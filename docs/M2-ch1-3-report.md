@@ -39,7 +39,7 @@ product claims. All copy, the portrait and the logo are marked placeholders.
    furthest stray. Strays pass under the page (it lies over the hair). Fibre tips are weighted by
    the shader's own tip fade, so a tip crossing a row can't make the edge jump.
 4. **Chapter frames are fixed and driven by the same clock as the camera** (not CSS sticky), and
-   Chapter 3 has a 60 vh tail, so the next section only rises after the page has closed.
+   Chapter 3 has a one-screen tail, so the next section only rises after the page has closed.
 5. **No paper texture of its own**: the site-wide film grain lies over the page. The texture image
    had become the LCP element (6.7 s); removing it restored LCP to 0.9 s.
 6. **Logo slot shows plain text "SLAY BRAIDS"** in a dashed placeholder box (accessible name
