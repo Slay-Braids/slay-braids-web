@@ -10,3 +10,4 @@ playwright-report/
 .DS_Store
 assets/anchors/*.png
 assets/chapters/*.png
+docs/perf/*.partial
