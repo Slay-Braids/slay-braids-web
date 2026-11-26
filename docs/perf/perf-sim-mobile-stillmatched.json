@@ -1,0 +1,76 @@
+{
+  "kind": "SIMULATED — headless Chromium + SwiftShader (CPU). Not a real-GPU or real-device result.",
+  "note": "The scene clamps a frame's dt at 100 ms, so frame times here saturate at 100 ms and say nothing about real devices.",
+  "mode": "mobile",
+  "viewport": "412×915 @2.625x",
+  "date": "2026-11-26T17:27:50.467Z",
+  "flags": "&stillmatched=1",
+  "allFrames": {
+    "n": 353,
+    "p50": 100,
+    "p95": 100,
+    "p99": 100,
+    "fpsMedian": 10
+  },
+  "ch1": {
+    "n": 74,
+    "p50": 100,
+    "p95": 100,
+    "p99": 100,
+    "fpsMedian": 10
+  },
+  "ch2": {
+    "n": 83,
+    "p50": 100,
+    "p95": 100,
+    "p99": 100,
+    "fpsMedian": 10
+  },
+  "ch3": {
+    "n": 196,
+    "p50": 100,
+    "p95": 100,
+    "p99": 100,
+    "fpsMedian": 10
+  },
+  "ch3Transition": {
+    "n": 101,
+    "p50": 100,
+    "p95": 100,
+    "p99": 100,
+    "fpsMedian": 10
+  },
+  "edgeComputeMs": {
+    "n": 101,
+    "p50": 2.7,
+    "p95": 5.1,
+    "p99": 7,
+    "fpsMedian": 370
+  },
+  "longTasks": {
+    "count": 355,
+    "totalMs": 357320,
+    "max": 1877
+  },
+  "lcpMs": 216,
+  "cls": 0.0137,
+  "handoff": {
+    "raw": 4.63,
+    "perceptual": 1.17,
+    "size": "824×1830",
+    "still": "anchor_v1-portrait-824.avif"
+  },
+  "stillMatched": "824w for target 824w",
+  "scene": {
+    "fibres": 1872,
+    "vertices": 855676,
+    "triangles": 851932,
+    "drawCalls": 1,
+    "dpr": 2,
+    "width": 824,
+    "height": 1830,
+    "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+  },
+  "tier": "A",
+  "downgrades": []
+}

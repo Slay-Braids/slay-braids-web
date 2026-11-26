@@ -103,9 +103,12 @@ export function mountPerfHud(state: ExperienceState) {
   const box = document.createElement("aside");
   box.setAttribute("aria-label", "Performance readout");
   box.style.cssText =
-    "position:fixed;right:12px;bottom:12px;z-index:50;max-width:min(92vw,360px);font:12px/1.45 ui-monospace,Menlo,monospace;" +
+    "position:fixed;right:12px;bottom:12px;z-index:50;width:min(92vw,360px);font:12px/1.45 ui-monospace,Menlo,monospace;" +
     "background:rgba(10,9,8,.88);color:#f2ece2;border:1px solid rgba(216,195,160,.35);padding:10px 12px;border-radius:6px;white-space:pre-wrap";
   const pre = document.createElement("div");
+  // Fixed size: the readout gains lines as results arrive; it must not grow, or its own layout
+  // shifts would be counted in the CLS it reports.
+  pre.style.cssText = "height:14.5em;overflow:auto";
   const btn = document.createElement("button");
   btn.type = "button";
   btn.textContent = "Copy results";

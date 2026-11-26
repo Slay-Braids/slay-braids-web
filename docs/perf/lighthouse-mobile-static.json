@@ -3,25 +3,18 @@
   "accessibility": 100,
   "bestPractices": 100,
   "seo": 60,
-  "LCP_ms": 903,
-  "FCP_ms": 903,
-  "TBT_ms": 99,
-  "CLS": 0.02,
-  "SpeedIndex_ms": 2025,
+  "LCP_ms": 902,
+  "FCP_ms": 902,
+  "TBT_ms": 103,
+  "CLS": 0.001,
+  "SpeedIndex_ms": 1968,
   "lcpElement": null,
-  "failedAccessibility": [
-    {
-      "id": "label-content-name-mismatch",
-      "nodes": [
-        "<a href=\"#top\" class=\"logo-slot\" data-ground=\"ink\" aria-label=\"SLAY BRAIDS, home (Logo pending)\">"
-      ]
-    }
-  ],
+  "failedAccessibility": [],
   "lcpDetail": "null",
   "layoutShifts": [
     {
-      "score": 0.02032040538037781,
-      "node": "<div class=\"ch1-content\" data-hero=\"true\">"
+      "score": 0.0007005059543778807,
+      "node": "<p data-testid=\"banner\" class=\"preview-banner\">"
     }
   ]
 }

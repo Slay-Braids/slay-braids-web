@@ -5,16 +5,11 @@
   "seo": 60,
   "LCP_ms": 247,
   "FCP_ms": 247,
-  "TBT_ms": 3625,
-  "CLS": 0.048,
-  "SpeedIndex_ms": 2359,
+  "TBT_ms": 4063,
+  "CLS": 0,
+  "SpeedIndex_ms": 2475,
   "lcpElement": null,
   "failedAccessibility": [],
   "lcpDetail": "null",
-  "layoutShifts": [
-    {
-      "score": 0.04770389083820663,
-      "node": "<div class=\"ch1-content\" data-hero=\"true\" style=\"\">"
-    }
-  ]
+  "layoutShifts": []
 }
