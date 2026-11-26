@@ -308,12 +308,12 @@ body {
 }
 /* Sections are the scroll track (their heights ARE the chapter extents of the camera timeline);
    each chapter's frame is fixed to the viewport and driven by the same scroll clock as the camera.
-   Chapter 3 has a one-screen tail so the next section only rises after the page has gone. */
+   Chapter 3 has a 60 vh tail so the next section only rises after the page has closed. */
 .ch2 {
   height: calc(var(--vh) * 150);
 }
 .ch3 {
-  height: calc(var(--vh) * 350);
+  height: calc(var(--vh) * 310);
 }
 @media (orientation: portrait) {
   .ch1 {
@@ -323,7 +323,7 @@ body {
     height: calc(var(--vh) * 130);
   }
   .ch3 {
-    height: calc(var(--vh) * 320);
+    height: calc(var(--vh) * 280);
   }
 }
 .chapter-frame {
