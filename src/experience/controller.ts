@@ -92,10 +92,13 @@ export async function initExperience(root: HTMLElement): Promise<void> {
     stage.dataset.mode = "static";
     state.marks.static = true;
     document.documentElement.dataset.static = "true";
-    void import("./chapters/staticSpreads").then((m) => m.initStaticSpreads(root, state.orientation));
+    void import("./chapters/staticSpreads").then((m) =>
+      m.initStaticSpreads(root, state.orientation),
+    );
     return;
   }
 
+  if (chapterFlags.stillMatched) swapToMatchedStill(img, tier, state); // tier is A or B here
   await img.decode().catch(() => undefined);
   state.marks.stillDecoded = now();
   await idle();
@@ -126,6 +129,12 @@ export async function initExperience(root: HTMLElement): Promise<void> {
   await scene.prepare();
   state.marks.shadersReady = now();
   scene.renderStill(); // frozen anchor pose, wind = 0
+  if (flags.perf) {
+    // On-device handoff Δ: the first live frame (read back in the same task as its render)
+    // against the still as the browser displays it.
+    const { measureHandoff } = await import("./chapters/handoffDelta");
+    state.marks.handoff = JSON.stringify(measureHandoff(img, scene.readPixels()));
+  }
   await nextFrame();
   state.marks.firstLiveFrame = now();
   stage.dataset.live = "true"; // CSS cross-fade, 600 ms
@@ -139,7 +148,7 @@ export async function initExperience(root: HTMLElement): Promise<void> {
   const monitorFrame = monitor(state, () => downgrade(), flags.noDowngrade);
   const onFrame = (dt: number) => {
     monitorFrame(dt);
-    chapters.frame();
+    chapters.frame(dt);
   };
   chapters.resume = () => scene.start(onFrame);
   if (chapterFlags.lab) void import("./chapters/lab").then((m) => m.mountLab(chapters));
@@ -228,7 +237,7 @@ export async function initExperience(root: HTMLElement): Promise<void> {
       const m = monitor(state, () => downgrade(), flags.noDowngrade);
       scene.start((dt) => {
         m(dt);
-        chapters.frame();
+        chapters.frame(dt);
       });
       state.stats = scene.stats() as unknown as Record<string, unknown>;
     } else {
@@ -247,6 +256,22 @@ export async function initExperience(root: HTMLElement): Promise<void> {
       void import("./chapters/staticSpreads").then((m) => m.initStaticSpreads(root, orientation));
     }
   }
+}
+
+/** I6 experiment (#still-matched): swap in the still whose width equals the capped live render. */
+function swapToMatchedStill(img: HTMLImageElement, tier: "A" | "B", state: ExperienceState) {
+  const portrait = innerWidth / innerHeight < 1;
+  const widths = portrait ? [720, 750, 780, 824, 860] : [2160, 2304];
+  const target = innerWidth * Math.min(devicePixelRatio || 1, TIER_SETTINGS[tier].maxDpr);
+  const w = widths.find((x) => x >= target - 1) ?? widths.at(-1)!;
+  const base = document.getElementById("experience")?.dataset.assetBase ?? "/";
+  img
+    .closest("picture")
+    ?.querySelectorAll("source")
+    .forEach((s) => s.remove());
+  img.removeAttribute("srcset");
+  img.src = `${base}anchors-matched/${ANCHOR.version}-${portrait ? "portrait" : "landscape"}-${w}.avif`;
+  state.marks.stillMatched = `${w}w for target ${Math.round(target)}w`;
 }
 
 /**

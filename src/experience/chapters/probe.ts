@@ -79,7 +79,8 @@ export class GpuProbe {
     canvas.width = canvas.height = 1;
     const gl = canvas.getContext("webgl2", { antialias: false });
     if (!gl) throw new Error("probe: WebGL2 unavailable");
-    if (!gl.getExtension("EXT_color_buffer_float")) throw new Error("probe: float render targets unavailable");
+    if (!gl.getExtension("EXT_color_buffer_float"))
+      throw new Error("probe: float render targets unavailable");
     this.gl = gl;
     const dbg = gl.getExtension("WEBGL_debug_renderer_info");
     this.renderer = String(gl.getParameter(dbg ? dbg.UNMASKED_RENDERER_WEBGL : gl.RENDERER));
@@ -88,16 +89,32 @@ export class GpuProbe {
       const s = gl.createShader(type)!;
       gl.shaderSource(s, src);
       gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(`probe shader: ${gl.getShaderInfoLog(s)}`);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))
+        throw new Error(`probe shader: ${gl.getShaderInfoLog(s)}`);
       return s;
     };
     const prog = gl.createProgram()!;
     gl.attachShader(prog, sh(gl.VERTEX_SHADER, probeVertexSource()));
     gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));
     gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(`probe link: ${gl.getProgramInfoLog(prog)}`);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS))
+      throw new Error(`probe link: ${gl.getProgramInfoLog(prog)}`);
     this.prog = prog;
-    for (const n of ["projectionMatrix", "modelViewMatrix", "uTime", "uWind", "uPointer", "uPointerForce", "uAspect", "uCamRight", "uCamUp", "uProbeSize", "uViewportH", "uFovTan", "uFibreWidth"]) {
+    for (const n of [
+      "projectionMatrix",
+      "modelViewMatrix",
+      "uTime",
+      "uWind",
+      "uPointer",
+      "uPointerForce",
+      "uAspect",
+      "uCamRight",
+      "uCamUp",
+      "uProbeSize",
+      "uViewportH",
+      "uFovTan",
+      "uFibreWidth",
+    ]) {
       this.loc[n] = gl.getUniformLocation(prog, n);
     }
 
@@ -116,7 +133,13 @@ export class GpuProbe {
     });
     this.vao = gl.createVertexArray()!;
     gl.bindVertexArray(this.vao);
-    const attr = (name: string, data: ArrayBufferView, size: number, type: number, norm: boolean) => {
+    const attr = (
+      name: string,
+      data: ArrayBufferView,
+      size: number,
+      type: number,
+      norm: boolean,
+    ) => {
       const l = gl.getAttribLocation(prog, name);
       if (l < 0) return; // optimised away (e.g. unused tangent)
       const b = gl.createBuffer();

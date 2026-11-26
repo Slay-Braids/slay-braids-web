@@ -36,7 +36,9 @@ for (const o of ["landscape", "portrait"] as const) {
         const left = sub(cam(b).position, cam(b - e).position).map((x) => x / e);
         const right = sub(cam(b + e).position, cam(b).position).map((x) => x / e);
         const scale = Math.max(1e-6, Math.hypot(...left), Math.hypot(...right));
-        expect(Math.hypot(left[0]! - right[0]!, left[1]! - right[1]!, left[2]! - right[2]!) / scale).toBeLessThan(0.02);
+        expect(
+          Math.hypot(left[0]! - right[0]!, left[1]! - right[1]!, left[2]! - right[2]!) / scale,
+        ).toBeLessThan(0.02);
       }
     });
 

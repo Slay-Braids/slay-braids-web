@@ -49,41 +49,12 @@ function el<K extends keyof SVGElementTagNameMap>(name: K, attrs: Record<string,
   return e;
 }
 
-/** A small, static paper-fibre texture (drawn once). Mid-grey based and blended with soft-light,
- *  which leaves the average tone unchanged, so the page matches flat ivory sections exactly. */
-function paperTexture(): string {
-  const c = document.createElement("canvas");
-  c.width = c.height = 256;
-  const g = c.getContext("2d")!;
-  const img = g.createImageData(256, 256);
-  let seed = 7;
-  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-  for (let i = 0; i < img.data.length; i += 4) {
-    const n = (rnd() - 0.5) * 18;
-    img.data[i] = img.data[i + 1] = img.data[i + 2] = 128 + n;
-    img.data[i + 3] = 255;
-  }
-  g.putImageData(img, 0, 0);
-  // Faint horizontal fibres.
-  g.globalAlpha = 0.05;
-  for (let k = 0; k < 140; k++) {
-    g.strokeStyle = rnd() > 0.5 ? "#000" : "#fff";
-    const y = rnd() * 256;
-    g.beginPath();
-    g.moveTo(rnd() * 256, y);
-    g.lineTo(rnd() * 256, y + (rnd() - 0.5) * 6);
-    g.stroke();
-  }
-  return c.toDataURL("image/png");
-}
-
 export class Paper {
   private svg: SVGSVGElement;
   private group: SVGGElement;
   private paperClip: SVGPathElement;
   private hairClip: SVGPathElement;
   private fill: SVGRectElement;
-  private texture: SVGRectElement;
   private spill: SVGRectElement;
   private spillGrad: SVGRadialGradientElement;
   private innerShadows: SVGPathElement[] = [];
@@ -103,10 +74,10 @@ export class Paper {
     const hc = el("clipPath", { id: `hair-${this.uid}` });
     this.hairClip = el("path");
     hc.append(this.hairClip);
-    const pattern = el("pattern", { id: `tex-${this.uid}`, width: "256", height: "256", patternUnits: "userSpaceOnUse" });
-    const image = el("image", { href: paperTexture(), width: "256", height: "256" });
-    pattern.append(image);
-    this.spillGrad = el("radialGradient", { id: `spill-${this.uid}`, gradientUnits: "userSpaceOnUse" });
+    this.spillGrad = el("radialGradient", {
+      id: `spill-${this.uid}`,
+      gradientUnits: "userSpaceOnUse",
+    });
     this.spillGrad.append(
       el("stop", { offset: "0", "stop-color": `rgb(${CHAMPAGNE})`, "stop-opacity": "0.22" }),
       el("stop", { offset: "0.55", "stop-color": `rgb(${CHAMPAGNE})`, "stop-opacity": "0.06" }),
@@ -114,32 +85,64 @@ export class Paper {
     );
     // Soft shadows: one stroke each, blurred (stepped strokes read as bands at close range).
     const blur = (id: string, sd: number) => {
-      const f = el("filter", { id, x: "-400", y: "-400", width: "6000", height: "6000", filterUnits: "userSpaceOnUse" });
+      const f = el("filter", {
+        id,
+        x: "-400",
+        y: "-400",
+        width: "6000",
+        height: "6000",
+        filterUnits: "userSpaceOnUse",
+      });
       f.append(el("feGaussianBlur", { stdDeviation: String(sd) }));
       return f;
     };
-    defs.append(pc, hc, pattern, this.spillGrad, blur(`soft-${this.uid}`, 7), blur(`contact-${this.uid}`, 14));
+    defs.append(
+      pc,
+      hc,
+      this.spillGrad,
+      blur(`soft-${this.uid}`, 7),
+      blur(`contact-${this.uid}`, 14),
+    );
 
     this.group = el("g");
     const paperLayer = el("g", { "clip-path": `url(#paper-${this.uid})` });
     this.fill = el("rect", { x: "-200", y: "-200", fill: IVORY });
-    this.texture = el("rect", { x: "-200", y: "-200", fill: `url(#tex-${this.uid})`, opacity: "0.06", style: "mix-blend-mode:soft-light" });
     this.spill = el("rect", { x: "-200", y: "-200", fill: `url(#spill-${this.uid})` });
-    paperLayer.append(this.fill, this.texture, this.spill);
+    // No texture of its own: the site-wide film grain lies over the page as over everything else.
+    paperLayer.append(this.fill, this.spill);
     // Paper thickness: soft espresso falloff just inside the edge.
-    for (const [w, a, sd] of [[3, 0.1, 0], [26, 0.13, 1]] as const) {
-      const p = el("path", { fill: "none", stroke: `rgba(${ESPRESSO},${a})`, "stroke-width": String(w), "stroke-linejoin": "round" });
+    for (const [w, a, sd] of [
+      [3, 0.1, 0],
+      [26, 0.13, 1],
+    ] as const) {
+      const p = el("path", {
+        fill: "none",
+        stroke: `rgba(${ESPRESSO},${a})`,
+        "stroke-width": String(w),
+        "stroke-linejoin": "round",
+      });
       if (sd) p.setAttribute("filter", `url(#soft-${this.uid})`);
       this.innerShadows.push(p);
       paperLayer.append(p);
     }
     const hairLayer = el("g", { "clip-path": `url(#hair-${this.uid})` });
     for (const [w, a] of [[48, 0.5]] as const) {
-      const p = el("path", { fill: "none", stroke: `rgba(0,0,0,${a})`, "stroke-width": String(w), "stroke-linejoin": "round", filter: `url(#contact-${this.uid})` });
+      const p = el("path", {
+        fill: "none",
+        stroke: `rgba(0,0,0,${a})`,
+        "stroke-width": String(w),
+        "stroke-linejoin": "round",
+        filter: `url(#contact-${this.uid})`,
+      });
       this.contactShadows.push(p);
       hairLayer.append(p);
     }
-    this.highlight = el("path", { fill: "none", stroke: `rgba(${CHAMPAGNE},0.35)`, "stroke-width": "1", "stroke-linejoin": "round" });
+    this.highlight = el("path", {
+      fill: "none",
+      stroke: `rgba(${CHAMPAGNE},0.35)`,
+      "stroke-width": "1",
+      "stroke-linejoin": "round",
+    });
     this.group.append(hairLayer, paperLayer, this.highlight);
     this.svg.append(defs, this.group);
   }
@@ -176,7 +179,7 @@ export class Paper {
     const W = fr.width;
     const H = fr.height;
     this.svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    for (const r of [this.fill, this.texture, this.spill]) {
+    for (const r of [this.fill, this.spill]) {
       r.setAttribute("width", String(W + 400));
       r.setAttribute("height", String(H + 400));
     }
@@ -190,7 +193,8 @@ export class Paper {
       const full = `M-300 -300H${W + 300}V${H + 300}H-300Z`;
       this.paperClip.setAttribute("d", full);
       this.hairClip.setAttribute("d", "M0 0Z");
-      for (const p of [...this.innerShadows, ...this.contactShadows, this.highlight]) p.style.display = "none";
+      for (const p of [...this.innerShadows, ...this.contactShadows, this.highlight])
+        p.style.display = "none";
       this.spill.style.display = "none";
       this.last = { edge: [], side: fr.side, visible: true, full: true };
       return { off: -extent };
@@ -206,17 +210,31 @@ export class Paper {
       const v = p[o] + (mean - p[o]) * straighten + off + fr.gap;
       return right ? [v, p[a]] : [p[a], v];
     });
-    const line = placed.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(2)} ${p[1].toFixed(2)}`).join("");
+    const line = placed
+      .map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(2)} ${p[1].toFixed(2)}`)
+      .join("");
     const first = placed[0]!;
     const last = placed.at(-1)!;
     // Close the edge polyline into the page region and the hair region (both run far past the
     // frame so no stroke or clip ever ends on screen).
     if (right) {
-      this.paperClip.setAttribute("d", `M${first[0]} -300${line.replace("M", "L")}L${last[0]} ${H + 300}L${W + 300} ${H + 300}L${W + 300} -300Z`);
-      this.hairClip.setAttribute("d", `M${first[0]} -300${line.replace("M", "L")}L${last[0]} ${H + 300}L-300 ${H + 300}L-300 -300Z`);
+      this.paperClip.setAttribute(
+        "d",
+        `M${first[0]} -300${line.replace("M", "L")}L${last[0]} ${H + 300}L${W + 300} ${H + 300}L${W + 300} -300Z`,
+      );
+      this.hairClip.setAttribute(
+        "d",
+        `M${first[0]} -300${line.replace("M", "L")}L${last[0]} ${H + 300}L-300 ${H + 300}L-300 -300Z`,
+      );
     } else {
-      this.paperClip.setAttribute("d", `M-300 ${first[1]}${line.replace("M", "L")}L${W + 300} ${last[1]}L${W + 300} ${H + 300}L-300 ${H + 300}Z`);
-      this.hairClip.setAttribute("d", `M-300 ${first[1]}${line.replace("M", "L")}L${W + 300} ${last[1]}L${W + 300} -300L-300 -300Z`);
+      this.paperClip.setAttribute(
+        "d",
+        `M-300 ${first[1]}${line.replace("M", "L")}L${W + 300} ${last[1]}L${W + 300} ${H + 300}L-300 ${H + 300}Z`,
+      );
+      this.hairClip.setAttribute(
+        "d",
+        `M-300 ${first[1]}${line.replace("M", "L")}L${W + 300} ${last[1]}L${W + 300} -300L-300 -300Z`,
+      );
     }
     for (const p of this.innerShadows) {
       p.setAttribute("d", line);

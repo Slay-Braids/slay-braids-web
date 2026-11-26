@@ -25,7 +25,12 @@ export interface LabResults {
   /** Readback interval in frames (spec: every 10th). */
   probeEvery: number;
   /** What the probed frames covered: wind strength and pointer force actually sent to the GPU. */
-  conditions: { windMin: number; windMax: number; pointerForceMax: number; framesWithPointer: number };
+  conditions: {
+    windMin: number;
+    windMax: number;
+    pointerForceMax: number;
+    framesWithPointer: number;
+  };
   pointError: ReturnType<typeof percentiles>;
   edgeError: ReturnType<typeof percentiles>;
   pass: boolean;
@@ -35,7 +40,10 @@ export interface LabResults {
 
 declare global {
   interface Window {
-    __lab?: { run: (durationMs?: number, probeEvery?: number) => Promise<LabResults>; last?: LabResults };
+    __lab?: {
+      run: (durationMs?: number, probeEvery?: number) => Promise<LabResults>;
+      last?: LabResults;
+    };
   }
 }
 
@@ -118,10 +126,16 @@ export function mountLab(chapters: LiveChapters) {
     const Y = (v: number) => 112 - ((v - lo) / (hi - lo || 1)) * 104;
     const colors = ["#d8c3a0", "#8fb3d9", "#c98fb3"];
     const lines = [0, 1, 2]
-      .map((c) => `<polyline fill="none" stroke="${colors[c]}" stroke-width="1.2" points="${pts.map((p, i) => `${X(i).toFixed(1)},${Y(p[c]!).toFixed(1)}`).join(" ")}"/>`)
+      .map(
+        (c) =>
+          `<polyline fill="none" stroke="${colors[c]}" stroke-width="1.2" points="${pts.map((p, i) => `${X(i).toFixed(1)},${Y(p[c]!).toFixed(1)}`).join(" ")}"/>`,
+      )
       .join("");
     const marks = CHAPTER_LAYOUT[o()].stops
-      .map((s) => `<line x1="${(s / end) * 300}" x2="${(s / end) * 300}" y1="0" y2="120" stroke="#3b342c"/>`)
+      .map(
+        (s) =>
+          `<line x1="${(s / end) * 300}" x2="${(s / end) * 300}" y1="0" y2="120" stroke="#3b342c"/>`,
+      )
       .join("");
     svg.innerHTML = `${marks}${lines}<line data-k="cursor" x1="0" x2="0" y1="0" y2="120" stroke="#fff" stroke-opacity=".6"/>`;
   };
@@ -153,7 +167,8 @@ export function mountLab(chapters: LiveChapters) {
     const dt = now - lastT;
     lastT = now;
     const v = info.fs.scroll;
-    q<HTMLSpanElement>("pos").textContent = `${v.toFixed(1)} vh · ch3 ${(info.s3.rel * 100).toFixed(1)} % · open ${info.s3.open.toFixed(2)} · away ${info.s3.away.toFixed(2)}`;
+    q<HTMLSpanElement>("pos").textContent =
+      `${v.toFixed(1)} vh · ch3 ${(info.s3.rel * 100).toFixed(1)} % · open ${info.s3.open.toFixed(2)} · away ${info.s3.away.toFixed(2)}`;
     q<HTMLSpanElement>("vh").textContent = `${v.toFixed(0)} vh`;
     const cur = panel.querySelector<SVGLineElement>("[data-k=cursor]");
     if (cur) {
@@ -166,7 +181,9 @@ export function mountLab(chapters: LiveChapters) {
       const r = running;
       const el = now - r.t0;
       // Scripted path: sweep the page between arriving and resting, pointer circling the edge.
-      const rel = CH3.paperIn[0] + (CH3.holdEnd - CH3.paperIn[0]) * (0.5 - 0.5 * Math.cos((el / r.duration) * Math.PI * 4));
+      const rel =
+        CH3.paperIn[0] +
+        (CH3.holdEnd - CH3.paperIn[0]) * (0.5 - 0.5 * Math.cos((el / r.duration) * Math.PI * 4));
       setPos(rel);
       if (info.inTransition) {
         r.dts.push(dt);
@@ -196,10 +213,22 @@ export function mountLab(chapters: LiveChapters) {
         );
         const cpu = chapters.guide.points(info.fs);
         for (let i = 0; i < cpu.xy.length / 2; i++) {
-          r.pointErr.push(Math.hypot(cpu.xy[i * 2]! - gpu[i * 2]!, cpu.xy[i * 2 + 1]! - gpu[i * 2 + 1]!));
+          r.pointErr.push(
+            Math.hypot(cpu.xy[i * 2]! - gpu[i * 2]!, cpu.xy[i * 2 + 1]! - gpu[i * 2 + 1]!),
+          );
         }
-        const eC = chapters.guide.edgeFromPoints(cpu.xy, cpu.runs, info.fs.cssWidth, info.fs.cssHeight);
-        const eG = chapters.guide.edgeFromPoints(gpu, cpu.runs, info.fs.cssWidth, info.fs.cssHeight);
+        const eC = chapters.guide.edgeFromPoints(
+          cpu.xy,
+          cpu.runs,
+          info.fs.cssWidth,
+          info.fs.cssHeight,
+        );
+        const eG = chapters.guide.edgeFromPoints(
+          gpu,
+          cpu.runs,
+          info.fs.cssWidth,
+          info.fs.cssHeight,
+        );
         eC.forEach((p, i) => r.edgeErr.push(Math.hypot(p[0] - eG[i]![0], p[1] - eG[i]![1])));
         r.probed++;
         r.wind.push(u.uWind!.value as number);

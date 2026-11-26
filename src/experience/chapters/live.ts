@@ -93,8 +93,23 @@ export class LiveChapters {
     this.scene.setScrollVh(y / vhPx(), immediate || this.flags.noDamp);
   }
 
-  /** Called by the scene loop after each render. */
-  frame() {
+  /** Frame times by chapter and for the Chapter 3 transition alone (performance HUD). */
+  readonly stats = {
+    ch1: [] as number[],
+    ch2: [] as number[],
+    ch3: [] as number[],
+    transition: [] as number[],
+    edgeMs: [] as number[],
+  };
+
+  private record(key: keyof LiveChapters["stats"], v: number) {
+    const a = this.stats[key];
+    a.push(v);
+    if (a.length > 2000) a.shift();
+  }
+
+  /** Called by the scene loop after each render (`dt` = this frame's time, ms). */
+  frame(dt?: number) {
     const fs = this.scene.frameState();
     const s3 = this.driver.update(fs.scroll);
     let edge: [number, number][] | undefined;
@@ -131,6 +146,14 @@ export class LiveChapters {
       this.paper.hide();
     }
     this.updateGrounds();
+    if (dt != null) {
+      const L = CHAPTER_LAYOUT[this.orientation];
+      this.record(fs.scroll < L.ch2[0] ? "ch1" : fs.scroll < L.ch3[0] ? "ch2" : "ch3", dt);
+      if (inTransition) {
+        this.record("transition", dt);
+        this.record("edgeMs", edgeMs);
+      }
+    }
     this.onChapterFrame?.({ fs, s3, edge, edgeMs, inTransition });
     this.maybePause();
   }
@@ -166,7 +189,11 @@ export class LiveChapters {
   }
 
   private maybePause() {
-    if (!this.paused && this.covered() && Math.abs(this.scene.scrollValue - scrollY / vhPx()) < 0.5) {
+    if (
+      !this.paused &&
+      this.covered() &&
+      Math.abs(this.scene.scrollValue - scrollY / vhPx()) < 0.5
+    ) {
       this.paused = true;
       this.scene.stop();
       this.root.dataset.renderPaused = "true";

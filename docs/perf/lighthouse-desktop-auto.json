@@ -3,10 +3,18 @@
   "accessibility": 100,
   "bestPractices": 100,
   "seo": 60,
-  "LCP_ms": 246,
-  "FCP_ms": 246,
-  "TBT_ms": 3959,
-  "CLS": 0.039,
-  "SpeedIndex_ms": 2515,
-  "lcpElement": null
+  "LCP_ms": 247,
+  "FCP_ms": 247,
+  "TBT_ms": 3625,
+  "CLS": 0.048,
+  "SpeedIndex_ms": 2359,
+  "lcpElement": null,
+  "failedAccessibility": [],
+  "lcpDetail": "null",
+  "layoutShifts": [
+    {
+      "score": 0.04770389083820663,
+      "node": "<div class=\"ch1-content\" data-hero=\"true\" style=\"\">"
+    }
+  ]
 }

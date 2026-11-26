@@ -9,6 +9,20 @@ function pct(sorted: number[], p: number) {
   return sorted[Math.min(sorted.length - 1, Math.floor((p / 100) * sorted.length))]!;
 }
 
+const observed = { longTasks: 0, longTaskMs: 0, cls: 0 };
+
+function stats(v: number[]) {
+  const s = [...v].sort((a, b) => a - b);
+  if (!s.length) return null;
+  return {
+    n: s.length,
+    p50: +pct(s, 50).toFixed(1),
+    p95: +pct(s, 95).toFixed(1),
+    p99: +pct(s, 99).toFixed(1),
+    fpsMedian: Math.round(1000 / pct(s, 50)),
+  };
+}
+
 export function summarise(state: ExperienceState) {
   const ft = [...state.frameTimes].sort((a, b) => a - b);
   const p50 = pct(ft, 50);
@@ -34,16 +48,55 @@ export function summarise(state: ExperienceState) {
     lcpMs: lcp ? Math.round(lcp.startTime) : null,
     domContentLoadedMs: nav ? Math.round(nav.domContentLoadedEventEnd) : null,
     jsHeapMB: mem ? +(mem.usedJSHeapSize / 1e6).toFixed(1) : null,
+    longTasks: observed.longTasks,
+    longTaskMs: Math.round(observed.longTaskMs),
+    cls: +observed.cls.toFixed(4),
+    handoff: state.marks.handoff ? JSON.parse(String(state.marks.handoff)) : null,
+    chapters: chapterStats(),
     marks: state.marks,
     downgrades: state.downgrades,
     scene: state.stats ?? null,
   };
 }
 
+function chapterStats() {
+  const c = (window as unknown as { __chapters?: { stats: Record<string, number[]> } }).__chapters;
+  if (!c) return null;
+  return {
+    ch1: stats(c.stats.ch1!),
+    ch2: stats(c.stats.ch2!),
+    ch3: stats(c.stats.ch3!),
+    transition: stats(c.stats.transition!),
+    edgeComputeMs: stats(c.stats.edgeMs!),
+  };
+}
+
 export function mountPerfHud(state: ExperienceState) {
-  // Observe LCP so it is available in summaries.
+  // Observe LCP so it is available in summaries; count long tasks and layout shifts.
   try {
     new PerformanceObserver(() => {}).observe({ type: "largest-contentful-paint", buffered: true });
+  } catch {
+    /* unsupported */
+  }
+  try {
+    new PerformanceObserver((l) => {
+      for (const e of l.getEntries()) {
+        observed.longTasks++;
+        observed.longTaskMs += e.duration;
+      }
+    }).observe({ type: "longtask", buffered: true });
+  } catch {
+    /* unsupported */
+  }
+  try {
+    new PerformanceObserver((l) => {
+      for (const e of l.getEntries() as (PerformanceEntry & {
+        value: number;
+        hadRecentInput: boolean;
+      })[]) {
+        if (!e.hadRecentInput) observed.cls += e.value;
+      }
+    }).observe({ type: "layout-shift", buffered: true });
   } catch {
     /* unsupported */
   }
@@ -73,7 +126,12 @@ export function mountPerfHud(state: ExperienceState) {
     pre.textContent =
       `tier ${s.tier} · ${s.orientation} · ${s.viewport}\n` +
       `fps ${s.fpsMedian ?? "–"} · frame p50 ${s.frameMsP50} / p95 ${s.frameMsP95} ms\n` +
-      `LCP ${s.lcpMs ?? "–"} ms · live at ${s.marks.handoffDone ?? "–"} ms\n` +
+      `LCP ${s.lcpMs ?? "–"} ms · CLS ${s.cls} · live at ${s.marks.handoffDone ?? "–"} ms\n` +
+      `long tasks ${s.longTasks} (${s.longTaskMs} ms)\n` +
+      (s.handoff ? `handoff Δ raw ${s.handoff.raw} · perceptual ${s.handoff.perceptual}\n` : "") +
+      (s.chapters?.transition
+        ? `Ch3 transition p50 ${s.chapters.transition.p50} / p95 ${s.chapters.transition.p95} / p99 ${s.chapters.transition.p99} ms\n`
+        : "") +
       (s.scene
         ? `fibres ${(s.scene as { fibres: number }).fibres} · draw calls ${(s.scene as { drawCalls: number }).drawCalls}\n`
         : "") +

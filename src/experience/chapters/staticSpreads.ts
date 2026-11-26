@@ -15,8 +15,14 @@ interface StillManifest {
   edges: Record<Orientation, [number, number][]>;
 }
 
-const STILL_SIZE: Record<Orientation, [number, number]> = { landscape: [2560, 1440], portrait: [1440, 2560] };
-const WIDTHS: Record<Orientation, number[]> = { landscape: [1280, 1920, 2560], portrait: [720, 1080, 1440] };
+const STILL_SIZE: Record<Orientation, [number, number]> = {
+  landscape: [2560, 1440],
+  portrait: [1440, 2560],
+};
+const WIDTHS: Record<Orientation, number[]> = {
+  landscape: [1280, 1920, 2560],
+  portrait: [720, 1080, 1440],
+};
 
 function picture(base: string, ch: "ch2" | "ch3") {
   const set = (o: Orientation, ext: string) =>
@@ -41,7 +47,9 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
   if (ch2 && !ch2.querySelector(".spread-still")) ch2.prepend(picture(base, "ch2"));
   if (ch3 && !ch3.querySelector(".spread-still")) ch3.prepend(picture(base, "ch3"));
 
-  root.querySelectorAll<HTMLElement>("[data-ch2-line]").forEach((l) => (l.dataset.state = "active"));
+  root
+    .querySelectorAll<HTMLElement>("[data-ch2-line]")
+    .forEach((l) => (l.dataset.state = "active"));
   root.querySelector<HTMLElement>("[data-ch3-line]")?.setAttribute("data-state", "active");
   // Live-mode inline styles (after a B→still downgrade) must not survive into the spreads.
   for (const sel of ["[data-hero]", "[data-ch3-content]", "[data-ch3-portrait]"]) {
@@ -63,7 +71,9 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
     let manifest: StillManifest | undefined;
     const draw = () => {
       if (!manifest) return;
-      const o: Orientation = matchMedia("(orientation: portrait)").matches ? "portrait" : "landscape";
+      const o: Orientation = matchMedia("(orientation: portrait)").matches
+        ? "portrait"
+        : "landscape";
       const edgeN = manifest.edges[o];
       if (!edgeN?.length) return;
       const W = ch3.clientWidth;
@@ -132,7 +142,9 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
       for (const e of entries) {
         if (!e.isIntersecting) continue;
         const i = sections.indexOf(e.target as HTMLElement);
-        ticks.forEach((tk, n) => (n === i ? tk.setAttribute("aria-current", "true") : tk.removeAttribute("aria-current")));
+        ticks.forEach((tk, n) =>
+          n === i ? tk.setAttribute("aria-current", "true") : tk.removeAttribute("aria-current"),
+        );
       }
     },
     { rootMargin: "-45% 0px -45% 0px" },

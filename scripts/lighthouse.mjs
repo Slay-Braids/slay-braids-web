@@ -53,13 +53,14 @@ const chrome = await chromeLauncher.launch({
 });
 await mkdir("docs/perf", { recursive: true });
 
+const only = process.argv[2];
 const runs = [
   { name: "mobile-auto", url: "/", formFactor: "mobile" },
   { name: "mobile-static", url: "/?tier=C", formFactor: "mobile" },
   { name: "desktop-auto", url: "/", formFactor: "desktop" },
 ];
 const summary = {};
-for (const r of runs) {
+for (const r of runs.filter((x) => !only || x.name === only)) {
   const desktop = r.formFactor === "desktop";
   const result = await lighthouse(`http://127.0.0.1:4180${r.url}`, {
     port: chrome.port,
@@ -88,6 +89,22 @@ for (const r of runs) {
     lcpElement:
       a["largest-contentful-paint-element"]?.details?.items?.[0]?.items?.[0]?.node?.snippet ?? null,
   };
+  // Diagnostics: the LCP element, layout shifts and any failed accessibility audits.
+  const failedA11y = Object.values(a)
+    .filter(
+      (x) => lhr.categories.accessibility.auditRefs.some((ref) => ref.id === x.id) && x.score === 0,
+    )
+    .map((x) => ({
+      id: x.id,
+      nodes: (x.details?.items ?? []).map((i) => i.node?.snippet).slice(0, 6),
+    }));
+  summary[r.name].failedAccessibility = failedA11y;
+  summary[r.name].lcpDetail = JSON.stringify(
+    a["largest-contentful-paint-element"]?.details ?? null,
+  ).slice(0, 1200);
+  summary[r.name].layoutShifts = (a["layout-shifts"]?.details?.items ?? [])
+    .map((i) => ({ score: i.score, node: i.node?.snippet }))
+    .slice(0, 5);
   await writeFile(
     `docs/perf/lighthouse-${r.name}.json`,
     JSON.stringify(summary[r.name], null, 2) + "\n",

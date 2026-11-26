@@ -1,0 +1,92 @@
+{
+  "source": "anchor_v1 masters (unchanged)",
+  "purpose": "I6 density-matched still (experimental, #still-matched)",
+  "files": [
+    {
+      "name": "anchor_v1-portrait-720.avif",
+      "width": 720,
+      "bytes": 45757,
+      "sha256": "95beffa2694f7e3635b2b8d8f36e3f96140e689ad1ee4676cfa56641ca6cd79e"
+    },
+    {
+      "name": "anchor_v1-portrait-720.webp",
+      "width": 720,
+      "bytes": 79996,
+      "sha256": "db9a82225dbaa6c5f19fc8bcbdd8eb3b8d095d8f58d5b8475da07f09c128d5cd"
+    },
+    {
+      "name": "anchor_v1-portrait-750.avif",
+      "width": 750,
+      "bytes": 49179,
+      "sha256": "a0255d6a2663e0ad647f562680a219916784b1855b6896a1e0aee024595770d1"
+    },
+    {
+      "name": "anchor_v1-portrait-750.webp",
+      "width": 750,
+      "bytes": 87004,
+      "sha256": "92fe3d74418a819f00f5412a561ee52c5abc10bd47f934174be7dded7bb2870a"
+    },
+    {
+      "name": "anchor_v1-portrait-780.avif",
+      "width": 780,
+      "bytes": 53106,
+      "sha256": "5d37466bea18197c23fedd149259f910328e286e4e275b7c7c69f2d8dfb9083e"
+    },
+    {
+      "name": "anchor_v1-portrait-780.webp",
+      "width": 780,
+      "bytes": 93740,
+      "sha256": "0f0a594bcb5f0479239264b9dc5c3f1c7e90c60150baecbfb319ea93065c4b98"
+    },
+    {
+      "name": "anchor_v1-portrait-824.avif",
+      "width": 824,
+      "bytes": 58502,
+      "sha256": "46b08acb9c78acbf79f503b6a52986868479e81353ef9099bf6f9de027cd6617"
+    },
+    {
+      "name": "anchor_v1-portrait-824.webp",
+      "width": 824,
+      "bytes": 104320,
+      "sha256": "c3618dfbe4b34e4cdd990c0ccc547becef77e5440d4dccda6dad498dca353ad1"
+    },
+    {
+      "name": "anchor_v1-portrait-860.avif",
+      "width": 860,
+      "bytes": 64099,
+      "sha256": "00ae58cffc39a0e1c9ea63838c3c89b561f34a51438a2c759b16b3e14068bc40"
+    },
+    {
+      "name": "anchor_v1-portrait-860.webp",
+      "width": 860,
+      "bytes": 113422,
+      "sha256": "4b95d801ede7a15bf65cba57fff9a6434ef6be0ada18dda524c0d0ed97fda9e0"
+    },
+    {
+      "name": "anchor_v1-landscape-2160.avif",
+      "width": 2160,
+      "bytes": 137575,
+      "sha256": "491db1cc6154e01fef307bd97e22c550fba6cd41452813f2ff0b06bf13ae39c1"
+    },
+    {
+      "name": "anchor_v1-landscape-2160.webp",
+      "width": 2160,
+      "bytes": 257312,
+      "sha256": "928384979b260eab6acd6260d691a3e193b010a8eda110cce6b8e40477706df1"
+    },
+    {
+      "name": "anchor_v1-landscape-2304.avif",
+      "width": 2304,
+      "bytes": 155850,
+      "sha256": "36331b096197ce2baf313ccef954d2a5c0da0a6ba523d13c37ea8bc5d42663cc"
+    },
+    {
+      "name": "anchor_v1-landscape-2304.webp",
+      "width": 2304,
+      "bytes": 290098,
+      "sha256": "7f96cce71b7cdf718ee4259aee161caeecec1f3922cb5738a28505c076aea635"
+    }
+  ],
+  "portraitMasterSha256": "3a3cce337e9e7da3ab0536d87c650ce5c6d599f892091bae58bd00239486c507",
+  "landscapeMasterSha256": "28532804faefbe7891bf4cbd55c71416a0c69246fe5ead798c4707ed4c42de0b"
+}

@@ -125,8 +125,8 @@ export function project(x: number, y: number, z: number, fs: FrameState, out: Fl
   const cx = P[0]! * vx + P[4]! * vy + P[8]! * vz + P[12]!;
   const cy = P[1]! * vx + P[5]! * vy + P[9]! * vz + P[13]!;
   const cw = P[3]! * vx + P[7]! * vy + P[11]! * vz + P[15]!;
-  out[0] = (cx / cw * 0.5 + 0.5) * fs.cssWidth;
-  out[1] = (1 - (cy / cw * 0.5 + 0.5)) * fs.cssHeight;
+  out[0] = ((cx / cw) * 0.5 + 0.5) * fs.cssWidth;
+  out[1] = (1 - ((cy / cw) * 0.5 + 0.5)) * fs.cssHeight;
 }
 
 export interface GuidePoint {
@@ -189,7 +189,10 @@ export class GuideStrand {
       rowMax.forEach((v, r) => best[r]!.push({ v, fi }));
     });
     const chosen = new Set<number>();
-    for (const b of best) b.sort((a, c) => c.v - a.v).slice(0, perRow).forEach((e) => chosen.add(e.fi));
+    for (const b of best)
+      b.sort((a, c) => c.v - a.v)
+        .slice(0, perRow)
+        .forEach((e) => chosen.add(e.fi));
     this.candidates = [...chosen];
     const loose = this.candidates.map((fi) => {
       const fib = this.fibres[fi]!;
@@ -232,7 +235,10 @@ export class GuideStrand {
         }
       }
       if (lo < 0) return;
-      this.runs.push({ from: r.from + Math.max(0, lo - 2), to: r.from + Math.min(a.length, hi + 3) });
+      this.runs.push({
+        from: r.from + Math.max(0, lo - 2),
+        to: r.from + Math.min(a.length, hi + 3),
+      });
     });
     // Tip weighting, from the shader's own tip fade (smoothstep 0.86–1 in t): faded tips are
     // invisible, so they must not hold the page edge out, and a tip crossing a row line can then
@@ -262,7 +268,16 @@ export class GuideStrand {
       const from = k;
       for (let s = r.from; s < r.to; s++) {
         const v = s * 2;
-        displace(pos[v * 3]!, pos[v * 3 + 1]!, pos[v * 3 + 2]!, par[v * 4]!, par[v * 4 + 1]!, par[v * 4 + 2]!, fs, this.tmp);
+        displace(
+          pos[v * 3]!,
+          pos[v * 3 + 1]!,
+          pos[v * 3 + 2]!,
+          par[v * 4]!,
+          par[v * 4 + 1]!,
+          par[v * 4 + 2]!,
+          fs,
+          this.tmp,
+        );
         project(this.tmp[0]!, this.tmp[1]!, this.tmp[2]!, fs, this.scr);
         xy[k * 2] = this.scr[0]!;
         xy[k * 2 + 1] = this.scr[1]!;
@@ -307,7 +322,8 @@ export class GuideStrand {
     runs.forEach((r, fi) => {
       const base = fi * (rows + 1);
       for (let i = r.from; i < r.to - 1; i++) {
-        const a0 = A(i), a1 = A(i + 1);
+        const a0 = A(i),
+          a1 = A(i + 1);
         const c0 = C(i) - (this.tipPenalty[i] ?? 0);
         const c1 = C(i + 1) - (this.tipPenalty[i + 1] ?? 0);
         const lo = Math.max(0, Math.ceil((Math.min(a0, a1) / along) * rows));

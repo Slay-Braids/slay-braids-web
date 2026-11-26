@@ -1,23 +1,23 @@
 {
   "initialJS": {
     "files": 5,
-    "raw": 450571,
-    "gzip": 134246,
-    "brotli": 111362
+    "raw": 452592,
+    "gzip": 134921,
+    "brotli": 111951
   },
   "lazyJS": {
-    "files": 23,
-    "raw": 1073776,
-    "gzip": 312850
+    "files": 27,
+    "raw": 1124556,
+    "gzip": 333121
   },
   "legacyBrowsersOnly": [
     "/_next/static/chunks/polyfills-42372ed130431b0a.js"
   ],
   "css": [
     {
-      "file": "/_next/static/css/24a0a8a69194ad08.css",
-      "raw": 18169,
-      "gzip": 4824
+      "file": "/_next/static/css/340bbd913920880f.css",
+      "raw": 24391,
+      "gzip": 6505
     }
   ],
   "labelledLazy": [

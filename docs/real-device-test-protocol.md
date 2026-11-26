@@ -36,3 +36,31 @@ cascade runs on real phones and laptops. Please run these checks on real devices
 | LCP (HUD)                     | ≤ 1.5 s on Wi-Fi    | ≤ 2.0 s on 4G                                                   |
 | Handoff                       | seamless            | seamless or slight softening                                    |
 | Downgrades                    | none on devices 4–5 | device 3 may drop to the still — that is the intended behaviour |
+
+---
+
+## M2 addendum: Chapters 1–3 preview (≈8 minutes per device)
+
+Use the same devices. Open the M2 preview link.
+
+1. **`#perf`**: wait 10 s at the top. In the box, note the **handoff Δ** line (raw / perceptual).
+   Then scroll slowly from the top through Chapter 3 until the ivory end card fills the screen,
+   and back. Tap **Copy results**. The results now include frame times per chapter, the
+   **Chapter 3 transition** alone (P50/P95/P99), long tasks and CLS.
+2. Look at the Chapter 3 page while it rests against the hair: _does the page edge sit along the
+   hair and stay with it when the hair moves (touch / move the pointer over the strands)?_
+   Note: _attached / slight lag / visibly detached_.
+3. **`#lab-transition`**: tap **Run accuracy test (30 s)** and keep the screen still (the test
+   scrolls and moves a virtual pointer itself). Tap **Copy results**. This measures the page edge
+   against this device's own GPU; pass = P99 ≤ 2 px and max ≤ 3 px, for points and edge.
+4. Phones only (devices 1–3): open **`#perf-still-matched`** and note the handoff Δ again (I6,
+   density-matched still, experimental). We adopt it only if it lowers Δ on real phones.
+5. With _Reduce motion_ on: Chapters 2 and 3 should appear as still spreads (braids close-up, then
+   the hair with the ivory page), all text readable, nothing moving.
+
+| Measure (Chapters 1–3)           | Desktop / laptop | Phones                         |
+| -------------------------------- | ---------------- | ------------------------------ |
+| Chapter 3 transition frame P95   | ≤ 25 ms          | ≤ 34 ms                        |
+| Page edge accuracy (lab)         | P99 ≤ 2 px, max ≤ 3 px | P99 ≤ 2 px, max ≤ 3 px   |
+| Long tasks while scrolling       | none > 100 ms    | none > 200 ms                  |
+| CLS                              | ≤ 0.05           | ≤ 0.05                         |

@@ -116,10 +116,11 @@ export class ChapterDriver {
     const p = chapterProgress(o, vh);
     const tick = p.ch3 > 0 ? 2 : p.ch2 > 0 ? 1 : 0;
     if (tick !== this.lastTick) {
-      this.ticks.forEach((t, i) => (i === tick ? t.setAttribute("aria-current", "true") : t.removeAttribute("aria-current")));
+      this.ticks.forEach((t, i) =>
+        i === tick ? t.setAttribute("aria-current", "true") : t.removeAttribute("aria-current"),
+      );
       this.lastTick = tick;
     }
     return s3;
   }
-
 }

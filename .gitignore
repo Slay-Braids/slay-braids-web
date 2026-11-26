@@ -9,4 +9,4 @@ playwright-report/
 .env*
 .DS_Store
 assets/anchors/*.png
-public/chapters/.m2-*-master.png
+assets/chapters/*.png

@@ -19,8 +19,15 @@ export function Header() {
   return (
     <>
       <header data-site-header className="site-header">
-        <a href="#top" className="logo-slot" data-ground="ink" aria-label="SLAY BRAIDS, home (logo file pending)">
-          Logo pending
+        {/* Placeholder slot: plain text, not a recreation of the logo (the file is pending). */}
+        <a
+          href="#top"
+          className="logo-slot"
+          data-ground="ink"
+          aria-label="SLAY BRAIDS, home"
+          title="Logo file pending"
+        >
+          SLAY BRAIDS
         </a>
         <div className="header-actions" data-ground="ink">
           <button
@@ -38,7 +45,13 @@ export function Header() {
           </a>
         </div>
       </header>
-      <dialog id="site-menu" ref={dialog} className="site-menu" aria-label="Menu" onClose={() => button.current?.focus()}>
+      <dialog
+        id="site-menu"
+        ref={dialog}
+        className="site-menu"
+        aria-label="Menu"
+        onClose={() => button.current?.focus()}
+      >
         <div className="site-menu-inner">
           <button type="button" className="menu-close" onClick={close}>
             Close
@@ -47,22 +60,33 @@ export function Header() {
             <ol className="menu-list">
               <li>
                 <a href="#top" onClick={close}>
-                  <span className="menu-num" aria-hidden="true">01</span> Arrival
+                  <span className="menu-num" aria-hidden="true">
+                    01
+                  </span>{" "}
+                  Arrival
                 </a>
               </li>
               <li>
                 <a href="#ch2" onClick={close}>
-                  <span className="menu-num" aria-hidden="true">02</span> The Craft
+                  <span className="menu-num" aria-hidden="true">
+                    02
+                  </span>{" "}
+                  The Craft
                 </a>
               </li>
               <li>
                 <a href="#ch3" onClick={close}>
-                  <span className="menu-num" aria-hidden="true">03</span> The Unbraiding
+                  <span className="menu-num" aria-hidden="true">
+                    03
+                  </span>{" "}
+                  The Unbraiding
                 </a>
               </li>
             </ol>
           </nav>
-          <p className="menu-note">Chapter titles are working titles. Chapters 4–7 follow after review.</p>
+          <p className="menu-note">
+            Chapter titles are working titles. Chapters 4–7 follow after review.
+          </p>
           <a href={enquiry.href} className="menu-enquire" onClick={close}>
             {enquiry.ctaLabel}
           </a>

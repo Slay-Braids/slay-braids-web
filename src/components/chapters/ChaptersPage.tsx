@@ -26,7 +26,10 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
       <main id="main" data-scroll-root className="relative z-10">
         {/* Chapter 1 — Arrival */}
         <section id="top" className="ch1 chapter" aria-labelledby="ch1-title">
-          <div aria-hidden="true" className="scrim-bottom pointer-events-none absolute inset-x-0 bottom-0 h-[52%] md:hidden" />
+          <div
+            aria-hidden="true"
+            className="scrim-bottom pointer-events-none absolute inset-x-0 bottom-0 h-[52%] md:hidden"
+          />
           <div className="ch1-content" data-hero>
             <p className="label hero-rise numeral-label" aria-hidden="true">
               01
@@ -63,7 +66,12 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
               </h2>
               <div className="ch2-lines">
                 {manifesto.map((m, i) => (
-                  <p key={i} data-ch2-line={i} data-state="hidden" className="ch2-line font-display">
+                  <p
+                    key={i}
+                    data-ch2-line={i}
+                    data-state="hidden"
+                    className="ch2-line font-display"
+                  >
                     {m.text}
                   </p>
                 ))}
@@ -102,7 +110,13 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
         </section>
 
         {/* End of this preview */}
-        <section id="next" className="end-card" data-opaque data-ground-section="ivory" aria-labelledby="next-title">
+        <section
+          id="next"
+          className="end-card"
+          data-opaque
+          data-ground-section="ivory"
+          aria-labelledby="next-title"
+        >
           <p className="label" data-reveal>
             Next review
           </p>
@@ -117,7 +131,12 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
           </a>
         </section>
 
-        <section id="enquire" className="enquire-section" data-ground-section="ink" aria-labelledby="enquire-title">
+        <section
+          id="enquire"
+          className="enquire-section"
+          data-ground-section="ink"
+          aria-labelledby="enquire-title"
+        >
           <div className="mx-auto max-w-xl">
             <h2 id="enquire-title" className="font-display text-4xl">
               Make an enquiry
