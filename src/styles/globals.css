@@ -222,3 +222,168 @@ body {
     0 1px 2px rgb(10 9 8 / 0.8),
     0 0 22px rgb(10 9 8 / 0.85);
 }
+
+/* =====================================================================================
+   M2 — Chapters 1–3
+   ===================================================================================== */
+:root {
+  --vh: 1vh; /* set from innerHeight by the controller so CSS and the camera timeline agree */
+  --espresso: #1c1612;
+  --ivory-deep: #e6dccc;
+  --past-line: 0.62; /* dimmed Chapter 2 lines; tuned by the contrast check */
+  --margin: max(5vw, 24px);
+}
+@media (max-width: 767px) {
+  :root { --margin: 20px; }
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.placeholder-tag {
+  display: inline-block; margin-left: 0.6em; padding: 2px 6px; vertical-align: middle;
+  border: 1px solid currentColor; border-radius: 2px; opacity: 0.55;
+  font: 500 10px/1.4 var(--font-sans); letter-spacing: 0.14em; text-transform: uppercase;
+}
+.chapter { position: relative; }
+.ch1 { height: calc(var(--vh) * 100); display: flex; flex-direction: column; justify-content: flex-end; padding: 0 var(--margin) calc(var(--vh) * 14); }
+/* Sections are the scroll track (their heights ARE the chapter extents of the camera timeline);
+   each chapter's frame is fixed to the viewport and driven by the same scroll clock as the camera.
+   Chapter 3 has a one-screen tail so the next section only rises after the page has gone. */
+.ch2 { height: calc(var(--vh) * 150); }
+.ch3 { height: calc(var(--vh) * 350); }
+@media (orientation: portrait) {
+  .ch1 { padding-bottom: calc(var(--vh) * 11); }
+  .ch2 { height: calc(var(--vh) * 130); }
+  .ch3 { height: calc(var(--vh) * 320); }
+}
+.chapter-frame { position: fixed; inset: 0; height: calc(var(--vh) * 100); overflow: hidden; pointer-events: none; visibility: hidden; }
+.chapter-frame[data-visible="true"] { visibility: visible; }
+.chapter-frame a, .chapter-frame button { pointer-events: auto; }
+
+/* Chapter 1 */
+.ch1-content { position: relative; will-change: opacity, transform; }
+.numeral-label { margin-bottom: 1rem; color: var(--color-champagne); }
+.hero-title { font-size: clamp(3.25rem, 1rem + 7.4vw, 8rem); line-height: 0.93; font-weight: 500; max-width: 11ch; text-wrap: balance; }
+@media (orientation: portrait) { .hero-title { font-size: clamp(2.9rem, 1.2rem + 7vw, 4.5rem); } }
+.hero-ctas { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.btn-primary, .btn-secondary, .btn-disabled {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 1.4rem; border-radius: 999px;
+  white-space: nowrap; font-weight: 500; transition: background-color 240ms, color 240ms, border-color 240ms, opacity 240ms;
+}
+.btn-primary { background: var(--color-champagne); color: var(--color-ink); }
+.btn-primary:hover { opacity: 0.9; }
+.btn-secondary { border: 1px solid rgb(242 236 226 / 0.4); color: var(--color-ivory); }
+.btn-secondary:hover { border-color: var(--color-ivory); }
+.btn-disabled { background: rgb(242 236 226 / 0.18); color: rgb(242 236 226 / 0.6); cursor: not-allowed; }
+.scroll-cue { position: absolute; left: 50%; bottom: calc(var(--vh) * 4); transform: translateX(-50%); display: grid; justify-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-mist); transition: opacity 400ms; }
+.scroll-cue i { display: block; width: 1px; height: 40px; background: var(--color-champagne); transform-origin: top; animation: cue-draw 1400ms 1200ms var(--ease-cinematic) both; }
+.scroll-cue[data-hidden="true"] { opacity: 0; }
+@keyframes cue-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+/* Chapter numerals (decorative) */
+.numeral { font-family: var(--font-display); font-size: clamp(88px, 11vw, 160px); line-height: 0.9; color: transparent; -webkit-text-stroke: 0.75px var(--color-champagne); margin: 0 0 1.5rem; }
+
+/* Chapter 2 — controlled text region */
+.ch2-field { position: absolute; inset: 0; pointer-events: none; opacity: var(--ch2-field, 0);
+  background: linear-gradient(to right, rgb(10 9 8 / var(--field, 0.82)) 0%, rgb(10 9 8 / var(--field, 0.82)) 34%, rgb(10 9 8 / 0) 50%); }
+.ch2-copy { position: absolute; left: var(--margin); top: 50%; transform: translateY(-50%); width: min(40vw, 560px); opacity: var(--ch2-copy, 0); }
+.ch2-lines { display: grid; gap: 1.1rem; }
+.ch2-line { font-size: clamp(2rem, 1rem + 2.4vw, 3.5rem); line-height: 1.04; color: var(--color-ivory); margin: 0;
+  transition: opacity 900ms var(--ease-cinematic), transform 900ms var(--ease-cinematic), clip-path 900ms var(--ease-cinematic); }
+.ch2-line[data-state="hidden"] { opacity: 0; transform: translateY(20px); clip-path: inset(0 0 100% 0); }
+.ch2-line[data-state="active"] { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+.ch2-line[data-state="past"] { opacity: var(--past-line); transform: none; clip-path: inset(0 0 0 0); }
+@media (orientation: portrait) {
+  .ch2-field { background: linear-gradient(to top, rgb(10 9 8 / var(--field, 0.9)) 0%, rgb(10 9 8 / var(--field, 0.9)) 38%, rgb(10 9 8 / 0) 58%); }
+  .ch2-copy { top: auto; bottom: calc(var(--vh) * 10); transform: none; width: auto; right: var(--margin); }
+  .ch2-copy .numeral { margin-bottom: 0.75rem; }
+  .ch2-lines { grid-template-areas: "line"; }
+  .ch2-lines > .ch2-line { grid-area: line; font-size: clamp(1.75rem, 1rem + 3.4vw, 2.25rem); }
+  .ch2-line[data-state="past"] { opacity: 0; }
+}
+
+/* Chapter 3 — content on the ivory page */
+.ch3-content { position: absolute; inset: 0; color: var(--espresso); will-change: transform; }
+.numeral-ivory { position: absolute; left: 58%; top: calc(var(--vh) * 12); -webkit-text-stroke-color: var(--color-champagne-deep); }
+.ch3-portrait { position: absolute; left: 71%; top: calc(var(--vh) * 14); width: min(19vw, 320px); margin: 0; opacity: 0; will-change: opacity, transform; }
+.portrait-mount { aspect-ratio: 4 / 5; background: var(--ivory-deep); display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgb(28 22 18 / 0.08); }
+.portrait-placeholder { margin: 0; padding: 1rem; text-align: center; font: 500 11px/1.6 var(--font-sans); letter-spacing: 0.16em; text-transform: uppercase; color: rgb(28 22 18 / 0.55); }
+.portrait-caption { margin-top: 0.6rem; font: 500 11px/1.4 var(--font-sans); letter-spacing: 0.2em; text-transform: uppercase; color: rgb(28 22 18 / 0.6); }
+.ch3-line { position: absolute; left: 58%; right: calc(var(--margin) + 24px); bottom: calc(var(--vh) * 12); margin: 0; font-style: italic; font-size: clamp(1.6rem, 0.9rem + 1.9vw, 3rem); line-height: 1.06; color: var(--espresso);
+  transition: opacity 900ms var(--ease-cinematic), transform 900ms var(--ease-cinematic); }
+.ch3-line[data-state="hidden"] { opacity: 0; transform: translateY(16px); }
+.ch3-line[data-state="active"] { opacity: 1; transform: none; }
+@media (orientation: portrait) {
+  .numeral-ivory { left: var(--margin); top: calc(var(--vh) * 50); font-size: 64px; margin: 0; }
+  .ch3-portrait { left: 50%; top: calc(var(--vh) * 53); width: 42vw; translate: -50% 0; }
+  .ch3-line { left: var(--margin); bottom: calc(var(--vh) * 6); font-size: clamp(1.4rem, 1rem + 2.6vw, 1.9rem); }
+}
+
+/* Paper layer and chapter stills (fixed, behind the editorial content, above the canvas) */
+.paper-layer { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; visibility: hidden; }
+/* Static spreads: stills and the page live inside their chapter frame (scroll together). */
+.spread-still, .spread-still img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.paper-static { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+:root[data-static="true"] .ch2-field, :root[data-static="true"] .ch2-copy, :root[data-static="true"] .ch3-content { z-index: 1; }
+
+/* Header */
+.site-header { position: fixed; inset: 0 0 auto 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 18px var(--margin); color: var(--color-ivory); transition: transform 500ms var(--ease-cinematic), color 300ms; }
+.site-header[data-hidden="true"] { transform: translateY(-110%); }
+.site-header [data-ground="ivory"] { color: var(--espresso); }
+.logo-slot, .header-actions { transition: color 300ms; }
+.logo-slot { display: flex; align-items: center; height: 40px; padding: 0 12px; border: 1px dashed currentColor; border-radius: 2px; opacity: 0.7; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; }
+.header-actions { display: flex; align-items: center; gap: 1.25rem; }
+.menu-button, .header-enquire { min-height: 44px; display: inline-flex; align-items: center; background: none; border: 0; color: inherit; font: 500 14px/1 var(--font-sans); letter-spacing: 0.04em; cursor: pointer; }
+.header-enquire { padding: 0 1.1rem; border: 1px solid color-mix(in srgb, currentColor 55%, transparent); border-radius: 999px; }
+@media (max-width: 767px) { .header-enquire { display: none; } }
+.site-menu { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgb(18 16 14 / 0.97); color: var(--color-ivory); }
+.site-menu::backdrop { background: rgb(10 9 8 / 0.6); }
+.site-menu-inner { min-height: 100%; padding: 22px var(--margin) 48px; display: grid; align-content: start; gap: 2rem; }
+.menu-close { justify-self: end; min-height: 44px; background: none; border: 0; color: inherit; font: 500 14px var(--font-sans); cursor: pointer; }
+.menu-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.menu-list a { font-family: var(--font-display); font-size: clamp(2.2rem, 1.2rem + 4vw, 4.5rem); line-height: 1.05; }
+.menu-num { font: 500 12px var(--font-sans); letter-spacing: 0.2em; color: var(--color-champagne); vertical-align: super; margin-right: 0.6rem; }
+.menu-note { color: var(--color-mist); font-size: 14px; }
+.menu-enquire { justify-self: start; display: inline-flex; min-height: 48px; align-items: center; padding: 0 1.4rem; border-radius: 999px; background: var(--color-champagne); color: var(--color-ink); font-weight: 500; }
+
+/* Chapter index (desktop) */
+.chapter-index { position: fixed; right: calc(var(--margin) * 0.5); top: 50%; z-index: 25; transform: translateY(-50%); display: none; flex-direction: column; gap: 18px; padding: 8px 0; color: var(--color-ivory); }
+@media (min-width: 768px) { .chapter-index { display: flex; } }
+.chapter-index::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: color-mix(in srgb, currentColor 30%, transparent); }
+.chapter-index a { position: relative; display: block; width: 24px; height: 24px; }
+.chapter-index a::after { content: ""; position: absolute; left: 50%; top: 50%; width: 9px; height: 1px; translate: -50% -50%; background: currentColor; opacity: 0.6; transition: width 300ms, background-color 300ms, opacity 300ms; }
+.chapter-index a[aria-current="true"]::after { width: 17px; background: var(--color-champagne); opacity: 1; }
+.chapter-index[data-ground="ivory"] { color: var(--espresso); }
+.chapter-index[data-ground="ivory"] a[aria-current="true"]::after { background: var(--color-champagne-deep); }
+
+/* End card, enquiry, footer, banner */
+/* The end card is printed on the same ivory as the Chapter 3 page, which covers the screen when
+   the chapter ends, so the card's top edge is invisible: its type simply rises into view. */
+.end-card { position: relative; min-height: calc(var(--vh) * 100); display: grid; align-content: center; justify-items: start; gap: 1rem; padding: 0 var(--margin); background: #f2ece2; color: var(--espresso); }
+.end-card .label { color: rgb(28 22 18 / 0.72); }
+.btn-on-ivory { border-color: rgb(28 22 18 / 0.45); color: var(--espresso); }
+.btn-on-ivory:hover { border-color: var(--espresso); }
+.end-title { font-size: clamp(2.4rem, 1rem + 4vw, 4.5rem); margin: 0; }
+.end-note { color: rgb(28 22 18 / 0.72); margin: 0 0 1rem; }
+.enquire-section { background: var(--color-ink); padding: 6rem var(--margin); }
+.field { display: grid; gap: 0.5rem; font-size: 14px; }
+.field input, .field select, .field textarea { min-height: 48px; border-radius: 2px; border: 1px solid rgb(242 236 226 / 0.25); background: var(--color-ink-2); padding: 0 1rem; color: var(--color-ivory); font-size: 16px; }
+.field textarea { padding: 0.75rem 1rem; }
+.site-footer { position: relative; z-index: 10; background: var(--color-ink); padding: 2.5rem var(--margin) 5rem; font-size: 14px; color: var(--color-mist); }
+.preview-banner { position: fixed; inset: auto 0 0 0; z-index: 30; margin: 0; padding: 6px 16px; background: rgb(10 9 8 / 0.8); text-align: center; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-mist); }
+
+/* Static / reduced-motion spreads: no pins, everything visible, printed-page layout */
+:root[data-static="true"] .ch2, :root[data-static="true"] .ch3 { height: auto; }
+:root[data-static="true"] .chapter-frame { position: relative; visibility: visible; pointer-events: auto; }
+:root[data-static="true"] .ch2-field, :root[data-static="true"] .ch2-copy { opacity: 1; }
+:root[data-static="true"] .ch2-line { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none; }
+@media (orientation: portrait) {
+  :root[data-static="true"] .ch2-lines { grid-template-areas: none; }
+  :root[data-static="true"] .ch2-lines > .ch2-line { grid-area: auto; }
+}
+:root[data-static="true"] .ch3-content { visibility: visible; transform: none !important; }
+:root[data-static="true"] .ch3-portrait { opacity: 1 !important; transform: none !important; }
+:root[data-static="true"] .ch3-line { opacity: 1; transform: none; transition: none; }
+:root[data-static="true"] .ch1-content { opacity: 1 !important; transform: none !important; }
+:root[data-static="true"] .paper-layer { display: none; }

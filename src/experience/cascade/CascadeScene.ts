@@ -18,7 +18,7 @@ import {
 } from "three";
 import type { CascadeGeometryData, Orientation } from "./geometry";
 import { cascadeFragment, cascadeVertex } from "./shaders";
-import { FRAMING, cameraAt, coverFov } from "../framing";
+import { FRAMING, cameraAt, coverFov, type CameraKey } from "../framing";
 
 export const SCENE_BG: [number, number, number] = [10 / 255, 9 / 255, 8 / 255]; // = --color-ink #0a0908
 
@@ -41,6 +41,25 @@ export interface SceneStats {
   width: number;
   height: number;
   gpu: string;
+}
+
+/** Everything the shader received for the frame just rendered (for the Chapter 3 guide strand). */
+export interface FrameState {
+  time: number;
+  wind: number;
+  pointer: [number, number];
+  pointerForce: number;
+  /** Damped scroll position (vh in timeline mode, 0..1 progress otherwise). */
+  scroll: number;
+  /** Column-major 4x4 matrices of the camera used for this frame. */
+  projection: Float32Array;
+  view: Float32Array;
+  camRight: [number, number, number];
+  camUp: [number, number, number];
+  aspect: number;
+  /** CSS size of the canvas. */
+  cssWidth: number;
+  cssHeight: number;
 }
 
 const damp = (current: number, target: number, lambda: number, dt: number) =>
@@ -69,6 +88,11 @@ export class CascadeScene {
   private pointerForce = 0;
   private lastPointerMove = -1e9;
   private onFrame?: (dtMs: number) => void;
+  // M2 (isolated, outside the locked look): timeline camera and deterministic review controls.
+  private timeline?: (vh: number) => CameraKey;
+  private timeFrozen = false;
+  private cssWidth = 1;
+  private cssHeight = 1;
 
   constructor(opts: CascadeSceneOptions) {
     ColorManagement.enabled = false; // shader writes display sRGB; clear colour must match CSS exactly
@@ -140,6 +164,8 @@ export class CascadeScene {
   /** Match the anchor still's `object-fit: cover` framing exactly at any viewport aspect. */
   setSize(width: number, height: number, dpr = window.devicePixelRatio || 1) {
     const ratio = Math.min(dpr, this.maxDpr);
+    this.cssWidth = width;
+    this.cssHeight = height;
     this.renderer.setPixelRatio(ratio);
     this.renderer.setSize(width, height, false);
     const preset = FRAMING[this.orientation];
@@ -153,20 +179,108 @@ export class CascadeScene {
   }
 
   private applyCamera(progress: number) {
-    const key = cameraAt(FRAMING[this.orientation].keys, progress);
+    const key = this.timeline
+      ? this.timeline(progress)
+      : cameraAt(FRAMING[this.orientation].keys, progress);
     this.camera.position.set(...key.position);
+    if (key.up) this.camera.up.set(...key.up);
+    else this.camera.up.set(0, 1, 0);
     this.camera.lookAt(new Vector3(...key.target));
     this.camera.updateMatrixWorld();
     const e = this.camera.matrixWorld.elements;
     (this.material.uniforms.uCamRight!.value as Vector3).set(e[0]!, e[1]!, e[2]!);
     (this.material.uniforms.uCamUp!.value as Vector3).set(e[4]!, e[5]!, e[6]!);
-    // FUTURA chapter (between keys 2 and 3) cools the light towards pearl.
-    const pearl = smooth(0.42, 0.55, progress) * (1 - smooth(0.82, 0.95, progress));
+    // FUTURA chapter (between keys 2 and 3) cools the light towards pearl. In the M2 chapter
+    // timeline the pearl shift belongs to Chapter 4, so Chapters 1–3 keep the default light.
+    const pearl = this.timeline
+      ? 0
+      : smooth(0.42, 0.55, progress) * (1 - smooth(0.82, 0.95, progress));
     this.material.uniforms.uPearl!.value = pearl;
   }
 
   setScrollProgress(p: number) {
     this.scrollTarget = Math.min(1, Math.max(0, p));
+  }
+
+  /** M2: drive the camera from the chapter timeline (scroll position in vh). */
+  setCameraTimeline(fn: (vh: number) => CameraKey) {
+    this.timeline = fn;
+    this.scroll = 0;
+    this.scrollTarget = 0;
+  }
+
+  /** M2: scroll position in vh (timeline mode). `immediate` skips damping (tests, the lab). */
+  setScrollVh(vh: number, immediate = false) {
+    this.scrollTarget = Math.max(0, vh);
+    if (immediate) this.scroll = this.scrollTarget;
+  }
+
+  /** Review/test aid: full wind, time held at `t` seconds (deterministic frames). */
+  freezeWindAt(t: number) {
+    this.timeFrozen = true;
+    this.wind = 1;
+    this.windTarget = 1;
+    this.time = t;
+  }
+
+  /** The exact inputs of the frame just rendered. */
+  frameState(): FrameState {
+    const u = this.material.uniforms;
+    const r = u.uCamRight!.value as Vector3;
+    const up = u.uCamUp!.value as Vector3;
+    return {
+      time: u.uTime!.value as number,
+      wind: u.uWind!.value as number,
+      pointer: [this.pointer.x, this.pointer.y],
+      pointerForce: u.uPointerForce!.value as number,
+      scroll: this.scroll,
+      projection: Float32Array.from(this.camera.projectionMatrix.elements),
+      view: Float32Array.from(this.camera.matrixWorldInverse.elements),
+      camRight: [r.x, r.y, r.z],
+      camUp: [up.x, up.y, up.z],
+      aspect: this.camera.aspect,
+      cssWidth: this.cssWidth,
+      cssHeight: this.cssHeight,
+    };
+  }
+
+  /** FrameState for another scroll position without rendering (camera only, wind as now). */
+  frameStateAt(vh: number): FrameState {
+    const saved = this.scroll;
+    this.applyCamera(vh);
+    const fs = this.frameState();
+    fs.scroll = vh;
+    this.applyCamera(saved);
+    return fs;
+  }
+
+  /** Current damped scroll value (vh in timeline mode). */
+  get scrollValue() {
+    return this.scroll;
+  }
+
+  get isRunning() {
+    return this.running;
+  }
+
+  /** Geometry the scene renders (read-only use by the guide strand). */
+  get geometry(): CascadeGeometryData {
+    return this.geometryData;
+  }
+
+  /** The live material's uniform values (read-only use by the lab probe). */
+  get liveUniforms() {
+    return this.material.uniforms;
+  }
+
+  /** Read the frame just rendered (call in the same task as the render). */
+  readPixels(): { data: Uint8Array; width: number; height: number } {
+    const gl = this.renderer.getContext();
+    const width = gl.drawingBufferWidth;
+    const height = gl.drawingBufferHeight;
+    const data = new Uint8Array(width * height * 4);
+    gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, data);
+    return { data, width, height };
   }
 
   /** Pointer in NDC (-1..1). */
@@ -217,8 +331,10 @@ export class CascadeScene {
   }
 
   private step(dt: number, now: number) {
-    this.wind = damp(this.wind, this.windTarget, 1.4, dt);
-    this.time += dt * this.wind;
+    if (!this.timeFrozen) {
+      this.wind = damp(this.wind, this.windTarget, 1.4, dt);
+      this.time += dt * this.wind;
+    }
     // Pointer force rises while the pointer moves and eases back so strands spring home.
     this.pointerTargetForce = now - this.lastPointerMove < 140 ? 1 : 0;
     this.pointerForce = damp(

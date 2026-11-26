@@ -1,5 +1,5 @@
-import { HomePrototype } from "@/components/HomePrototype";
+import { ChaptersPage } from "@/components/chapters/ChaptersPage";
 
 export default function Page() {
-  return <HomePrototype />;
+  return <ChaptersPage />;
 }

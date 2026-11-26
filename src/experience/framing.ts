@@ -7,6 +7,8 @@ import type { Orientation } from "./cascade/geometry";
 export interface CameraKey {
   position: [number, number, number];
   target: [number, number, number];
+  /** Optional camera up vector (roll). Absent = world up (0, 1, 0), as in every M1 key. */
+  up?: [number, number, number];
 }
 
 export interface FramingPreset {

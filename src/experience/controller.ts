@@ -23,6 +23,8 @@ import {
 } from "./tiers";
 import { FRAMING, orientationFor } from "./framing";
 import type { Orientation } from "./cascade/geometry";
+import { parseChapterFlags } from "./chapters/flags";
+import { syncVh, vhPx } from "./chapters/viewport";
 
 export interface PerfMarks {
   [key: string]: number | string | boolean | undefined;
@@ -55,6 +57,9 @@ export async function initExperience(root: HTMLElement): Promise<void> {
   if (!stage || !canvas || !img) return;
 
   const flags = parseFlags(location.search, location.hash);
+  const chapterFlags = parseChapterFlags(location.search, location.hash);
+  syncVh(true);
+  addEventListener("resize", () => syncVh());
   const signals = probeDevice();
   const reduced = flags.reduced || signals.reducedMotion;
   document.documentElement.dataset.reducedMotion = String(reduced);
@@ -86,6 +91,8 @@ export async function initExperience(root: HTMLElement): Promise<void> {
   if (tier === "C") {
     stage.dataset.mode = "static";
     state.marks.static = true;
+    document.documentElement.dataset.static = "true";
+    void import("./chapters/staticSpreads").then((m) => m.initStaticSpreads(root, state.orientation));
     return;
   }
 
@@ -95,9 +102,10 @@ export async function initExperience(root: HTMLElement): Promise<void> {
 
   const settings = TIER_SETTINGS[tier];
   let orientation = state.orientation;
-  const [{ CascadeScene }, { buildCascadeAsync }] = await Promise.all([
+  const [{ CascadeScene }, { buildCascadeAsync }, { LiveChapters }] = await Promise.all([
     import("./cascade/CascadeScene"),
     import("./cascade/build"),
+    import("./chapters/live"),
   ]);
   state.marks.chunkLoaded = now();
 
@@ -112,6 +120,9 @@ export async function initExperience(root: HTMLElement): Promise<void> {
     antialias: settings.antialias,
   });
   scene.setSize(innerWidth, innerHeight);
+  if (chapterFlags.vh != null) scrollTo(0, chapterFlags.vh * vhPx());
+  const chapters = new LiveChapters(root, scene, orientation, chapterFlags);
+  (window as unknown as { __chapters?: unknown }).__chapters = chapters;
   await scene.prepare();
   state.marks.shadersReady = now();
   scene.renderStill(); // frozen anchor pose, wind = 0
@@ -125,7 +136,14 @@ export async function initExperience(root: HTMLElement): Promise<void> {
 
   // Motion, pointer, scroll — only after the invisible handoff.
   if (!flags.freeze) scene.startMotion();
-  const onFrame = monitor(state, () => downgrade(), flags.noDowngrade);
+  const monitorFrame = monitor(state, () => downgrade(), flags.noDowngrade);
+  const onFrame = (dt: number) => {
+    monitorFrame(dt);
+    chapters.frame();
+  };
+  chapters.resume = () => scene.start(onFrame);
+  if (chapterFlags.lab) void import("./chapters/lab").then((m) => m.mountLab(chapters));
+  chapters.frame();
   scene.start(onFrame);
 
   const onPointer = (e: PointerEvent) => {
@@ -135,8 +153,8 @@ export async function initExperience(root: HTMLElement): Promise<void> {
   addEventListener("pointermove", onPointer, { passive: true });
 
   const scroll = await import("./scroll");
-  const unbindScroll = await scroll.bindScrollCamera(root, (p) => scene.setScrollProgress(p), {
-    smooth: tier === "A" && !signals.coarsePointer,
+  const unbindScroll = await scroll.bindSmoothScroll({
+    smooth: tier === "A" && !signals.coarsePointer && !chapterFlags.noDamp,
   });
 
   const onVisibility = () => (document.hidden ? scene.stop() : scene.start(onFrame));
@@ -149,6 +167,7 @@ export async function initExperience(root: HTMLElement): Promise<void> {
       const next = orientationFor(innerWidth, innerHeight);
       if (next === orientation) {
         scene.setSize(innerWidth, innerHeight);
+        chapters.reselect();
         return;
       }
       // Orientation changed: the matching anchor still is already shown by <picture>.
@@ -171,10 +190,11 @@ export async function initExperience(root: HTMLElement): Promise<void> {
         antialias: settings.antialias,
       });
       scene.setSize(innerWidth, innerHeight);
+      chapters.attach(scene, orientation);
       scene.renderStill();
       await nextFrame();
       stage.dataset.live = "true";
-      scene.startMotion();
+      if (!flags.freeze) scene.startMotion();
       scene.start(onFrame);
     }, 200);
   });
@@ -200,11 +220,16 @@ export async function initExperience(root: HTMLElement): Promise<void> {
         antialias: true,
       });
       scene.setSize(innerWidth, innerHeight);
+      chapters.attach(scene, orientation);
       scene.renderStill();
       await nextFrame();
       stage!.dataset.live = "true";
-      scene.startMotion();
-      scene.start(monitor(state, () => downgrade(), flags.noDowngrade));
+      if (!flags.freeze) scene.startMotion();
+      const m = monitor(state, () => downgrade(), flags.noDowngrade);
+      scene.start((dt) => {
+        m(dt);
+        chapters.frame();
+      });
       state.stats = scene.stats() as unknown as Record<string, unknown>;
     } else {
       state.downgrades.push(`B→still at ${now()} ms`);
@@ -214,9 +239,12 @@ export async function initExperience(root: HTMLElement): Promise<void> {
       await wait(600);
       scene.dispose();
       unbindScroll();
+      chapters.dispose();
       removeEventListener("pointermove", onPointer);
       document.removeEventListener("visibilitychange", onVisibility);
       stage!.dataset.mode = "static";
+      document.documentElement.dataset.static = "true";
+      void import("./chapters/staticSpreads").then((m) => m.initStaticSpreads(root, orientation));
     }
   }
 }

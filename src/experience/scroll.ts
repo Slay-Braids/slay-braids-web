@@ -42,3 +42,20 @@ export async function bindScrollCamera(
     lenis?.destroy();
   };
 }
+
+/**
+ * M2: smooth wheel scrolling only (desktop). The chapters read window.scrollY directly, so the
+ * camera timeline, the CSS chapter heights and the page edge all use the same scroll value.
+ */
+export async function bindSmoothScroll(opts: { smooth: boolean }): Promise<() => void> {
+  if (!opts.smooth) return () => undefined;
+  const { default: Lenis } = await import("lenis");
+  const instance = new Lenis({ autoRaf: false, lerp: 0.12 });
+  const tick = (time: number) => instance.raf(time * 1000);
+  gsap.ticker.add(tick);
+  gsap.ticker.lagSmoothing(0);
+  return () => {
+    gsap.ticker.remove(tick);
+    instance.destroy();
+  };
+}

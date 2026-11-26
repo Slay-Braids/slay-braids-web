@@ -3,8 +3,8 @@ import "@/styles/globals.css";
 import { anchorSrcSet } from "@/components/AnchorStage";
 
 export const metadata: Metadata = {
-  title: "SLAY BRAIDS — M1 prototype",
-  description: "Prototype of the SLAY BRAIDS website. Not for publication.",
+  title: "SLAY BRAIDS — Premium look. Affordable price.",
+  description: "Preview of the SLAY BRAIDS website (Chapters 1–3). Not for publication.",
   robots: { index: false, follow: false },
 };
 
