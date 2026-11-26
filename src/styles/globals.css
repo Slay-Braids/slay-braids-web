@@ -279,7 +279,7 @@ body {
   --vh: 1vh; /* set from innerHeight by the controller so CSS and the camera timeline agree */
   --espresso: #1c1612;
   --ivory-deep: #e6dccc;
-  --past-line: 0.62; /* dimmed Chapter 2 lines; tuned by the contrast check */
+  --past-line: 0.72; /* dimmed Chapter 2 lines: 0.62 measured 6.71:1 (below 7:1); 0.72 clears 7:1 with margin */
   --margin: max(5vw, 24px);
 }
 @media (max-width: 767px) {
