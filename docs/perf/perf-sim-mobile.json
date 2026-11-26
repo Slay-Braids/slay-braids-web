@@ -3,17 +3,17 @@
   "note": "The scene clamps a frame's dt at 100 ms, so frame times here saturate at 100 ms and say nothing about real devices.",
   "mode": "mobile",
   "viewport": "412×915 @2.625x",
-  "date": "2026-11-26T17:21:49.558Z",
+  "date": "2026-11-26T17:49:58.129Z",
   "flags": null,
   "allFrames": {
-    "n": 355,
+    "n": 351,
     "p50": 100,
     "p95": 100,
     "p99": 100,
     "fpsMedian": 10
   },
   "ch1": {
-    "n": 73,
+    "n": 69,
     "p50": 100,
     "p95": 100,
     "p99": 100,
@@ -34,26 +34,26 @@
     "fpsMedian": 10
   },
   "ch3Transition": {
-    "n": 106,
+    "n": 104,
     "p50": 100,
     "p95": 100,
     "p99": 100,
     "fpsMedian": 10
   },
   "edgeComputeMs": {
-    "n": 106,
-    "p50": 2.6,
-    "p95": 5.2,
-    "p99": 7.9,
-    "fpsMedian": 385
+    "n": 104,
+    "p50": 2.8,
+    "p95": 5.8,
+    "p99": 6.9,
+    "fpsMedian": 357
   },
   "longTasks": {
-    "count": 357,
-    "totalMs": 360477,
-    "max": 1910
+    "count": 352,
+    "totalMs": 357862,
+    "max": 2039
   },
-  "lcpMs": 196,
-  "cls": 0.0137,
+  "lcpMs": 176,
+  "cls": 0,
   "handoff": {
     "raw": 3.31,
     "perceptual": 1.13,

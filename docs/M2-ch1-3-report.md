@@ -9,7 +9,7 @@ product claims. All copy, the portrait and the logo are marked placeholders.
 | # | Condition | Result |
 |---|-----------|--------|
 | 1 | anchor_v1 and all lock tests preserved exactly | Foundation lock test unchanged and passing (geometry both orientations, shaders, lighting uniforms, anchor framing). anchor_v1 masters, encodes and manifest unchanged (sha256 verified). No locked file edited. |
-| 2 | Ch3 transition: P99 ≤ 2 px, max ≤ 3 px, and visual review | Passes in every simulated run (see §4). Visual review: frame sheets in `docs/review/m2/`, for your judgement. |
+| 2 | Ch3 transition: P99 ≤ 2 px, max ≤ 3 px, and visual review | Passes in every simulated run (§4); real-GPU accuracy not measured. Visual review: yours, using the preview and the frame sheets in `docs/review/m2/`. |
 | 3 | Strictly Chapters 1–3 + lab | Yes. The end card says "Chapter 4 · FUTURA — built after this preview is approved". |
 | 4 | Existing tests intact, failures reported | M1 e2e suite unmodified: 15 passed, 1 skipped (pointer test on mobile, skipped by design since M1). Unit 36/36. New suite: 18/18. |
 | 5 | Preview, lab, frame sheets, performance report before further approval | See the review page. |
@@ -45,16 +45,46 @@ product claims. All copy, the portrait and the logo are marked placeholders.
 6. **Logo slot shows plain text "SLAY BRAIDS"** in a dashed placeholder box (accessible name
    "SLAY BRAIDS, home"). It is not a recreation of the logo; the file is still pending.
 
-## 4. Edge accuracy (CPU guide strand vs the locked vertex shader on the GPU)
+## 4. Results (final build)
 
-See `docs/perf/accuracy-*.json`. The lab compiles the locked shader's own source at runtime
-(declarations + `main()` up to the ribbon expansion) and reads back the displaced centre lines
-from a float render target.
+Review page (published, private): https://claude.ai/artifact/1ezWjMpK1MZt1gUddGyjdy
+Preview (private): https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn (`#lab-transition`, `#perf`, `#reduced`)
+
+**Page-edge accuracy** (`docs/perf/accuracy-*.json`). The lab compiles the locked shader's own
+source at runtime and reads back the displaced centre lines from a float render target. Each run
+lasts 30 s, with live wind and a moving pointer. **Simulated GPU (SwiftShader).**
+
+| Run | Probed frames | Point P99 / max px | Edge P99 / max px | Result |
+|---|---|---|---|---|
+| desktop, every 10th frame | 4 | 0.0083 / 0.017 | 0.005 / 0.005 | pass |
+| desktop, every frame | 13 | 0.0050 / 0.082 | 0.002 / 0.003 | pass |
+| mobile, every 10th frame | 4 | 0.0053 / 0.007 | 0.013 / 0.015 | pass |
+| mobile, every frame | 15 | 0.0035 / 0.153 | 0.017 / 0.029 | pass |
+
+**Chapter 2 contrast** (`docs/perf/ch2-contrast-*.json`): 21 positions × 3 wind phases × 4
+viewports. 225 samples judged; 24 caught mid-fade are recorded but not judged. Worst case 8.76:1
+(dimmed line, 1440×900); active lines 16.04:1 or better. No sample below 7:1. At the original
+0.62 opacity, dimmed lines measured 6.71:1; they were raised to 0.72.
+
+**Tests** (`docs/perf/test-results.json`): unit 36/36 (including the lock test, 6/6). M1 e2e,
+unmodified: 15 passed, 1 skipped (by design since M1). M2 e2e: 18/18. The M1 handoff numbers
+are identical to M1.
+
+**Lighthouse** (lab): LCP 902 ms on mobile (M1: 905), accessibility 100 on all profiles,
+CLS 0.001 mobile and 0 desktop (M1: 0.02–0.05).
+
+**Bundle:** initial JS 131.8 KB gzip (M1: 131.1); lazy JS 325.4 KB (M1: 305.5).
 
 ## 5. Performance
 
-See the review page. Real-device results: **not measured**. No device or computer is connected to
-this session; the protocol is in `docs/real-device-test-protocol.md` (M2 addendum).
+**Real devices: not measured.** No device or computer is connected to this session. Protocol:
+`docs/real-device-test-protocol.md` (M2 addendum).
+
+**Simulated** (`docs/perf/perf-sim-*.json`, SwiftShader). Frame times saturate at the scene's
+100 ms dt clamp, so they say nothing about real hardware. Page-edge compute on the CPU:
+P50 2.4 / P95 5.8 ms desktop, 2.8 / 5.8 ms mobile. CLS in the run: 0.0002 desktop, 0 mobile.
+Handoff Δ (perceptual): 1.10 desktop, 1.13 mobile. With the I6 matched still: 1.17, so I6 is not
+adopted.
 
 ## 6. Open items
 

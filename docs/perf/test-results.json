@@ -1,10 +1,32 @@
 {
-  "build": "final (out/index.html md5 409d00b33783c1e3308a4962e6f0b0f2)",
-  "date": "2026-11-26T17:06Z",
-  "environment": "headless Chromium + SwiftShader; Playwright projects desktop 1440×900 and Pixel 7",
+  "build": "final (out/index.html md5 c68b191ec4e3f97d3ce46dbf055f2a6d)",
+  "date": "2026-11-26T17:56Z",
+  "environment": "headless Chromium + SwiftShader; Playwright projects desktop 1440\u00d7900 and Pixel 7",
   "suites": [
-    { "name": "Unit (Vitest)", "passed": 36, "failed": 0, "skipped": 0, "note": "includes the anchor_v1 foundation lock test, 6/6" },
-    { "name": "M1 e2e (tests/e2e/experience.spec.ts, unmodified)", "passed": 15, "failed": 0, "skipped": 1, "note": "skipped: pointer test on mobile (touch), skipped by design since M1" },
-    { "name": "M2 e2e (tests/e2e/chapters.spec.ts)", "passed": 18, "failed": 0, "skipped": 0, "note": "structure, skip link, modal menu, axe ×3, chapter states, I4 pause/resume, page-edge accuracy, static spreads; desktop + mobile" }
-  ]
+    {
+      "name": "Unit (Vitest)",
+      "passed": 36,
+      "failed": 0,
+      "skipped": 0,
+      "note": "includes the anchor_v1 foundation lock test, 6/6"
+    },
+    {
+      "name": "M1 e2e (tests/e2e/experience.spec.ts, unmodified)",
+      "passed": 15,
+      "failed": 0,
+      "skipped": 1,
+      "note": "skipped: pointer test on mobile (touch), skipped by design since M1"
+    },
+    {
+      "name": "M2 e2e (tests/e2e/chapters.spec.ts)",
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "note": "structure, skip link, modal menu, axe \u00d73, chapter states, I4 pause/resume, page-edge accuracy, static spreads; desktop + mobile"
+    }
+  ],
+  "m1HandoffTest": {
+    "desktop": "raw 4.40 \u00b7 perceptual 1.19 /255 (M1: 4.40 / 1.19)",
+    "mobile": "raw 3.18 \u00b7 perceptual 1.44 /255 (M1: 3.18 / 1.44)"
+  }
 }

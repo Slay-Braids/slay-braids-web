@@ -2,13 +2,13 @@
   "initialJS": {
     "files": 5,
     "raw": 452601,
-    "gzip": 134922,
-    "brotli": 111941
+    "gzip": 134923,
+    "brotli": 111949
   },
   "lazyJS": {
     "files": 27,
-    "raw": 1124678,
-    "gzip": 333145
+    "raw": 1124724,
+    "gzip": 333162
   },
   "legacyBrowsersOnly": [
     "/_next/static/chunks/polyfills-42372ed130431b0a.js"

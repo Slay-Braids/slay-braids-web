@@ -3,57 +3,57 @@
   "note": "The scene clamps a frame's dt at 100 ms, so frame times here saturate at 100 ms and say nothing about real devices.",
   "mode": "mobile",
   "viewport": "412×915 @2.625x",
-  "date": "2026-11-26T17:27:50.467Z",
+  "date": "2026-11-26T17:56:18.480Z",
   "flags": "&stillmatched=1",
   "allFrames": {
-    "n": 353,
+    "n": 360,
     "p50": 100,
     "p95": 100,
     "p99": 100,
     "fpsMedian": 10
   },
   "ch1": {
-    "n": 74,
+    "n": 71,
     "p50": 100,
     "p95": 100,
     "p99": 100,
     "fpsMedian": 10
   },
   "ch2": {
-    "n": 83,
+    "n": 86,
     "p50": 100,
     "p95": 100,
     "p99": 100,
     "fpsMedian": 10
   },
   "ch3": {
-    "n": 196,
+    "n": 203,
     "p50": 100,
     "p95": 100,
     "p99": 100,
     "fpsMedian": 10
   },
   "ch3Transition": {
-    "n": 101,
+    "n": 105,
     "p50": 100,
     "p95": 100,
     "p99": 100,
     "fpsMedian": 10
   },
   "edgeComputeMs": {
-    "n": 101,
+    "n": 105,
     "p50": 2.7,
-    "p95": 5.1,
-    "p99": 7,
+    "p95": 4.6,
+    "p99": 6.5,
     "fpsMedian": 370
   },
   "longTasks": {
-    "count": 355,
-    "totalMs": 357320,
-    "max": 1877
+    "count": 361,
+    "totalMs": 376811,
+    "max": 1968
   },
   "lcpMs": 216,
-  "cls": 0.0137,
+  "cls": 0,
   "handoff": {
     "raw": 4.63,
     "perceptual": 1.17,

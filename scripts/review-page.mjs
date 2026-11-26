@@ -115,6 +115,7 @@ const lhRows = Object.entries(lh)
   )
   .join("");
 
+const handoffNote = tests?.m1HandoffTest ? `M1 handoff test: desktop ${esc(tests.m1HandoffTest.desktop)}; mobile ${esc(tests.m1HandoffTest.mobile)}.` : "";
 const testRows = tests
   ? tests.suites
       .map(
@@ -206,6 +207,14 @@ const decisions = [
     "Its bottom edge was travelling up across the hair as a hard line.",
   ],
   [
+    "Chapter 2 dimmed lines: 0.62 → 0.72 opacity",
+    "The contrast check measured 6.71:1 at 0.62, below the 7:1 criterion. At 0.72 the worst case is 8.76:1; the active line stays visibly brighter (16.5:1).",
+  ],
+  [
+    "Performance readout has a fixed size",
+    "It grew as results arrived and its own layout shifts were counted in the CLS it reports (0.0137 in the simulated mobile run). The page itself: 0.0006.",
+  ],
+  [
     "Logo slot shows plain text “SLAY BRAIDS”",
     "Dashed placeholder box, accessible name “SLAY BRAIDS, home”. Not a recreation of the logo; the file is still pending.",
   ],
@@ -275,7 +284,7 @@ code{font-size:13px;overflow-wrap:anywhere}
 <section class="band" id="checklist"><div class="wrap">
 <h2>Your seven checks</h2>
 <ol class="check">
-<li><span class="n">1</span><div><b>Chapter 2 contrast.</b> ${contrastDone ? `21 positions × 3 wind phases × 4 viewports, all on the final build. Worst case <b>${n(Math.min(...contrast.map((c) => c.summary.minRatio)))}:1</b>; ${cFails.length ? `<b class="bad">${cFails.length} samples below 7:1</b>` : "no sample below 7:1"}. ${cTrans} samples caught mid-fade are listed separately, not judged.` : NM}</div></li>
+<li><span class="n">1</span><div><b>Chapter 2 contrast.</b> ${contrastDone ? `21 positions × 3 wind phases × 4 viewports, on the final build (the one later change, the performance readout\'s size, cannot affect Chapter 2). Worst case <b>${n(Math.min(...contrast.map((c) => c.summary.minRatio)))}:1</b>; ${cFails.length ? `<b class="bad">${cFails.length} samples below 7:1</b>` : "no sample below 7:1"}. ${cTrans} samples caught mid-fade are listed separately, not judged.` : NM}</div></li>
 <li><span class="n">2</span><div><b>Frame sheets</b> regenerated from the final build, desktop and mobile, including the one-screen Chapter 3 tail.</div></li>
 <li><span class="n">3</span><div><b>Test suites</b> on the final build: ${tests ? tests.suites.map((s) => `${esc(s.name)} ${s.passed} passed${s.failed ? `, <b class="bad">${s.failed} failed</b>` : ""}${s.skipped ? `, ${s.skipped} skipped` : ""}`).join(" · ") : NM}.</div></li>
 <li><span class="n">4</span><div><b>Lighthouse, bundle, CLS, page-edge accuracy, performance:</b> below. All lab or simulated.</div></li>
@@ -303,7 +312,7 @@ ${sheets.map(([f, c]) => `<figure><a href="${f}"><img src="${f}" alt="${esc(c)}"
 ${
   contrastDone
     ? `<div class="scroll"><table><thead><tr><th>Viewport</th><th>Judged</th><th>Worst</th><th>Worst active</th><th>Worst past</th><th>Where</th><th>≥ 7:1</th></tr></thead><tbody>${cRows.join("")}</tbody></table></div>
-<p class="note">${cJudged} samples judged; ${cTrans} caught mid-fade (a line easing in or the chapter fading out) are kept in the data file but not judged. Data: <code>docs/perf/ch2-contrast-*.json</code>.</p>`
+<p class="note">Run on the final build except for one later change that cannot affect Chapter 2: the performance readout's fixed size (shown only with #perf). ${cJudged} samples judged; ${cTrans} caught mid-fade (a line easing in or the chapter fading out) are kept in the data file but not judged. Data: <code>docs/perf/ch2-contrast-*.json</code>.</p>`
     : `<p>${NM}</p>`
 }
 </div></section>
@@ -322,6 +331,7 @@ ${bundle ? `<p>Initial JS <b>${(bundle.initialJS.gzip / 1024).toFixed(1)} KB</b>
 <section class="band" id="tests"><div class="wrap">
 <h2>Tests on the final build</h2>
 <div class="scroll"><table><thead><tr><th>Suite</th><th>Passed</th><th>Failed</th><th>Skipped</th><th>Note</th></tr></thead><tbody>${testRows}</tbody></table></div>
+<p class="note">${tests ? esc(tests.build) : ""}. ${handoffNote} Log: <code>docs/perf/e2e-final.log</code>.</p>
 </div></section>
 
 <section class="band" id="register"><div class="wrap">
