@@ -1,0 +1,1288 @@
+{
+  "summary": {
+    "criterion": "each shown line ≥ 7:1 vs the 95th-percentile-luminance pixel behind it",
+    "samples": {
+      "positions": 21,
+      "phases": [
+        0,
+        2.1,
+        4.2
+      ],
+      "viewports": [
+        "mobile 412×915",
+        "mobile 390×844"
+      ]
+    },
+    "judged": 78,
+    "inTransition": 6,
+    "minRatio": 16.04,
+    "minRatioByViewport": {
+      "mobile 412×915": 16.04,
+      "mobile 390×844": 16.05
+    },
+    "failures": [],
+    "pass": true
+  },
+  "results": [
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 145.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 152,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 158.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        17,
+        15,
+        12
+      ],
+      "ratio": 16.28
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 165,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        17,
+        15,
+        12
+      ],
+      "ratio": 16.28
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 171.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 178,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 184.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 191,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 204,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        16,
+        14
+      ],
+      "ratio": 16.16
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 210.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        17,
+        15
+      ],
+      "ratio": 16.06
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 217,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        17,
+        14
+      ],
+      "ratio": 16.04
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 223.6,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        14
+      ],
+      "ratio": 16.13
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 0,
+      "vh": 230.1,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.924,
+      "steady": false,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 13.9
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 145.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        13
+      ],
+      "ratio": 16.25
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 152,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 158.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 165,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 171.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 178,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 184.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 191,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        15,
+        12
+      ],
+      "ratio": 16.23
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        13
+      ],
+      "ratio": 16.25
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 204,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        16,
+        12
+      ],
+      "ratio": 16.17
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 210.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        12
+      ],
+      "ratio": 16.14
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 217,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        17,
+        13
+      ],
+      "ratio": 16.05
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 223.6,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        12
+      ],
+      "ratio": 16.14
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 2.1,
+      "vh": 230.1,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.924,
+      "steady": false,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 13.91
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 145.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 152,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 158.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 165,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 171.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 178,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 184.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 191,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        15,
+        12
+      ],
+      "ratio": 16.23
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        16,
+        12
+      ],
+      "ratio": 16.17
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 204,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        16,
+        13
+      ],
+      "ratio": 16.16
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 210.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        12
+      ],
+      "ratio": 16.14
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 217,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        17,
+        13
+      ],
+      "ratio": 16.05
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 223.6,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        13
+      ],
+      "ratio": 16.14
+    },
+    {
+      "viewport": "mobile 412×915",
+      "phase": 4.2,
+      "vh": 230.1,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.924,
+      "steady": false,
+      "bgP95": [
+        17,
+        15,
+        12
+      ],
+      "ratio": 13.92
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 145.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 152,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 158.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        17,
+        15,
+        12
+      ],
+      "ratio": 16.28
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 165,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        17,
+        15,
+        12
+      ],
+      "ratio": 16.28
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 171.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 178,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 184.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 191,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 204,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        15,
+        12
+      ],
+      "ratio": 16.23
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 210.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        12
+      ],
+      "ratio": 16.14
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 217,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        17,
+        13
+      ],
+      "ratio": 16.08
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 223.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        13
+      ],
+      "ratio": 16.14
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 0,
+      "vh": 230,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.927,
+      "steady": false,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 13.99
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 145.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 152,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 158.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 165,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        17,
+        16,
+        14
+      ],
+      "ratio": 16.18
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 171.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        15,
+        11
+      ],
+      "ratio": 16.23
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 178,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        15,
+        11
+      ],
+      "ratio": 16.23
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 184.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 191,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        15,
+        11
+      ],
+      "ratio": 16.23
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 204,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        16,
+        13
+      ],
+      "ratio": 16.16
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 210.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        16,
+        13
+      ],
+      "ratio": 16.16
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 217,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        17,
+        13
+      ],
+      "ratio": 16.05
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 223.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        12
+      ],
+      "ratio": 16.14
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 2.1,
+      "vh": 230,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.927,
+      "steady": false,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 13.99
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 145.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 152,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 158.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 165,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 171.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 178,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 184.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 191,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        15,
+        12
+      ],
+      "ratio": 16.26
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        15,
+        12
+      ],
+      "ratio": 16.23
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 204,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        16,
+        12
+      ],
+      "ratio": 16.17
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 210.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        18,
+        16,
+        13
+      ],
+      "ratio": 16.16
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 217,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        20,
+        16,
+        13
+      ],
+      "ratio": 16.11
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 223.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        19,
+        16,
+        13
+      ],
+      "ratio": 16.14
+    },
+    {
+      "viewport": "mobile 390×844",
+      "phase": 4.2,
+      "vh": 230,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.927,
+      "steady": false,
+      "bgP95": [
+        18,
+        15,
+        11
+      ],
+      "ratio": 14
+    }
+  ]
+}
