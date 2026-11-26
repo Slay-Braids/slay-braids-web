@@ -1,0 +1,78 @@
+import { describe, expect, it } from "vitest";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { buildCascade } from "@/experience/cascade/geometry";
+import { cascadeFragment, cascadeVertex } from "@/experience/cascade/shaders";
+import { FRAMING } from "@/experience/framing";
+import { ANCHOR, anchorConfig } from "@/experience/tiers";
+
+/**
+ * APPROVED VISUAL FOUNDATION — anchor_v1 (approved by the project owner after M1 review).
+ *
+ * Locks the hair geometry, hair shader, lighting and anchor framing that produce the approved
+ * look and the seamless still → live handoff. If this test fails, the approved look has changed.
+ * Do not "fix" it by updating the hashes: a change needs explicit owner approval, a new
+ * ANCHOR.version (anchor_v2), re-rendered anchor stills, and a re-run of the handoff e2e tests.
+ * See docs/visual-foundation.md.
+ *
+ * Deliberately NOT locked (expected to evolve in M2): scroll camera keyframes after the anchor
+ * pose, page design, typography, copy, section structure.
+ */
+const sha = (b: string | Uint8Array) => createHash("sha256").update(b).digest("hex");
+const bytes = (a: ArrayBufferView) => new Uint8Array(a.buffer, a.byteOffset, a.byteLength);
+
+const LOCK = {
+  version: "anchor_v1",
+  geometry: {
+    landscape: {
+      positions: "5fbb4d75f9a425d77f52f2b4f982c4ffa3c88654d282cd90f659c0e1291fc01a",
+      params: "94d2161e70465c66ac1a3cc97241760a5d297f373411b1989efca8ada99de03d",
+    },
+    portrait: {
+      positions: "2449bae4b9dcb82507586c6c77fbac1312f2ac9e055c19345f2f42984b7f2d59",
+      params: "ecbab123552b38e89a7bba391c34504861016c432e2ca33f897b6a77d791ed2e",
+    },
+  },
+  shaders: "92749c82b3b38b0dad1cfc0ddf163025b3793860fe0c9376bbbbf489093f498d",
+  lighting: "72435cc6d8f314e327a6e5844e6cab0c3ea8c06ca83d8ea86a67187eb7054bdf",
+  anchorFraming: "eeb9e2cdf9aa9713035b97f65ef0d369ed41dc64e0778cd67dec7e236bb0b63c",
+} as const;
+
+describe("approved visual foundation (anchor_v1) is unchanged", () => {
+  it("anchor version", () => expect(ANCHOR.version).toBe(LOCK.version));
+
+  for (const o of ["landscape", "portrait"] as const) {
+    it(`hair geometry — ${o}`, () => {
+      const g = buildCascade(anchorConfig(o));
+      expect(sha(bytes(g.positions))).toBe(LOCK.geometry[o].positions);
+      expect(sha(bytes(g.params))).toBe(LOCK.geometry[o].params);
+    });
+  }
+
+  it("hair shader", () => expect(sha(cascadeVertex + cascadeFragment)).toBe(LOCK.shaders));
+
+  it("lighting and material uniforms", () => {
+    const src = readFileSync("src/experience/cascade/CascadeScene.ts", "utf8");
+    const block = src
+      .slice(src.indexOf("uniforms: {"), src.indexOf("},\n    });"))
+      .replace(/\s+/g, "");
+    expect(sha(block)).toBe(LOCK.lighting);
+  });
+
+  it("anchor framing (camera, key light, softbox pool)", () => {
+    const framing = Object.fromEntries(
+      Object.entries(FRAMING).map(([k, v]) => [
+        k,
+        {
+          refAspect: v.refAspect,
+          fov: v.fov,
+          anchorSize: v.anchorSize,
+          keyDir: v.keyDir,
+          keyPool: v.keyPool,
+          anchorPose: v.keys[0],
+        },
+      ]),
+    );
+    expect(sha(JSON.stringify(framing))).toBe(LOCK.anchorFraming);
+  });
+});
