@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+/* Self-hosted, Latin-only variable fonts (SIL OFL 1.1, licences beside the files). */
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("./fonts/bodoni-moda-latin-opsz-normal.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("./fonts/bodoni-moda-latin-opsz-italic.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Design tokens. Deep blacks, warm champagne highlights, ivory type. FUTURA adds a faint pearl. */
+@theme {
+  --color-ink: #0a0908;
+  --color-ink-2: #12100e;
+  --color-ivory: #f2ece2;
+  --color-mist: #b9b0a3;
+  --color-champagne: #d8c3a0;
+  --color-champagne-deep: #a8875a;
+  --color-pearl: #e3e5e6;
+
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-hero: clamp(2.6rem, 1.2rem + 6.2vw, 7.5rem);
+  --text-display: clamp(2rem, 1.2rem + 3.4vw, 4.5rem);
+  --text-lead: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
+  --text-label: 0.75rem;
+
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --scene-bg: var(--color-ink);
+}
+
+html {
+  background: var(--scene-bg);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  margin: 0;
+  overflow-x: clip;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+.label {
+  font-size: var(--text-label);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-champagne);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--color-ivory);
+  color: var(--color-ink);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Shared film grain: one overlay above both the anchor still and the live canvas,
+   so the handoff never changes texture. Static under reduced motion. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-3%, 2%);
+  }
+  40% {
+    transform: translate(2%, -3%);
+  }
+  60% {
+    transform: translate(-2%, -1%);
+  }
+  80% {
+    transform: translate(3%, 2%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}
+:root[data-reduced-motion="true"] .grain {
+  animation: none;
+}
+
+/* Stage: anchor still + live canvas share one fixed layer behind the editorial content. */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--scene-bg);
+}
+.stage picture,
+.stage img,
+.stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.stage img {
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.stage canvas {
+  opacity: 0;
+  transition: opacity 600ms var(--ease-cinematic);
+}
+.stage[data-live="true"] canvas {
+  opacity: 1;
+}
+/* Legibility scrim for type over imagery. */
+.scrim-bottom {
+  background: linear-gradient(to top, rgb(10 9 8 / 0.85), rgb(10 9 8 / 0) 60%);
+}
+
+/* Text reveals (only once JS has marked the document; content is visible without JS). */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 900ms var(--ease-cinematic),
+    transform 900ms var(--ease-cinematic);
+}
+.js [data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+:root[data-reduced-motion="true"] [data-reveal] {
+  transition: none;
+  transform: none;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.stage[data-mode="static"] canvas {
+  display: none;
+}
+
+/* Hero entrance: transform only (never opacity), CSS only, so the LCP text and still paint at
+   first render without waiting for JavaScript. */
+.hero-rise {
+  animation: hero-rise 1100ms var(--ease-cinematic) both;
+}
+.hero-rise:nth-child(2) {
+  animation-delay: 80ms;
+}
+.hero-rise:nth-child(3) {
+  animation-delay: 160ms;
+}
+@keyframes hero-rise {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise {
+    animation: none;
+  }
+}
+
+/* Legibility over imagery (static/reduced-motion paths show text over the lit still). */
+.legible {
+  text-shadow:
+    0 1px 2px rgb(10 9 8 / 0.8),
+    0 0 22px rgb(10 9 8 / 0.85);
+}

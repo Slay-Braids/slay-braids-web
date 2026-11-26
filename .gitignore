@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+dist-preview/
+next-env.d.ts
+*.tsbuildinfo
+test-results/
+playwright-report/
+.env*
+.DS_Store
+assets/anchors/*.png

@@ -1,0 +1,12 @@
+{
+  "performance": 99,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 60,
+  "LCP_ms": 905,
+  "FCP_ms": 905,
+  "TBT_ms": 112,
+  "CLS": 0.05,
+  "SpeedIndex_ms": 905,
+  "lcpElement": null
+}
