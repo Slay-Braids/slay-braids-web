@@ -1,0 +1,50 @@
+{
+  "mode": "desktop",
+  "date": "2026-11-26T15:51:24.736Z",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "orientation": "landscape",
+  "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "durationMs": 30382,
+  "guidePoints": 4983,
+  "probedFrames": 13,
+  "probeEvery": 1,
+  "conditions": {
+    "windMin": 0.49929591444767696,
+    "windMax": 0.9066817887564366,
+    "pointerForceMax": 0.9850044231795223,
+    "framesWithPointer": 13
+  },
+  "pointError": {
+    "n": 64779,
+    "p50": 0.0012351273271905135,
+    "p95": 0.003459197032726101,
+    "p99": 0.00496300267238794,
+    "max": 0.08151014619617411
+  },
+  "edgeError": {
+    "n": 1261,
+    "p50": 0.00039194836210754147,
+    "p95": 0.0012301686074351892,
+    "p99": 0.0019020076803144548,
+    "max": 0.002677254764932968
+  },
+  "pass": true,
+  "transitionFrames": {
+    "n": 13,
+    "p50": 1805,
+    "p95": 2546.5999999996275,
+    "p99": 2546.5999999996275,
+    "max": 3016.7000000011176
+  },
+  "edgeComputeMs": {
+    "n": 13,
+    "p50": 7.199999999254942,
+    "p95": 28.59999999962747,
+    "p99": 28.59999999962747,
+    "max": 46.59999999962747
+  }
+}
