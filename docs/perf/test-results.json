@@ -1,0 +1,10 @@
+{
+  "build": "final (out/index.html md5 409d00b33783c1e3308a4962e6f0b0f2)",
+  "date": "2026-11-26T17:06Z",
+  "environment": "headless Chromium + SwiftShader; Playwright projects desktop 1440×900 and Pixel 7",
+  "suites": [
+    { "name": "Unit (Vitest)", "passed": 36, "failed": 0, "skipped": 0, "note": "includes the anchor_v1 foundation lock test, 6/6" },
+    { "name": "M1 e2e (tests/e2e/experience.spec.ts, unmodified)", "passed": 15, "failed": 0, "skipped": 1, "note": "skipped: pointer test on mobile (touch), skipped by design since M1" },
+    { "name": "M2 e2e (tests/e2e/chapters.spec.ts)", "passed": 18, "failed": 0, "skipped": 0, "note": "structure, skip link, modal menu, axe ×3, chapter states, I4 pause/resume, page-edge accuracy, static spreads; desktop + mobile" }
+  ]
+}
