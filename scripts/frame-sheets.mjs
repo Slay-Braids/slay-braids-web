@@ -54,7 +54,7 @@ async function sheet(name, tiles, cols, scale) {
 const browser = await chromium.launch({
   args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"],
 });
-for (const mode of ["desktop", "mobile"]) {
+for (const mode of (process.env.MODES ?? "desktop,mobile").split(",")) {
   const page = await browser.newPage(VP[mode]);
   await page.goto(`${BASE}?tier=A&nodowngrade=1&windt=3&nodamp=1`);
   await page.waitForFunction(() => window.__slay?.live === true, null, { timeout: 180000 });

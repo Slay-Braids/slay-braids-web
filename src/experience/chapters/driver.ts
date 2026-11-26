@@ -38,6 +38,7 @@ export function ch3State(o: Orientation, vh: number): Ch3State {
 
 export class ChapterDriver {
   private hero: HTMLElement | null;
+  private heroScrim: HTMLElement | null;
   private cue: HTMLElement | null;
   private lines: HTMLElement[];
   private ch2Frame: HTMLElement | null;
@@ -55,6 +56,7 @@ export class ChapterDriver {
     public orientation: Orientation,
   ) {
     this.hero = root.querySelector("[data-hero]");
+    this.heroScrim = root.querySelector("[data-hero-scrim]");
     this.cue = root.querySelector("[data-scroll-cue]");
     this.lines = [...root.querySelectorAll<HTMLElement>("[data-ch2-line]")];
     this.ch2Frame = root.querySelector("[data-ch2-frame]");
@@ -74,6 +76,8 @@ export class ChapterDriver {
       this.hero.style.opacity = String(1 - k);
       this.hero.style.transform = `translate3d(0, ${(-12 * k).toFixed(2)}%, 0)`;
     }
+    // Its mobile scrim fades out while Chapter 2's bottom field fades in (70–130 vh).
+    if (this.heroScrim) this.heroScrim.style.opacity = String(1 - smooth((vh - 60) / 60));
     // Header hides on scroll down, returns on scroll up (raw scroll direction).
     const y = window.scrollY;
     if (this.cue) this.cue.dataset.hidden = String(y > 24);

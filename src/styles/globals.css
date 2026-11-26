@@ -196,6 +196,20 @@ body {
 .scrim-bottom {
   background: linear-gradient(to top, rgb(10 9 8 / 0.85), rgb(10 9 8 / 0) 60%);
 }
+/* Mobile headline scrim: pinned to the viewport and faded on the scroll clock as Chapter 2's
+   bottom field arrives, so its edge never travels up across the hair. In the static spreads it
+   stays part of Chapter 1. */
+.ch1-scrim {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: calc(var(--vh) * 52);
+  pointer-events: none;
+}
+:root[data-static="true"] .ch1-scrim {
+  position: absolute;
+  height: 52%;
+  opacity: 1 !important;
+}
 
 /* Text reveals (only once JS has marked the document; content is visible without JS). */
 .js [data-reveal] {

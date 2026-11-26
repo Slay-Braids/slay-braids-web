@@ -26,10 +26,7 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
       <main id="main" data-scroll-root className="relative z-10">
         {/* Chapter 1 — Arrival */}
         <section id="top" className="ch1 chapter" aria-labelledby="ch1-title">
-          <div
-            aria-hidden="true"
-            className="scrim-bottom pointer-events-none absolute inset-x-0 bottom-0 h-[52%] md:hidden"
-          />
+          <div aria-hidden="true" className="scrim-bottom ch1-scrim md:hidden" data-hero-scrim />
           <div className="ch1-content" data-hero>
             <p className="label hero-rise numeral-label" aria-hidden="true">
               01
