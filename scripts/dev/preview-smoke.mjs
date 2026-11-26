@@ -1,0 +1,17 @@
+import { chromium } from "@playwright/test";
+const browser = await chromium.launch({ args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+const errs = []; page.on("pageerror", (e) => errs.push(e.message)); page.on("requestfailed", (r) => errs.push("failed " + r.url()));
+page.on("response", (r) => { if (r.status() >= 400) errs.push(r.status() + " " + r.url()); });
+await page.goto("http://127.0.0.1:4176/index.html#lab-transition-tier-a-nodowngrade");
+await page.waitForFunction(() => window.__slay?.live === true && !!window.__lab, null, { timeout: 120000 });
+console.log("live+lab ok");
+const p2 = await browser.newPage({ viewport: { width: 412, height: 915 }, isMobile: true });
+p2.on("response", (r) => { if (r.status() >= 400) errs.push(r.status() + " " + r.url()); });
+await p2.goto("http://127.0.0.1:4176/index.html#reduced");
+await p2.waitForTimeout(2000);
+await p2.evaluate(() => document.getElementById("ch3").scrollIntoView());
+await p2.waitForTimeout(1500);
+console.log("static paper paths", await p2.locator(".paper-static path").count(), "stills", await p2.locator(".spread-still img").count());
+console.log(JSON.stringify(errs));
+await browser.close();

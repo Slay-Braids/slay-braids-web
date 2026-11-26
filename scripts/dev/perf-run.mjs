@@ -15,7 +15,7 @@ const page = await browser.newPage(
       }
     : { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 },
 );
-await page.goto(`http://127.0.0.1:4173/?tier=A&nodowngrade=1&perf=1${extra}`);
+await page.goto(`${process.env.BASE ?? "http://127.0.0.1:4173/"}?tier=A&nodowngrade=1&perf=1${extra}`);
 await page.waitForFunction(() => window.__slay?.live === true, null, { timeout: 120000 });
 await page.waitForTimeout(3000);
 const vh = await page.evaluate(() => innerHeight);
