@@ -15,12 +15,15 @@ import sharp from "sharp";
 import { writeFile, mkdir } from "node:fs/promises";
 
 const BASE = process.env.BASE ?? "http://127.0.0.1:4173/";
-const VIEWPORTS = [
+const ALL_VIEWPORTS = [
   { name: "desktop 1440×900", width: 1440, height: 900, mobile: false },
   { name: "desktop 1920×1080", width: 1920, height: 1080, mobile: false },
   { name: "mobile 412×915", width: 412, height: 915, mobile: true },
   { name: "mobile 390×844", width: 390, height: 844, mobile: true },
 ];
+// Optional filter for parallel runs: ONLY=desktop or ONLY=mobile; OUT names the result file.
+const VIEWPORTS = ALL_VIEWPORTS.filter((v) => !process.env.ONLY || v.name.startsWith(process.env.ONLY));
+const OUTFILE = process.env.OUT ?? "docs/perf/ch2-contrast.json";
 const PHASES = [0, 2.1, 4.2]; // wind time, s (full wind)
 const POSITIONS = 21;
 const TARGET = 7;
@@ -121,6 +124,8 @@ for (const vp of VIEWPORTS) {
       }
     }
     await page.close();
+    await mkdir("docs/perf", { recursive: true });
+    await writeFile(`${OUTFILE}.partial`, JSON.stringify(results) + "\n"); // progress is never lost
     console.log(`${vp.name} phase ${phase}: done`);
   }
 }
@@ -144,7 +149,7 @@ const summary = {
 };
 await mkdir("docs/perf", { recursive: true });
 await writeFile(
-  "docs/perf/ch2-contrast.json",
+  OUTFILE,
   JSON.stringify({ summary, results }, null, 2) + "\n",
 );
 console.log(JSON.stringify(summary, null, 2));
