@@ -72,7 +72,9 @@ test.describe("structure", () => {
     const text = (await page.locator("body").innerText()).toLowerCase();
     expect(text).not.toMatch(/[£$€₦]\s?\d/);
     expect(text).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}/); // no email address
-    expect(text).not.toMatch(/\+?\d[\d\s-]{8,}\d/); // no phone number
+    // The only phone number is the owner-verified WhatsApp number (27 Nov 2026).
+    const phones = [...new Set(text.match(/\+?\d[\d\s-]{8,}\d/g) ?? [])];
+    expect(phones).toEqual(["+234 903 685 7758"]);
     expect(text).not.toMatch(/testimonial|★|wording to come|placeholder|pending|preview/);
     await expect(page.locator(".placeholder-tag")).toHaveCount(0);
   });
