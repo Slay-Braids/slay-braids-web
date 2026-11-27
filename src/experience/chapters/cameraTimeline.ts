@@ -52,24 +52,85 @@ export const CHAPTER_KEYS: Record<Orientation, { K1: CameraKey; K1b: CameraKey; 
   },
 };
 
-export function chapterStops(o: Orientation): { at: number; key: CameraKey }[] {
+/**
+ * Chapters 4–7 continue the same timeline (M3). Poses chosen from rendered candidates:
+ * K3 FUTURA (hair beside dark space for the name), K4 the Collection backdrop (drifting slightly
+ * per product), K5 the Lookbook edge (the page meets the hair again), K6 the final pull-back.
+ */
+export const STORY_KEYS: Record<Orientation, { K3: CameraKey; K4: CameraKey; K5: CameraKey; K6: CameraKey; drift: V3 }> = {
+  landscape: {
+    K3: { position: [1.2, -0.9, 5.4], target: [0.2, -0.9, -0.2] },
+    K4: { position: [-0.6, -1.0, 4.6], target: [0.6, -1.1, -0.2], up: [-0.3, 0.95, 0] },
+    K5: { position: [0.4, 0.6, 4.4], target: [1.4, 0.2, -0.2], up: [-0.42, 0.91, 0] },
+    K6: { position: [-0.6, 0.2, 8.0], target: [0.4, -0.2, 0] },
+    drift: [0.2, -0.05, 0],
+  },
+  portrait: {
+    K3: { position: [1.6, -0.6, 4.1], target: [0.1, -1.0, -0.4] },
+    K4: { position: [0.2, 0.4, 5.0], target: [0.3, -0.3, -0.2] },
+    K5: { position: [-0.4, -0.9, 4.4], target: [0.0, -1.5, -0.2] },
+    K6: { position: [0.3, 0.0, 7.6], target: [0.2, -0.5, 0] },
+    drift: [0.06, -0.12, 0],
+  },
+};
+
+export interface Stop {
+  at: number;
+  key: CameraKey;
+  /** The camera comes to rest here (zero speed), as at the ends of the timeline. */
+  rest?: boolean;
+}
+
+/** Chapters 1–3 stops, exactly as approved (K0 hold → K1 → K1b → K2 at rest). */
+export function chapterStops(o: Orientation): Stop[] {
   const k = CHAPTER_KEYS[o];
   const s = CHAPTER_LAYOUT[o].stops;
   return [
-    { at: s[0], key: FRAMING[o].keys[0]! },
+    { at: s[0], key: FRAMING[o].keys[0]!, rest: true },
     { at: s[1], key: k.K1 },
     { at: s[2], key: k.K1b },
-    { at: s[3], key: k.K2 },
+    { at: s[3], key: k.K2, rest: true },
   ];
 }
 
-/** Returns the camera pose for a scroll position in vh. */
-export function cameraTimeline(o: Orientation): (vh: number) => CameraKey {
-  const stops = chapterStops(o);
+/** Chapters 4–7 stops, appended after Chapter 3. Positions come from the story layout. */
+export function storyStops(
+  o: Orientation,
+  S: { ch4Cover: [number, number]; ch4Retreat: [number, number]; ch5: [number, number]; ch6Arrive: [number, number]; ch6Close: [number, number]; ch7Lift: [number, number]; ch7Line: number },
+  productCentres: number[],
+): Stop[] {
+  const k = CHAPTER_KEYS[o];
+  const K = STORY_KEYS[o];
+  const off = (key: CameraKey, f: number): CameraKey => ({
+    position: [key.position[0] + K.drift[0] * f, key.position[1] + K.drift[1] * f, key.position[2] + K.drift[2] * f],
+    target: [key.target[0] + K.drift[0] * f, key.target[1] + K.drift[1] * f, key.target[2] + K.drift[2] * f],
+    ...(key.up ? { up: key.up } : {}),
+  });
+  const n = productCentres.length;
+  const mid = (n - 1) / 2;
+  return [
+    // K2 holds through the end of Chapter 3; the move to K3 happens under the covering page.
+    { at: CHAPTER_LAYOUT[o].ch3[1], key: k.K2, rest: true },
+    { at: S.ch4Cover[1] - 15, key: K.K3, rest: true },
+    { at: S.ch4Retreat[1], key: K.K3, rest: true },
+    ...productCentres.map((at, i) => ({ at, key: off(K.K4, i - mid), rest: i === 0 || i === n - 1 })),
+    { at: S.ch6Arrive[0], key: K.K5, rest: true },
+    { at: S.ch7Lift[0], key: K.K5, rest: true },
+    { at: S.ch7Line, key: K.K6, rest: true },
+  ];
+}
+
+/**
+ * Returns the camera pose for a scroll position in vh. With `extra` stops (Chapters 4–7) the
+ * timeline continues after K2; because K2 is a rest stop, every Chapters 1–3 segment is the
+ * same curve as before (its end tangents do not change).
+ */
+export function cameraTimeline(o: Orientation, extra: Stop[] = []): (vh: number) => CameraKey {
+  const stops = [...chapterStops(o), ...extra];
   const n = stops.length;
   // Tangents (units per vh) for position and target, zero at the rest points.
   const tangent = (sel: (k: CameraKey) => V3, i: number): V3 => {
-    if (i === 0 || i === n - 1) return [0, 0, 0];
+    if (i === 0 || i === n - 1 || stops[i]!.rest) return [0, 0, 0];
     const a = stops[i - 1]!;
     const b = stops[i + 1]!;
     const pa = sel(a.key);
