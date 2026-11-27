@@ -439,7 +439,7 @@ const SECTIONS = [
     title: "TalkBack",
     kind: "A",
     intro:
-      "Gestures: swipe right = next item; swipe left = previous; double-tap = activate; two-finger swipe = scroll; swipe up or down with one finger = change what a swipe moves by (for example Headings); swipe down then left = back. Wording varies by TalkBack version; what matters is the order and that nothing is missing or extra. TalkBack first reads claude.ai's own viewer controls; the test starts at the first item of the preview, “Skip to main content”. KNOWN ISSUE, found before this protocol: in normal (moving) mode, Chapter 2 and 3 content is hidden from TalkBack unless that chapter is on screen. T6.2 and T6.3 are expected to show this; please confirm it on the phone. In reduced-motion mode everything is exposed (T6.1).",
+      "Gestures: swipe right = next item; swipe left = previous; double-tap = activate; two-finger swipe = scroll; swipe up or down with one finger = change what a swipe moves by (for example Headings); swipe down then left = back. Wording varies by TalkBack version; what matters is the order and that nothing is missing or extra. TalkBack first reads claude.ai's own viewer controls; the test starts at the first item of the preview, “Skip to main content”. Fixed in this build (27 Nov 2026): before, in normal (moving) mode, Chapter 2 and 3 content was hidden from TalkBack unless that chapter was on screen. T6.2 and T6.3 now verify the fix: the reading order must be the same in both modes. One thing to watch in normal mode: when TalkBack reads Chapter 2 or 3 text that has not scrolled into view yet, its focus outline may sit over the current picture, because the text only appears visually when you reach it. Record whether that is confusing; it is an observation, not a failure.",
     tests: [
       {
         id: "T6.1",
@@ -470,13 +470,13 @@ const SECTIONS = [
       },
       {
         id: "T6.2",
-        name: "Reading order, normal motion (known issue)",
+        name: "Reading order, normal motion",
         url: "U1",
         steps: [
           "Open U1 (motion on). With TalkBack on, start at “Skip to main content” and swipe right through the page, as in T6.1.",
         ],
         expected:
-          "Correct target: the same order as T6.1. Predicted on the current build: after “Discover FUTURA” TalkBack skips the Chapter 2 and Chapter 3 headings and text (it may say only the region names), and continues at “Next review”. Record exactly what it reads.",
+          "Exactly the same order as T6.1: nothing missing (in particular the Chapter 2 and Chapter 3 headings, the three manifesto lines, the portrait placeholder and the Chapter 3 line), nothing read twice, no numerals. Note where the focus outline appears while it reads Chapter 2–3 text.",
         evidence: "Recording or list of announcements.",
       },
       {
@@ -488,7 +488,7 @@ const SECTIONS = [
           "Repeat in U1.",
         ],
         expected:
-          "U7: Premium look. Affordable price. (1) → The craft (2) → The unbraiding (2) → Chapter 4 · FUTURA (2) → Make an enquiry (2). U1: correct target is the same; predicted on the current build: the two chapter headings are missing.",
+          "In both U7 and U1: Premium look. Affordable price. (1) → The craft (2) → The unbraiding (2) → Chapter 4 · FUTURA (2) → Make an enquiry (2).",
         evidence: "List of headings heard, for each URL.",
       },
       {
@@ -527,13 +527,13 @@ const SECTIONS = [
       },
       {
         id: "T6.7",
-        name: "Chapter content when on screen (normal motion)",
+        name: "Explore by touch (normal motion)",
         url: "U1",
         steps: [
           "Two-finger scroll until Chapter 2's lines are visible; tap a line once with one finger.",
         ],
         expected:
-          "TalkBack reads the line. (This is the current workaround for the known issue; it is not the target behaviour.)",
+          "TalkBack reads the line you touched, once.",
         evidence: "Notes.",
       },
     ],
@@ -593,7 +593,7 @@ const urlById = Object.fromEntries(URLS.map(([id, , u]) => [id, u]));
 const md = [];
 md.push("# Real-device test protocol: Samsung Galaxy A26 5G — Chapters 1–3 preview", "");
 md.push(
-  "Documentation only. It changes nothing in the approved build or the locked M1 assets. Phone page with links, checklist and a copy-results button: see the review pack link in the chat (private artifact).",
+  "Build under test: the Chapters 1–3 preview with the TalkBack fix (27 Nov 2026), at the same preview URL. Phone page with links, checklist and a copy-results button: https://claude.ai/artifact/G8pcwwkBQxrFwJbTJK798q (private).",
   "",
   "**How the tests are split**",
   "",
@@ -714,7 +714,7 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
 </style></head><body>
 <header class="band cover"><div class="wrap">
 <h1>Galaxy A26 5G: real-device tests</h1>
-<p>Chapters 1–3 preview, final build. Work through the cards in order, mark each result, then copy everything back to the chat. Nothing here changes the build. Results are kept in this browser only until you copy them.</p>
+<p>Chapters 1–3 preview, final build with the TalkBack fix (27 Nov 2026). Work through the cards in order, mark each result, then copy everything back to the chat. Nothing here changes the build. Results are kept in this browser only until you copy them.</p>
 <ul class="kinds">${Object.entries(KIND)
   .map(([k, v]) => `<li><b>${k}</b>${esc(v)}</li>`)
   .join("")}</ul>
