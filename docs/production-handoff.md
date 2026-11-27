@@ -119,3 +119,10 @@ Source: `main`, merged from `claude/cool-ramanujan-0ln9mf` via [Slay-Braids/slay
   - Phones get a taller reading field behind the hero headline, and the desktop hero and Chapter 7 fields are wider, so braids no longer cross the type.
   - On phones, the FUTURA intro sits right under its title, and the feature list then replaces both, so there is no empty band of red.
 - **FUTURA:** presented as one of SLAY BRAIDS' products, not a brand: no wordmark treatment (spaced letters on the page). It is set as a chapter title under "A SLAY BRAIDS product". The intro reads "FUTURA is one of our products…", the source note says other hair brands use futura fibre too, and the footer reads "FUTURA is a SLAY BRAIDS product." A FUTURA logo is no longer on the list of missing items.
+
+## Update 5 (27 Nov 2026): WhatsApp, photos confirmed
+- **WhatsApp:** the owner confirmed the SLAY BRAIDS WhatsApp number, +234 903 685 7758, and it is now the enquiry channel.
+  - Where it appears: a floating chat button (bottom right on every page; a green circle on phones, a "WhatsApp" pill on larger screens), "Chat on WhatsApp" in Enquiries with the number, a link in the menu and the number in the footer.
+  - Every link opens `https://wa.me/2349036857758` with a short greeting filled in. The site itself has no form and sends nothing.
+  - The number lives in `src/content/site.ts` (`contact.whatsapp`).
+- **Studio photographs:** the owner confirmed they are real photographs.

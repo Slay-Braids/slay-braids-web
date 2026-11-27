@@ -2843,3 +2843,90 @@ html {
     );
   }
 }
+
+/* WhatsApp (owner request, 27 Nov 2026): the verified SLAY BRAIDS number. A floating chat
+   button, bottom right (a circle on phones, a pill with its label on larger screens), plus the
+   enquiries call to action, the menu and the footer. WhatsApp green with black ink (11:1). */
+.wa-float {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 35;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 56px;
+  height: 56px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  background: #25d366;
+  color: #0a0a0a;
+  font: 600 15px/1 var(--font-sans);
+  text-decoration: none;
+  box-shadow:
+    0 10px 30px -10px rgb(0 0 0 / 0.45),
+    0 0 0 1px rgb(0 0 0 / 0.06);
+  transition:
+    transform 300ms var(--ease-cinematic),
+    box-shadow 300ms;
+}
+.wa-float:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 34px -10px rgb(0 0 0 / 0.5),
+    0 0 0 1px rgb(0 0 0 / 0.06);
+}
+.wa-float:focus-visible {
+  outline: 3px solid var(--on-paper);
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .wa-float {
+    padding: 0;
+    width: 56px;
+  }
+  .wa-float-label {
+    display: none;
+  }
+}
+@media print {
+  .wa-float {
+    display: none;
+  }
+}
+/* The site notice sits above the button. */
+.view-notice {
+  bottom: 88px;
+}
+.enquire-actions {
+  grid-column: 1;
+  display: grid;
+  justify-items: start;
+  gap: 0.9rem;
+  margin-top: 1.6rem;
+}
+.btn-wa {
+  gap: 0.55rem;
+}
+.enquire-number {
+  margin: 0;
+  color: var(--on-paper-2);
+  font-size: 14px;
+}
+.enquire-number a,
+.footer-contact a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+.enquire-number a {
+  color: var(--on-paper);
+}
+.footer-contact {
+  margin: 0;
+  color: var(--color-white);
+}
+.menu-wa {
+  background: none;
+  border: 1px solid rgb(255 255 255 / 0.45);
+}

@@ -1,8 +1,9 @@
 import { AnchorStage } from "../AnchorStage";
 import { ExperienceBoot } from "../ExperienceBoot";
 import { Header } from "./Header";
+import { ChatIcon, WhatsAppButton } from "../WhatsApp";
 import { LoopVideo, Logo, StillPicture } from "../Media";
-import { craft, enquiry, futura, lookbook, looks, positioning, promise, unbraiding } from "@/content/site";
+import { contact, craft, enquiry, futura, whatsappHref, lookbook, looks, positioning, promise, unbraiding } from "@/content/site";
 import { craftClip, lookClips, lookbookMedia, portraitStudio, studioPhotos } from "@/content/media";
 import { SECTION_VH } from "@/experience/chapters/story";
 import { CHAPTERS } from "@/content/chapters";
@@ -338,6 +339,16 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
             <p className="enquire-status" data-reveal>
               {enquiry.status}
             </p>
+            <div className="enquire-actions" data-reveal>
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-primary btn-wa">
+                <ChatIcon size={20} />
+                {enquiry.cta}
+                <span className="sr-only"> (opens WhatsApp)</span>
+              </a>
+              <p className="enquire-number">
+                WhatsApp <a href={whatsappHref} target="_blank" rel="noopener noreferrer">{contact.whatsapp.display}</a>
+              </p>
+            </div>
           </div>
         </section>
       </main>
@@ -377,9 +388,16 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
               Simple view
             </button>
           </div>
+          <p className="footer-contact">
+            WhatsApp{" "}
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+              {contact.whatsapp.display}
+            </a>
+          </p>
           <p className="footer-legal">© SLAY BRAIDS · {futura.line}</p>
         </div>
       </footer>
+      <WhatsAppButton />
       <p className="view-notice" data-view-notice role="status" aria-live="polite" />
       <ExperienceBoot />
     </div>
