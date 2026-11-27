@@ -2160,7 +2160,27 @@ body {
   --scene-bg: var(--paper);
   --ink-2: var(--on-paper-2);
 }
+/* The same dark tokens under the system setting itself: browsers with their own "dark mode for
+   websites" (Samsung Internet) look for a prefers-color-scheme rule in the stylesheet before
+   leaving a page to its own dark theme. A theme picked on the site (data-theme) still wins. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0a0a0a;
+    --paper-rgb: 10 10 10;
+    --on-paper: #ffffff;
+    --on-paper-rgb: 255 255 255;
+    --on-paper-2: rgb(255 255 255 / 0.76);
+    --inverse: #ffffff;
+    --inverse-rgb: 255 255 255;
+    --on-inverse: #0a0a0a;
+    --on-inverse-rgb: 10 10 10;
+    --on-inverse-2: rgb(10 10 10 / 0.7);
+    --red-ink: #ff5a5f;
+  }
+}
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --paper: #0a0a0a;
   --paper-rgb: 10 10 10;
   --on-paper: #ffffff;
@@ -2461,8 +2481,35 @@ html {
     inset: auto 0 0 0;
     margin: 0;
     /* Starts once the intro and title have gone (storyDriver), so the two never overlap. */
-    --f: max(0, calc((var(--ch4-feat, 0) - 0.45) / 0.55));
+    --f: clamp(0, calc((var(--ch4-feat, 0) - 0.17) / 0.1), 1);
+    /* Two pages, so the list always fits the screen (large text settings included):
+       01–03 from 0.17, giving way at 0.55 to 04–06, which stay to the end. */
+    --page-a: calc(var(--f) * (1 - clamp(0, calc((var(--ch4-feat, 0) - 0.55) / 0.07), 1)));
+    --page-b: clamp(0, calc((var(--ch4-feat, 0) - 0.62) / 0.1), 1);
     isolation: isolate;
+  }
+  :root:not([data-static="true"]) .ch4-features li {
+    grid-column: 1;
+    align-content: start;
+    transform: none;
+  }
+  :root:not([data-static="true"]) .ch4-features li:nth-child(-n + 3) {
+    opacity: var(--page-a);
+  }
+  :root:not([data-static="true"]) .ch4-features li:nth-child(n + 4) {
+    opacity: var(--page-b);
+  }
+  :root:not([data-static="true"]) .ch4-features li:nth-child(1),
+  :root:not([data-static="true"]) .ch4-features li:nth-child(4) {
+    grid-row: 1;
+  }
+  :root:not([data-static="true"]) .ch4-features li:nth-child(2),
+  :root:not([data-static="true"]) .ch4-features li:nth-child(5) {
+    grid-row: 2;
+  }
+  :root:not([data-static="true"]) .ch4-features li:nth-child(3),
+  :root:not([data-static="true"]) .ch4-features li:nth-child(6) {
+    grid-row: 3;
   }
   /* The list is taller than the red field behind the type: it brings its own red ground,
      fading in above it, so no line sits on a braid. */
@@ -2929,4 +2976,59 @@ html {
 .menu-wa {
   background: none;
   border: 1px solid rgb(255 255 255 / 0.45);
+}
+
+/* Contact details (owner, 27 Nov 2026): address and social accounts, as text links. */
+.enquire-details {
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.4rem 3rem;
+  margin: 2.4rem 0 0;
+  max-width: 720px;
+}
+.enquire-details dt {
+  margin: 0 0 0.5rem;
+  font: 500 12px var(--font-sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red-ink);
+}
+.enquire-details dd {
+  margin: 0;
+  color: var(--on-paper);
+  line-height: 1.6;
+}
+address {
+  font-style: normal;
+}
+.social-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+.social-list a {
+  display: inline-flex;
+  gap: 0.5ch;
+  min-height: 32px;
+  align-items: center;
+  color: inherit;
+  text-underline-offset: 3px;
+}
+.social-net {
+  opacity: 0.7;
+}
+.footer-contact {
+  display: grid;
+  gap: 0.5rem;
+}
+.footer-contact p {
+  margin: 0;
+}
+.footer-contact .social-list {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+  column-gap: 1.6rem;
 }

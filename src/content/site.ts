@@ -33,10 +33,18 @@ export const brand = {
 export const futuraClaims: Claim[] = [];
 
 /**
- * Contact (owner, 27 Nov 2026): the SLAY BRAIDS WhatsApp number, confirmed by the owner. It is
- * the only verified contact; no email, address or social accounts are published.
+ * Contact (owner, 27 Nov 2026): the WhatsApp number, the address and the social accounts, all
+ * confirmed by the owner. Orders are taken on WhatsApp for now (online ordering later). No email.
  */
 export const contact = {
+  address: "11 Udeco Medical Road, Chevy View Estate, Chevron Drive",
+  ordering: "For now, orders are taken on WhatsApp.",
+  social: [
+    { network: "Instagram", handle: "@slayy_braids", href: "https://www.instagram.com/slayy_braids/" },
+    { network: "Instagram", handle: "@futurabyslaybraids", href: "https://www.instagram.com/futurabyslaybraids/" },
+    { network: "TikTok", handle: "@slay.braids4", href: "https://www.tiktok.com/@slay.braids4" },
+    { network: "TikTok", handle: "@futura.by.slay", href: "https://www.tiktok.com/@futura.by.slay" },
+  ],
   whatsapp: {
     display: "+234 903 685 7758",
     /** wa.me takes the number in international form, digits only. */
@@ -54,7 +62,7 @@ export const whatsappHref = `https://wa.me/${contact.whatsapp.wa}?text=${encodeU
 export const enquiry = {
   href: "#enquire",
   title: "Enquiries",
-  status: "Questions about a look, FUTURA or an order? Chat with us on WhatsApp.",
+  status: "Questions about a look, FUTURA or an order? Chat with us on WhatsApp. For now, orders are taken on WhatsApp too.",
   cta: "Chat on WhatsApp",
   destination: { kind: "whatsapp", value: contact.whatsapp.display } as { kind: "whatsapp" | "email" | "endpoint"; value: string },
 } as const;

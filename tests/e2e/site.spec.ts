@@ -71,9 +71,13 @@ test.describe("structure", () => {
     await page.goto("/?tier=C");
     const text = (await page.locator("body").innerText()).toLowerCase();
     expect(text).not.toMatch(/[£$€₦]\s?\d/);
-    expect(text).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}/); // no email address
+    // No email address. The only @-handles are the owner-verified social accounts (27 Nov 2026).
+    const verified = ["@slayy_braids", "@futurabyslaybraids", "@slay.braids4", "@futura.by.slay"];
+    const rest = verified.reduce((t, h) => t.split(h).join(""), text);
+    expect(rest).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}/);
+    for (const h of verified) expect(text).toContain(h);
     // The only phone number is the owner-verified WhatsApp number (27 Nov 2026).
-    const phones = [...new Set(text.match(/\+?\d[\d\s-]{8,}\d/g) ?? [])];
+    const phones = [...new Set(text.match(/\+?\d[\d -]{8,}\d/g) ?? [])];
     expect(phones).toEqual(["+234 903 685 7758"]);
     expect(text).not.toMatch(/testimonial|★|wording to come|placeholder|pending|preview/);
     await expect(page.locator(".placeholder-tag")).toHaveCount(0);
@@ -253,6 +257,14 @@ test.describe("enquiries and motion", () => {
     await page.goto("/?tier=C");
     await expect(page.locator("#enquire h2")).toHaveText("Enquiries");
     await expect(page.locator("#enquire")).toContainText("+234 903 685 7758");
+    await expect(page.locator("#enquire address")).toHaveText("11 Udeco Medical Road, Chevy View Estate, Chevron Drive");
+    const social = await page.locator("#enquire .social-list a").evaluateAll((as) => as.map((a) => (a as HTMLAnchorElement).href));
+    expect(social).toEqual([
+      "https://www.instagram.com/slayy_braids/",
+      "https://www.instagram.com/futurabyslaybraids/",
+      "https://www.tiktok.com/@slay.braids4",
+      "https://www.tiktok.com/@futura.by.slay",
+    ]);
     // The floating button, the enquiries button, the menu and the footer all open the same chat.
     const wa = page.locator('a[href^="https://wa.me/"]');
     expect(await wa.count()).toBeGreaterThanOrEqual(4);

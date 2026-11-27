@@ -126,3 +126,10 @@ Source: `main`, merged from `claude/cool-ramanujan-0ln9mf` via [Slay-Braids/slay
   - Every link opens `https://wa.me/2349036857758` with a short greeting filled in. The site itself has no form and sends nothing.
   - The number lives in `src/content/site.ts` (`contact.whatsapp`).
 - **Studio photographs:** the owner confirmed they are real photographs.
+- **Contact details (owner, 27 Nov 2026):**
+  - Address: 11 Udeco Medical Road, Chevy View Estate, Chevron Drive.
+  - Instagram @slayy_braids and @futurabyslaybraids; TikTok @slay.braids4 and @futura.by.slay.
+  - Shown in Enquiries ("Visit us", "Follow us") and in the footer, as text links (no platform logos). Orders are taken on WhatsApp for now; full online ordering comes later.
+- **Privacy policy:** a plain-language draft for management to review (with a lawyer) is in Claude Docs. It is not on the site yet.
+- **Samsung Internet:** it still darkened the page after Update 4. The dark tokens are now also set under `@media (prefers-color-scheme: dark)` in the stylesheet, which Samsung Internet is believed to look for before forcing its own dark mode. Chrome's forced dark was already handled; Samsung Internet itself cannot be tested here and needs a check on a real phone.
+- **FUTURA features on phones:** shown in two pages (01–03, then 04–06) as you scroll, so the list fits the screen even with large text settings.
