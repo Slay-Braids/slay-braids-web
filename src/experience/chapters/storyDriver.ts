@@ -52,7 +52,7 @@ export class StoryDriver {
     }
     if (this.ch4Printed) this.ch4Printed.style.opacity = f(s4.printed);
     // Phones: the feature list replaces the intro and the title (it is taller than the screen allows for all three).
-    const titleOn = o === "portrait" ? s4.title * (1 - Math.min(1, s4.features * 1.6)) : s4.title;
+    const titleOn = o === "portrait" ? s4.title * (1 - Math.min(1, s4.features * 2.4)) : s4.title;
     if (this.ch4Kicker) this.ch4Kicker.style.opacity = f(titleOn);
     if (this.ch4Title) {
       this.ch4Title.style.opacity = f(titleOn);
@@ -60,7 +60,7 @@ export class StoryDriver {
     }
     // Phones: the features take the intro's place (one screen); desktop shows both.
     if (this.ch4Line)
-      this.ch4Line.style.opacity = f(o === "portrait" ? s4.line * (1 - Math.min(1, s4.features * 1.6)) : s4.line);
+      this.ch4Line.style.opacity = f(o === "portrait" ? s4.line * (1 - Math.min(1, s4.features * 2.4)) : s4.line);
     if (this.ch4Frame) this.ch4Frame.style.setProperty("--ch4-feat", f(s4.features));
 
     const s5 = ch5State(o, vh);

@@ -98,3 +98,24 @@ Source: `main`, merged from `claude/cool-ramanujan-0ln9mf` via [Slay-Braids/slay
 - **Smoke test, desktop 1440×900 and mobile 412×915:** 0 console errors and 0 failed requests. Every image in view loaded; the studio photos further down load lazily as you scroll. The 404 page works and the security headers are present. Screenshots are in `docs/review/prod-v3/`.
 - **Local suite on the release build:** unit 51/51; end-to-end 71 passed, 1 skipped (by design).
 - **Not done:** real-device testing (Galaxy A26, iPhone Safari, Samsung Internet).
+
+## Update 4 (27 Nov 2026): dark mode, colours on every ground, FUTURA as a product
+- **What the owner saw:** on a Samsung phone in dark mode the text was white on white, the reds were darkened and mismatched, and type crossed the braids. The cause was the browser's own "dark mode for websites" recolouring the page: the site declared light colours only, so Samsung Internet (and Chrome's auto-dark) inverted the page's colours but not the 3D braids. It was reproduced in Chromium with its forced-dark setting (`scripts/dev/forced-dark.mjs`).
+- **Dark mode:**
+  - The site follows the device's light/dark setting by default. A switch in the header (half-moon icon), the menu and the footer picks a theme, and the device remembers it; picking the system's own theme goes back to following it. `?theme=light|dark` also works.
+  - The page now declares both colour schemes ("only light"/"only dark" when a theme is picked), so browsers' forced dark mode leaves it alone. This is checked in the tests.
+- **Colours by tone:** every world, page and type colour now comes from a tone that each theme maps to a colour:
+
+  | Tone | Light theme | Dark theme | Where |
+  |---|---|---|---|
+  | paper | white | black | Chapters 1–3 and 5, Find your look, Enquiries |
+  | inverse | black | white | Chapter 3 and 4 pages, Chapter 7 |
+  | red | SLAY red | SLAY red | Chapter 4 world, Chapter 6 page, ribbon |
+
+  The studio gallery and the footer are black in both themes. Small red type on black uses a lighter red (#FF5A5F, 6.1:1); display-size red stays SLAY red.
+- **Dark stills:** the same locked scene rendered on the black world. They are the anchor (`anchor_v3-dark-*`) and the Chapter 2, 3, 5 and 7 stills (`*-dark-*`); Chapter 4 is red in both themes, so it has one still. The light theme is unchanged from Update 3. The lock test still passes.
+- **Legibility:**
+  - Header controls sit on a soft blurred pill of their ground colour.
+  - Phones get a taller reading field behind the hero headline, and the desktop hero and Chapter 7 fields are wider, so braids no longer cross the type.
+  - On phones, the FUTURA intro sits right under its title, and the feature list then replaces both, so there is no empty band of red.
+- **FUTURA:** presented as one of SLAY BRAIDS' products, not a brand: no wordmark treatment (spaced letters on the page). It is set as a chapter title under "A SLAY BRAIDS product". The intro reads "FUTURA is one of our products…", the source note says other hair brands use futura fibre too, and the footer reads "FUTURA is a SLAY BRAIDS product." A FUTURA logo is no longer on the list of missing items.

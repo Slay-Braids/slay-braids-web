@@ -1,0 +1,116 @@
+{
+  "version": "anchor_v3",
+  "theme": "dark",
+  "renderedAt": "2026-11-27T18:04:28.728Z",
+  "renderer": "headless chromium (SwiftShader)",
+  "files": [
+    {
+      "name": "anchor_v3-dark-landscape-1280.avif",
+      "width": 1280,
+      "bytes": 52048,
+      "sha256": "86a4f4a6fab08ec18c1b04d6fce77f3822d9c076f438bb09de987b68ea14541e"
+    },
+    {
+      "name": "anchor_v3-dark-landscape-1280.webp",
+      "width": 1280,
+      "bytes": 89510,
+      "sha256": "6d57ca97bf7a871b68f0df038f182e5beb2070342c8f7eabd88c1876262d5629"
+    },
+    {
+      "name": "anchor_v3-dark-landscape-1280.jpg",
+      "width": 1280,
+      "bytes": 99310,
+      "sha256": "f2597dd0c62d26886c6974e5124c2ed3b26c043ea0c81d28f27fbbee5916ffcd"
+    },
+    {
+      "name": "anchor_v3-dark-landscape-1920.avif",
+      "width": 1920,
+      "bytes": 110410,
+      "sha256": "bcf80667bb6aca03ea6546f67671d41cdd575eea2f172b569564a1a06224c19f"
+    },
+    {
+      "name": "anchor_v3-dark-landscape-1920.webp",
+      "width": 1920,
+      "bytes": 198422,
+      "sha256": "37ab4ca6e3fd2c55053f73706a1a10a4a5f28113c70ae4e8886c9bd1a206312c"
+    },
+    {
+      "name": "anchor_v3-dark-landscape-1920.jpg",
+      "width": 1920,
+      "bytes": 223701,
+      "sha256": "d2925639490b2bbeef8eecc288246719206eded0183269f94a4e4850fd815eae"
+    },
+    {
+      "name": "anchor_v3-dark-landscape-2560.avif",
+      "width": 2560,
+      "bytes": 210114,
+      "sha256": "377ba847301e5e39299b4fe1363cbef14f8b784c6ff99cef914e45c7900a0d21"
+    },
+    {
+      "name": "anchor_v3-dark-landscape-2560.webp",
+      "width": 2560,
+      "bytes": 371782,
+      "sha256": "2eca3fd801b3ff0517d2bf4ffab2870dfe6f02dbe9b3b994d43530f15ea8275b"
+    },
+    {
+      "name": "anchor_v3-dark-landscape-2560.jpg",
+      "width": 2560,
+      "bytes": 405895,
+      "sha256": "a7c43ebf445cb9d989a8dcaa52f4ae7592c0df4de182e049a0080b58f75f4185"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-720.avif",
+      "width": 720,
+      "bytes": 45928,
+      "sha256": "1889bcbc9b5f94d5942fa0c49bb48c42ac07f24a7b9209a588e476603ea46171"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-720.webp",
+      "width": 720,
+      "bytes": 77744,
+      "sha256": "c313d4c4bc8b2d1945c62597ffab9ed2ff9547a088c43830171aef0629e8cbfd"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-720.jpg",
+      "width": 720,
+      "bytes": 86630,
+      "sha256": "81e39299b57ca1b8ba75d8c6b0fd22062552e2fff65bb1906c6fc832500d005e"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-1080.avif",
+      "width": 1080,
+      "bytes": 98455,
+      "sha256": "d6d550142e8fef9fb4a4dbad855c1306da8ee9369be8ea67e1e7e61a63650004"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-1080.webp",
+      "width": 1080,
+      "bytes": 169292,
+      "sha256": "1f4a532bea5855eaaec7e40896bcdf86f738a30d70d35b62dbf750dd0cd1edb1"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-1080.jpg",
+      "width": 1080,
+      "bytes": 191485,
+      "sha256": "f4604a97ae5b5b192904db256932d49965e0e2246c97e6cd0d80ba4d88d0b87c"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-1440.avif",
+      "width": 1440,
+      "bytes": 175245,
+      "sha256": "024a3d2b44a4a3f5cbd3d6951add095398cfae211f6bf93b6dd0d635a2a5c71e"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-1440.webp",
+      "width": 1440,
+      "bytes": 299964,
+      "sha256": "560dc88fc9824bb5caf0e82db15039796907ee923ac1b344944400fb1b3a3921"
+    },
+    {
+      "name": "anchor_v3-dark-portrait-1440.jpg",
+      "width": 1440,
+      "bytes": 340242,
+      "sha256": "2a943452e2e117dc7e925b23e2c2d7b05560aab3edc0fc4618d418932cddda69"
+    }
+  ]
+}
