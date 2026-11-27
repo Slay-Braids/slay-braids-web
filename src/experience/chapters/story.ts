@@ -210,7 +210,9 @@ export function ch4State(o: Orientation, vh: number) {
   const title = smooth(range(vh, [S.ch4Lift[1] - 10, S.ch4Lift[1] + 30])) * out;
   const line = smooth(range(vh, [S.ch4Retreat[0] + 15, S.ch4Retreat[0] + 45])) * out;
   // The six FUTURA features arrive after the intro (CSS staggers them from this one value).
-  const features = range(vh, [S.ch4Retreat[0] + 55, S.ch4Retreat[0] + 95]) * out;
+  // Phones show them in two pages (01–03, then 04–06), so they get a longer stretch of scroll.
+  const featRange: R = o === "portrait" ? [S.ch4Retreat[0] + 55, S.ch4[1] - 30] : [S.ch4Retreat[0] + 55, S.ch4Retreat[0] + 95];
+  const features = range(vh, featRange) * out;
   return { printed, title, line, features, visible: printed > 0.001 || title > 0.001 || line > 0.001 };
 }
 

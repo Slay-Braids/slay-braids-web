@@ -21,7 +21,7 @@ const VIEWPORTS = [
 const THEME = process.env.THEME === "dark" ? "dark" : "light";
 const AT = {
   landscape: { ch1: 0, ch2: 150, ch3: 400, ch4: 700, ch4feat: 765, p1: 850, p2: 900, p3: 950, p4: 1000, ch6: 1195, ch7: 1375 },
-  portrait: { ch1: 0, ch2: 130, ch3: 360, ch4: 620, ch4feat: 685, p1: 800, p2: 880, p3: 960, p4: 1040, ch6: 1205, ch7: 1365 },
+  portrait: { ch1: 0, ch2: 130, ch3: 360, ch4: 620, ch4featA: 650, ch4feat: 685, p1: 800, p2: 880, p3: 960, p4: 1040, ch6: 1205, ch7: 1365 },
 };
 const PHASES = [0, 2.1];
 const lin = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);

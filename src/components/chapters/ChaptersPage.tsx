@@ -349,6 +349,28 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
                 WhatsApp <a href={whatsappHref} target="_blank" rel="noopener noreferrer">{contact.whatsapp.display}</a>
               </p>
             </div>
+            <dl className="enquire-details" data-reveal>
+              <div>
+                <dt>Visit us</dt>
+                <dd>
+                  <address>{contact.address}</address>
+                </dd>
+              </div>
+              <div>
+                <dt>Follow us</dt>
+                <dd>
+                  <ul className="social-list">
+                    {contact.social.map((x) => (
+                      <li key={x.href}>
+                        <a href={x.href} target="_blank" rel="noopener noreferrer">
+                          <span className="social-net">{x.network}</span> {x.handle}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            </dl>
           </div>
         </section>
       </main>
@@ -388,12 +410,24 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
               Simple view
             </button>
           </div>
-          <p className="footer-contact">
-            WhatsApp{" "}
-            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-              {contact.whatsapp.display}
-            </a>
-          </p>
+          <div className="footer-contact">
+            <p>
+              WhatsApp{" "}
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                {contact.whatsapp.display}
+              </a>
+            </p>
+            <address>{contact.address}</address>
+            <ul className="social-list" aria-label="SLAY BRAIDS on social media">
+              {contact.social.map((x) => (
+                <li key={x.href}>
+                  <a href={x.href} target="_blank" rel="noopener noreferrer">
+                    <span className="social-net">{x.network}</span> {x.handle}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
           <p className="footer-legal">© SLAY BRAIDS · {futura.line}</p>
         </div>
       </footer>
