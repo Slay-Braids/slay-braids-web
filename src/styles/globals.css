@@ -1421,7 +1421,8 @@ body {
 }
 @media (orientation: portrait) {
   .ch7-content {
-    bottom: calc(var(--vh) * 10);
+    /* Clear of the brand ribbon, which rises from 85 vh at the Chapter 7 landing point. */
+    bottom: calc(var(--vh) * 22);
   }
   .ch7-content .numeral {
     font-size: 64px;
