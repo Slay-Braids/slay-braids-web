@@ -4,6 +4,20 @@ Scope: Chapters 1–3 and the separate Chapter 3 transition lab, as approved (br
 Nothing from Chapters 4–7, no product recolouring, no public deployment, no paid services, no
 product claims. All copy, the portrait and the logo are marked placeholders.
 
+## 0. Status (27 Nov 2026)
+
+**Chapters 1–3 are provisionally approved as the technical and design baseline, on automated evidence only. Real-device validation is outstanding. Not approved for public release.**
+
+Validation status for the 38 tests of the A26 checklist (`docs/review/status.json`):
+automated passed 9 · partial automated coverage 14 ·
+no automated evidence 15 · real-device (A26) NOT TESTED 38 of 38.
+Assessment: `docs/M2-ch1-3-assessment.md`. Review pack: https://claude.ai/artifact/1ezWjMpK1MZt1gUddGyjdy.
+Checklist: https://claude.ai/artifact/G8pcwwkBQxrFwJbTJK798q.
+
+The TalkBack fix (27 Nov) is in this build. Off-screen chapter frames are hidden with opacity
+instead of visibility, so Chapter 2–3 text stays in the accessibility tree. One CSS file changed;
+visuals are pixel-identical. M2 e2e: 20/20.
+
 ## 1. Approval conditions
 
 | # | Condition | Result |
@@ -11,7 +25,7 @@ product claims. All copy, the portrait and the logo are marked placeholders.
 | 1 | anchor_v1 and all lock tests preserved exactly | Foundation lock test unchanged and passing (geometry both orientations, shaders, lighting uniforms, anchor framing). anchor_v1 masters, encodes and manifest unchanged (sha256 verified). No locked file edited. |
 | 2 | Ch3 transition: P99 ≤ 2 px, max ≤ 3 px, and visual review | Passes in every simulated run (§4); real-GPU accuracy not measured. Visual review: yours, using the preview and the frame sheets in `docs/review/m2/`. |
 | 3 | Strictly Chapters 1–3 + lab | Yes. The end card says "Chapter 4 · FUTURA — built after this preview is approved". |
-| 4 | Existing tests intact, failures reported | M1 e2e suite unmodified: 15 passed, 1 skipped (pointer test on mobile, skipped by design since M1). Unit 36/36. New suite: 18/18. |
+| 4 | Existing tests intact, failures reported | M1 e2e suite unmodified: 15 passed, 1 skipped (pointer test on mobile, skipped by design since M1). Unit 36/36. New suite: 20/20 (18 at first publication, plus the accessibility-tree test added with the TalkBack fix). |
 | 5 | Preview, lab, frame sheets, performance report before further approval | See the review page. |
 
 ## 2. Isolated changes (I1–I7)
@@ -67,7 +81,7 @@ viewports. 225 samples judged; 24 caught mid-fade are recorded but not judged. W
 0.62 opacity, dimmed lines measured 6.71:1; they were raised to 0.72.
 
 **Tests** (`docs/perf/test-results.json`): unit 36/36 (including the lock test, 6/6). M1 e2e,
-unmodified: 15 passed, 1 skipped (by design since M1). M2 e2e: 18/18. The M1 handoff numbers
+unmodified: 15 passed, 1 skipped (by design since M1). M2 e2e: 20/20. The M1 handoff numbers
 are identical to M1.
 
 **Lighthouse** (lab): LCP 902 ms on mobile (M1: 905), accessibility 100 on all profiles,

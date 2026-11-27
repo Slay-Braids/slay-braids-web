@@ -3,15 +3,23 @@
 Build: Chapters 1–3 preview with the TalkBack fix (`out/index.html` md5 9c3bbabf…; preview
 https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn). Assessment only; no implementation change.
 
-## Recommendation
+## Decision recorded (27 Nov 2026)
 
-**Provisional approval is supportable. Suggested wording:** "Chapters 1–3 are provisionally
-approved as the design and technical baseline, on automated evidence only. Real-device validation
-is outstanding. Not approved for public release."
+**Chapters 1–3 are provisionally approved as the technical and design baseline, on automated evidence only. Real-device validation is outstanding. Not approved for public release.**
 
-The evidence shows no genuine blocker for that. No check that was run has failed. It does not
-show how the experience performs or feels on a real phone. No result here should be read as a
-device result.
+This follows the recommendation below. The evidence shows no genuine blocker for a provisional
+approval. No check that was run has failed. It does not show how the experience performs or
+feels on a real phone, and no result here should be read as a device result.
+
+**Validation status** (the same data as the checklist and the review pack,
+`docs/review/status.json`), for the 38 tests of the A26 checklist:
+
+| Status | Tests |
+|---|---|
+| Automated: passed | 9 |
+| Partial automated coverage | 14 |
+| No automated evidence | 15 |
+| Real-device (A26): NOT TESTED | 38 of 38 |
 
 ## What the automated evidence shows
 
