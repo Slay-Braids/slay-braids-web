@@ -112,10 +112,13 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
           <div className="chapter-frame ch4-frame" data-ch4-frame>
             <div className="ch4-printed" data-ch4-printed aria-hidden="true">
               <p className="numeral numeral-ivory">04</p>
+              <p className="ch4-printed-kicker">{futura.kicker}</p>
               <p className="ch4-printed-name font-display">{futura.name}</p>
-              <p className="ch4-printed-by">{futura.by}</p>
             </div>
             <div className="ch4-content" data-ch4-content>
+              <p className="ch4-kicker" data-ch4-kicker>
+                {futura.kicker}
+              </p>
               <h2 id="ch4-title" className="ch4-title font-display" data-ch4-title>
                 {futura.name}
                 <span className="ch4-by">
@@ -264,7 +267,7 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
           </div>
         </div>
 
-        <section className="find-look" data-ground-section="white" aria-labelledby="find-look-title">
+        <section className="find-look" data-ground-section="paper" aria-labelledby="find-look-title">
           <div className="find-look-inner">
             <h2 id="find-look-title" className="find-look-title font-display">
               Find your <em>look</em>
@@ -325,7 +328,7 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
           id="enquire"
           className="enquire-section"
           data-opaque
-          data-ground-section="white"
+          data-ground-section="paper"
           aria-labelledby="enquire-title"
         >
           <div className="enquire-inner">
@@ -366,9 +369,14 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
               </li>
             </ul>
           </nav>
-          <button type="button" className="footer-view" data-view-toggle>
-            Simple view
-          </button>
+          <div className="footer-switches">
+            <button type="button" className="footer-view" data-theme-toggle aria-pressed="false">
+              <span data-theme-label>Dark mode</span>
+            </button>
+            <button type="button" className="footer-view" data-view-toggle>
+              Simple view
+            </button>
+          </div>
           <p className="footer-legal">© SLAY BRAIDS · {futura.line}</p>
         </div>
       </footer>

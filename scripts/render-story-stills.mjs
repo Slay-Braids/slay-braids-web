@@ -28,6 +28,9 @@ import { mkdir, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const BASE = process.env.BASE ?? "http://127.0.0.1:4173/";
+// v4: THEME=dark renders the dark-theme stills (files: m3-<ch>-dark-…, own manifest).
+const THEME = process.env.THEME === "dark" ? "dark" : "light";
+const SUFFIX = THEME === "dark" ? "-dark" : "";
 const DEST = path.resolve("public/chapters");
 const MASTERS = path.resolve("assets/chapters"); // gitignored, like the anchor masters
 const SIZE = { landscape: [2560, 1440], portrait: [1440, 2560] };
@@ -51,7 +54,7 @@ const manifest = {
 for (const orientation of ["landscape", "portrait"]) {
   const [w, h] = SIZE[orientation];
   const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
-  await page.goto(`${BASE}?tier=A&nodowngrade=1&freeze=1&nodamp=1`);
+  await page.goto(`${BASE}?tier=A&nodowngrade=1&freeze=1&nodamp=1&theme=${THEME}`);
   await page.waitForFunction(() => window.__slay?.live === true, null, { timeout: 180000 });
   manifest.renderer = "headless chromium (SwiftShader)";
   await page.addStyleTag({
@@ -59,6 +62,7 @@ for (const orientation of ["landscape", "portrait"]) {
       "main, header, footer, .grain, .chapter-index, [data-testid=banner], .paper-layer, .chapter-frame { visibility: hidden !important; }",
   });
   for (const [ch, vh] of Object.entries(POSES[orientation])) {
+    if (THEME === "dark" && ch === "ch4") continue; // red world in both themes: one still
     const edge = await page.evaluate(async (vh) => {
       const c = window.__chapters;
       const s = c.currentScene;
@@ -73,7 +77,7 @@ for (const orientation of ["landscape", "portrait"]) {
     const png = await page.screenshot({ animations: "disabled" });
     await page.evaluate(() => window.__chapters.resume?.());
     void edge;
-    await writeFile(path.join(MASTERS, `m3-${ch}-${orientation}-master.png`), png); // not served
+    await writeFile(path.join(MASTERS, `m3-${ch}${SUFFIX}-${orientation}-master.png`), png); // not served
     for (const width of WIDTHS[orientation]) {
       const img = sharp(png).resize({ width, kernel: "lanczos3" });
       for (const [ext, enc] of [
@@ -81,7 +85,7 @@ for (const orientation of ["landscape", "portrait"]) {
         ["webp", img.clone().webp({ quality: 82 })],
         ["jpg", img.clone().jpeg({ quality: 84, mozjpeg: true })],
       ]) {
-        const name = `m3-${ch}-${orientation}-${width}.${ext}`;
+        const name = `m3-${ch}${SUFFIX}-${orientation}-${width}.${ext}`;
         await enc.toFile(path.join(DEST, name));
         const buf = await readFile(path.join(DEST, name));
         manifest.files.push({
@@ -97,4 +101,4 @@ for (const orientation of ["landscape", "portrait"]) {
   await page.close();
 }
 await browser.close();
-await writeFile(path.join(DEST, "m3-manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+await writeFile(path.join(DEST, `m3-manifest${SUFFIX}.json`), JSON.stringify(manifest, null, 2) + "\n");

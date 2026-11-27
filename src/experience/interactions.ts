@@ -6,6 +6,7 @@
  * chapter link or a keyboard focus must move the scroll position to where that content is on
  * screen. In the static spreads everything is in normal flow and native behaviour is kept.
  */
+import { initTheme } from "./theme";
 import { landingVh, productVh } from "./chapters/story";
 import { vhPx } from "./chapters/viewport";
 
@@ -96,6 +97,7 @@ export function initInteractions(root: HTMLElement) {
   initShowcase(root);
   initEnquiry(root);
   initViewToggle();
+  initTheme();
 }
 
 /**

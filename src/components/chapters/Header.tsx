@@ -26,6 +26,19 @@ export function Header({ assetBase = "/" }: { assetBase?: string }) {
           <Logo base={assetBase} variant="white" width={112} alt="" className="logo-white" />
         </a>
         <div className="header-actions" data-ground="ink">
+          <button
+            type="button"
+            className="theme-toggle"
+            data-theme-toggle
+            data-theme-icon
+            aria-pressed="false"
+            aria-label="Switch to dark mode"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" />
+            </svg>
+          </button>
           <button type="button" className="motion-toggle" data-motion-toggle aria-pressed="false">
             <span data-motion-label>Pause video</span>
           </button>
@@ -70,6 +83,9 @@ export function Header({ assetBase = "/" }: { assetBase?: string }) {
             Enquiries
           </a>
           <div className="menu-view">
+            <button type="button" className="menu-view-btn" data-theme-toggle aria-pressed="false">
+              <span data-theme-label>Dark mode</span>
+            </button>
             <button type="button" className="menu-view-btn" data-view-toggle>
               Simple view
             </button>

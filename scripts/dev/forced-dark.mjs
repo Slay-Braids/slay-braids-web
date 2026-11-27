@@ -1,0 +1,12 @@
+import { chromium, devices } from "@playwright/test";
+const [, , url, out] = process.argv;
+const b = await chromium.launch({ args: ["--blink-settings=forceDarkModeEnabled=true", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const ctx = await b.newContext({ ...devices["Galaxy S9+"], colorScheme: "dark" });
+const p = await ctx.newPage();
+await p.goto(url + "/?nodowngrade=1");
+await p.waitForFunction(() => window.__slay?.live === true, null, { timeout: 120000 }).catch(() => {});
+await p.waitForTimeout(2000);
+await p.screenshot({ path: out + "-0.png" });
+await p.evaluate(() => scrollTo(0, 560 * innerHeight / 100)); await p.waitForTimeout(2500);
+await p.screenshot({ path: out + "-1.png" });
+await b.close();

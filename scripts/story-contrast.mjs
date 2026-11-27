@@ -17,9 +17,11 @@ const VIEWPORTS = [
   { name: "mobile 412×915", width: 412, height: 915, mobile: true, o: "portrait" },
   { name: "mobile 390×844", width: 390, height: 844, mobile: true, o: "portrait" },
 ];
+// v4: all seven chapters at their resting positions (and the FUTURA features), per theme.
+const THEME = process.env.THEME === "dark" ? "dark" : "light";
 const AT = {
-  landscape: { ch4: 685, p1: 770, p2: 820, p3: 870, ch6: 1065, ch7: 1245 },
-  portrait: { ch4: 605, p1: 720, p2: 800, p3: 880, ch6: 1045, ch7: 1205 },
+  landscape: { ch1: 0, ch2: 150, ch3: 400, ch4: 700, ch4feat: 765, p1: 850, p2: 900, p3: 950, p4: 1000, ch6: 1195, ch7: 1375 },
+  portrait: { ch1: 0, ch2: 130, ch3: 360, ch4: 620, ch4feat: 685, p1: 800, p2: 880, p3: 960, p4: 1040, ch6: 1205, ch7: 1365 },
 };
 const PHASES = [0, 2.1];
 const lin = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
@@ -37,6 +39,7 @@ for (const vp of VIEWPORTS) {
       deviceScaleFactor: 1,
       isMobile: vp.mobile,
       hasTouch: vp.mobile,
+      colorScheme: THEME,
     });
     await page.goto(`${BASE}?tier=A&nodowngrade=1&nodamp=1&windt=${phase}`);
     await page.waitForFunction(() => window.__slay?.live === true, null, { timeout: 180000 });
@@ -54,7 +57,7 @@ for (const vp of VIEWPORTS) {
         await frames(2);
         const els = [
           ...document.querySelectorAll(
-            ".ch4-frame *, .ch5-frame *, .ch6-frame *, .ch7-frame *",
+            ".ch1 *, .ch2-copy *, .ch3-content *, .ch4-frame *, .ch5-frame *, .ch6-frame *, .ch7-frame *, .header-actions *",
           ),
         ].filter(
           (e) =>
@@ -132,11 +135,12 @@ const worst = [...results].sort((a, b) => a.ratio / a.need - b.ratio / b.need).s
 const summary = {
   generated: new Date().toISOString(),
   renderer: "headless Chromium, SwiftShader (simulated GPU)",
+  theme: THEME,
   samples: results.length,
   failingAA: fails.length,
   belowAAA: results.filter((r) => !r.aaa).length,
   worst,
 };
 await mkdir("docs/perf", { recursive: true });
-await writeFile("docs/perf/m3-contrast.json", JSON.stringify({ summary, results }, null, 2) + "\n");
+await writeFile(`docs/perf/v4-contrast-${THEME}.json`, JSON.stringify({ summary, results }, null, 2) + "\n");
 console.log(JSON.stringify(summary, null, 1));

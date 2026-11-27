@@ -62,7 +62,7 @@ third-party branding (the venue's name sign is visible in several clips).
 - **Not used:** the "Main Products of futura" list, and claims specific to futura LF or ST.
 
 ## 3. Not found in the Drive (needed from SLAY BRAIDS)
-1. **FUTURA logo or FUTURA branding.** FUTURA is set in the site's display typeface, with "by SLAY BRAIDS".
+1. ~~FUTURA logo~~: not needed. FUTURA is one of SLAY BRAIDS' products, not a brand (owner, 27 Nov 2026), and futura fibre is used by other hair brands too. It is set as a plain product name: "FUTURA by SLAY BRAIDS", under "A SLAY BRAIDS product".
 2. **Official names:** product, style and shade names. Looks are shown as "Look 01–04".
 3. **Prices, specifications and approved product claims.** None are published.
 4. **Which clips show FUTURA products** (see the open question in the footage brief).

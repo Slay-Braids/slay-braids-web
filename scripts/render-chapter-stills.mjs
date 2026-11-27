@@ -21,6 +21,9 @@ import { mkdir, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const BASE = process.env.BASE ?? "http://127.0.0.1:4173/";
+// v4: THEME=dark renders the dark-theme stills (files: m2-<ch>-dark-…, own manifest).
+const THEME = process.env.THEME === "dark" ? "dark" : "light";
+const SUFFIX = THEME === "dark" ? "-dark" : "";
 const DEST = path.resolve("public/chapters");
 const MASTERS = path.resolve("assets/chapters"); // gitignored, like the anchor masters
 const SIZE = { landscape: [2560, 1440], portrait: [1440, 2560] };
@@ -45,7 +48,7 @@ const manifest = {
 for (const orientation of ["landscape", "portrait"]) {
   const [w, h] = SIZE[orientation];
   const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
-  await page.goto(`${BASE}?tier=A&nodowngrade=1&freeze=1&nodamp=1`);
+  await page.goto(`${BASE}?tier=A&nodowngrade=1&freeze=1&nodamp=1&theme=${THEME}`);
   await page.waitForFunction(() => window.__slay?.live === true, null, { timeout: 180000 });
   manifest.renderer = "headless chromium (SwiftShader)";
   await page.addStyleTag({
@@ -68,7 +71,7 @@ for (const orientation of ["landscape", "portrait"]) {
     await page.evaluate(() => window.__chapters.resume?.());
     if (ch === "ch3")
       manifest.edges[orientation] = edge.map(([x, y]) => [+x.toFixed(5), +y.toFixed(5)]);
-    await writeFile(path.join(MASTERS, `m2-${ch}-${orientation}-master.png`), png); // not served
+    await writeFile(path.join(MASTERS, `m2-${ch}${SUFFIX}-${orientation}-master.png`), png); // not served
     for (const width of WIDTHS[orientation]) {
       const img = sharp(png).resize({ width, kernel: "lanczos3" });
       for (const [ext, enc] of [
@@ -76,7 +79,7 @@ for (const orientation of ["landscape", "portrait"]) {
         ["webp", img.clone().webp({ quality: 82 })],
         ["jpg", img.clone().jpeg({ quality: 84, mozjpeg: true })],
       ]) {
-        const name = `m2-${ch}-${orientation}-${width}.${ext}`;
+        const name = `m2-${ch}${SUFFIX}-${orientation}-${width}.${ext}`;
         await enc.toFile(path.join(DEST, name));
         const buf = await readFile(path.join(DEST, name));
         manifest.files.push({
@@ -92,4 +95,4 @@ for (const orientation of ["landscape", "portrait"]) {
   await page.close();
 }
 await browser.close();
-await writeFile(path.join(DEST, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+await writeFile(path.join(DEST, `manifest${SUFFIX}.json`), JSON.stringify(manifest, null, 2) + "\n");

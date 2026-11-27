@@ -12,6 +12,7 @@ export class StoryDriver {
   private ch4Frame: HTMLElement | null;
   private ch4Printed: HTMLElement | null;
   private ch4Title: HTMLElement | null;
+  private ch4Kicker: HTMLElement | null;
   private ch4Line: HTMLElement | null;
   private ch5Frame: HTMLElement | null;
   private productEls: HTMLElement[];
@@ -30,6 +31,7 @@ export class StoryDriver {
     this.ch4Frame = q("[data-ch4-frame]");
     this.ch4Printed = q("[data-ch4-printed]");
     this.ch4Title = q("[data-ch4-title]");
+    this.ch4Kicker = q("[data-ch4-kicker]");
     this.ch4Line = q("[data-ch4-line]");
     this.ch5Frame = q("[data-ch5-frame]");
     this.productEls = [...root.querySelectorAll<HTMLElement>("[data-product]")];
@@ -49,8 +51,11 @@ export class StoryDriver {
       this.ch4Frame.style.setProperty("--field", f(Math.max(s4.title, s4.line, s4.features)));
     }
     if (this.ch4Printed) this.ch4Printed.style.opacity = f(s4.printed);
+    // Phones: the feature list replaces the intro and the title (it is taller than the screen allows for all three).
+    const titleOn = o === "portrait" ? s4.title * (1 - Math.min(1, s4.features * 1.6)) : s4.title;
+    if (this.ch4Kicker) this.ch4Kicker.style.opacity = f(titleOn);
     if (this.ch4Title) {
-      this.ch4Title.style.opacity = f(s4.title);
+      this.ch4Title.style.opacity = f(titleOn);
       this.ch4Title.style.transform = `translate3d(0, ${((1 - s4.title) * 24).toFixed(1)}px, 0)`;
     }
     // Phones: the features take the intro's place (one screen); desktop shows both.

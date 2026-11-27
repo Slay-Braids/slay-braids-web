@@ -1613,7 +1613,7 @@ body {
 :root[data-static="true"] .ch4-printed {
   display: none;
 }
-:root[data-static="true"] :is(.ch4-title, .ch4-line, .ch7-content, .ch6-spread) {
+:root[data-static="true"] :is(.ch4-title, .ch4-kicker, .ch4-line, .ch7-content, .ch6-spread) {
   opacity: 1 !important;
   transform: none !important;
 }
@@ -2130,19 +2130,48 @@ body {
 }
 
 /* =====================================================================================
-   v3 "BRIGHT": white by default. The world behind the braids changes under the pages:
-   Ch1–3 white · Ch3/4 black page · Ch4 SLAY red · Ch5 white · Ch6 red page · Ch7 black.
-   Contrast: black on white 19.8:1 · white on red 6.0:1 · red on white 5.9:1 (red type on
-   black is used only at display sizes, 3.2:1 ≥ 3:1 large text).
+   v3 "BRIGHT", v4 THEMES. Two themes, the system setting by default (html[data-theme]):
+   light — white "paper", black "inverse"; dark — black paper, white inverse. SLAY red is the same
+   in both. The world behind the braids changes under the pages, by tone:
+   Ch1–3 paper · Ch3/4 inverse page · Ch4 red · Ch5 paper · Ch6 red page · Ch7 inverse.
+   Every colour below comes from a tone, so type always matches the ground it sits on.
+   Contrast: black/white 19.8:1 · white on red 6.0:1 · red on white 5.9:1 · red type on black only
+   at display sizes (3.2:1 ≥ 3:1 large text); small red type on black uses --red-ink (6.1:1).
+   The page declares both schemes, so browsers' own "dark mode for websites" leaves it alone.
    ===================================================================================== */
 :root {
-  color-scheme: light;
-  --scene-bg: #ffffff;
-  --ink-2: rgb(10 10 10 / 0.68);
+  color-scheme: light dark;
+  --paper: #ffffff;
+  --paper-rgb: 255 255 255;
+  --on-paper: #0a0a0a;
+  --on-paper-rgb: 10 10 10;
+  --on-paper-2: rgb(10 10 10 / 0.7);
+  --inverse: #0a0a0a;
+  --inverse-rgb: 10 10 10;
+  --on-inverse: #ffffff;
+  --on-inverse-rgb: 255 255 255;
+  --on-inverse-2: rgb(255 255 255 / 0.76);
+  /* Small red type on paper (true red on white; a lighter red on black for AA). */
+  --red-ink: #c60d13;
+  --scene-bg: var(--paper);
+  --ink-2: var(--on-paper-2);
+}
+:root[data-theme="dark"] {
+  --paper: #0a0a0a;
+  --paper-rgb: 10 10 10;
+  --on-paper: #ffffff;
+  --on-paper-rgb: 255 255 255;
+  --on-paper-2: rgb(255 255 255 / 0.76);
+  --inverse: #ffffff;
+  --inverse-rgb: 255 255 255;
+  --on-inverse: #0a0a0a;
+  --on-inverse-rgb: 10 10 10;
+  --on-inverse-2: rgb(10 10 10 / 0.7);
+  --red-ink: #ff5a5f;
 }
 html {
-  background: #ffffff;
-  color: var(--color-ink);
+  background: var(--paper);
+  color: var(--on-paper);
 }
 .grain {
   opacity: 0.035;
@@ -2154,26 +2183,35 @@ html {
   mix-blend-mode: normal;
 }
 .skip-link {
-  background: var(--color-ink);
-  color: var(--color-white);
+  background: var(--on-paper);
+  color: var(--paper);
 }
 :focus-visible {
-  outline-color: var(--color-ink);
+  outline-color: var(--on-paper);
 }
 :root[data-world="black"] :focus-visible,
 :root[data-world="red"] :focus-visible,
 .ch4-frame :focus-visible,
 .ch6-frame :focus-visible,
-.ch7-frame :focus-visible,
 .site-footer :focus-visible,
-.site-menu :focus-visible {
+.site-menu :focus-visible,
+.studio :focus-visible {
   outline-color: var(--color-white);
 }
+:root[data-world="white"] :focus-visible,
+.ch7-frame :focus-visible {
+  outline-color: var(--on-paper);
+}
+:root[data-world="white"] .ch7-frame :focus-visible,
+:root[data-theme="light"] .ch7-frame :focus-visible {
+  outline-color: var(--on-inverse);
+}
 
-/* Header: colour from what lies under each part (white world → black type, red logo; red
-   world → white type, white logo; black → white type, red logo). */
+/* Header: colour from what lies under each part (white ground → black type, red logo; red →
+   white type, white logo; black → white type, red logo). The controls sit on a soft pill of
+   their ground colour, so they stay legible where braids pass under them. */
 .site-header {
-  color: var(--color-ink);
+  color: var(--on-paper);
 }
 .site-header [data-ground="black"],
 .site-header [data-ground="red"],
@@ -2186,6 +2224,57 @@ html {
 .chapter-index[data-ground="ivory"] {
   color: var(--color-ink);
 }
+.header-actions {
+  gap: 0.35rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: rgb(var(--paper-rgb) / 0.62);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition:
+    color 300ms,
+    background-color 300ms;
+}
+.header-actions[data-ground="white"] {
+  background: rgb(255 255 255 / 0.66);
+}
+.header-actions[data-ground="black"] {
+  background: rgb(10 10 10 / 0.5);
+}
+.header-actions[data-ground="red"] {
+  background: rgb(198 13 19 / 0.55);
+}
+.header-actions .motion-toggle,
+.header-actions .menu-button {
+  padding: 0 0.7rem;
+}
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.theme-toggle svg {
+  transition: transform 500ms var(--ease-cinematic);
+}
+:root[data-theme="dark"] .theme-toggle svg {
+  transform: rotate(180deg);
+}
+@media (max-width: 480px) {
+  .header-actions {
+    gap: 0;
+  }
+  .header-actions .motion-toggle,
+  .header-actions .menu-button {
+    padding: 0 0.55rem;
+    font-size: 13px;
+  }
+}
 .logo-slot .logo-white {
   display: none;
 }
@@ -2196,69 +2285,98 @@ html {
   display: block;
 }
 .chapter-index {
-  color: var(--color-ink);
+  color: var(--on-paper);
 }
 .chapter-index[data-ground="red"] a[aria-current="true"]::after {
   background: var(--color-white);
 }
 
-/* Chapter 1 on white */
+/* Chapter 1 on paper: a reading field behind the headline, so the braids never cross the type
+   (desktop: from the left; phones: from the bottom, where the type sits). */
 .scrim-bottom {
-  background: linear-gradient(to top, rgb(255 255 255 / 0.92), rgb(255 255 255 / 0) 60%);
+  background: linear-gradient(to top, rgb(var(--paper-rgb) / 0.94), rgb(var(--paper-rgb) / 0) 60%);
 }
+.ch1 .scrim-bottom {
+  height: calc(var(--vh) * 74);
+  background: linear-gradient(
+    to top,
+    rgb(var(--paper-rgb) / 0.97) 0%,
+    rgb(var(--paper-rgb) / 0.94) 60%,
+    rgb(var(--paper-rgb) / 0.78) 70%,
+    rgb(var(--paper-rgb) / 0.35) 82%,
+    rgb(var(--paper-rgb) / 0) 94%
+  );
+}
+:root[data-static="true"] .ch1 .scrim-bottom {
+  height: 74%;
+}
+.hero-title,
 .hero-sub,
 .ch2-text {
-  color: var(--color-ink);
+  color: var(--on-paper);
 }
 .numeral-label {
-  color: var(--color-ink);
+  color: var(--on-paper);
 }
 .btn-secondary {
-  border-color: rgb(10 10 10 / 0.45);
-  color: var(--color-ink);
+  border-color: rgb(var(--on-paper-rgb) / 0.45);
+  color: var(--on-paper);
 }
 .btn-secondary:hover {
-  border-color: var(--color-ink);
+  border-color: var(--on-paper);
 }
 .ch7-frame .btn-secondary {
-  border-color: rgb(255 255 255 / 0.5);
-  color: var(--color-white);
+  border-color: rgb(var(--on-inverse-rgb) / 0.5);
+  color: var(--on-inverse);
+}
+.ch7-frame .btn-secondary:hover {
+  border-color: var(--on-inverse);
 }
 .scroll-cue {
-  color: var(--ink-2);
+  color: var(--on-paper-2);
 }
 
-/* Chapter 2 on white: a white reading field over the braids */
+/* Chapter 2 on paper: a reading field over the braids */
 .ch2-field {
-  background: linear-gradient(to right, rgb(255 255 255 / 0.9) 0%, rgb(255 255 255 / 0.86) 34%, rgb(255 255 255 / 0) 52%);
+  background: linear-gradient(
+    to right,
+    rgb(var(--paper-rgb) / 0.92) 0%,
+    rgb(var(--paper-rgb) / 0.88) 34%,
+    rgb(var(--paper-rgb) / 0) 52%
+  );
 }
 .ch2-copy,
 .ch2-title {
-  color: var(--color-ink);
+  color: var(--on-paper);
 }
 .film-caption {
-  color: var(--ink-2);
+  color: var(--on-paper-2);
 }
 @media (orientation: portrait) {
   .ch2-field {
-    background: linear-gradient(to top, rgb(255 255 255 / 0.96) 0%, rgb(255 255 255 / 0.92) 66%, rgb(255 255 255 / 0) 84%);
+    background: linear-gradient(
+      to top,
+      rgb(var(--paper-rgb) / 0.97) 0%,
+      rgb(var(--paper-rgb) / 0.93) 66%,
+      rgb(var(--paper-rgb) / 0) 84%
+    );
   }
 }
 
-/* Chapter 3: the black page meets the braids */
+/* Chapter 3: the inverse page meets the braids */
 .ch3-content,
 .ch3-text,
 .portrait-caption {
-  color: var(--color-white);
+  color: var(--on-inverse);
 }
 .portrait-mount {
   box-shadow: none;
-  background: #161616;
+  background: rgb(var(--on-inverse-rgb) / 0.08);
 }
 
-/* Chapter 4: printed on the black page, then FUTURA in the red world */
+/* Chapter 4: printed on the inverse page, then FUTURA in the red world */
 .ch4-printed {
-  color: var(--color-white);
+  color: var(--on-inverse);
 }
 .ch4-frame::before {
   background: linear-gradient(90deg, rgb(198 13 19 / 0.92) 0%, rgb(198 13 19 / 0.78) 40%, rgb(198 13 19 / 0) 66%);
@@ -2279,43 +2397,95 @@ html {
 }
 @media (orientation: portrait) {
   .ch4-frame::before {
-    background: linear-gradient(0deg, rgb(198 13 19 / 0.95) 0%, rgb(198 13 19 / 0.86) 62%, rgb(198 13 19 / 0) 86%);
+    background: linear-gradient(0deg, rgb(198 13 19 / 0.96) 0%, rgb(198 13 19 / 0.9) 62%, rgb(198 13 19 / 0) 86%);
+  }
+}
+/* v4: FUTURA is one of SLAY BRAIDS' products, not a brand: no wordmark treatment. The name is
+   set like every other chapter title, under a plain kicker. */
+.ch4-kicker,
+.ch4-printed-kicker {
+  margin: 0 0 0.9rem;
+  font: 500 12px var(--font-sans);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.ch4-kicker {
+  color: rgb(255 255 255 / 0.85);
+  opacity: 0;
+}
+.ch4-printed-kicker {
+  margin: 0.4rem 0 0;
+  color: var(--on-inverse-2);
+}
+.ch4-printed-name {
+  letter-spacing: -0.01em;
+  margin-right: 0;
+  font-size: clamp(2.6rem, 1rem + 5vw, 6rem);
+}
+.ch4-title {
+  letter-spacing: -0.01em;
+}
+.ch4-by {
+  letter-spacing: 0.24em;
+  font-size: clamp(0.78rem, 0.7rem + 0.2vw, 0.92rem);
+}
+@media (orientation: portrait) {
+  /* Phones: the intro sits right under the title; the feature list then takes over the whole
+     block (the title steps back as it arrives), so there is never an empty band of red. */
+  :root:not([data-static="true"]) .ch4-feat {
+    position: absolute;
+    inset: auto 0 0 0;
+    margin: 0;
   }
 }
 
-/* Chapter 5 on white */
+/* Chapter 5 on paper */
 .ch5-frame {
-  color: var(--color-ink);
+  color: var(--on-paper);
 }
 .ch5-frame::before {
-  background: linear-gradient(90deg, rgb(255 255 255 / 0.94) 0%, rgb(255 255 255 / 0.84) 44%, rgb(255 255 255 / 0) 72%);
+  background: linear-gradient(
+    90deg,
+    rgb(var(--paper-rgb) / 0.95) 0%,
+    rgb(var(--paper-rgb) / 0.86) 44%,
+    rgb(var(--paper-rgb) / 0) 72%
+  );
 }
 @media (orientation: portrait) {
   .ch5-frame::before {
-    background: linear-gradient(0deg, rgb(255 255 255 / 0.96) 0%, rgb(255 255 255 / 0.9) 72%, rgb(255 255 255 / 0) 94%);
+    background: linear-gradient(
+      0deg,
+      rgb(var(--paper-rgb) / 0.97) 0%,
+      rgb(var(--paper-rgb) / 0.92) 72%,
+      rgb(var(--paper-rgb) / 0) 94%
+    );
   }
+}
+.ch5-title {
+  color: var(--on-paper);
 }
 .ch5-intro,
 .look-text,
 .showcase-counter {
-  color: var(--ink-2);
+  color: var(--on-paper-2);
 }
 .showcase-counter span,
 .product-count,
 .look-name,
 .product-name {
-  color: var(--color-ink);
+  color: var(--on-paper);
 }
 .showcase-btn {
-  border-color: rgb(10 10 10 / 0.35);
-  color: var(--color-ink);
+  border-color: rgb(var(--on-paper-rgb) / 0.35);
+  color: var(--on-paper);
+  background: rgb(var(--paper-rgb) / 0.5);
 }
 .showcase-btn:hover {
-  border-color: var(--color-ink);
+  border-color: var(--on-paper);
 }
 .product-photo {
   border: 0;
-  box-shadow: 0 24px 60px -24px rgb(10 10 10 / 0.45);
+  box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.45);
 }
 
 /* Chapter 6: printed on the red page */
@@ -2336,17 +2506,28 @@ html {
   box-shadow: 0 24px 60px -28px rgb(0 0 0 / 0.55);
 }
 
-/* Chapter 7 in the black world */
+/* Chapter 7 in the inverse world */
 .ch7-frame,
+.ch7-title,
 .ch7-sub {
-  color: var(--color-white);
+  color: var(--on-inverse);
 }
 .ch7-frame::before {
-  background: linear-gradient(90deg, rgb(10 10 10 / 0.86) 0%, rgb(10 10 10 / 0.7) 34%, rgb(10 10 10 / 0) 62%);
+  background: linear-gradient(
+    90deg,
+    rgb(var(--inverse-rgb) / 0.88) 0%,
+    rgb(var(--inverse-rgb) / 0.72) 34%,
+    rgb(var(--inverse-rgb) / 0) 62%
+  );
 }
 @media (orientation: portrait) {
   .ch7-frame::before {
-    background: linear-gradient(0deg, rgb(10 10 10 / 0.92) 0%, rgb(10 10 10 / 0.82) 45%, rgb(10 10 10 / 0) 72%);
+    background: linear-gradient(
+      0deg,
+      rgb(var(--inverse-rgb) / 0.94) 0%,
+      rgb(var(--inverse-rgb) / 0.86) 45%,
+      rgb(var(--inverse-rgb) / 0) 72%
+    );
   }
 }
 
@@ -2394,12 +2575,12 @@ html {
   animation: none;
 }
 
-/* Find your look: the looks at a glance (white) */
+/* Find your look: the looks at a glance (paper) */
 .find-look {
   position: relative;
   z-index: 2;
-  background: #ffffff;
-  color: var(--color-ink);
+  background: var(--paper);
+  color: var(--on-paper);
   padding: calc(var(--vh) * 12) var(--margin) calc(var(--vh) * 10);
 }
 .find-look-inner {
@@ -2417,7 +2598,7 @@ html {
 .find-look-intro {
   margin: 1rem 0 2.4rem;
   max-width: 46ch;
-  color: var(--ink-2);
+  color: var(--on-paper-2);
   line-height: 1.6;
 }
 .find-look-grid {
@@ -2443,7 +2624,7 @@ html {
 }
 .find-look-grid .tile-media {
   overflow: hidden;
-  background: #f1f1f1;
+  background: rgb(var(--on-paper-rgb) / 0.06);
 }
 .find-look-grid img {
   transition: transform 700ms var(--ease-cinematic);
@@ -2455,7 +2636,7 @@ html {
 .tile-num {
   font: 500 12px var(--font-sans);
   letter-spacing: 0.2em;
-  color: var(--color-red);
+  color: var(--red-ink);
 }
 .tile-name {
   font-family: var(--font-display);
@@ -2468,48 +2649,64 @@ html {
   }
 }
 
-/* Enquiries on white; footer black */
+/* Enquiries on paper; footer always black */
 .enquire-section {
-  background: #ffffff;
-  color: var(--color-ink);
-  border-top: 1px solid rgb(10 10 10 / 0.08);
+  background: var(--paper);
+  color: var(--on-paper);
+  border-top: 1px solid rgb(var(--on-paper-rgb) / 0.08);
 }
 .enquire-status {
-  color: var(--ink-2);
+  color: var(--on-paper-2);
 }
 .site-footer {
   background: var(--color-ink);
   color: var(--color-mist);
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+.footer-switches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-self: start;
 }
 
 /* Static / simple view: each chapter on its own world colour */
 :root[data-static="true"] [data-ch2-frame],
 :root[data-static="true"] [data-ch3-frame],
 :root[data-static="true"] .ch5-frame {
-  background: #ffffff;
+  background: var(--paper);
 }
 :root[data-static="true"] .ch4-frame,
 :root[data-static="true"] .ch6-frame {
   background: var(--color-red);
 }
 :root[data-static="true"] .ch7-frame {
-  background: var(--color-ink);
+  background: var(--inverse);
 }
 :root[data-static="true"] .ch4-frame::before {
   z-index: 1;
   background: linear-gradient(180deg, rgb(198 13 19 / 0.4) 0, rgb(198 13 19 / 0.9) calc(var(--vh) * 40), rgb(198 13 19 / 0.96) 100%);
 }
 :root[data-static="true"] .ch5-frame::before {
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.4) 0, rgb(255 255 255 / 0.9) calc(var(--vh) * 40), rgb(255 255 255 / 0.96) 100%);
+  background: linear-gradient(
+    180deg,
+    rgb(var(--paper-rgb) / 0.4) 0,
+    rgb(var(--paper-rgb) / 0.9) calc(var(--vh) * 40),
+    rgb(var(--paper-rgb) / 0.96) 100%
+  );
 }
 
-/* The studio edit: a black gallery of the studio photographs */
+/* The studio edit: a black gallery of the studio photographs (both themes) */
 .studio {
   position: relative;
   z-index: 2;
   background: var(--color-ink);
   color: var(--color-white);
   padding: calc(var(--vh) * 12) var(--margin) calc(var(--vh) * 12);
+}
+:root[data-theme="dark"] .studio {
+  background: #121212;
+  border-block: 1px solid rgb(255 255 255 / 0.06);
 }
 .studio-inner {
   max-width: 1280px;
@@ -2588,14 +2785,19 @@ html {
   }
 }
 
-/* Chapter 1 (desktop): a soft white reading field behind the headline, so the braids never
-   cross the type. It belongs to the hero and leaves with it. */
+/* Chapter 1 (desktop): a soft reading field behind the headline, so the braids never cross the
+   type. It belongs to the hero and leaves with it. */
 @media (orientation: landscape) {
   .ch1::before {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(90deg, rgb(255 255 255 / 0.97) 0%, rgb(255 255 255 / 0.95) 38%, rgb(255 255 255 / 0) 62%);
+    background: linear-gradient(
+      90deg,
+      rgb(var(--paper-rgb) / 0.97) 0%,
+      rgb(var(--paper-rgb) / 0.95) 38%,
+      rgb(var(--paper-rgb) / 0) 62%
+    );
   }
 }

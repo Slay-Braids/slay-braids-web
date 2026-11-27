@@ -22,6 +22,8 @@ import { FRAMING, cameraAt, coverFov, type CameraKey } from "../framing";
 
 // anchor_v3 (bright identity): the default world is white; the chapter timeline changes it.
 export const SCENE_BG: [number, number, number] = [1, 1, 1];
+// v4 dark theme: the same scene on the black world (= WORLD_RGB.black, #0a0a0a).
+export const SCENE_BG_DARK: [number, number, number] = [10 / 255, 10 / 255, 10 / 255];
 
 export interface CascadeSceneOptions {
   canvas: HTMLCanvasElement;
@@ -31,6 +33,8 @@ export interface CascadeSceneOptions {
   antialias: boolean;
   /** Keep the drawing buffer (needed to read pixels for anchor rendering / tests). */
   preserveDrawingBuffer?: boolean;
+  /** World colour before the chapter timeline takes over (anchor pose). Default SCENE_BG. */
+  background?: [number, number, number];
 }
 
 export interface SceneStats {
@@ -112,10 +116,9 @@ export class CascadeScene {
       preserveDrawingBuffer: !!opts.preserveDrawingBuffer,
     });
     this.renderer.outputColorSpace = LinearSRGBColorSpace;
+    const bg = opts.background ?? SCENE_BG;
     this.renderer.setClearColor(
-      (Math.round(SCENE_BG[0] * 255) << 16) |
-        (Math.round(SCENE_BG[1] * 255) << 8) |
-        Math.round(SCENE_BG[2] * 255),
+      (Math.round(bg[0] * 255) << 16) | (Math.round(bg[1] * 255) << 8) | Math.round(bg[2] * 255),
       1,
     );
 
@@ -157,6 +160,8 @@ export class CascadeScene {
         uExposure: { value: 1.0 },
       },
     });
+    // v4: the theme's anchor world (the locked uniforms above stay as approved).
+    (this.material.uniforms.uBg!.value as Vector3).set(...bg);
     this.mesh = new Mesh(g, this.material);
     this.mesh.frustumCulled = false;
     this.scene.add(this.mesh);

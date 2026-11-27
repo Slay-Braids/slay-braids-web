@@ -10,6 +10,8 @@
 import type { Orientation } from "../cascade/geometry";
 import { DEFAULT_TOGGLES, Paper } from "./paper";
 import { CHAPTERS } from "../../content/chapters";
+import { CHAPTER_TONE, TONE, groundOf, pageColor } from "./story";
+import { applySchemeMedia, currentTheme, onThemeChange } from "../theme";
 
 interface StillManifest {
   version: string;
@@ -28,18 +30,29 @@ const WIDTHS: Record<Orientation, number[]> = {
 function picture(base: string, ch: "ch2" | "ch3" | "ch4" | "ch5" | "ch7") {
   // M3 stills (Chapters 4, 5, 7) are a separate set with their own manifest (m3-manifest.json).
   const set_ = ch === "ch2" || ch === "ch3" ? "m2" : "m3";
-  const set = (o: Orientation, ext: string) =>
-    WIDTHS[o].map((w) => `${base}chapters/${set_}-${ch}-${o}-${w}.${ext} ${w}w`).join(", ");
+  // v4: every chapter but the red Chapter 4 has a dark-theme still (its world changes colour).
+  const dark = ch !== "ch4";
+  const set = (o: Orientation, ext: string, t = "") =>
+    WIDTHS[o].map((w) => `${base}chapters/${set_}-${ch}${t}-${o}-${w}.${ext} ${w}w`).join(", ");
+  const D = "(prefers-color-scheme: dark)";
+  const darkSources = dark
+    ? `
+    <source data-scheme media="${D} and (orientation: portrait)" type="image/avif" srcset="${set("portrait", "avif", "-dark")}" sizes="100vw">
+    <source data-scheme media="${D} and (orientation: portrait)" type="image/webp" srcset="${set("portrait", "webp", "-dark")}" sizes="100vw">
+    <source data-scheme media="${D}" type="image/avif" srcset="${set("landscape", "avif", "-dark")}" sizes="100vw">
+    <source data-scheme media="${D}" type="image/webp" srcset="${set("landscape", "webp", "-dark")}" sizes="100vw">`
+    : "";
   const p = document.createElement("picture");
   p.className = "spread-still";
   p.setAttribute("aria-hidden", "true");
-  p.innerHTML = `
+  p.innerHTML = `${darkSources}
     <source media="(orientation: portrait)" type="image/avif" srcset="${set("portrait", "avif")}" sizes="100vw">
     <source media="(orientation: portrait)" type="image/webp" srcset="${set("portrait", "webp")}" sizes="100vw">
     <source media="(orientation: portrait)" srcset="${set("portrait", "jpg")}" sizes="100vw">
     <source type="image/avif" srcset="${set("landscape", "avif")}" sizes="100vw">
     <source type="image/webp" srcset="${set("landscape", "webp")}" sizes="100vw">
     <img src="${base}chapters/${set_}-${ch}-landscape-1920.jpg" srcset="${set("landscape", "jpg")}" sizes="100vw" alt="" loading="lazy" decoding="async">`;
+  applySchemeMedia(p);
   return p;
 }
 
@@ -67,6 +80,7 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
     "[data-ch4-frame]",
     "[data-ch4-printed]",
     "[data-ch4-title]",
+    "[data-ch4-kicker]",
     "[data-ch4-line]",
     "[data-ch5-frame]",
     "[data-ch6-intro]",
@@ -112,7 +126,8 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
         width: W,
         height: H,
         gap: 7,
-        fill: "#0A0A0A", // v3: the Chapter 3 page is black
+        // The Chapter 3 page is the inverse tone: black (light theme) or white (dark theme).
+        fill: pageColor("ch3", currentTheme()) === "white" ? "#FFFFFF" : "#0A0A0A",
         edge_: "rgba(198,13,19,0.95)",
         toggles: { ...DEFAULT_TOGGLES, spill: false },
       });
@@ -130,6 +145,10 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
       clearTimeout(t);
       t = window.setTimeout(draw, 150);
     });
+    onThemeChange(() => {
+      draw();
+      grounds();
+    });
   }
 
   // Header and index take the colour of what lies under them (as in the live chapters).
@@ -137,24 +156,23 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
     .map((q) => root.querySelector<HTMLElement>(q))
     .filter((e): e is HTMLElement => !!e);
   const groundSections = [...root.querySelectorAll<HTMLElement>("[data-ground-section]")];
-  // Each chapter's world in the simple view (matches the live story).
-  const WORLD: Record<string, string> = { top: "white", ch2: "white", ch3: "white", ch4: "red", ch5: "white", ch6: "red", ch7: "black" };
-  const chapterSections = Object.keys(WORLD).map((id) => document.getElementById(id));
+  // Each chapter's world in the simple view (matches the live story), in the current theme.
+  const chapterSections = Object.keys(CHAPTER_TONE).map((id) => document.getElementById(id));
   const groundAt = (x: number, y: number): string => {
     for (const sec of groundSections) {
       const b = sec.getBoundingClientRect();
-      if (y >= b.top && y <= b.bottom) return sec.dataset.groundSection ?? "white";
+      if (y >= b.top && y <= b.bottom) return groundOf(sec.dataset.groundSection);
     }
     if (ch3 && paperRef) {
       const b = ch3.getBoundingClientRect();
-      if (y >= b.top && y <= b.bottom && paperRef.covers(x - b.left, y - b.top)) return "black";
+      if (y >= b.top && y <= b.bottom && paperRef.covers(x - b.left, y - b.top)) return pageColor("ch3", currentTheme());
     }
     for (const sec of chapterSections) {
       if (!sec) continue;
       const b = sec.getBoundingClientRect();
-      if (y >= b.top && y <= b.bottom) return WORLD[sec.id]!;
+      if (y >= b.top && y <= b.bottom) return TONE[currentTheme()][CHAPTER_TONE[sec.id]!];
     }
-    return "white";
+    return TONE[currentTheme()].paper;
   };
   const grounds = () => {
     for (const el of parts) {

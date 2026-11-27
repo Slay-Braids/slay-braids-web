@@ -292,35 +292,73 @@ export function mapVh(from: Orientation, to: Orientation, vh: number): number {
 }
 
 /**
- * Production identity v3 ("bright"): the world behind the braids changes colour, always while a
- * page covers the screen (or as type fades), so the change is never seen happening on the hair.
- *   Ch1–3 white · Ch4 SLAY red · Ch5–6 white · Ch7 black. Pages: Ch3/Ch4 black, Ch6/Ch7 red.
+ * Production identity v3 ("bright"), v4 themes: the world behind the braids changes colour,
+ * always while a page covers the screen (or as type fades), so the change is never seen
+ * happening on the hair. Worlds and pages are tones that each theme maps to a colour:
+ *   paper   — the default world: white (light theme) · black (dark theme)
+ *   inverse — the contrast world: black (light) · white (dark)
+ *   red     — SLAY red in both
+ *   Ch1–3 paper · Ch4 red · Ch5 paper · Ch7 inverse. Pages: Ch3/Ch4 inverse, Ch6 red.
  */
 export type World = "white" | "red" | "black";
+export type Theme = "light" | "dark";
+export type Tone = "paper" | "inverse" | "red";
 export const WORLD_RGB: Record<World, [number, number, number]> = {
   white: [1, 1, 1],
   red: [198 / 255, 13 / 255, 19 / 255],
   black: [10 / 255, 10 / 255, 10 / 255],
 };
-export const PAGE_COLOR: Record<PageState["guide"], World> = { ch3: "black", ch4: "black", ch6: "red" };
+export const TONE: Record<Theme, Record<Tone, World>> = {
+  light: { paper: "white", inverse: "black", red: "red" },
+  dark: { paper: "black", inverse: "white", red: "red" },
+};
+export const PAGE_TONE: Record<PageState["guide"], Tone> = { ch3: "inverse", ch4: "inverse", ch6: "red" };
+/** The colour of a page in a theme. */
+export const pageColor = (guide: PageState["guide"], theme: Theme = "light"): World => TONE[theme][PAGE_TONE[guide]];
+/** Light-theme page colours (kept for the v3 tests and scripts). */
+export const PAGE_COLOR: Record<PageState["guide"], World> = {
+  ch3: pageColor("ch3"),
+  ch4: pageColor("ch4"),
+  ch6: pageColor("ch6"),
+};
+/** Each chapter's world in the simple view (matches the live story). */
+export const CHAPTER_TONE: Record<string, Tone> = {
+  top: "paper",
+  ch2: "paper",
+  ch3: "paper",
+  ch4: "red",
+  ch5: "paper",
+  ch6: "red",
+  ch7: "inverse",
+};
 
 /** Which world (and blend towards the next) at this position. */
-export function worldAt(o: Orientation, vh: number): { rgb: [number, number, number]; name: World } {
+export function worldAt(o: Orientation, vh: number, theme: Theme = "light"): { rgb: [number, number, number]; name: World } {
   const S = STORY[o];
   const L = CHAPTER_LAYOUT[o];
-  const mix = (a: World, b: World, t: number) => {
-    const A = WORLD_RGB[a];
-    const B = WORLD_RGB[b];
+  const T = TONE[theme];
+  const at = (t: Tone) => ({ rgb: WORLD_RGB[T[t]], name: T[t] });
+  const mix = (a: Tone, b: Tone, t: number) => {
+    const A = WORLD_RGB[T[a]];
+    const B = WORLD_RGB[T[b]];
     const k = smooth(t);
-    return { rgb: [0, 1, 2].map((i) => A[i]! + (B[i]! - A[i]!) * k) as [number, number, number], name: k < 0.5 ? a : b };
+    return { rgb: [0, 1, 2].map((i) => A[i]! + (B[i]! - A[i]!) * k) as [number, number, number], name: k < 0.5 ? T[a] : T[b] };
   };
-  // Under the full black cover that ends Chapter 3: white → red.
-  if (vh < L.ch3[1] + 10) return { rgb: WORLD_RGB.white, name: "white" };
-  // Chapter 4 ends with its type fading: red → white, before the looks.
-  if (vh < S.ch4[1] - 25) return { rgb: WORLD_RGB.red, name: "red" };
-  if (vh < S.ch4[1] + 5) return mix("red", "white", range(vh, [S.ch4[1] - 25, S.ch4[1] + 5]));
-  // Under the full red cover of the lookbook spread: white → black for the finale.
+  // Under the full cover that ends Chapter 3: paper → red.
+  if (vh < L.ch3[1] + 10) return at("paper");
+  // Chapter 4 ends with its type fading: red → paper, before the looks.
+  if (vh < S.ch4[1] - 25) return at("red");
+  if (vh < S.ch4[1] + 5) return mix("red", "paper", range(vh, [S.ch4[1] - 25, S.ch4[1] + 5]));
+  // Under the full red cover of the lookbook spread: paper → inverse for the finale.
   const swap = (S.ch6Close[1] + S.ch7Lift[0]) / 2;
-  if (vh < swap) return { rgb: WORLD_RGB.white, name: "white" };
-  return { rgb: WORLD_RGB.black, name: "black" };
+  if (vh < swap) return at("paper");
+  return at("inverse");
 }
+
+/** A section's ground: a tone (paper/inverse/red, resolved by the theme) or a fixed colour. */
+export function groundOf(v: string | undefined, theme: Theme = themeNow()): World {
+  if (v === "paper" || v === "inverse" || v === "red") return TONE[theme][v];
+  return v === "black" || v === "white" ? v : TONE[theme].paper;
+}
+const themeNow = (): Theme =>
+  typeof document !== "undefined" && document.documentElement.dataset.theme === "dark" ? "dark" : "light";
