@@ -58,6 +58,25 @@ export function initInteractions(root: HTMLElement) {
     true,
   );
 
+  // "Find your look" tiles: go straight to that look (live: its step; simple view: its card).
+  document.addEventListener(
+    "click",
+    (e) => {
+      const a = (e.target as Element | null)?.closest?.<HTMLAnchorElement>("a[data-look]");
+      if (!a) return;
+      const i = Number(a.dataset.look);
+      e.preventDefault();
+      if (isLive()) scrollToVh(productVh(orientation(), i));
+      else document.querySelector(`[data-product='${i}']`)?.scrollIntoView({ block: "center" });
+      const h = document.getElementById(`look-${String(i + 1).padStart(2, "0")}-name`);
+      if (h) {
+        h.setAttribute("tabindex", "-1");
+        setTimeout(() => h.focus({ preventScroll: true }), 0);
+      }
+    },
+    true,
+  );
+
   // Keyboard focus follows into the fixed chapter frames.
   root.addEventListener("focusin", (e) => {
     if (!isLive()) return;

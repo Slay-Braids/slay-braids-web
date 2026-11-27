@@ -18,7 +18,7 @@ import sharp from "sharp";
 const OUT = path.resolve("out");
 const DEST = path.resolve("public/anchors");
 const draft = process.argv.includes("--draft");
-const VERSION = process.env.ANCHOR_VERSION ?? "anchor_v2";
+const VERSION = process.env.ANCHOR_VERSION ?? "anchor_v3";
 const WIDTHS = { landscape: [1280, 1920, 2560], portrait: [720, 1080, 1440] };
 
 const types = {

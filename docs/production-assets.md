@@ -35,6 +35,16 @@ The official red, sampled from the logo file, is **#C60D13**. The site palette i
 Segments were chosen so that only one model is in frame, with no other guests and no
 third-party branding (the venue's name sign is visible in several clips).
 
+### Studio photographs (uploaded to "Slay shoot footages" on 27 Nov 2026, 16:17)
+- **What arrived:** 17 JPEGs, 718–1536 px. They are long braided looks on warm backdrops in red tops, plus a logo card (white "Slay" on deep red).
+- **Used:**
+  - 12 in the "Studio edit" gallery.
+  - One as the Chapter 3 portrait (black braids).
+  - The logo card as the social share image (cover-fitted to 1200×630).
+- **Skipped:** IMG #0 and #12 are the same photo; two near-identical back views were left out.
+- **Encoding:** resized only, never upscaled: `photo-<key>-{480,960}.{avif,webp,jpg}`; provenance in `public/media/photos-manifest.json`.
+- **To confirm:** the files carry no camera metadata, and several are exactly 1024×1536, 1536×1024 or 1024×1280, typical of AI image generators. You asked not to use AI-generated models or hairstyles, so please confirm these are real photographs. If not, removing them is one line each in `src/content/media.ts`.
+
 ### Also available, not yet used
 - **Product clips:** IMG_2202, IMG_2203 and IMG_2213 (hands presenting hair: ash ombré and auburn). They are not labelled as FUTURA, so they are not presented as FUTURA.
 - **Campaign clips:** about 60 more, at an evening venue, often with several guests at a table.

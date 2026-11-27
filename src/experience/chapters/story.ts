@@ -290,3 +290,37 @@ export function mapVh(from: Orientation, to: Orientation, vh: number): number {
   }
   return vh;
 }
+
+/**
+ * Production identity v3 ("bright"): the world behind the braids changes colour, always while a
+ * page covers the screen (or as type fades), so the change is never seen happening on the hair.
+ *   Ch1–3 white · Ch4 SLAY red · Ch5–6 white · Ch7 black. Pages: Ch3/Ch4 black, Ch6/Ch7 red.
+ */
+export type World = "white" | "red" | "black";
+export const WORLD_RGB: Record<World, [number, number, number]> = {
+  white: [1, 1, 1],
+  red: [198 / 255, 13 / 255, 19 / 255],
+  black: [10 / 255, 10 / 255, 10 / 255],
+};
+export const PAGE_COLOR: Record<PageState["guide"], World> = { ch3: "black", ch4: "black", ch6: "red" };
+
+/** Which world (and blend towards the next) at this position. */
+export function worldAt(o: Orientation, vh: number): { rgb: [number, number, number]; name: World } {
+  const S = STORY[o];
+  const L = CHAPTER_LAYOUT[o];
+  const mix = (a: World, b: World, t: number) => {
+    const A = WORLD_RGB[a];
+    const B = WORLD_RGB[b];
+    const k = smooth(t);
+    return { rgb: [0, 1, 2].map((i) => A[i]! + (B[i]! - A[i]!) * k) as [number, number, number], name: k < 0.5 ? a : b };
+  };
+  // Under the full black cover that ends Chapter 3: white → red.
+  if (vh < L.ch3[1] + 10) return { rgb: WORLD_RGB.white, name: "white" };
+  // Chapter 4 ends with its type fading: red → white, before the looks.
+  if (vh < S.ch4[1] - 25) return { rgb: WORLD_RGB.red, name: "red" };
+  if (vh < S.ch4[1] + 5) return mix("red", "white", range(vh, [S.ch4[1] - 25, S.ch4[1] + 5]));
+  // Under the full red cover of the lookbook spread: white → black for the finale.
+  const swap = (S.ch6Close[1] + S.ch7Lift[0]) / 2;
+  if (vh < swap) return { rgb: WORLD_RGB.white, name: "white" };
+  return { rgb: WORLD_RGB.black, name: "black" };
+}

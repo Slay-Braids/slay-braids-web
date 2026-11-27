@@ -1,0 +1,18 @@
+import { chromium } from "@playwright/test";
+import sharp from "sharp";
+const b = await chromium.launch({ args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+const iso = "main, header, footer, .grain, .chapter-index, .paper-layer, [data-view-notice] { visibility: hidden !important; }";
+await p.goto("http://127.0.0.1:4173/?tier=C"); await p.waitForTimeout(1500); await p.addStyleTag({ content: iso }); await p.waitForTimeout(300);
+const still = await p.screenshot();
+await p.goto("http://127.0.0.1:4173/?tier=A&freeze=1&nodowngrade=1");
+await p.waitForFunction(() => window.__slay?.live === true, null, { timeout: 120000 }); await p.addStyleTag({ content: iso }); await p.waitForTimeout(500);
+const live = await p.screenshot();
+await b.close();
+const crop = { left: 700, top: 200, width: 500, height: 400 };
+const a = await sharp(still).extract(crop).toBuffer(), c = await sharp(live).extract(crop).toBuffer();
+const ra = await sharp(a).raw().toBuffer(), rc = await sharp(c).raw().toBuffer();
+const d = Buffer.alloc(ra.length); for (let i = 0; i < ra.length; i++) d[i] = Math.min(255, Math.abs(ra[i] - rc[i]) * 4);
+const diff = await sharp(d, { raw: { width: 500, height: 400, channels: 3 } }).png().toBuffer();
+await sharp({ create: { width: 1520, height: 400, channels: 3, background: "#888" } }).composite([{ input: a, left: 0, top: 0 }, { input: c, left: 510, top: 0 }, { input: diff, left: 1020, top: 0 }]).jpeg({ quality: 90 }).toFile(process.argv[2]);
+console.log("ok");

@@ -116,7 +116,7 @@ test.describe("screen readers get every chapter, whatever the scroll position", 
   const check = (tree: string) => {
     expect(tree).toContain('heading "The Craft" [level=2]');
     expect(tree).toContain('heading "The Unbraiding" [level=2]');
-    expect(tree).toContain("Portrait of a model with long copper curls");
+    expect(tree).toContain("Long, sleek black braids falling past the waist.");
     expect(tree).toContain('img "SLAY BRAIDS"');
     // Decorative numerals and the scroll cue never.
     // A decorative numeral would appear as its own text node ("Look 01" is a real heading).

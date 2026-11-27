@@ -112,6 +112,8 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
         width: W,
         height: H,
         gap: 7,
+        fill: "#0A0A0A", // v3: the Chapter 3 page is black
+        edge_: "rgba(198,13,19,0.95)",
         toggles: { ...DEFAULT_TOGGLES, spill: false },
       });
     };
@@ -130,26 +132,34 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
     });
   }
 
-  // Header and index turn espresso wherever ivory lies under them (as in the live chapters).
+  // Header and index take the colour of what lies under them (as in the live chapters).
   const parts = [".logo-slot", ".header-actions", "[data-chapter-index]"]
     .map((q) => root.querySelector<HTMLElement>(q))
     .filter((e): e is HTMLElement => !!e);
   const groundSections = [...root.querySelectorAll<HTMLElement>("[data-ground-section]")];
-  const onIvory = (x: number, y: number) => {
+  // Each chapter's world in the simple view (matches the live story).
+  const WORLD: Record<string, string> = { top: "white", ch2: "white", ch3: "white", ch4: "red", ch5: "white", ch6: "red", ch7: "black" };
+  const chapterSections = Object.keys(WORLD).map((id) => document.getElementById(id));
+  const groundAt = (x: number, y: number): string => {
     for (const sec of groundSections) {
       const b = sec.getBoundingClientRect();
-      if (y >= b.top && y <= b.bottom) return sec.dataset.groundSection === "ivory";
+      if (y >= b.top && y <= b.bottom) return sec.dataset.groundSection ?? "white";
     }
     if (ch3 && paperRef) {
       const b = ch3.getBoundingClientRect();
-      if (y >= b.top && y <= b.bottom) return paperRef.covers(x - b.left, y - b.top);
+      if (y >= b.top && y <= b.bottom && paperRef.covers(x - b.left, y - b.top)) return "black";
     }
-    return false;
+    for (const sec of chapterSections) {
+      if (!sec) continue;
+      const b = sec.getBoundingClientRect();
+      if (y >= b.top && y <= b.bottom) return WORLD[sec.id]!;
+    }
+    return "white";
   };
   const grounds = () => {
     for (const el of parts) {
       const r = el.getBoundingClientRect();
-      el.dataset.ground = onIvory(r.left + r.width / 2, r.top + r.height / 2) ? "ivory" : "ink";
+      el.dataset.ground = groundAt(r.left + r.width / 2, r.top + r.height / 2);
     }
   };
   addEventListener("scroll", grounds, { passive: true });

@@ -74,3 +74,20 @@ Source: `main`, merged from `claude/cool-ramanujan-0ln9mf` via [Slay-Braids/slay
 2. Add an entry to `CLIPS` (video segment: file, Drive id, start, duration) or `STILLS` (file, Drive id, frame time; a photo can be used directly) in `scripts/encode-brand-media.mjs`, then run it.
 3. Reference the new base name in `src/content/media.ts`, with a short description of what is shown.
 4. Build, test, push. Previews build automatically; merging to `main` deploys production.
+
+## Update 3 (27 Nov 2026): bright identity, studio photographs
+- **White by default:** the braids now sit on white (anchor_v3: white anchor world; light, geometry, shader, pose and framing as anchor_v2). The world behind the braids changes under the pages, so each chapter lifts into a new colour:
+
+  | Chapters | World | Page across the hair |
+  |---|---|---|
+  | 1–3 | white | |
+  | 3 | | black |
+  | 4, FUTURA | SLAY red | |
+  | 5, The Looks | white | |
+  | 6, Lookbook | | red |
+  | 7, The Promise | black | |
+  | Ribbon, "Find your look", studio edit, enquiries | red, white, black, white | |
+
+- **Header:** each part takes its colour from what lies under it; the white logo is used on red.
+- **New sections:** a red brand ribbon (motion off for reduced motion), "Find your look" (the four looks, linking into Chapter 5), and "Braids in full colour" (the studio photographs).
+- **Inspiration:** Lush Hair Africa (bold section heads, ribbon, style tiles). darlinghair.com refused automated access. Nothing was copied.

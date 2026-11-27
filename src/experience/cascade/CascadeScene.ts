@@ -20,7 +20,8 @@ import type { CascadeGeometryData, Orientation } from "./geometry";
 import { cascadeFragment, cascadeVertex } from "./shaders";
 import { FRAMING, cameraAt, coverFov, type CameraKey } from "../framing";
 
-export const SCENE_BG: [number, number, number] = [10 / 255, 9 / 255, 8 / 255]; // = --color-ink #0a0908
+// anchor_v3 (bright identity): the default world is white; the chapter timeline changes it.
+export const SCENE_BG: [number, number, number] = [1, 1, 1];
 
 export interface CascadeSceneOptions {
   canvas: HTMLCanvasElement;
@@ -91,6 +92,8 @@ export class CascadeScene {
   // M2 (isolated, outside the locked look): timeline camera and deterministic review controls.
   private timeline?: (vh: number) => CameraKey;
   private pearlCurve?: (vh: number) => number;
+  private bgCurve?: (vh: number) => [number, number, number];
+  private lastBg = "";
   private timeFrozen = false;
   private cssWidth = 1;
   private cssHeight = 1;
@@ -199,6 +202,16 @@ export class CascadeScene {
       ? (this.pearlCurve?.(progress) ?? 0)
       : smooth(0.42, 0.55, progress) * (1 - smooth(0.82, 0.95, progress));
     this.material.uniforms.uPearl!.value = pearl;
+    // Bright identity: the world colour behind the braids follows the scroll (fog fades to it).
+    if (this.bgCurve) {
+      const c = this.bgCurve(progress);
+      (this.material.uniforms.uBg!.value as Vector3).set(c[0], c[1], c[2]);
+      const key = c.map((v) => v.toFixed(4)).join();
+      if (key !== this.lastBg) {
+        this.lastBg = key;
+        this.renderer.setClearColor((Math.round(c[0] * 255) << 16) | (Math.round(c[1] * 255) << 8) | Math.round(c[2] * 255), 1);
+      }
+    }
   }
 
   setScrollProgress(p: number) {
@@ -206,9 +219,14 @@ export class CascadeScene {
   }
 
   /** M2: drive the camera from the chapter timeline (scroll position in vh). */
-  setCameraTimeline(fn: (vh: number) => CameraKey, pearl?: (vh: number) => number) {
+  setCameraTimeline(
+    fn: (vh: number) => CameraKey,
+    pearl?: (vh: number) => number,
+    bg?: (vh: number) => [number, number, number],
+  ) {
     this.timeline = fn;
     this.pearlCurve = pearl;
+    this.bgCurve = bg;
     this.scroll = 0;
     this.scrollTarget = 0;
   }

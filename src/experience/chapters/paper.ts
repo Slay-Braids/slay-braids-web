@@ -25,6 +25,9 @@ export interface PaperFrame {
   away: number;
   /** M3: forced edge straightening 0–1 (default: derived from `away`, as in Chapter 3). */
   straighten?: number;
+  /** v3 bright identity: the page's colour and its edge line (default white page, red line). */
+  fill?: string;
+  edge_?: string;
   width: number;
   height: number;
   /** Gap between the hair envelope and the page edge, px. */
@@ -64,6 +67,7 @@ export class Paper {
   private contactShadows: SVGPathElement[] = [];
   private highlight: SVGPathElement;
   private uid = Math.random().toString(36).slice(2, 8);
+  private lastFill = "";
   /** Last drawn edge (screen px), for hit tests. */
   private last?: { edge: [number, number][]; side: Side; visible: boolean; full: boolean };
 
@@ -179,6 +183,11 @@ export class Paper {
       return undefined;
     }
     this.svg.style.visibility = "visible";
+    if (fr.fill && fr.fill !== this.lastFill) {
+      this.lastFill = fr.fill;
+      this.fill.setAttribute("fill", fr.fill);
+      this.highlight.setAttribute("stroke", fr.edge_ ?? `rgba(${CHAMPAGNE},0.9)`);
+    }
     const W = fr.width;
     const H = fr.height;
     this.svg.setAttribute("viewBox", `0 0 ${W} ${H}`);

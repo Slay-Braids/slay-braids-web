@@ -84,6 +84,8 @@ export const unbraiding = {
 export const looks = {
   title: "The Looks",
   intro: "Four looks from the SLAY BRAIDS shoot, on real models in real light. Keep scrolling, or use Previous and Next.",
+  findIntro: "Every look from the shoot, in one place. Tap one to see it move.",
+  studioIntro: "Twelve frames, up close: length, colour and texture, close enough to see every braid.",
 } as const;
 
 export const lookbook = {

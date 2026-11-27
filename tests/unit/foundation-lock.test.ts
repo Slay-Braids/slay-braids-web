@@ -5,6 +5,7 @@ import { buildCascade } from "@/experience/cascade/geometry";
 import { cascadeFragment, cascadeVertex } from "@/experience/cascade/shaders";
 import { FRAMING } from "@/experience/framing";
 import { ANCHOR, anchorConfig } from "@/experience/tiers";
+import { SCENE_BG } from "@/experience/cascade/CascadeScene";
 
 /**
  * APPROVED VISUAL FOUNDATION — anchor_v2.
@@ -14,6 +15,9 @@ import { ANCHOR, anchorConfig } from "@/experience/tiers";
  * instead of champagne (fill 0.3/0.31/0.34 → 0.3/0.3/0.32). Geometry, shader, pose and framing
  * are unchanged, so only the lighting hash and the version changed; the anchor stills were
  * re-rendered (public/anchors/anchor_v2-*, manifest-anchor_v2.json; anchor_v1 files kept).
+ * anchor_v3 (same day, owner request: "white background by default"): the anchor world is white.
+ * The lighting block text is unchanged (it reads SCENE_BG), so the world colour is locked
+ * separately below; stills re-rendered as anchor_v3-* with manifest-anchor_v3.json.
  *
  * Locks the hair geometry, hair shader, lighting and anchor framing that produce the approved
  * look and the seamless still → live handoff. If this test fails, the approved look has changed.
@@ -28,7 +32,9 @@ const sha = (b: string | Uint8Array) => createHash("sha256").update(b).digest("h
 const bytes = (a: ArrayBufferView) => new Uint8Array(a.buffer, a.byteOffset, a.byteLength);
 
 const LOCK = {
-  version: "anchor_v2",
+  version: "anchor_v3",
+  // anchor_v3: the anchor world (scene background) is white for the bright identity.
+  sceneBg: [1, 1, 1],
   geometry: {
     landscape: {
       positions: "5fbb4d75f9a425d77f52f2b4f982c4ffa3c88654d282cd90f659c0e1291fc01a",
@@ -44,8 +50,9 @@ const LOCK = {
   anchorFraming: "eeb9e2cdf9aa9713035b97f65ef0d369ed41dc64e0778cd67dec7e236bb0b63c",
 } as const;
 
-describe("approved visual foundation (anchor_v2) is unchanged", () => {
+describe("approved visual foundation (anchor_v3) is unchanged", () => {
   it("anchor version", () => expect(ANCHOR.version).toBe(LOCK.version));
+  it("anchor world colour", () => expect(SCENE_BG).toEqual(LOCK.sceneBg));
 
   for (const o of ["landscape", "portrait"] as const) {
     it(`hair geometry — ${o}`, () => {

@@ -22,7 +22,8 @@ export function Header({ assetBase = "/" }: { assetBase?: string }) {
     <>
       <header data-site-header className="site-header">
         <a href="#top" className="logo-slot" data-ground="ink" aria-label="SLAY BRAIDS, home">
-          <Logo base={assetBase} width={112} alt="" />
+          <Logo base={assetBase} width={112} alt="" className="logo-red" />
+          <Logo base={assetBase} variant="white" width={112} alt="" className="logo-white" />
         </a>
         <div className="header-actions" data-ground="ink">
           <button type="button" className="motion-toggle" data-motion-toggle aria-pressed="false">

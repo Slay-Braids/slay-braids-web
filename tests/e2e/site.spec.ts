@@ -57,6 +57,8 @@ test.describe("structure", () => {
       "The",
       "Lookbook",
       "Premium",
+      "Find",
+      "Braids",
       "Enquiries",
     ]);
     await expect(page.locator("[data-chapter-tick]")).toHaveCount(7);
@@ -77,7 +79,7 @@ test.describe("structure", () => {
 
   test("the original logo and the brand media load", async ({ page }) => {
     await page.goto("/?tier=C");
-    const logo = page.locator("header .logo-slot img");
+    const logo = page.locator("header .logo-slot .logo-red img");
     await expect(logo).toHaveAttribute("src", /media\/logo-red/);
     await expect.poll(() => logo.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
     for (const img of await page.locator("main figure img").all()) {

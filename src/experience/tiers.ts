@@ -77,9 +77,11 @@ export const TIER_SETTINGS: Record<Exclude<Tier, "C">, TierSettings> = {
 /**
  * The anchor pose: frozen seed. anchor_v2 (27 Nov 2026, owner-approved colour correction for the
  * red/black/white identity): same geometry, shader, pose and framing as anchor_v1, with a neutral
- * white key light instead of the champagne key. anchor_v1 files are kept in public/anchors.
+ * white key light instead of the champagne key. anchor_v3 (same day, owner request for a bright
+ * site): the anchor world is white instead of black; light, geometry, shader, pose and framing
+ * as anchor_v2. Earlier versions' files are kept in public/anchors.
  */
-export const ANCHOR = { version: "anchor_v2", seed: 20261126 } as const;
+export const ANCHOR = { version: "anchor_v3", seed: 20261126 } as const;
 
 /** Anchor stills are always rendered from the tier-A cascade. */
 export function anchorConfig(orientation: Orientation): CascadeConfig {
