@@ -299,7 +299,9 @@ test.describe("FUTURA story and the simple view", () => {
     test.setTimeout(240_000);
     await page.goto(LIVE);
     await waitLive(page);
-    await scrollVh(page, AT[isPortrait(page) ? "portrait" : "landscape"].ch4);
+    // Landscape: at the landing point. Phones: just after it (the list replaces title and intro).
+    const o = isPortrait(page) ? "portrait" : "landscape";
+    await scrollVh(page, STORY[o].ch4[1] - 35);
     await expect
       .poll(() => page.locator(".ch4-features li").last().evaluate((e) => parseFloat(getComputedStyle(e).opacity)), {
         timeout: 30_000,

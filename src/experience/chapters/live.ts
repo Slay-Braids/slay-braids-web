@@ -11,7 +11,8 @@ import type { Orientation } from "../cascade/geometry";
 import { FRAMING } from "../framing";
 import { CHAPTER_LAYOUT, cameraTimeline, storyStops } from "./cameraTimeline";
 import { ChapterDriver, smooth, type Ch3State } from "./driver";
-import { PAGE_COLOR, STORY, chapterIndex, pageState, productVh, worldAt, type PageState, type World } from "./story";
+import { STORY, chapterIndex, groundOf, pageColor, pageState, productVh, worldAt, type PageState, type World } from "./story";
+import { currentTheme, onThemeChange } from "../theme";
 import { lookClips as products } from "../../content/media";
 import { GuideStrand, project } from "./guideStrand";
 import { DEFAULT_TOGGLES, Paper, type PaperToggles } from "./paper";
@@ -77,7 +78,17 @@ export class LiveChapters {
     this.attach(scene, orientation);
     addEventListener("scroll", this.onScroll, { passive: true });
     addEventListener("slay:jump", this.onJump);
+    // v4: a theme switch recolours the world and pages at once, even while rendering is paused.
+    this.offTheme = onThemeChange(() => {
+      if (this.paused) {
+        this.paused = false;
+        this.root.dataset.renderPaused = "false";
+        this.resume?.();
+      }
+      this.updateGrounds(scrollY / vhPx());
+    });
   }
+  private offTheme: () => void;
 
   get currentScene() {
     return this.scene;
@@ -96,7 +107,7 @@ export class LiveChapters {
     const centres = products.map((_, i) => productVh(orientation, i));
     // Production identity: no pearl light shift; the world colour follows the story (v3 bright).
     scene.setCameraTimeline(cameraTimeline(orientation, storyStops(orientation, S, centres)), undefined, (vh) =>
-      worldAt(orientation, vh).rgb,
+      worldAt(orientation, vh, currentTheme()).rgb,
     );
     if (this.flags.windT != null) scene.freezeWindAt(this.flags.windT);
     this.guide = new GuideStrand(scene.geometry, orientation);
@@ -170,8 +181,8 @@ export class LiveChapters {
         open: page.open,
         away: page.away,
         straighten: page.straighten,
-        fill: PAGE_FILL[PAGE_COLOR[page.guide]],
-        edge_: PAGE_COLOR[page.guide] === "red" ? "rgba(255,255,255,0.85)" : "rgba(198,13,19,0.95)",
+        fill: PAGE_FILL[pageColor(page.guide, currentTheme())],
+        edge_: pageColor(page.guide, currentTheme()) === "red" ? "rgba(255,255,255,0.85)" : "rgba(198,13,19,0.95)",
         width: fs.cssWidth,
         height: fs.cssHeight,
         gap: PAPER_GAP,
@@ -199,7 +210,7 @@ export class LiveChapters {
     } else {
       this.paper.hide();
     }
-    this.pageColor = page ? PAGE_COLOR[page.guide] : null;
+    this.pageColor = page ? pageColor(page.guide, currentTheme()) : null;
     this.updateGrounds(fs.scroll);
     if (dt != null) {
       const keys = ["ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "ch7"] as const;
@@ -218,7 +229,7 @@ export class LiveChapters {
   private world: World = "white";
   private pageColor: World | null = null;
   private updateGrounds(vh?: number) {
-    if (vh != null) this.world = worldAt(this.orientation, vh).name;
+    if (vh != null) this.world = worldAt(this.orientation, vh, currentTheme()).name;
     document.documentElement.dataset.world = this.world;
     const ground = (el: HTMLElement | null): World => {
       if (!el) return this.world;
@@ -228,7 +239,7 @@ export class LiveChapters {
       const y = r.top + r.height / 2;
       for (const sec of this.groundSections) {
         const b = sec.getBoundingClientRect();
-        if (y >= b.top && y <= b.bottom) return (sec.dataset.groundSection as World) ?? "white";
+        if (y >= b.top && y <= b.bottom) return groundOf(sec.dataset.groundSection);
       }
       if (this.pageColor && this.paper.covers(x, y)) return this.pageColor;
       return this.world;
@@ -266,7 +277,7 @@ export class LiveChapters {
       // Rendering is paused but the page still scrolls: keep header and index in step.
       this.driver.update(scrollY / vhPx());
       const p = pageState(this.orientation, scrollY / vhPx());
-      this.pageColor = p ? PAGE_COLOR[p.guide] : null;
+      this.pageColor = p ? pageColor(p.guide, currentTheme()) : null;
       this.updateGrounds(scrollY / vhPx());
     }
     if (this.paused && !this.covered()) {
@@ -282,6 +293,7 @@ export class LiveChapters {
   dispose() {
     removeEventListener("scroll", this.onScroll);
     removeEventListener("slay:jump", this.onJump);
+    this.offTheme();
     this.paper.hide();
   }
 }

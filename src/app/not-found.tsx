@@ -6,7 +6,7 @@ export default function NotFound() {
     <main className="not-found">
       <p className="label">404</p>
       <h1 className="font-display not-found-title">This page is not here.</h1>
-      <p className="not-found-text">The address may have changed while the site is in preview.</p>
+      <p className="not-found-text">The address may have changed.</p>
       <Link href="/" className="btn-primary">
         Back to SLAY BRAIDS
       </Link>

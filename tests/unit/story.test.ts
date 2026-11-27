@@ -12,6 +12,11 @@ import {
   pearlAt,
   productAt,
   productVh,
+  worldAt,
+  pageColor,
+  groundOf,
+  TONE,
+  PAGE_COLOR,
 } from "@/experience/chapters/story";
 import { products } from "@/content/products";
 
@@ -85,5 +90,32 @@ describe("M3 story layout", () => {
         expect(productAt("landscape", l)).toBe(productAt("portrait", vh));
       expect(mapVh("landscape", "portrait", l)).toBeCloseTo(vh, 6);
     }
+  });
+});
+
+describe("v4 themes: worlds and pages by tone", () => {
+  const vhs = (o: "landscape" | "portrait") => Array.from({ length: 160 }, (_, i) => i * 10).filter((v) => v <= STORY[o].ch7[1]);
+  it("dark swaps white and black; red stays red", () => {
+    for (const o of ["landscape", "portrait"] as const)
+      for (const vh of vhs(o)) {
+        const l = worldAt(o, vh, "light");
+        const d = worldAt(o, vh, "dark");
+        const swap = { white: "black", black: "white", red: "red" } as const;
+        expect(d.name).toBe(swap[l.name]);
+      }
+  });
+  it("light theme is unchanged from v3", () => {
+    for (const o of ["landscape", "portrait"] as const)
+      for (const vh of vhs(o)) expect(worldAt(o, vh)).toEqual(worldAt(o, vh, "light"));
+    expect(PAGE_COLOR).toEqual({ ch3: "black", ch4: "black", ch6: "red" });
+  });
+  it("pages and sections resolve per theme", () => {
+    expect(pageColor("ch3", "dark")).toBe("white");
+    expect(pageColor("ch6", "dark")).toBe("red");
+    expect(groundOf("paper", "dark")).toBe("black");
+    expect(groundOf("inverse", "dark")).toBe("white");
+    expect(groundOf("paper", "light")).toBe("white");
+    expect(groundOf("black", "dark")).toBe("black");
+    expect(TONE.dark.paper).toBe("black");
   });
 });

@@ -1,0 +1,223 @@
+{
+  "version": "m3_ch_v1",
+  "renderedAt": "2026-11-27T18:10:48.443Z",
+  "files": [
+    {
+      "name": "m3-ch5-dark-landscape-1280.avif",
+      "width": 1280,
+      "bytes": 64547,
+      "sha256": "1edb0298577f63f8fa2d6d3de28e31f3680958a1e48eb9c9d18878b00d76ad09"
+    },
+    {
+      "name": "m3-ch5-dark-landscape-1280.webp",
+      "width": 1280,
+      "bytes": 122720,
+      "sha256": "ea79fa08349285f681701ff5378ca238a971b837ecf1aba1be39e8117d0f01eb"
+    },
+    {
+      "name": "m3-ch5-dark-landscape-1280.jpg",
+      "width": 1280,
+      "bytes": 130515,
+      "sha256": "0a988885a9e384e952b200e183ac47a9553de0578e74aea41e246aadcf9fa9de"
+    },
+    {
+      "name": "m3-ch5-dark-landscape-1920.avif",
+      "width": 1920,
+      "bytes": 147766,
+      "sha256": "a5b8787e32b23e48222399011399ef7e2aeeecfae12aa08f12a84a506f45f32b"
+    },
+    {
+      "name": "m3-ch5-dark-landscape-1920.webp",
+      "width": 1920,
+      "bytes": 287760,
+      "sha256": "b28306e90584d93e6270b4b67687075d6a0863da0a2a98dee4a9ebc55f691a04"
+    },
+    {
+      "name": "m3-ch5-dark-landscape-1920.jpg",
+      "width": 1920,
+      "bytes": 304213,
+      "sha256": "7776e5d25f72d3cec3c1c774316a05f56ab612b9331c117d51358bc119baa4fb"
+    },
+    {
+      "name": "m3-ch5-dark-landscape-2560.avif",
+      "width": 2560,
+      "bytes": 306561,
+      "sha256": "709c247cec872cfded7a55f1bdc67cf0919bce4e3118e9d03c64082400bb3c3f"
+    },
+    {
+      "name": "m3-ch5-dark-landscape-2560.webp",
+      "width": 2560,
+      "bytes": 554142,
+      "sha256": "4a2dc9fe30d25dab0f2c821d61a3491116f28307b9840cd6dc4f5ad8ef503005"
+    },
+    {
+      "name": "m3-ch5-dark-landscape-2560.jpg",
+      "width": 2560,
+      "bytes": 581323,
+      "sha256": "b59de73e4661599eb304a97c844cc1895b10dee6c41f74f3b17a69fb966f259c"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-1280.avif",
+      "width": 1280,
+      "bytes": 36670,
+      "sha256": "88c56ec10d69c97d71e2926c0ffdb5ea3829f52e39f8c168e15393ad95ef1566"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-1280.webp",
+      "width": 1280,
+      "bytes": 66968,
+      "sha256": "8f2de5004b2f758f2eeacaf74f62a5ec0af79431c218fc028cbc1eec060f318c"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-1280.jpg",
+      "width": 1280,
+      "bytes": 78181,
+      "sha256": "41767ca125069fde1a7167c29918831d58db99974c35265d0b92890964bcf1f6"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-1920.avif",
+      "width": 1920,
+      "bytes": 84587,
+      "sha256": "b081528725ec9bff61a48d97c44e67a1597f4a53adec0a1cdbffe60817362987"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-1920.webp",
+      "width": 1920,
+      "bytes": 154844,
+      "sha256": "8356ea8659aa073c4b5153f54181291301c7ce1a97f51895543a02ad6fb243d6"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-1920.jpg",
+      "width": 1920,
+      "bytes": 177591,
+      "sha256": "1c9dce74154d6177aad288121149bc91fee44009093e773d4e18f10d279a5643"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-2560.avif",
+      "width": 2560,
+      "bytes": 185190,
+      "sha256": "73103f73e644c2d44a41b8ede5966190359ad1cb209c8f9a2439a79a78a2d395"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-2560.webp",
+      "width": 2560,
+      "bytes": 312922,
+      "sha256": "03d762e520d93eb654a92d27f1b705c46bfce940d347875777cac03d559bd362"
+    },
+    {
+      "name": "m3-ch7-dark-landscape-2560.jpg",
+      "width": 2560,
+      "bytes": 343707,
+      "sha256": "ae165561fe042e0d5f8049c0420cbe14d2aeb046e082399fc204abc521df578d"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-720.avif",
+      "width": 720,
+      "bytes": 58263,
+      "sha256": "b04fe53ddae85fb73e0d90541b03cae2d5e5647dd0a7bf5078c3722f84e08ca1"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-720.webp",
+      "width": 720,
+      "bytes": 105194,
+      "sha256": "2221bb390e7790b43387ce20135063382629420e0fe4909a4a03dc8fc8878545"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-720.jpg",
+      "width": 720,
+      "bytes": 116065,
+      "sha256": "85064ae69c9c33292a41e6d1a8288df87443dc7cda5e0b93745dd9d4a861324f"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-1080.avif",
+      "width": 1080,
+      "bytes": 121165,
+      "sha256": "9440c3a85402b49120afd9d9498c930fcbfdce7e1434d80ae9b822d14e09a6b0"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-1080.webp",
+      "width": 1080,
+      "bytes": 220618,
+      "sha256": "a4664de61390bdfd281b2001e41e2a9d83a15d52ad1cb78b0950ed4274ddd4e4"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-1080.jpg",
+      "width": 1080,
+      "bytes": 252141,
+      "sha256": "151beeee82e62bcce6989126f4140c0ab762713723dd28c94dc346c88041093b"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-1440.avif",
+      "width": 1440,
+      "bytes": 212673,
+      "sha256": "2997f375903e55d645d4d13503e1b95312f863812921d3a7febfa9dc4ba84a52"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-1440.webp",
+      "width": 1440,
+      "bytes": 377638,
+      "sha256": "99db8acf6769b5dea156194efe167cf78220f597cbd5af85c5cc7767146ae65f"
+    },
+    {
+      "name": "m3-ch5-dark-portrait-1440.jpg",
+      "width": 1440,
+      "bytes": 439391,
+      "sha256": "d28786c0feee8cbe25698dcb32515cba9e789ab3853193db6ea34f6653792380"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-720.avif",
+      "width": 720,
+      "bytes": 40568,
+      "sha256": "cbb41f13b1e02aeab5728d94577a6e847fbf7ecb761ca5881bbcf5dbc678b43e"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-720.webp",
+      "width": 720,
+      "bytes": 78658,
+      "sha256": "7c3b9505f24c685ecce231b70c38feaa8e391d7df6065cb92f1cad6678d48a70"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-720.jpg",
+      "width": 720,
+      "bytes": 84319,
+      "sha256": "191a5b5f063b666411e6bb6052fa680b4863b399adac65b4a559d070f9df5067"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-1080.avif",
+      "width": 1080,
+      "bytes": 94126,
+      "sha256": "59b6144bb2ed3e5ef4220121b789b2794202a1a44b22235a41f89c11469e4eb6"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-1080.webp",
+      "width": 1080,
+      "bytes": 175458,
+      "sha256": "33bcbcdbc58b854f6b53e3b4c35be197e162ce3bc922af55f292d5b4d2078c59"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-1080.jpg",
+      "width": 1080,
+      "bytes": 188754,
+      "sha256": "dc5e51430f577cbd49fa25d23aa6bf12206d1c6fb4d753eed5719010a82c08dc"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-1440.avif",
+      "width": 1440,
+      "bytes": 173428,
+      "sha256": "290cb1260137859867f313dcce70335f7b7e9ce511af794bda0c56c7f46c183d"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-1440.webp",
+      "width": 1440,
+      "bytes": 318790,
+      "sha256": "502f7a5d86edf78e935921b83782d2841584303dafb6687b4a7874fa7801cf5f"
+    },
+    {
+      "name": "m3-ch7-dark-portrait-1440.jpg",
+      "width": 1440,
+      "bytes": 342330,
+      "sha256": "a1a8fa5c28947fb4798901c50de8d1dfdb03ca73b79626eacd27446bcc747c9c"
+    }
+  ],
+  "renderer": "headless chromium (SwiftShader)"
+}

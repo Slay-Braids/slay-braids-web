@@ -5,7 +5,7 @@ import { buildCascade } from "@/experience/cascade/geometry";
 import { cascadeFragment, cascadeVertex } from "@/experience/cascade/shaders";
 import { FRAMING } from "@/experience/framing";
 import { ANCHOR, anchorConfig } from "@/experience/tiers";
-import { SCENE_BG } from "@/experience/cascade/CascadeScene";
+import { SCENE_BG, SCENE_BG_DARK } from "@/experience/cascade/CascadeScene";
 
 /**
  * APPROVED VISUAL FOUNDATION — anchor_v2.
@@ -53,6 +53,8 @@ const LOCK = {
 describe("approved visual foundation (anchor_v3) is unchanged", () => {
   it("anchor version", () => expect(ANCHOR.version).toBe(LOCK.version));
   it("anchor world colour", () => expect(SCENE_BG).toEqual(LOCK.sceneBg));
+  // v4: the dark theme renders the same locked scene on the black world (#0a0a0a).
+  it("dark theme anchor world colour", () => expect(SCENE_BG_DARK).toEqual([10 / 255, 10 / 255, 10 / 255]));
 
   for (const o of ["landscape", "portrait"] as const) {
     it(`hair geometry — ${o}`, () => {

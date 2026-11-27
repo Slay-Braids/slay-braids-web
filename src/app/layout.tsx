@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
 import { anchorSrcSet } from "@/components/AnchorStage";
+import { THEME_BOOT } from "@/experience/theme";
 
 export const metadata: Metadata = {
   title: "SLAY BRAIDS — Premium look. Affordable price.",
@@ -22,41 +23,44 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0a0a0a",
-  colorScheme: "dark",
+  // v4: both schemes are supported, so browsers' own "dark mode for websites" leaves the page to
+  // its dark theme instead of recolouring it.
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // data-static is on by default so the page is complete without JavaScript (the printed spreads);
     // the inline script removes it before first paint when JavaScript runs.
-    <html lang="en" data-static="true" suppressHydrationWarning>
+    <html lang="en" data-static="true" data-theme="light" suppressHydrationWarning>
       <head>
         <link rel="icon" type="image/png" href="/media/favicon.png" />
+        {/* Theme before first paint: the visitor's pick, else the system setting. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
         {/* Marks JS availability before paint so reveal styles never hide content without JS. */}
         <script
           dangerouslySetInnerHTML={{ __html:
               "document.documentElement.classList.add('js');document.documentElement.removeAttribute('data-static')" }}
         />
         {/* The anchor still is the LCP element: preload the right orientation. */}
-        <link
-          rel="preload"
-          as="image"
-          type="image/avif"
-          media="(orientation: portrait)"
-          imageSrcSet={anchorSrcSet("/", "portrait", "avif")}
-          imageSizes="100vw"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="image"
-          type="image/avif"
-          media="(orientation: landscape)"
-          imageSrcSet={anchorSrcSet("/", "landscape", "avif")}
-          imageSizes="100vw"
-          fetchPriority="high"
-        />
+        {(["light", "dark"] as const).flatMap((t) =>
+          (["portrait", "landscape"] as const).map((o) => (
+            <link
+              key={`${t}-${o}`}
+              rel="preload"
+              as="image"
+              type="image/avif"
+              media={`(prefers-color-scheme: ${t}) and (orientation: ${o})`}
+              imageSrcSet={anchorSrcSet("/", o, "avif", t)}
+              imageSizes="100vw"
+              fetchPriority="high"
+            />
+          )),
+        )}
       </head>
       <body>{children}</body>
     </html>

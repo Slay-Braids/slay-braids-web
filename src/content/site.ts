@@ -47,11 +47,13 @@ export const enquiry = {
 export const futura = {
   name: "FUTURA",
   by: "by SLAY BRAIDS",
-  line: "FUTURA is a SLAY BRAIDS product line.",
+  /** v4 (owner, 27 Nov 2026): FUTURA is not a brand and has no logo; it is one of SLAY BRAIDS' products. */
+  kicker: "A SLAY BRAIDS product",
+  line: "FUTURA is a SLAY BRAIDS product.",
   lineSource: "Project owner brief, 2026-11-26; instruction 2026-11-27",
   headline: "Made to look expensive. Priced not to be.",
   intro:
-    "FUTURA is the SLAY BRAIDS collection made with futura, a fibre from Kaneka created to look and move like real hair. You get the finish people usually pay a premium for, at a SLAY BRAIDS price.",
+    "FUTURA is one of our products: SLAY BRAIDS hair made with futura, a fibre from Kaneka created to look and move like real hair. You get the finish people usually pay a premium for, at a SLAY BRAIDS price.",
   featuresTitle: "What futura fibre brings",
   features: [
     { title: "Feels like real hair", text: "Smooth and soft, and easy to comb through." },
@@ -67,7 +69,8 @@ export const futura = {
     { title: "Blend for a natural finish", text: "futura types can be mixed for a more natural look and feel." },
     { title: "Made for wigs and weaves", text: "Suited to wigs, weaves and other hair attachments." },
   ],
-  source: "Fibre information: Kaneka Corporation (kanekalon.com). futura is a fibre made by Kaneka.",
+  source:
+    "Fibre information: Kaneka Corporation (kanekalon.com). futura is a fibre made by Kaneka, and other hair brands use it too.",
 } as const;
 
 export const craft = {

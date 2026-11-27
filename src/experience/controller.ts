@@ -12,6 +12,7 @@
  *  5. Only after the fade: start motion, pointer response and scroll-driven camera.
  *  6. Watch frame times; drop A → B → still if the device cannot hold the frame rate.
  */
+import { currentTheme } from "./theme";
 import {
   ANCHOR,
   TIER_SETTINGS,
@@ -139,6 +140,7 @@ async function startExperience(root: HTMLElement): Promise<void> {
   let scene = new CascadeScene({
     canvas,
     orientation,
+    background: themeBg(),
     geometry,
     maxDpr: settings.maxDpr,
     antialias: settings.antialias,
@@ -245,6 +247,7 @@ async function startExperience(root: HTMLElement): Promise<void> {
       scene = new CascadeScene({
         canvas,
         orientation,
+        background: themeBg(),
         geometry: g,
         maxDpr: settings.maxDpr,
         antialias: settings.antialias,
@@ -275,6 +278,7 @@ async function startExperience(root: HTMLElement): Promise<void> {
       scene = new CascadeScene({
         canvas: canvas!,
         orientation,
+        background: themeBg(),
         geometry: g,
         maxDpr: TIER_SETTINGS.B.maxDpr,
         antialias: true,
@@ -386,6 +390,7 @@ async function renderAnchorMode(
   const scene = new CascadeScene({
     canvas,
     orientation,
+    background: themeBg(),
     geometry,
     maxDpr: 1,
     antialias: true,
@@ -399,6 +404,10 @@ async function renderAnchorMode(
   state.marks.anchorRendered = now();
   (window as unknown as { __anchorPNG?: string }).__anchorPNG = canvas.toDataURL("image/png");
 }
+
+/** The anchor world of the current theme (white, or black in the dark theme). */
+const themeBg = (): [number, number, number] =>
+  currentTheme() === "dark" ? [10 / 255, 10 / 255, 10 / 255] : [1, 1, 1];
 
 const nextFrame = () =>
   new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));

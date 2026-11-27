@@ -19,6 +19,9 @@ const OUT = path.resolve("out");
 const DEST = path.resolve("public/anchors");
 const draft = process.argv.includes("--draft");
 const VERSION = process.env.ANCHOR_VERSION ?? "anchor_v3";
+// v4: THEME=dark renders the same anchor on the dark theme's black world (files: <version>-dark-…).
+const THEME = process.env.THEME === "dark" ? "dark" : "light";
+const NAME = THEME === "dark" ? `${VERSION}-dark` : VERSION;
 const WIDTHS = { landscape: [1280, 1920, 2560], portrait: [720, 1080, 1440] };
 
 const types = {
@@ -55,6 +58,7 @@ const browser = await chromium.launch({
 await mkdir(DEST, { recursive: true });
 const manifest = {
   version: VERSION,
+  theme: THEME,
   renderedAt: new Date().toISOString(),
   renderer: "",
   files: [],
@@ -67,7 +71,7 @@ for (const orientation of ["landscape", "portrait"]) {
   });
   page.on("console", (m) => m.type() === "error" && console.error("[page]", m.text()));
   const t0 = Date.now();
-  await page.goto(`http://127.0.0.1:${port}/?anchor=${orientation}`);
+  await page.goto(`http://127.0.0.1:${port}/?anchor=${orientation}&theme=${THEME}`);
   await page.waitForFunction(() => window.__anchorPNG, null, { timeout: 180_000 });
   const dataUrl = await page.evaluate(() => window.__anchorPNG);
   manifest.renderer = await page.evaluate(
@@ -85,7 +89,7 @@ for (const orientation of ["landscape", "portrait"]) {
     continue;
   }
   await mkdir(path.resolve("assets/anchors"), { recursive: true });
-  const master = path.resolve("assets/anchors", `${VERSION}-${orientation}-master.png`);
+  const master = path.resolve("assets/anchors", `${NAME}-${orientation}-master.png`);
   await writeFile(master, png);
   for (const w of WIDTHS[orientation]) {
     const img = sharp(png).resize({ width: w, kernel: "lanczos3" });
@@ -96,7 +100,7 @@ for (const orientation of ["landscape", "portrait"]) {
     ];
     for (const [ext, pipeline] of outs) {
       const buf = await pipeline.toBuffer();
-      const name = `${VERSION}-${orientation}-${w}.${ext}`;
+      const name = `${NAME}-${orientation}-${w}.${ext}`;
       await writeFile(path.join(DEST, name), buf);
       manifest.files.push({
         name,
@@ -109,7 +113,7 @@ for (const orientation of ["landscape", "portrait"]) {
 }
 if (!draft) {
   // anchor_v1 keeps public/anchors/manifest.json; later versions get their own manifest.
-  const manifestName = VERSION === "anchor_v1" ? "manifest.json" : `manifest-${VERSION}.json`;
+  const manifestName = VERSION === "anchor_v1" && THEME === "light" ? "manifest.json" : `manifest-${NAME}.json`;
   await writeFile(path.join(DEST, manifestName), JSON.stringify(manifest, null, 2) + "\n");
 }
 await browser.close();
