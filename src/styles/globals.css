@@ -2324,6 +2324,10 @@ html {
 .btn-secondary {
   border-color: rgb(var(--on-paper-rgb) / 0.45);
   color: var(--on-paper);
+  /* A soft field of its ground, so the label never sits on a braid. */
+  background: rgb(var(--paper-rgb) / 0.78);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 .btn-secondary:hover {
   border-color: var(--on-paper);
@@ -2331,6 +2335,7 @@ html {
 .ch7-frame .btn-secondary {
   border-color: rgb(var(--on-inverse-rgb) / 0.5);
   color: var(--on-inverse);
+  background: rgb(var(--inverse-rgb) / 0.78);
 }
 .ch7-frame .btn-secondary:hover {
   border-color: var(--on-inverse);
@@ -2447,6 +2452,18 @@ html {
     margin: 0;
     /* Starts once the intro and title have gone (storyDriver), so the two never overlap. */
     --f: max(0, calc((var(--ch4-feat, 0) - 0.45) / 0.55));
+    isolation: isolate;
+  }
+  /* The list is taller than the red field behind the type: it brings its own red ground,
+     fading in above it, so no line sits on a braid. */
+  :root:not([data-static="true"]) .ch4-feat::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -4rem calc(var(--margin) * -1) calc(var(--vh) * -12);
+    background: linear-gradient(to bottom, rgb(198 13 19 / 0), rgb(198 13 19 / 0.94) 4rem);
+    opacity: min(1, calc(var(--f) * 3));
+    pointer-events: none;
   }
   :root:not([data-static="true"]) .ch4-line {
     grid-area: auto;
@@ -2811,8 +2828,8 @@ html {
     background: linear-gradient(
       90deg,
       rgb(var(--paper-rgb) / 0.97) 0%,
-      rgb(var(--paper-rgb) / 0.95) 44%,
-      rgb(var(--paper-rgb) / 0) 68%
+      rgb(var(--paper-rgb) / 0.95) 50%,
+      rgb(var(--paper-rgb) / 0) 74%
     );
   }
 }
