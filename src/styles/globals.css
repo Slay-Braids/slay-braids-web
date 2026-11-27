@@ -966,7 +966,6 @@ body {
   gap: 0.5rem;
   color: var(--espresso);
   opacity: 0;
-  will-change: opacity, transform;
 }
 .ch4-printed .numeral-ivory,
 .ch6-intro .numeral-ivory {
@@ -994,7 +993,6 @@ body {
   letter-spacing: 0.06em;
   color: #eef0f0; /* pearl: the light has cooled to pearl in this chapter */
   opacity: 0;
-  will-change: opacity, transform;
 }
 .ch4-title .placeholder-tag {
   display: table;
@@ -1120,8 +1118,7 @@ body {
   border: 1px solid rgb(242 236 226 / 0.2);
 }
 .product-photo-placeholder,
-.look-placeholder,
-.portrait-placeholder {
+.look-placeholder {
   margin: 0;
   text-align: center;
   font-size: 11px;
@@ -1277,7 +1274,6 @@ body {
   justify-items: end;
   text-align: right;
   opacity: calc(var(--ch6-intro, 0) * var(--ride, 1));
-  will-change: opacity, transform;
 }
 .ch6-title {
   margin: 0;
@@ -1295,7 +1291,6 @@ body {
   align-items: start;
   padding: calc(var(--vh) * 14) calc(var(--margin) + 32px) calc(var(--vh) * 9) var(--margin);
   opacity: 0;
-  will-change: opacity, transform;
 }
 .look {
   margin: 0;
@@ -1408,7 +1403,6 @@ body {
   right: var(--margin);
   bottom: calc(var(--vh) * 14);
   opacity: 0;
-  will-change: opacity, transform;
 }
 .ch7-content .numeral {
   font-size: clamp(64px, 8vh, 110px);

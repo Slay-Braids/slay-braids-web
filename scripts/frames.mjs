@@ -13,14 +13,15 @@ const page = await browser.newPage({
   isMobile: vp.isMobile,
   hasTouch: vp.hasTouch,
 });
-await page.goto(`http://127.0.0.1:4173/?tier=A&nodowngrade=1&windt=3&nodamp=1`);
+await page.goto(`${process.env.BASE ?? "http://127.0.0.1:4173/"}?tier=A&nodowngrade=1&windt=3&nodamp=1`);
 await page.waitForFunction(() => window.__slay?.live === true, null, { timeout: 120000 });
+if (process.env.CSS) await page.addStyleTag({ content: process.env.CSS });
 for (const v of list.split(",").map(Number)) {
   await page.evaluate((v) => {
     const vh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--vh"));
     window.scrollTo(0, v * vh);
   }, v);
   await page.waitForTimeout(1500);
-  await page.screenshot({ path: `${outDir}/${mode}-${String(v).padStart(3, "0")}.png` });
+  await page.screenshot({ path: `${outDir}/${mode}-${String(v).padStart(3, "0")}.png`, animations: "disabled" });
 }
 await browser.close();
