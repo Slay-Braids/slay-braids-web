@@ -7,7 +7,13 @@ import { FRAMING } from "@/experience/framing";
 import { ANCHOR, anchorConfig } from "@/experience/tiers";
 
 /**
- * APPROVED VISUAL FOUNDATION — anchor_v1 (approved by the project owner after M1 review).
+ * APPROVED VISUAL FOUNDATION — anchor_v2.
+ *
+ * anchor_v1 was approved after M1 review. anchor_v2 (27 Nov 2026) follows the owner's instruction
+ * to correct the colouring for the red/black/white identity: the key light is neutral white
+ * instead of champagne (fill 0.3/0.31/0.34 → 0.3/0.3/0.32). Geometry, shader, pose and framing
+ * are unchanged, so only the lighting hash and the version changed; the anchor stills were
+ * re-rendered (public/anchors/anchor_v2-*, manifest-anchor_v2.json; anchor_v1 files kept).
  *
  * Locks the hair geometry, hair shader, lighting and anchor framing that produce the approved
  * look and the seamless still → live handoff. If this test fails, the approved look has changed.
@@ -22,7 +28,7 @@ const sha = (b: string | Uint8Array) => createHash("sha256").update(b).digest("h
 const bytes = (a: ArrayBufferView) => new Uint8Array(a.buffer, a.byteOffset, a.byteLength);
 
 const LOCK = {
-  version: "anchor_v1",
+  version: "anchor_v2",
   geometry: {
     landscape: {
       positions: "5fbb4d75f9a425d77f52f2b4f982c4ffa3c88654d282cd90f659c0e1291fc01a",
@@ -34,11 +40,11 @@ const LOCK = {
     },
   },
   shaders: "92749c82b3b38b0dad1cfc0ddf163025b3793860fe0c9376bbbbf489093f498d",
-  lighting: "72435cc6d8f314e327a6e5844e6cab0c3ea8c06ca83d8ea86a67187eb7054bdf",
+  lighting: "363e23bc15b766f067f9e4671269bb79c5a5559e6b1ffdf3da6b800e0df2fece", // anchor_v2 (anchor_v1: 72435cc6…)
   anchorFraming: "eeb9e2cdf9aa9713035b97f65ef0d369ed41dc64e0778cd67dec7e236bb0b63c",
 } as const;
 
-describe("approved visual foundation (anchor_v1) is unchanged", () => {
+describe("approved visual foundation (anchor_v2) is unchanged", () => {
   it("anchor version", () => expect(ANCHOR.version).toBe(LOCK.version));
 
   for (const o of ["landscape", "portrait"] as const) {

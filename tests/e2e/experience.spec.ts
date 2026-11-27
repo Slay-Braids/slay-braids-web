@@ -194,24 +194,28 @@ test.describe("lazy loading and fallbacks", () => {
   });
 });
 
+// 27 Nov 2026: the owner approved publishing futura fibre features from Kaneka's page (M1 banned
+// all Kaneka information). Claims must still come only from that approved list: Kaneka's heat
+// figure only with its own caveat, the source credited, and nothing beyond the approved features.
 test("publishes no unapproved product claims", async ({ page }) => {
   await page.goto("/?tier=C");
   const text = (await page.locator("body").innerText()).toLowerCase();
   for (const banned of [
-    "°c",
     "°f",
-    "flame",
-    "heat friendly",
     "heat resistant",
     "tangle",
     "curl retention",
     "polyester",
-    "kanekalon",
-    "kaneka",
     "fibre composition",
+    "guaranteed to",
+    "100%",
   ]) {
     expect(text, `found "${banned}"`).not.toContain(banned);
   }
+  // The only temperature on the site is Kaneka's recommendation, with its caveat, credited.
+  expect(text.match(/\d+\s?°c/g)).toEqual(["180 °c"]);
+  expect(text).toContain("not a guaranteed value");
+  expect(text).toContain("fibre information: kaneka corporation");
 });
 
 // Production (27 Nov 2026): no verified enquiry destination exists, so there is no form at all

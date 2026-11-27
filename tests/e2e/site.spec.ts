@@ -1,5 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { STORY, landingVh, productVh } from "../../src/experience/chapters/story";
+import { lookClips } from "../../src/content/media";
 
 /**
  * M3: the complete site (Chapters 4–7, navigation, showcase, enquiry, fallbacks). Runs beside
@@ -30,12 +32,15 @@ const isPortrait = (page: Page) => page.viewportSize()!.width < page.viewportSiz
 const opacity = (page: Page, sel: string) =>
   page.locator(sel).evaluate((e) => parseFloat(getComputedStyle(e).opacity));
 
-// Settled positions per chapter (story.ts): landing points used by the chapter links.
-// Production: four looks (one step each) in Chapter 5.
-const AT = {
-  landscape: { cover: 530, ch4: 685, p: [770, 820, 870, 920], ch6: 1115, ch7: 1295 },
-  portrait: { cover: 475, ch4: 605, p: [720, 800, 880, 960], ch6: 1125, ch7: 1285 },
-};
+// Settled positions, from the story layout itself (no hard-coded numbers to drift).
+const at = (o: "landscape" | "portrait") => ({
+  cover: STORY[o].ch4[0] + 30,
+  ch4: landingVh(o, "ch4")!,
+  p: lookClips.map((_, i) => productVh(o, i)),
+  ch6: landingVh(o, "ch6")!,
+  ch7: landingVh(o, "ch7")!,
+});
+const AT = { landscape: at("landscape"), portrait: at("portrait") };
 
 test.describe("structure", () => {
   test("seven chapters, in order, one h1; enquiry and footer last", async ({ page }) => {
@@ -278,6 +283,48 @@ test.describe("enquiries and motion", () => {
   });
 });
 
+test.describe("FUTURA story and the simple view", () => {
+  test("FUTURA: affordability headline, six fibre features with Kaneka's caveat and source", async ({ page }) => {
+    await page.goto("/?tier=C");
+    await expect(page.locator(".ch4-headline")).toHaveText("Made to look expensive. Priced not to be.");
+    await expect(page.locator(".ch4-features li")).toHaveCount(6);
+    await expect(page.locator(".ch4-features")).toContainText("not a guaranteed value");
+    await expect(page.locator(".ch4-source")).toContainText("Kaneka");
+    for (const li of await page.locator(".ch4-features li").all()) await expect(li).toHaveCSS("opacity", "1");
+  });
+
+  test("live: the features arrive after the intro and are fully shown at the landing point", async ({ page }) => {
+    test.setTimeout(240_000);
+    await page.goto(LIVE);
+    await waitLive(page);
+    await scrollVh(page, AT[isPortrait(page) ? "portrait" : "landscape"].ch4);
+    await expect
+      .poll(() => page.locator(".ch4-features li").last().evaluate((e) => parseFloat(getComputedStyle(e).opacity)), {
+        timeout: 30_000,
+      })
+      .toBeGreaterThan(0.99);
+  });
+
+  test("the visitor can switch to the simple view and back; the choice is remembered", async ({ page }) => {
+    test.setTimeout(240_000);
+    await page.goto("/?tier=A&nodowngrade=1");
+    await waitLive(page);
+    const footerSwitch = page.locator("footer [data-view-toggle]");
+    await expect(footerSwitch).toHaveText("Switch to simple view");
+    await footerSwitch.click();
+    await page.waitForURL(/view=simple/);
+    await expect(page.locator("html")).toHaveAttribute("data-static", "true");
+    expect(await page.evaluate(() => "__chapters" in window)).toBe(false);
+    // Remembered without the URL parameter.
+    await page.goto("/?tier-unset");
+    await expect(page.locator("html")).toHaveAttribute("data-static", "true");
+    await expect(page.locator("footer [data-view-toggle]")).toHaveText("Switch to immersive view");
+    await page.locator("footer [data-view-toggle]").click();
+    await page.waitForURL(/view=immersive/);
+    await expect.poll(() => page.evaluate(() => window.__slay?.tier), { timeout: 60_000 }).not.toBe("C");
+  });
+});
+
 test.describe("resilience", () => {
   test.setTimeout(240_000);
   test("a lost WebGL context falls back to the static spreads", async ({ page }) => {
@@ -296,14 +343,14 @@ test.describe("resilience", () => {
     const page = await ctx.newPage();
     await page.goto("/?tier=B&nodowngrade=1&windt=3&nodamp=1");
     await waitLive(page);
-    await scrollVh(page, 800); // Chapter 5, product 2 (portrait)
+    await scrollVh(page, productVh("portrait", 1)); // Chapter 5, look 2 (portrait)
     await page.setViewportSize({ width: 915, height: 412 });
     await page.waitForTimeout(2500);
     const vh = await page.evaluate(
       () => scrollY / parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--vh")),
     );
-    // Portrait 800 vh is the middle of product 2's step; landscape product 2 is centred at 820.
-    expect(Math.abs(vh - 820)).toBeLessThan(3);
+    // The middle of look 2's step in portrait maps to the middle of look 2's step in landscape.
+    expect(Math.abs(vh - productVh("landscape", 1))).toBeLessThan(3);
     await expect(page.locator("[data-product='1']")).toHaveAttribute("data-active", "true");
     await ctx.close();
   });

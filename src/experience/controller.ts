@@ -305,6 +305,7 @@ async function startExperience(root: HTMLElement): Promise<void> {
       stage!.dataset.mode = "static";
       document.documentElement.dataset.static = "true";
       void import("./chapters/staticSpreads").then((m) => m.initStaticSpreads(root, orientation));
+      announceSimpleView();
     }
   }
 }
@@ -332,20 +333,40 @@ function swapToMatchedStill(img: HTMLImageElement, tier: "A" | "B", state: Exper
 function monitor(state: ExperienceState, onTooSlow: () => void, disabled = false) {
   const startedAt = performance.now();
   let judged = false;
+  let fired = false;
   const window_: number[] = [];
+  // After the first judgement, keep watching for the rest of the visit (a phone that heats up
+  // and throttles): a sustained slowdown, well past the budget, steps down too.
+  const rolling: number[] = [];
+  const budget = () => (state.tier === "A" ? 22 : 34); // ≈45 fps on A, ≈30 fps on B
+  const median = (a: number[]) => [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)] ?? 1000;
   return (dt: number) => {
     state.frameTimes.push(dt);
     if (state.frameTimes.length > 600) state.frameTimes.shift();
+    if (fired || disabled) return;
     const elapsed = performance.now() - startedAt;
-    if (judged || elapsed < 1000) return;
-    window_.push(dt);
-    if (window_.length >= 120 || elapsed > 3000) {
-      judged = true;
-      const sorted = [...window_].sort((a, b) => a - b);
-      const median = sorted[Math.floor(sorted.length / 2)] ?? 1000;
-      const budget = state.tier === "A" ? 22 : 34; // ≈45 fps on A, ≈30 fps on B
-      state.marks[`medianFrameMs_${state.tier}`] = +median.toFixed(1);
-      if (median > budget && !disabled) onTooSlow();
+    if (!judged) {
+      if (elapsed < 1000) return;
+      window_.push(dt);
+      if (window_.length >= 120 || elapsed > 3000) {
+        judged = true;
+        const m = median(window_);
+        state.marks[`medianFrameMs_${state.tier}`] = +m.toFixed(1);
+        if (m > budget()) {
+          fired = true;
+          onTooSlow();
+        }
+      }
+      return;
+    }
+    rolling.push(dt);
+    if (rolling.length < 180) return;
+    const m = median(rolling);
+    rolling.length = 0;
+    if (m > budget() * 1.4) {
+      fired = true;
+      state.marks[`sustainedSlowMs_${state.tier}`] = +m.toFixed(1);
+      onTooSlow();
     }
   };
 }
@@ -392,3 +413,12 @@ const idle = () =>
     if (ric) ric(() => r(), { timeout: 1200 });
     else setTimeout(r, 200);
   });
+
+/** After an automatic step down to the simple view, say so briefly (and how to switch back). */
+function announceSimpleView() {
+  const el = document.querySelector<HTMLElement>("[data-view-notice]");
+  if (!el) return;
+  el.textContent = "Switched to the simple view for smoother scrolling. You can change this in the menu.";
+  el.dataset.show = "true";
+  setTimeout(() => (el.dataset.show = "false"), 6000);
+}

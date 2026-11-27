@@ -46,14 +46,17 @@ export class StoryDriver {
     const s4 = ch4State(o, vh);
     if (this.ch4Frame) {
       this.ch4Frame.dataset.visible = String(s4.visible);
-      this.ch4Frame.style.setProperty("--field", f(Math.max(s4.title, s4.line)));
+      this.ch4Frame.style.setProperty("--field", f(Math.max(s4.title, s4.line, s4.features)));
     }
     if (this.ch4Printed) this.ch4Printed.style.opacity = f(s4.printed);
     if (this.ch4Title) {
       this.ch4Title.style.opacity = f(s4.title);
       this.ch4Title.style.transform = `translate3d(0, ${((1 - s4.title) * 24).toFixed(1)}px, 0)`;
     }
-    if (this.ch4Line) this.ch4Line.style.opacity = f(s4.line);
+    // Phones: the features take the intro's place (one screen); desktop shows both.
+    if (this.ch4Line)
+      this.ch4Line.style.opacity = f(o === "portrait" ? s4.line * (1 - Math.min(1, s4.features * 1.6)) : s4.line);
+    if (this.ch4Frame) this.ch4Frame.style.setProperty("--ch4-feat", f(s4.features));
 
     const s5 = ch5State(o, vh);
     if (this.ch5Frame) {

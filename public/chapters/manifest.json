@@ -1,222 +1,222 @@
 {
   "version": "m2_ch_v1",
-  "renderedAt": "2026-11-26T14:39:53.301Z",
+  "renderedAt": "2026-11-27T16:21:07.390Z",
   "files": [
     {
       "name": "m2-ch2-landscape-1280.avif",
       "width": 1280,
-      "bytes": 43633,
-      "sha256": "69a92b68e7512335ca2678ebd623c0118a4e04ca6c7365eb3c0acbdc524b8570"
+      "bytes": 43416,
+      "sha256": "77b2686bcc6b38cf3aa2c5be4b605f61e4ef44c1c8a85ffd6090f40851c794fe"
     },
     {
       "name": "m2-ch2-landscape-1280.webp",
       "width": 1280,
-      "bytes": 61140,
-      "sha256": "9430bedb9642ca640890be472e1b2f285f6381e06dff95fc5b04896b0ac1302b"
+      "bytes": 60052,
+      "sha256": "a50c3ce9ec141d73c750d657d4c44f7c561d030dea17a877eb66a3abc89c3e6e"
     },
     {
       "name": "m2-ch2-landscape-1280.jpg",
       "width": 1280,
-      "bytes": 75877,
-      "sha256": "6ccd32060a04db44e07a29b89b435272f3a49f1320c2d86f61b86c435d1fbaf8"
+      "bytes": 73093,
+      "sha256": "d3dfab34c364af55fff2fc96018679f9dbceaf5b20b61c79d04efc1dcafe4bba"
     },
     {
       "name": "m2-ch2-landscape-1920.avif",
       "width": 1920,
-      "bytes": 85604,
-      "sha256": "150eb2060d42a25b3e444b6d3b0ac2eefa439a9888b053a8a6ae91bb2b65989c"
+      "bytes": 86005,
+      "sha256": "12707f8e7a6833aa48c8ef69e9f59882e4cda52052d5dbfe3ce914ff958189db"
     },
     {
       "name": "m2-ch2-landscape-1920.webp",
       "width": 1920,
-      "bytes": 123766,
-      "sha256": "1b41db666f6a2a8ee4df1ac865acb602e32c6ed4c8c871f305604c9ab5c0cab7"
+      "bytes": 119948,
+      "sha256": "7206b36d20afac62ea174c566228e1ffec967f07b17caff60f546fdc92ea559b"
     },
     {
       "name": "m2-ch2-landscape-1920.jpg",
       "width": 1920,
-      "bytes": 155553,
-      "sha256": "e85dd298a4588d24370d569017ecb482074840044deaaba72c5049929f880b08"
+      "bytes": 149666,
+      "sha256": "b8ccd49adb85beb4e1cbd7ac249355f8342178d2fc94298f9726b73d95a3bd02"
     },
     {
       "name": "m2-ch2-landscape-2560.avif",
       "width": 2560,
-      "bytes": 148523,
-      "sha256": "fee204e6483d71e2f62ebf136d6a8fe91327fce40d8006b572a0fbae8eafb020"
+      "bytes": 148068,
+      "sha256": "eb4d0eb2f960636729e2fb27dc0b96ac0bb327996dfe1dd47c33961b95904e1b"
     },
     {
       "name": "m2-ch2-landscape-2560.webp",
       "width": 2560,
-      "bytes": 215938,
-      "sha256": "4428df74729b19a3f9949296983f331c3f8fb4276eb25bbb7e0924d032fc35c4"
+      "bytes": 210234,
+      "sha256": "ad48f0ec897035fc3be5671fd21a37863ab64beea94fd56c0929563e92c06146"
     },
     {
       "name": "m2-ch2-landscape-2560.jpg",
       "width": 2560,
-      "bytes": 260100,
-      "sha256": "20f5eb95314e4dab0e850378cd4771bff394032f52139d2be0314562b7165221"
+      "bytes": 250207,
+      "sha256": "3c2f607d2bb77468175f5159d5ee846db5d535e04a6480e246d29850b5985eaa"
     },
     {
       "name": "m2-ch3-landscape-1280.avif",
       "width": 1280,
-      "bytes": 47232,
-      "sha256": "a809e2da8a85fe75244f9169da221c66f077226e7c92c8234d2a4ae81387dac9"
+      "bytes": 46814,
+      "sha256": "6fa084db089315ac24fd623fcd03ae50256c841acb925d034cdf57eb496260b7"
     },
     {
       "name": "m2-ch3-landscape-1280.webp",
       "width": 1280,
-      "bytes": 99660,
-      "sha256": "ca6f26d59ac14e861e588eb58b9dd922a8d590333501c3b0d70a67af0e52da0a"
+      "bytes": 97118,
+      "sha256": "873d0c7191aaae18354c6e5dafd77214bade5b3690cbfd7413d4d0daa7550042"
     },
     {
       "name": "m2-ch3-landscape-1280.jpg",
       "width": 1280,
-      "bytes": 103394,
-      "sha256": "1d558f70621ee3f2a5580f8f8f264d95997c97ed4238a1222172ece7c2bd711b"
+      "bytes": 100001,
+      "sha256": "3e2512e9be7493a87044eb0f21a3db922cdce3493aac46bf7365e17a436180dd"
     },
     {
       "name": "m2-ch3-landscape-1920.avif",
       "width": 1920,
-      "bytes": 111056,
-      "sha256": "e7360ef156a0376cb4e8de25dc52895d2a2d17a0495c2d73e7f9af8878e9352f"
+      "bytes": 110239,
+      "sha256": "1c38831f524834e88600e355cbfd0992e731c565fca8067b7c6d97482daaf251"
     },
     {
       "name": "m2-ch3-landscape-1920.webp",
       "width": 1920,
-      "bytes": 230800,
-      "sha256": "78f897b98270794cc48e6db3bd35c21329e4e23811160a416cc2e3b9de68d673"
+      "bytes": 224124,
+      "sha256": "6c1bf00f29e13c0106d6e7afdfc288c85b0e7dc4b3c6dbb81f0874f97bde239d"
     },
     {
       "name": "m2-ch3-landscape-1920.jpg",
       "width": 1920,
-      "bytes": 242357,
-      "sha256": "7409145bde4f9833e67df3ae5b934e08c058c5590f7d9da0637f6f2f5e4849f2"
+      "bytes": 233549,
+      "sha256": "8a05b361750a5d17973c197abb3a670aa79724a5401bb40edf9642d5156212a8"
     },
     {
       "name": "m2-ch3-landscape-2560.avif",
       "width": 2560,
-      "bytes": 217761,
-      "sha256": "d6b8e77ebbbc48f9bf7ee2c5535f2573d4d2377111df12c8f09da7af4cba312c"
+      "bytes": 216843,
+      "sha256": "e4261b172acee47861b7fe0537e5ee15386cdded4150e4780510509d086d91d9"
     },
     {
       "name": "m2-ch3-landscape-2560.webp",
       "width": 2560,
-      "bytes": 428570,
-      "sha256": "d4f8aa94a89fc671b2db370093b23ef44794bf0cf32da8de4d370900c46e2c9a"
+      "bytes": 414694,
+      "sha256": "2108554b8c62902b2ba17f55941109b68f43101cc0c137641501a5c99c78376f"
     },
     {
       "name": "m2-ch3-landscape-2560.jpg",
       "width": 2560,
-      "bytes": 450611,
-      "sha256": "11979971251791720032ac1ff0fa2d19c3ae0e588aec95e1af6194f809ee0c1f"
+      "bytes": 433895,
+      "sha256": "a6a3320887b7a19f97902516181d4f809541f26b108214b5a4ba7f19039a3eb8"
     },
     {
       "name": "m2-ch2-portrait-720.avif",
       "width": 720,
-      "bytes": 80548,
-      "sha256": "ba21e3f77517e385bad1ced1c9f22cbca1edaf46bdeda63ccf46dba80fd6363f"
+      "bytes": 80145,
+      "sha256": "68d4c3581277e1dc9b01daf8a78f474dd0cc434dc38bb90b7caa4106bde42fe5"
     },
     {
       "name": "m2-ch2-portrait-720.webp",
       "width": 720,
-      "bytes": 138306,
-      "sha256": "8ad9736b6ae9936a87598f2a1416bfdd0f3c653fedd3ca89727e9ed846cd8034"
+      "bytes": 133174,
+      "sha256": "55006700dda76f8fb140b8df18278860e2bf151abc547a48dd8b70690c6b7df5"
     },
     {
       "name": "m2-ch2-portrait-720.jpg",
       "width": 720,
-      "bytes": 155036,
-      "sha256": "e20be205d4f2c794d29c9d3b685a4e8ab85447ac4533147fe6123bbc486a52b3"
+      "bytes": 148772,
+      "sha256": "9b4dc7d8f722c8120d450348055db8edac93915ae7ef6f7476f5e798efa14dae"
     },
     {
       "name": "m2-ch2-portrait-1080.avif",
       "width": 1080,
-      "bytes": 154641,
-      "sha256": "b18e8d045dcd1cba39682e655dc26e29f36d2ec89311e06826aa1dbc5613b462"
+      "bytes": 153940,
+      "sha256": "acde3b20cfdb7788ec46bb0aa44249e9dc07c50da1c645ae47474c1022aaec14"
     },
     {
       "name": "m2-ch2-portrait-1080.webp",
       "width": 1080,
-      "bytes": 272452,
-      "sha256": "04062dd2347069f89946957190ec4d9676d9c0ea2b6288bea3d3da8ded605b40"
+      "bytes": 260920,
+      "sha256": "93c52383afaffd4ed4fb1653f4e6d41adfbcef8681100b571374951186c7c299"
     },
     {
       "name": "m2-ch2-portrait-1080.jpg",
       "width": 1080,
-      "bytes": 317512,
-      "sha256": "e63824fb2f84872e376039d57d99a3bae074c4ca0ecdcf3378ee6924750fd7a6"
+      "bytes": 303240,
+      "sha256": "82a1d3568fac36e17fa9d9eea65767085f0a9487b8a8a3191a584219d2fd9916"
     },
     {
       "name": "m2-ch2-portrait-1440.avif",
       "width": 1440,
-      "bytes": 262495,
-      "sha256": "e2c2538fd908650071fee622bb27602c5adea575f9b53047c0de8a191b468b3d"
+      "bytes": 260271,
+      "sha256": "e2dda274a612c16c0005673ada524077094e8be2678c12f760a170db612d0cbc"
     },
     {
       "name": "m2-ch2-portrait-1440.webp",
       "width": 1440,
-      "bytes": 448246,
-      "sha256": "4b1bcd42f8fc1a99150d251826b93b255017442c28385a09d289b4c5d74f5d3e"
+      "bytes": 431284,
+      "sha256": "569901204aad5c12868872ad997b44def7ef82f701d6090e299eb85f10752ae7"
     },
     {
       "name": "m2-ch2-portrait-1440.jpg",
       "width": 1440,
-      "bytes": 536378,
-      "sha256": "d3af86a580c9f5c370d2b7b92951f3e1af7755b8a3909afb80cc12fbfd84b8a5"
+      "bytes": 512127,
+      "sha256": "fba0c33ddbc3b9bf0f1df78268e4255eac40ccf1de2aca8453edca7a34ce8e53"
     },
     {
       "name": "m2-ch3-portrait-720.avif",
       "width": 720,
-      "bytes": 34103,
-      "sha256": "632b3b19498ac3556b565654a2c5974d8dfb063e5d19e2f3e37d5b77733f504c"
+      "bytes": 33792,
+      "sha256": "4c350ea4879ba308f78b69724d4b914b65e0e4d01be04b28178fed4fc9fd2782"
     },
     {
       "name": "m2-ch3-portrait-720.webp",
       "width": 720,
-      "bytes": 71418,
-      "sha256": "71bfc588b38eed039cef1e9074b6abaccda6d445b30196df468b7cd885cba5cb"
+      "bytes": 69894,
+      "sha256": "f3ab4c66c404409506e48d4929681ea2f821585b5f0c97c40f8ced21656a2a76"
     },
     {
       "name": "m2-ch3-portrait-720.jpg",
       "width": 720,
-      "bytes": 77941,
-      "sha256": "7ce0e8c1585cc7d3cc8299a2ca0de69bf6fa22b032043153351fab068b594617"
+      "bytes": 75457,
+      "sha256": "360e774dd6db916ba474b2548e45c6173687064f32de05c9789e7cdd8ccbdbd4"
     },
     {
       "name": "m2-ch3-portrait-1080.avif",
       "width": 1080,
-      "bytes": 76153,
-      "sha256": "1720ce0ac1c807c3ab5acaec8ec44d800905875036b61fd1345c9ddc441f9cf8"
+      "bytes": 75040,
+      "sha256": "6e2d8817d6051fcade9074297593e58dcd953b35be2b6daea9191f6116b62cdd"
     },
     {
       "name": "m2-ch3-portrait-1080.webp",
       "width": 1080,
-      "bytes": 157502,
-      "sha256": "76579735aa30e2a659e7d5b1e843d5903707468530d22e076901d222e19489e8"
+      "bytes": 152562,
+      "sha256": "b2ce96bf42925833dad41173270068fd969bc27e137b075b4d6ac0f55dbe4a44"
     },
     {
       "name": "m2-ch3-portrait-1080.jpg",
       "width": 1080,
-      "bytes": 177423,
-      "sha256": "6e19f6e2174494ecc21db2a39c9e42d0081690c5e1361d9a5727d8dcf44cfd34"
+      "bytes": 171093,
+      "sha256": "0169a7b79272f513498ace60611a029b80c9dba1ce52a15ad58f9ee04a531e14"
     },
     {
       "name": "m2-ch3-portrait-1440.avif",
       "width": 1440,
-      "bytes": 135262,
-      "sha256": "28bd46f900c3dcb91bfb345ac68ce2edc885dfae6461e5f1804e07343042292a"
+      "bytes": 133453,
+      "sha256": "923b68376a996c969e0aaba43e9b974f01419e109000229bf91f2771ad4fe142"
     },
     {
       "name": "m2-ch3-portrait-1440.webp",
       "width": 1440,
-      "bytes": 272758,
-      "sha256": "f4b0272ee5a4a04a031546c25c61a90fa0b43c4aae0fff0cd1bdee1b37d2a744"
+      "bytes": 267236,
+      "sha256": "3dbaf54564f0063c2e87f148a21d82591ecb696f062dde0e097547d280140607"
     },
     {
       "name": "m2-ch3-portrait-1440.jpg",
       "width": 1440,
-      "bytes": 314480,
-      "sha256": "3a6723e03e9e80a0aa12c0d419d4a3cbe1b05dfc7aff17527b2b175f932cf706"
+      "bytes": 301591,
+      "sha256": "c2b6582526744a1fbdd8c0c6f1f9fbb3234dcf9109f716aa604eab03a7e34ee1"
     }
   ],
   "edges": {

@@ -1684,11 +1684,15 @@ body {
   z-index: 0;
 }
 /* Static Chapter 5: the products sit on ink below the still's hair (contrast for all text). */
+:root[data-static="true"] .ch4-frame::before,
 :root[data-static="true"] .ch5-frame::before {
   z-index: 1;
   background: linear-gradient(180deg, rgb(10 10 10 / 0.5) 0, rgb(10 10 10 / 0.9) calc(var(--vh) * 40), rgb(10 10 10 / 0.96) 100%);
 }
 :root[data-static="true"] :is(.ch5-head, .showcase) {
+  z-index: 2;
+}
+:root[data-static="true"] .ch4-content {
   z-index: 2;
 }
 /* 404 */
@@ -1752,14 +1756,18 @@ body {
 }
 .ch2-film {
   margin: 0;
-  width: min(100%, calc(var(--vh) * 34));
+  width: min(100%, calc(var(--vh) * 21));
   aspect-ratio: 9 / 16;
   overflow: hidden;
   border-top: 2px solid var(--color-red);
 }
 @media (orientation: portrait) {
   .ch2-film {
-    width: min(46vw, calc(var(--vh) * 26));
+    width: min(36vw, calc(var(--vh) * 15));
+  }
+  .ch2-text {
+    font-size: 14px;
+    margin-bottom: 1rem;
   }
 }
 /* Chapter 3: the logo is printed on the white page */
@@ -1892,4 +1900,231 @@ body {
 }
 :root[data-static="true"] .ch6-frame {
   padding-bottom: calc(var(--vh) * 10);
+}
+
+/* =====================================================================================
+   Write-ups (copy) and the FUTURA story
+   ===================================================================================== */
+.hero-sub {
+  margin: 1.4rem 0 0;
+  max-width: 34ch;
+  font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.35rem);
+  line-height: 1.5;
+  color: var(--color-white);
+}
+.ch2-text {
+  margin: 0 0 1.4rem;
+  max-width: 38ch;
+  line-height: 1.6;
+  color: var(--color-white);
+}
+.film-caption {
+  margin-top: 0.6rem;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+.ch2-film {
+  overflow: visible;
+}
+.ch2-film .loop-video {
+  aspect-ratio: 9 / 16;
+}
+.ch3-text {
+  margin: 1rem 0 0;
+  max-width: 26ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1rem + 0.9vw, 1.9rem);
+  line-height: 1.2;
+  color: var(--espresso);
+}
+/* Chapter 4: FUTURA, then six features */
+.ch4-content {
+  max-width: min(50vw, 760px);
+}
+.ch4-title {
+  font-size: clamp(3.4rem, 1rem + 6.4vw, 7.6rem);
+}
+.ch4-headline {
+  margin: 1.4rem 0 0.6rem;
+  font-size: clamp(1.5rem, 1rem + 1.3vw, 2.4rem);
+  line-height: 1.1;
+  color: var(--color-white);
+}
+.ch4-intro {
+  margin: 0;
+  max-width: 50ch;
+  line-height: 1.6;
+  color: var(--color-mist);
+}
+.ch4-line {
+  margin-top: 0;
+  max-width: none;
+}
+.ch4-feat {
+  margin-top: 1.6rem;
+}
+.ch4-feat-title,
+.ch4-source {
+  opacity: min(1, calc(var(--ch4-feat, 0) * 4));
+}
+.ch4-feat-title {
+  margin: 0 0 0.9rem;
+  font: 500 12px var(--font-sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+.ch4-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+}
+.ch4-features li {
+  --on: clamp(0, calc(var(--ch4-feat, 0) * 7 - var(--i)), 1);
+  display: grid;
+  grid-template-columns: 2.2em 1fr;
+  column-gap: 0.4rem;
+  opacity: var(--on);
+  transform: translate3d(0, calc((1 - var(--on)) * 10px), 0);
+}
+.ch4-feat-num {
+  grid-row: span 2;
+  font: 500 12px/1.9 var(--font-sans);
+  letter-spacing: 0.14em;
+  color: var(--color-red);
+  /* red numerals are decorative; large enough at 12px bold? keep them aria-hidden */
+}
+.ch4-features strong {
+  font-weight: 600;
+  color: var(--color-white);
+}
+.ch4-features span:last-child {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-mist);
+}
+.ch4-source {
+  margin: 1.1rem 0 0;
+  font-size: 12px;
+  color: var(--color-mist);
+}
+@media (orientation: portrait) {
+  .ch4-content {
+    display: grid;
+    bottom: calc(var(--vh) * 8);
+  }
+  .ch4-title {
+    font-size: clamp(2.8rem, 1rem + 9vw, 4.4rem);
+  }
+  .ch4-line,
+  .ch4-feat {
+    grid-area: 2 / 1;
+    margin-top: 1.2rem;
+  }
+  .ch4-features {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  .ch4-features span:last-child {
+    font-size: 13px;
+  }
+}
+/* Chapter 5: each look named and described */
+.look-name {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.55em;
+  font-style: italic;
+  color: var(--color-white);
+}
+.look-text {
+  margin: 0;
+  max-width: 30ch;
+  line-height: 1.55;
+  color: var(--color-mist);
+}
+.ch6-text {
+  margin: 0.8rem 0 0;
+  max-width: 28ch;
+  line-height: 1.5;
+  color: rgb(10 10 10 / 0.78);
+}
+.look-caption {
+  max-width: 34ch;
+  line-height: 1.45;
+}
+.ch7-sub {
+  margin: 1.3rem 0 0;
+  max-width: 46ch;
+  line-height: 1.6;
+  color: var(--color-white);
+}
+:root[data-static="true"] .ch4-features li,
+:root[data-static="true"] .ch4-feat-title,
+:root[data-static="true"] .ch4-source {
+  opacity: 1;
+  transform: none;
+}
+@media (orientation: portrait) {
+  :root[data-static="true"] .ch4-line,
+  :root[data-static="true"] .ch4-feat {
+    grid-area: auto;
+  }
+}
+
+/* Simple view switch and notice */
+.menu-view {
+  display: grid;
+  gap: 0.4rem;
+  justify-items: start;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+}
+.menu-view-btn,
+.footer-view {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.4);
+  background: none;
+  color: var(--color-white);
+  font: 500 14px/1 var(--font-sans);
+  cursor: pointer;
+}
+.footer-view {
+  justify-self: start;
+}
+.menu-view-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-mist);
+}
+.view-notice {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 40;
+  max-width: min(92vw, 520px);
+  margin: 0;
+  padding: 0.8rem 1.1rem;
+  translate: -50% 0;
+  border-left: 3px solid var(--color-red);
+  background: rgb(10 10 10 / 0.94);
+  color: var(--color-white);
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms;
+}
+.view-notice:empty {
+  display: none;
+}
+.view-notice[data-show="true"] {
+  opacity: 1;
 }

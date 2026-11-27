@@ -68,6 +68,14 @@ export function Header({ assetBase = "/" }: { assetBase?: string }) {
           <a href="#enquire" className="menu-enquire" onClick={close}>
             Enquiries
           </a>
+          <div className="menu-view">
+            <button type="button" className="menu-view-btn" data-view-toggle>
+              Simple view
+            </button>
+            <p className="menu-view-note" data-view-note>
+              A lighter version without the 3D scroll, for phones that struggle with it.
+            </p>
+          </div>
         </div>
       </dialog>
     </>

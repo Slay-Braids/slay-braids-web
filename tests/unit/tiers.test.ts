@@ -54,4 +54,18 @@ describe("URL flags (query string or #hash for the artifact preview)", () => {
   it("ignores unknown values", () => {
     expect(parseFlags("?tier=z", "#tier-q").tier).toBeUndefined();
   });
+
+  it("weak phones get the simple view; the visitor's choice is respected", () => {
+    const phone = { ...desktop, coarsePointer: true, viewportWidth: 390 };
+    expect(decideTier({ ...phone, hardwareConcurrency: 2, deviceMemory: 2 }).tier).toBe("C");
+    expect(decideTier({ ...phone, hardwareConcurrency: 2, deviceMemory: 4 }).tier).toBe("C");
+    expect(decideTier({ ...phone, hardwareConcurrency: 2, deviceMemory: 8 }).tier).toBe("B");
+    expect(decideTier({ ...phone, effectiveType: "2g" }).tier).toBe("C");
+    expect(decideTier({ ...phone, effectiveType: "4g" }).tier).toBe("B");
+    expect(decideTier({ ...desktop, view: "simple" }).tier).toBe("C");
+    // Choosing the immersive view lifts the soft limits, never the hard ones.
+    expect(decideTier({ ...phone, deviceMemory: 2, view: "immersive" }).tier).toBe("B");
+    expect(decideTier({ ...phone, reducedMotion: true, view: "immersive" }).tier).toBe("C");
+    expect(decideTier({ ...phone, webgl2: false, view: "immersive" }).tier).toBe("C");
+  });
 });
