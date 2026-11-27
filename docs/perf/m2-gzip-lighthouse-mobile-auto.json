@@ -1,0 +1,20 @@
+{
+  "performance": 62,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 60,
+  "LCP_ms": 758,
+  "FCP_ms": 758,
+  "TBT_ms": 23485,
+  "CLS": 0.001,
+  "SpeedIndex_ms": 8431,
+  "lcpElement": null,
+  "failedAccessibility": [],
+  "lcpDetail": "null",
+  "layoutShifts": [
+    {
+      "score": 0.0007005059543778807,
+      "node": "<p data-testid=\"banner\" class=\"preview-banner\">"
+    }
+  ]
+}

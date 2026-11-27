@@ -1,0 +1,2503 @@
+{
+  "summary": {
+    "criterion": "each shown line ≥ 7:1 vs the 95th-percentile-luminance pixel behind it",
+    "samples": {
+      "positions": 21,
+      "phases": [
+        0,
+        2.1,
+        4.2
+      ],
+      "viewports": [
+        "desktop 1440×900",
+        "desktop 1920×1080"
+      ]
+    },
+    "judged": 147,
+    "inTransition": 18,
+    "minRatio": 8.76,
+    "minRatioByViewport": {
+      "desktop 1440×900": 8.76,
+      "desktop 1920×1080": 8.81
+    },
+    "failures": [],
+    "pass": true
+  },
+  "results": [
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 152.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 160,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 167.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 175,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 182.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 190,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 190,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 16.53
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 197.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 205,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 205,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 212.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 212.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 220,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 220,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 220,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 227.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 227.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 227.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 16.53
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 235,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 235,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 235,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 16.53
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 242.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 242.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 242.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 250,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 7.63
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 250,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 7.63
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 0,
+      "vh": 250,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.926,
+      "steady": false,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 14.23
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 152.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 160,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 167.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 175,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 182.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 190,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 190,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 197.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 205,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 205,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 212.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 212.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 220,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 220,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 220,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 227.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 227.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 227.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 235,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 235,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 235,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 242.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 242.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 242.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 250,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 7.63
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 250,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 7.63
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 2.1,
+      "vh": 250,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.926,
+      "steady": false,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 14.23
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 152.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 160,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 167.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 16.53
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 175,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 182.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        12
+      ],
+      "ratio": 16.52
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 190,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 190,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 197.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 205,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 205,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 212.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 212.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 220,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 220,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 220,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 16.53
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 227.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 227.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 227.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 235,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 235,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 8.78
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 235,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        14,
+        12,
+        12
+      ],
+      "ratio": 16.6
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 242.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 242.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 8.76
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 242.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        13,
+        13,
+        11
+      ],
+      "ratio": 16.56
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 250,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 7.62
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 250,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 7.62
+    },
+    {
+      "viewport": "desktop 1440×900",
+      "phase": 4.2,
+      "vh": 250,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.926,
+      "steady": false,
+      "bgP95": [
+        14,
+        13,
+        11
+      ],
+      "ratio": 14.17
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 152.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 160,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 167.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 175,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 182.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 190,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 8.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 190,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 197.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 205,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 205,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 212.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 8.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 212.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 220,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 220,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 227.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        10,
+        9
+      ],
+      "ratio": 8.83
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 227.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        10,
+        9
+      ],
+      "ratio": 8.83
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 227.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        10,
+        9
+      ],
+      "ratio": 16.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 235,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 235,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 235,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 242.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 8.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 242.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 8.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 242.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 250,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 7.66
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 250,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 7.66
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 0,
+      "vh": 250,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.926,
+      "steady": false,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 14.35
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 152.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        10,
+        9
+      ],
+      "ratio": 16.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 160,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 167.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 175,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 182.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 190,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 190,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 197.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 205,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 8.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 205,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 212.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 8.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 212.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 220,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 220,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 227.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        10,
+        9
+      ],
+      "ratio": 8.83
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 227.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        12,
+        10,
+        9
+      ],
+      "ratio": 8.83
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 227.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        10,
+        9
+      ],
+      "ratio": 16.81
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 235,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 235,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 235,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 242.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 242.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 242.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 250,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 7.66
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 250,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 7.66
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 2.1,
+      "vh": 250,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.926,
+      "steady": false,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 14.35
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 152.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 160,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 167.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 175,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 16.74
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 182.5,
+      "line": 1,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 190,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 190,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 197.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 197.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 205,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 205,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 212.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 212.5,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 220,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 220,
+      "line": 2,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 227.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 227.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 227.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        9
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 235,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 235,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 235,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 242.5,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 242.5,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.72,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 8.82
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 242.5,
+      "line": 3,
+      "state": "active",
+      "opacity": 1,
+      "steady": true,
+      "bgP95": [
+        11,
+        11,
+        10
+      ],
+      "ratio": 16.76
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 250,
+      "line": 1,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 7.65
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 250,
+      "line": 2,
+      "state": "past",
+      "opacity": 0.667,
+      "steady": false,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 7.65
+    },
+    {
+      "viewport": "desktop 1920×1080",
+      "phase": 4.2,
+      "vh": 250,
+      "line": 3,
+      "state": "active",
+      "opacity": 0.926,
+      "steady": false,
+      "bgP95": [
+        12,
+        11,
+        9
+      ],
+      "ratio": 14.33
+    }
+  ]
+}

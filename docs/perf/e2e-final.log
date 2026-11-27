@@ -1,0 +1,46 @@
+  ✓   2 [desktop] › tests/e2e/chapters.spec.ts:33:3 › document structure and accessibility › title, landmarks and reading order follow the approved order (467ms)
+  ✓   3 [desktop] › tests/e2e/chapters.spec.ts:58:3 › document structure and accessibility › skip link moves focus to the h1 (249ms)
+  ✓   4 [desktop] › tests/e2e/chapters.spec.ts:66:3 › document structure and accessibility › menu is a modal dialog: focus moves in, Escape closes, focus returns (458ms)
+  ✓   5 [desktop] › tests/e2e/chapters.spec.ts:83:5 › document structure and accessibility › axe: no WCAG 2.1 A/AA violations (/?tier=C) (2.4s)
+  ✓   6 [desktop] › tests/e2e/chapters.spec.ts:83:5 › document structure and accessibility › axe: no WCAG 2.1 A/AA violations (/?reduced=1) (2.4s)
+[desktop] handoff raw 4.40/255 · perceptual 1.19/255 · content 12.05/255 · luminance 20.65 vs 20.43
+  ✓   1 [desktop] › tests/e2e/experience.spec.ts:48:3 › anchor still → live 3D handoff › live first frame matches the anchor still (25.6s)
+  ✓   7 [desktop] › tests/e2e/chapters.spec.ts:96:3 › document structure and accessibility › axe on the live page at the Chapter 3 page (24.5s)
+  ✓   9 [desktop] › tests/e2e/chapters.spec.ts:131:3 › screen readers get every chapter, whatever the scroll position › live: same accessibility tree at the top, in Chapter 2, in Chapter 3 and after the page closes, matching reduced motion (59.6s)
+[pointer] mean Δ in pointer region 15.26
+  ✓   8 [desktop] › tests/e2e/experience.spec.ts:86:1 › pointer parts the loose strands (1.2m)
+  ✓  10 [desktop] › tests/e2e/chapters.spec.ts:154:3 › live chapters › Chapter 2 lines reveal in order; Chapter 3 page opens, covers, and the loop pauses (I4) (39.2s)
+[scroll] mean Δ after scrolling 35% 17.77
+  ✓  11 [desktop] › tests/e2e/experience.spec.ts:109:1 › scroll drives the camera (48.8s)
+[lazy] JS tier C 443 KB (three: -1) · tier A 1022 KB (anchor at 54 ms, three at 648 ms)
+  ✓  13 [desktop] › tests/e2e/experience.spec.ts:144:3 › lazy loading and fallbacks › tier C never downloads three.js; tier A downloads it only after the still (5.2s)
+  ✓  14 [desktop] › tests/e2e/experience.spec.ts:160:3 › lazy loading and fallbacks › reduced motion shows the static anchor, no canvas, all text visible (2.0s)
+  ✓  15 [desktop] › tests/e2e/experience.spec.ts:175:3 › lazy loading and fallbacks › shows the anchor that matches the orientation (447ms)
+  ✓  16 [desktop] › tests/e2e/experience.spec.ts:184:1 › publishes no unapproved product claims (336ms)
+  ✓  17 [desktop] › tests/e2e/experience.spec.ts:204:1 › enquiry CTA is flexible and never pretends to send (370ms)
+  ✓  18 [mobile] › tests/e2e/chapters.spec.ts:33:3 › document structure and accessibility › title, landmarks and reading order follow the approved order (410ms)
+  ✓  19 [mobile] › tests/e2e/chapters.spec.ts:58:3 › document structure and accessibility › skip link moves focus to the h1 (347ms)
+  ✓  20 [mobile] › tests/e2e/chapters.spec.ts:66:3 › document structure and accessibility › menu is a modal dialog: focus moves in, Escape closes, focus returns (517ms)
+  ✓  21 [mobile] › tests/e2e/chapters.spec.ts:83:5 › document structure and accessibility › axe: no WCAG 2.1 A/AA violations (/?tier=C) (2.4s)
+  ✓  22 [mobile] › tests/e2e/chapters.spec.ts:83:5 › document structure and accessibility › axe: no WCAG 2.1 A/AA violations (/?reduced=1) (2.3s)
+[accuracy] landscape points 4983 · frames 9 · point P99 0.0044 max 0.0664 · edge P99 0.0015 max 0.0017 px · pointer 9 frames
+  ✓  12 [desktop] › tests/e2e/chapters.spec.ts:191:3 › live chapters › page edge accuracy: CPU guide strand vs the locked shader on the GPU (P99 ≤ 2 px, max ≤ 3 px) (31.3s)
+  ✓  24 [desktop] › tests/e2e/chapters.spec.ts:212:3 › static and reduced-motion spreads › stills from the locked scene, every line visible, the page drawn once (1.7s)
+  ✓  23 [mobile] › tests/e2e/chapters.spec.ts:96:3 › document structure and accessibility › axe on the live page at the Chapter 3 page (18.7s)
+[mobile] handoff raw 3.18/255 · perceptual 1.44/255 · content 10.61/255 · luminance 19.21 vs 19.11
+  ✓  25 [mobile] › tests/e2e/experience.spec.ts:48:3 › anchor still → live 3D handoff › live first frame matches the anchor still (33.6s)
+  ✓  26 [mobile] › tests/e2e/chapters.spec.ts:131:3 › screen readers get every chapter, whatever the scroll position › live: same accessibility tree at the top, in Chapter 2, in Chapter 3 and after the page closes, matching reduced motion (1.2m)
+[scroll] mean Δ after scrolling 35% 22.05
+  ✓  28 [mobile] › tests/e2e/experience.spec.ts:109:1 › scroll drives the camera (54.0s)
+[lazy] JS tier C 460 KB (three: -1) · tier A 1022 KB (anchor at 35 ms, three at 330 ms)
+  ✓  30 [mobile] › tests/e2e/experience.spec.ts:144:3 › lazy loading and fallbacks › tier C never downloads three.js; tier A downloads it only after the still (4.9s)
+  ✓  31 [mobile] › tests/e2e/experience.spec.ts:160:3 › lazy loading and fallbacks › reduced motion shows the static anchor, no canvas, all text visible (1.5s)
+  ✓  32 [mobile] › tests/e2e/experience.spec.ts:175:3 › lazy loading and fallbacks › shows the anchor that matches the orientation (413ms)
+  ✓  33 [mobile] › tests/e2e/experience.spec.ts:184:1 › publishes no unapproved product claims (301ms)
+  ✓  34 [mobile] › tests/e2e/experience.spec.ts:204:1 › enquiry CTA is flexible and never pretends to send (355ms)
+  ✓  29 [mobile] › tests/e2e/chapters.spec.ts:154:3 › live chapters › Chapter 2 lines reveal in order; Chapter 3 page opens, covers, and the loop pauses (I4) (22.9s)
+[accuracy] portrait points 11061 · frames 16 · point P99 0.0033 max 0.1017 · edge P99 0.0100 max 0.0119 px · pointer 16 frames
+  ✓  35 [mobile] › tests/e2e/chapters.spec.ts:191:3 › live chapters › page edge accuracy: CPU guide strand vs the locked shader on the GPU (P99 ≤ 2 px, max ≤ 3 px) (19.7s)
+  ✓  36 [mobile] › tests/e2e/chapters.spec.ts:212:3 › static and reduced-motion spreads › stills from the locked scene, every line visible, the page drawn once (847ms)
+  1 skipped
+  35 passed (4.9m)

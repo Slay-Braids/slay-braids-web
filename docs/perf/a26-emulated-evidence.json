@@ -1,0 +1,133 @@
+{
+  "kind": "AUTOMATED, EMULATED — headless Chromium + SwiftShader at an A26-like viewport. Not measured on the A26.",
+  "viewport": "384×832 @2.8125x, touch",
+  "date": "2026-11-27T09:31:58.694Z",
+  "accuracyTierB": {
+    "every10": {
+      "tier": "B",
+      "guidePoints": 9794,
+      "probedFrames": 8,
+      "conditions": {
+        "windMin": 0.7560812253773045,
+        "windMax": 0.9999864743138156,
+        "pointerForceMax": 0.8580402371518033,
+        "framesWithPointer": 8
+      },
+      "pointError": {
+        "n": 78352,
+        "p50": 0.0009044308667094373,
+        "p95": 0.0035567991633384546,
+        "p99": 0.004875722686237129,
+        "max": 0.010580924838918855
+      },
+      "edgeError": {
+        "n": 776,
+        "p50": 0.001376685146510681,
+        "p95": 0.011361088649721296,
+        "p99": 0.016626527009862002,
+        "max": 0.017503914241103757
+      },
+      "pass": true
+    },
+    "every1": {
+      "tier": "B",
+      "guidePoints": 9794,
+      "probedFrames": 74,
+      "conditions": {
+        "windMin": 0.6245837993273535,
+        "windMax": 0.9999863219746233,
+        "pointerForceMax": 0.9698026165776815,
+        "framesWithPointer": 74
+      },
+      "pointError": {
+        "n": 724756,
+        "p50": 0.0009593197216569812,
+        "p95": 0.0036545396942867943,
+        "p99": 0.0050753519099030085,
+        "max": 0.24121639081277635
+      },
+      "edgeError": {
+        "n": 7178,
+        "p50": 0.0015726583105220016,
+        "p95": 0.009850959223228983,
+        "p99": 0.02425823367883595,
+        "max": 2.231943495599211
+      },
+      "pass": true
+    }
+  },
+  "horizontalOverflow": {
+    "live": {
+      "screens": 7.8,
+      "maxScrollWidth": 384,
+      "clientWidth": 384,
+      "overflowingElements": [],
+      "pass": true
+    },
+    "reduced": {
+      "screens": 5.3,
+      "maxScrollWidth": 384,
+      "clientWidth": 384,
+      "overflowingElements": [],
+      "pass": true
+    }
+  },
+  "rotation": [
+    {
+      "startVh": 0,
+      "steps": [
+        {
+          "step": "portrait",
+          "orientation": "portrait",
+          "stageLive": "true",
+          "mode": null,
+          "vh": 0
+        },
+        {
+          "step": "landscape",
+          "orientation": "landscape",
+          "stageLive": "true",
+          "mode": null,
+          "vh": 0
+        },
+        {
+          "step": "portrait again",
+          "orientation": "portrait",
+          "stageLive": "true",
+          "mode": null,
+          "vh": 0
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "startVh": 380,
+      "steps": [
+        {
+          "step": "portrait",
+          "orientation": "portrait",
+          "stageLive": "true",
+          "mode": null,
+          "vh": 380
+        },
+        {
+          "step": "landscape",
+          "orientation": "landscape",
+          "stageLive": "true",
+          "mode": null,
+          "vh": 865
+        },
+        {
+          "step": "portrait again",
+          "orientation": "portrait",
+          "stageLive": "true",
+          "mode": null,
+          "vh": 679
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

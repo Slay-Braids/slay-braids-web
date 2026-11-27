@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-27",
+  "build": "M3 complete site (Chapters 1–7)",
+  "environment": "headless Chromium, SwiftShader (simulated GPU); Playwright projects desktop 1440×900 and Pixel 7 (412×915)",
+  "unit": { "passed": 49, "failed": 0, "includes": "foundation-lock 6/6, story 13 new" },
+  "e2e": {
+    "M1 experience.spec.ts (unchanged)": "15 passed, 1 skipped by design",
+    "M2 chapters.spec.ts (unchanged)": "20 passed",
+    "M3 site.spec.ts (new)": "26 passed",
+    "total": "61 passed, 1 skipped, 0 failed"
+  },
+  "ch1to3PixelIdentity": "docs/perf/m3-ch1-3-pixel-identity.json: 22/27 identical; 5 mobile frames (100–260 vh) max channel delta 1/255 on 5–7 % of pixels, from compositing of the invisible Ch4–7 layers",
+  "contrast": "docs/perf/m3-contrast.json: 448 samples, 0 below WCAG AA, worst 6.08:1",
+  "lighthouse": "docs/perf/m3-gzip-lighthouse-*.json (compressed, comparable with docs/perf/m2-gzip-*) and m3-lighthouse-*.json (uncompressed)",
+  "realDevice": "NOT TESTED"
+}

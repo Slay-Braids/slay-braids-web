@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Galaxy A26 test protocol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a field test sheet: plain, exact, one thing per line.
+   IDEA: the brand's printed run-sheet; ink cover, ivory pages, one card per test.
+   PICTURE: the working checklist itself, at the top under a modest title.
+   COLOUR and TYPE: ink #0a0908, ivory #f2ece2, espresso, one champagne accent; Bodoni Moda titles, Inter body.
+   LAYOUT: phone first; one column; sticky section links on wide screens; results always one tap away. */
+:root{color-scheme:light dark;--bg:light-dark(#f2ece2,#13100d);--fg:light-dark(#1c1612,#efe8dc);--mute:light-dark(#5e5248,#b9ad9d);--rule:light-dark(#d8ceBF,#3a322a);--card:light-dark(#fbf7f1,#1c1814);--ch:light-dark(#8a6a3f,#d8c3a0);--ink:#0a0908}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Bodoni Moda",Georgia,serif;font-weight:500;line-height:1.08;margin:0 0 .4em;text-wrap:balance}
+h1{font-size:clamp(32px,6vw,46px)}h2{font-size:clamp(24px,4vw,32px)}h3{font-size:20px}
+h4{font:600 13px Inter,sans-serif;margin:14px 0 4px;color:var(--mute)}
+.band{padding:clamp(22px,4vw,48px) max(5vw,16px)}.wrap{max-width:860px;margin:0 auto}
+.cover{background:var(--ink);color:#f2ece2}.cover p{color:#d2c7b7;max-width:62ch}
+.kinds{display:grid;gap:8px;margin:18px 0 0;padding:0;list-style:none}.kinds li{border:1px solid #3b342c;padding:10px 12px}.kinds b{color:#d8c3a0;margin-right:6px}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px max(5vw,16px);border-bottom:1px solid var(--rule);font-size:15px}
+nav.toc a{color:var(--fg);padding:6px 0}
+@media(min-width:900px){nav.toc{position:sticky;top:0;background:var(--bg);z-index:3}}
+html{scroll-padding-top:64px}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:9px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}th{font-size:13px;color:var(--mute);font-weight:600}
+.url{word-break:break-all;font-size:13px}.copy{min-height:44px;min-width:64px;border:1px solid var(--rule);background:var(--card);color:var(--fg);border-radius:6px;font:500 14px Inter;cursor:pointer}
+.sec{margin-top:8px}.kindtag{display:inline-block;font:600 12px Inter;padding:3px 8px;border-radius:999px;border:1px solid var(--ch);color:var(--ch);margin-bottom:8px}
+.intro{color:var(--mute);max-width:70ch}
+.test{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:16px;margin:14px 0}
+.test header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 12px}
+.tid{font-family:Inter;font-weight:600;font-size:14px;color:var(--ch);margin-right:6px}
+a.u,span.u{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--ch);color:var(--fg);text-decoration:none;font:500 14px Inter}
+ol,ul{padding-left:1.2em;margin:4px 0}li{margin:3px 0}.ev{font-size:14px;color:var(--mute)}
+.res{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.res label{flex:1 1 90px}.res input{position:absolute;opacity:0;pointer-events:none}
+.res span{display:flex;justify-content:center;align-items:center;min-height:44px;border:1px solid var(--rule);border-radius:6px;font-weight:500;cursor:pointer}
+.res input:focus-visible+span{outline:2px solid var(--ch);outline-offset:2px}
+.res input[value=pass]:checked+span{background:light-dark(#dcebd6,#20361e);border-color:light-dark(#2f6b2f,#8fd08a)}
+.res input[value=fail]:checked+span{background:light-dark(#f4d9d5,#3d1f1b);border-color:light-dark(#a3332b,#f19a8f)}
+.res input[value="not tested"]:checked+span{background:light-dark(#e7e1d8,#2a2520)}
+.status{margin-top:12px;padding-top:10px;border-top:1px solid var(--rule)}
+.auto{margin:0 0 8px;font-size:14px}.auto-what{color:var(--mute)}
+.badge{display:inline-block;font:600 12px Inter;letter-spacing:.02em;padding:3px 8px;border-radius:4px;margin-right:4px}
+.b-passed{background:light-dark(#dcebd6,#20361e);color:light-dark(#1f4d1f,#a9dca5)}
+.b-partial{background:light-dark(#f3e7cf,#3a3020);color:light-dark(#6b4e14,#e2c98f)}
+.b-none{background:light-dark(#e7e1d8,#2a2520);color:var(--mute)}
+.dev-label{margin:6px 0 0;font-size:14px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px;margin-top:16px}
+.summary div{border:1px solid #3b342c;padding:10px 12px}.summary b{display:block;font:600 22px Inter;color:#f2ece2}
+.notes{display:grid;gap:4px;margin-top:10px;font-size:14px;color:var(--mute)}
+textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);border-radius:6px;background:var(--bg);color:var(--fg)}
+.bar{position:sticky;bottom:0;z-index:4;background:var(--ink);color:#f2ece2;padding:10px max(5vw,16px);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bar button{min-height:44px;padding:0 16px;border-radius:999px;border:0;background:#d8c3a0;color:#0a0908;font:600 15px Inter;cursor:pointer}
+.bar .sec2{background:transparent;color:#f2ece2;border:1px solid #6b5e4f}
+.count{font-size:14px}
+#out{width:100%;height:160px;max-height:40vh;font:13px ui-monospace,Menlo,monospace;display:none;margin-top:10px}
+.known{border-left:3px solid var(--ch);padding:8px 12px;background:var(--card)}
+@media(max-width:600px){table{font-size:13px}.hide-s{display:none}}
+</style></head><body>
+<header class="band cover"><div class="wrap">
+<h1>Galaxy A26 5G: real-device tests</h1>
+<p>Chapters 1–3 preview, final build with the TalkBack fix (27 Nov 2026). Each card shows two separate results. <b>Automated</b>: what headless Chromium with an emulated phone has verified (never the A26 itself). <b>On the A26</b>: your result, “Not tested” until you mark it. An automated PASS is not a device pass.</p>
+<div class="summary">
+<div><b>9</b>automated: passed</div>
+<div><b>14</b>automated: partly covered</div>
+<div><b>15</b>no automated evidence</div>
+<div><b>0 of 38</b>tested on the A26</div>
+</div>
+<p style="margin-top:14px;border-left:3px solid #d8c3a0;padding-left:12px"><b>Recorded 27 Nov 2026:</b> Chapters 1–3 are provisionally approved as the technical and design baseline, on automated evidence only. Real-device validation is outstanding. Not approved for public release.</p>
+<p style="margin-top:14px">Technical assessment: <a style="color:#d8c3a0" href="https://claude.ai/artifact/VXfMtBQUMRiXXmJ7mDiYx5">claude.ai/artifact/VXfMtBQUMRiXXmJ7mDiYx5</a></p>
+<ul class="kinds"><li><b>A</b>Manual: your eyes and hands</li><li><b>B</b>On-device automated: built into the preview, no cable</li><li><b>C</b>Needs a connected computer</li></ul>
+</div></header>
+<nav class="toc" aria-label="Sections"><a href="#urls">URLs</a><a href="#sec-S0">S0 Set-up and test conditions</a><a href="#sec-T1">T1 Page-edge accuracy</a><a href="#sec-T2">T2 Chapter transitions</a><a href="#sec-T3">T3 Scrolling smoothness</a><a href="#sec-T4">T4 Reduced motion</a><a href="#sec-T5">T5 Touch interactions and mobile layout integrity</a><a href="#sec-T6">T6 TalkBack</a><a href="#sec-C">C Measurements that need a connected computer</a></nav>
+
+<section class="band" id="urls"><div class="wrap">
+<h2>Preview URLs</h2>
+<p class="intro">Open in Chrome on the phone, signed in to claude.ai. Each link carries its test settings after the #. The 14 links: U1–U8 (U6 is six positions) and R.</p>
+<table><thead><tr><th>ID</th><th>Purpose</th><th class="hide-s">Link</th><th></th></tr></thead><tbody>
+<tr><td><b>U1</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">Preview (normal)</a><br><small class="intro">All manual checks.</small><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn" aria-label="Copy U1 link">Copy</button></td></tr><tr><td><b>U2</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf">Performance readout</a><br><small class="intro">Frame times, chapter/transition stats, long tasks, CLS, handoff Δ.</small><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf" aria-label="Copy U2 link">Copy</button></td></tr><tr><td><b>U3</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf-tier-a-nodowngrade">Performance, tier A forced</a><br><small class="intro">Headroom check: the heavier cascade the phone would not get by default.</small><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf-tier-a-nodowngrade</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf-tier-a-nodowngrade" aria-label="Copy U3 link">Copy</button></td></tr><tr><td><b>U4</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-nodowngrade">Transition lab</a><br><small class="intro">Page-edge accuracy against this phone&#39;s GPU.</small><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-nodowngrade</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-nodowngrade" aria-label="Copy U4 link">Copy</button></td></tr><tr><td><b>U5</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-tier-a-nodowngrade">Transition lab, tier A forced</a><br><small class="intro">Accuracy with the heavier cascade.</small><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-tier-a-nodowngrade</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-tier-a-nodowngrade" aria-label="Copy U5 link">Copy</button></td></tr><tr><td><b>U6a</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-296-windt-3-nodamp">Ch3 30 %: page starts to arrive (296 vh)</a><br><small class="intro">Fixed wind, exact position; compare with the mobile lab sheet.</small><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-296-windt-3-nodamp</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-296-windt-3-nodamp" aria-label="Copy U6a link">Copy</button></td></tr><tr><td><b>U6b</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-329-windt-3-nodamp">Ch3 45 %: page arriving (329 vh)</a><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-329-windt-3-nodamp</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-329-windt-3-nodamp" aria-label="Copy U6b link">Copy</button></td></tr><tr><td><b>U6c</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-362-windt-3-nodamp">Ch3 60 %: page at rest (362 vh)</a><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-362-windt-3-nodamp</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-362-windt-3-nodamp" aria-label="Copy U6c link">Copy</button></td></tr><tr><td><b>U6d</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-415-windt-3-nodamp">Ch3 84 %: closing begins (415 vh)</a><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-415-windt-3-nodamp</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-415-windt-3-nodamp" aria-label="Copy U6d link">Copy</button></td></tr><tr><td><b>U6e</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-432-windt-3-nodamp">Ch3 92 %: closing (432 vh)</a><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-432-windt-3-nodamp</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-432-windt-3-nodamp" aria-label="Copy U6e link">Copy</button></td></tr><tr><td><b>U6f</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-450-windt-3-nodamp">Ch3 100 %: page covers the screen (450 vh)</a><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-450-windt-3-nodamp</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#vh-450-windt-3-nodamp" aria-label="Copy U6f link">Copy</button></td></tr><tr><td><b>U7</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#reduced-perf">Reduced motion by flag</a><br><small class="intro">Static spreads without changing the phone&#39;s setting.</small><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#reduced-perf</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#reduced-perf" aria-label="Copy U7 link">Copy</button></td></tr><tr><td><b>U8</b></td><td><a href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf-still-matched">I6 matched still (experiment)</a><br><small class="intro">Handoff Δ with the density-matched still.</small><br><span class="url">claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf-still-matched</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf-still-matched" aria-label="Copy U8 link">Copy</button></td></tr><tr><td><b>R</b></td><td><a href="https://claude.ai/artifact/1ezWjMpK1MZt1gUddGyjdy#sheets">Review pack (frame sheets to compare)</a><br><small class="intro">Open on a second device or later; mobile sheets are the reference.</small><br><span class="url">claude.ai/artifact/1ezWjMpK1MZt1gUddGyjdy#sheets</span></td><td class="hide-s"></td><td><button class="copy" data-copy="https://claude.ai/artifact/1ezWjMpK1MZt1gUddGyjdy#sheets" aria-label="Copy R link">Copy</button></td></tr>
+</tbody></table>
+</div></section>
+
+<section class="band sec" id="sec-S0"><div class="wrap">
+<span class="kindtag">A · Manual: your eyes and hands</span>
+<h2>S0 · Set-up and test conditions</h2>
+<p class="intro">Do this once before any test. Record what you find; several results depend on it.</p>
+
+<article class="test" id="S0.1" data-id="S0.1">
+  <header><h3><span class="tid">S0.1</span> Record the device and software</h3></header>
+  <h4>Steps</h4><ol><li>Settings → About phone: note the model name and RAM; Software information → One UI version and Android version.</li><li>Chrome → ⋮ → Settings → About Chrome: note the Chrome version.</li><li>Settings → Display → Motion smoothness: note Adaptive (120 Hz) or Standard (60 Hz). Leave it on the default, Adaptive.</li></ol>
+  <h4>Expected</h4><p>Galaxy A26 5G, Chrome (not the Claude app, not Samsung Internet) for every test unless a step says otherwise.</p>
+  <p class="ev"><b>Evidence:</b> Write the values in the notes field.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Device facts: nothing to automate.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for S0.1">
+      <label><input type="radio" name="r-S0.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-S0.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-S0.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-S0.1" rows="2"></textarea></label>
+</article>
+<article class="test" id="S0.2" data-id="S0.2">
+  <header><h3><span class="tid">S0.2</span> Conditions</h3></header>
+  <h4>Steps</h4><ol><li>Battery ≥ 50 %, charger unplugged, Power saving OFF (Settings → Battery). Power saving lowers the frame rate and changes every result.</li><li>Wi-Fi on. Data Saver / Lite mode OFF in Chrome (Data Saver makes the page choose the still on purpose).</li><li>Close other apps. Phone at room temperature (not just after charging or gaming).</li><li>Brightness fixed at about 70 % (Adaptive brightness off) so recordings compare.</li><li>Display size and font size at default for all tests except T5.7.</li><li>Do Not Disturb on (notifications distort frame times and recordings).</li></ol>
+  <h4>Expected</h4><p>All conditions met, or the exception written in the notes.</p>
+  <p class="ev"><b>Evidence:</b> Notes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Test conditions on the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for S0.2">
+      <label><input type="radio" name="r-S0.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-S0.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-S0.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-S0.2" rows="2"></textarea></label>
+</article>
+<article class="test" id="S0.3" data-id="S0.3">
+  <header><h3><span class="tid">S0.3</span> Access and tools</h3></header>
+  <h4>Steps</h4><ol><li>In Chrome on the phone, sign in to claude.ai with the same account. The preview is private and only opens for you.</li><li>Open U1 and check that the preview loads. The preview runs inside claude.ai&#39;s viewer frame; that is expected.</li><li>Screen recorder: Quick panel → Screen recorder → settings: Video quality 1080p, Sound “Media sounds”. You will use it in T2, T5 and T6.</li><li>TalkBack shortcut: Settings → Accessibility → Advanced settings → Side and Volume up keys / Volume keys shortcut → TalkBack. Then you can turn TalkBack on and off by holding both volume keys for 3 seconds.</li></ol>
+  <h4>Expected</h4><p>The preview opens. Screen recorder and the TalkBack shortcut are ready.</p>
+  <p class="ev"><b>Evidence:</b> Notes. If the preview does not open, stop and tell me.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">The published preview bundle loads with no failed requests, in live, lab and static modes (smoke test). Signing in and the phone&#39;s Chrome: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for S0.3">
+      <label><input type="radio" name="r-S0.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-S0.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-S0.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-S0.3" rows="2"></textarea></label>
+</article>
+</div></section><section class="band sec" id="sec-T1"><div class="wrap">
+<span class="kindtag">B · On-device automated: built into the preview, no cable</span>
+<h2>T1 · Page-edge accuracy (Chapter 3)</h2>
+<p class="intro">Measured on the phone by the transition lab: it runs the locked shader on this phone&#39;s GPU and compares it with the code that places the ivory page edge. No cable needed. Criterion (approved): P99 ≤ 2 CSS px and max ≤ 3 CSS px, for the points and for the edge. The scripted run lasts 30 s: it sweeps the page between arriving (Ch3 30 %) and resting (84 %) twice, moves a virtual pointer over the hair, with live wind, and reads the GPU back every 10th frame.</p>
+
+<article class="test" id="T1.1" data-id="T1.1">
+  <header><h3><span class="tid">T1.1</span> Accuracy run, default tier</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-nodowngrade">U4</a></header>
+  <h4>Steps</h4><ol><li>Open U4. Wait until the hair moves and the lab panel appears (about 10–20 s). The panel covers most of the screen on a phone; that is expected.</li><li>Do not touch the screen except to start the run. Tap “Run accuracy test (30 s)”. Put the phone down, screen up, for 35 s.</li><li>When the panel shows PASS or FAIL, tap “Copy results” and paste into a note. Then take a screenshot of the panel; scroll the panel to capture every line.</li></ol>
+  <h4>Expected</h4><p>PASS. GPU line names the phone&#39;s GPU (Mali, not SwiftShader). Probed frames ≥ 20. Pointer force &gt; 0 in most probed frames. Point and edge P99 ≤ 2 px, max ≤ 3 px. In simulation the worst case was 0.15 px; real GPUs may differ slightly.</p>
+  <p class="ev"><b>Evidence:</b> Copied JSON + screenshot(s) of the panel.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Tier B (the A26 default) at an A26-sized screen (384×832 @2.8125). Spec run: 8 probed frames, point P99 0.005 px / max 0.011 px, edge max 0.018 px. Dense run: 74 frames, point P99 0.005 px / max 0.24 px, edge P99 0.024 px / max 2.23 px (limit 3 px; thinnest margin seen). GPU: SwiftShader, not the A26&#39;s Mali GPU.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T1.1">
+      <label><input type="radio" name="r-T1.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T1.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T1.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T1.1" rows="2"></textarea></label>
+</article>
+<article class="test" id="T1.2" data-id="T1.2">
+  <header><h3><span class="tid">T1.2</span> Accuracy run, tier A forced</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-tier-a-nodowngrade">U5</a></header>
+  <h4>Steps</h4><ol><li>Same as T1.1 with U5.</li></ol>
+  <h4>Expected</h4><p>PASS, same criteria. Fewer probed frames is acceptable if the phone renders tier A more slowly.</p>
+  <p class="ev"><b>Evidence:</b> Copied JSON + screenshot.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Tier A, spec and dense runs, desktop and mobile: worst point max 0.15 px, edge max 0.03 px; repeated in the e2e suite on every run. SwiftShader.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T1.2">
+      <label><input type="radio" name="r-T1.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T1.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T1.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T1.2" rows="2"></textarea></label>
+</article>
+<article class="test" id="T1.3" data-id="T1.3">
+  <header><h3><span class="tid">T1.3</span> Visual check of the guide points</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-nodowngrade">U4</a></header>
+  <h4>Steps</h4><ol><li>In U4 (no run needed), tick “show guide points”.</li><li>Drag the Position slider slowly to about 60–80 % (the page at rest).</li><li>Look at the edge of the hair: green dots are the CPU guide points, the white line is the page edge.</li></ol>
+  <h4>Expected</h4><p>Green dots lie on the outer strands of the hair and move with them. The white line runs just outside the outer clump, about one finger-width of dark at most, and moves with the hair, without jumping. Magenta circles (GPU readback, shown after a run) sit on the green dots.</p>
+  <p class="ev"><b>Evidence:</b> Two screenshots: slider ~60 % and ~80 %.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">CPU/GPU point agreement is measured (T1.1). The edge&#39;s visual position was reviewed on headless frame sheets and close-ups; the overlay itself not viewed on the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T1.3">
+      <label><input type="radio" name="r-T1.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T1.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T1.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T1.3" rows="2"></textarea></label>
+</article>
+<article class="test" id="T1.4" data-id="T1.4">
+  <header><h3><span class="tid">T1.4</span> Accuracy after warm-up (optional)</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#lab-transition-nodowngrade">U4</a></header>
+  <h4>Steps</h4><ol><li>After T2 and T3 (phone warm, about 10 minutes of use), repeat T1.1 once.</li></ol>
+  <h4>Expected</h4><p>Still PASS. Fewer probed frames is acceptable.</p>
+  <p class="ev"><b>Evidence:</b> Copied JSON.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a warm phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T1.4">
+      <label><input type="radio" name="r-T1.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T1.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T1.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T1.4" rows="2"></textarea></label>
+</article>
+</div></section><section class="band sec" id="sec-T2"><div class="wrap">
+<span class="kindtag">A · Manual: your eyes and hands</span>
+<h2>T2 · Chapter transitions, especially the Chapter 3 closing</h2>
+<p class="intro">Manual, recorded. Scroll positions on this phone (portrait): Chapter 1 0–100 vh, Chapter 2 100–230 vh, Chapter 3 230–450 vh (page arrives 296–362, rests 362–415, closes 415–450), then about one screen of ivory and the end card. One “vh” is one screen height.</p>
+
+<article class="test" id="T2.1" data-id="T2.1">
+  <header><h3><span class="tid">T2.1</span> Slow pass, top to end card</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Open U1. Wait until the hair starts moving (about 3–5 s after the image appears).</li><li>Start the screen recorder. Scroll down slowly with one finger, about one screen every 4–5 seconds, until the ivory “Chapter 4 · FUTURA” end card is centred. Stop recording.</li></ol>
+  <h4>Expected</h4><ul><li>Handoff: the still image turns into moving hair without a visible jump (slight softening acceptable).</li><li>Chapter 1: as the headline scrolls away, no hard horizontal line crosses the hair (fixed in the final build).</li><li>Chapter 2: the camera moves in one continuous motion onto the braids (no cut, no reset). A dark field rises at the bottom, the outlined “02” appears, and the three manifesto lines appear one at a time (on a phone only one line shows at a time).</li><li>Chapter 3, arriving: the ivory page rises from the bottom. Its top edge follows the loose hair ends; there is no gap flicker and no stepped or banded shadow at the edge.</li><li>Chapter 3, at rest: “03”, the portrait placeholder and the Chapter 3 line sit on ivory, and none of the text overlaps hair.</li><li>Chapter 3, closing: the page continues upwards over the hair until it covers the whole screen. Its edge straightens as it travels and the text fades. No straight horizontal band or rectangle cuts across the hair (fixed in the final build). No dark flash.</li><li>After closing: plain ivory, then the end card text rises with no visible seam or tone step between page and end card. Then the dark enquiry section and footer.</li><li>The header (SLAY BRAIDS, Menu) turns dark when it is over ivory and stays readable.</li></ul>
+  <p class="ev"><b>Evidence:</b> Screen recording (keep the file; send it or note timestamps of any problem).</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Automated: M1 handoff test (perceptual Δ 1.44 on mobile, limit 2); Chapter 2 lines reveal in order; the Chapter 3 page opens and covers; render pause at full cover. The look of the sequence was reviewed on headless frame sheets. Smoothness and appearance on the A26: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T2.1">
+      <label><input type="radio" name="r-T2.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T2.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T2.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T2.1" rows="2"></textarea></label>
+</article>
+<article class="test" id="T2.2" data-id="T2.2">
+  <header><h3><span class="tid">T2.2</span> Slow pass back up</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Continue from T2.1: record again and scroll slowly back to the top.</li></ol>
+  <h4>Expected</h4><p>Everything reverses in order: the ivory page re-opens from full cover, settles against the hair, slides away down; Chapter 2 lines return; the headline returns. No state is stuck (no leftover ivory, no missing text). The header reappears when you scroll up.</p>
+  <p class="ev"><b>Evidence:</b> Screen recording.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Automated: rendering resumes when scrolling back from full cover (I4 test). Reverse visuals: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T2.2">
+      <label><input type="radio" name="r-T2.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T2.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T2.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T2.2" rows="2"></textarea></label>
+</article>
+<article class="test" id="T2.3" data-id="T2.3">
+  <header><h3><span class="tid">T2.3</span> Fast flicks</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Flick hard to the bottom, wait 2 s, flick hard to the top. Repeat twice.</li><li>Then stop in the middle of Chapter 3 (page at rest) and wait 2 s.</li></ol>
+  <h4>Expected</h4><p>No black or blank screen longer than a moment. The page edge stays on the hair even during a flick: page and camera run on the same clock, so any visible gap between them is a failure. After stopping, the screen settles to match the scroll position within about 1 second.</p>
+  <p class="ev"><b>Evidence:</b> Screen recording; note the time of any frame where the page edge is detached from the hair.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Fast flicks: no automated equivalent.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T2.3">
+      <label><input type="radio" name="r-T2.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T2.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T2.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T2.3" rows="2"></textarea></label>
+</article>
+<article class="test" id="T2.4" data-id="T2.4">
+  <header><h3><span class="tid">T2.4</span> Exact positions vs the frame sheet</h3><span class="u">U6a–U6f</span></header>
+  <h4>Steps</h4><ol><li>Open U6a, wait 15 s without touching, screenshot. Repeat for U6b–U6f.</li><li>Compare with the mobile lab sheet in the review pack (R, “Mobile — Chapter 3 at lab positions”).</li></ol>
+  <h4>Expected</h4><p>Same composition at each position (hair at the top, page edge along the hair ends, text on ivory; 100 % = all ivory). The phone&#39;s screen is a slightly different shape, so compare the arrangement, not pixels.</p>
+  <p class="ev"><b>Evidence:</b> Six screenshots.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Reference frames exist for every position (mobile lab sheet, headless). Not compared on the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T2.4">
+      <label><input type="radio" name="r-T2.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T2.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T2.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T2.4" rows="2"></textarea></label>
+</article>
+</div></section><section class="band sec" id="sec-T3"><div class="wrap">
+<span class="kindtag">B · On-device automated: built into the preview, no cable</span>
+<h2>T3 · Scrolling smoothness, frame drops and visual stability</h2>
+<p class="intro">The #perf readout measures on the phone itself; no cable needed. It counts every animation frame. Criteria (approved for phones): Chapter 3 transition frame time P95 ≤ 34 ms; median ≥ 45 fps; CLS ≤ 0.05; no unexplained downgrades. A frame drop shows as a frame time well above the median (at 120 Hz a frame is 8.3 ms, at 60 Hz 16.7 ms).</p>
+
+<article class="test" id="T3.1" data-id="T3.1">
+  <header><h3><span class="tid">T3.1</span> Load and handoff</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf">U2</a></header>
+  <h4>Steps</h4><ol><li>Open U2 in a fresh tab. Do not touch the screen for 10 s.</li><li>Read the box: tier, viewport, “handoff Δ”, “live at … ms”.</li></ol>
+  <h4>Expected</h4><p>Tier B, reason “GPU class (… Mali …)” or “mobile / touch device”: phones get the lighter cascade by design. Handoff Δ perceptual ≤ 2 (the M1 limit). No downgrade line. Visually: seamless or slight softening.</p>
+  <p class="ev"><b>Evidence:</b> Screenshot of the box.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Handoff Δ passes in emulation (M1 test 1.44, readout 1.13; limit 2). Tier choice rule is unit-tested. Visual seamlessness and absence of downgrades on the A26: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.1">
+      <label><input type="radio" name="r-T3.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T3.1" rows="2"></textarea></label>
+</article>
+<article class="test" id="T3.2" data-id="T3.2">
+  <header><h3><span class="tid">T3.2</span> Scroll pass with measurements</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf">U2</a></header>
+  <h4>Steps</h4><ol><li>Continue in U2: scroll slowly from the top to the end card and back to the top (about 30–40 s in total).</li><li>Immediately tap “Copy results” and paste into a note. If copying is blocked, screenshot the box.</li></ol>
+  <h4>Expected</h4><p>Chapter 3 transition P95 ≤ 34 ms. Median fps ≥ 45 (with Adaptive motion smoothness the browser may run above 60). CLS ≤ 0.05. Downgrades: none. Long tasks: record the count and total; they include start-up, which is why the attribution check is in C1.</p>
+  <p class="ev"><b>Evidence:</b> Copied JSON (or screenshot).</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">CLS passes (Lighthouse 0.001 mobile; scripted scroll 0). Frame-time criteria (Ch3 transition P95 ≤ 34 ms, median ≥ 45 fps) have NO valid automated evidence: SwiftShader frames saturate at 100 ms.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.2">
+      <label><input type="radio" name="r-T3.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T3.2" rows="2"></textarea></label>
+</article>
+<article class="test" id="T3.3" data-id="T3.3">
+  <header><h3><span class="tid">T3.3</span> Tier A headroom (optional)</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf-tier-a-nodowngrade">U3</a></header>
+  <h4>Steps</h4><ol><li>Repeat T3.1–T3.2 with U3.</li></ol>
+  <h4>Expected</h4><p>For information only: shows whether the phone could carry the heavier cascade. Not a pass/fail criterion.</p>
+  <p class="ev"><b>Evidence:</b> Copied JSON.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Tier A headroom on the A26: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.3">
+      <label><input type="radio" name="r-T3.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T3.3" rows="2"></textarea></label>
+</article>
+<article class="test" id="T3.4" data-id="T3.4">
+  <header><h3><span class="tid">T3.4</span> Visual stability (watch while scrolling)</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Scroll down slowly so that Chrome&#39;s address bar hides, then scroll up a little so it shows again; repeat in each chapter.</li><li>Try to scroll sideways anywhere on the page.</li><li>Optional: Developer options → Show refresh rate, to see 120/60 Hz while scrolling.</li></ol>
+  <h4>Expected</h4><p>No jump or resize of the chapters when the address bar hides or shows. No sideways scrolling anywhere. No text that jumps after the page has loaded. The header slides away on scroll down and back on scroll up, smoothly.</p>
+  <p class="ev"><b>Evidence:</b> Notes; recording if something jumps.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">No horizontal overflow at 41 scroll positions, live and reduced, at 384 px. CLS passes. Address-bar show/hide behaviour: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.4">
+      <label><input type="radio" name="r-T3.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T3.4" rows="2"></textarea></label>
+</article>
+<article class="test" id="T3.5" data-id="T3.5">
+  <header><h3><span class="tid">T3.5</span> I6 matched still (experiment)</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf-still-matched">U8</a></header>
+  <h4>Steps</h4><ol><li>Open U8, wait 10 s, read “handoff Δ” and the “stillMatched” value in Copy results.</li></ol>
+  <h4>Expected</h4><p>For the I6 decision: compare handoff Δ with T3.1. Adopted only if it is lower on this phone.</p>
+  <p class="ev"><b>Evidence:</b> Copied JSON.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Simulated: matched still Δ 1.17 vs 1.13 for the standard still, so I6 stays not adopted. The decision needs the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.5">
+      <label><input type="radio" name="r-T3.5" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.5" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.5" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T3.5" rows="2"></textarea></label>
+</article>
+</div></section><section class="band sec" id="sec-T4"><div class="wrap">
+<span class="kindtag">A · Manual: your eyes and hands</span>
+<h2>T4 · Reduced motion</h2>
+<p class="intro">Checks the static spreads that replace all motion when the phone asks for reduced motion.</p>
+
+<article class="test" id="T4.1" data-id="T4.1">
+  <header><h3><span class="tid">T4.1</span> Phone setting: Remove animations</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#perf">U2</a></header>
+  <h4>Steps</h4><ol><li>Settings → Accessibility → Visibility enhancements → Remove animations: ON (or search Settings for “Remove animations”).</li><li>Close the Chrome tab, open U2 in a new tab, wait 5 s.</li><li>Scroll slowly through the whole page.</li></ol>
+  <h4>Expected</h4><p>The box says tier C, reason “prefers-reduced-motion”. Nothing moves: no hair motion, no camera motion, no page closing. Chapter 1: still image with headline. Chapter 2: still close-up of the braids with all three lines visible at once. Chapter 3: still hair with the ivory page edge along it, “03”, portrait placeholder and Chapter 3 line all visible. Then the ivory end card, enquiry section and footer. All text readable; header turns dark over ivory.</p>
+  <p class="ev"><b>Evidence:</b> Screenshot of the box + one screenshot per chapter.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">prefers-reduced-motion emulated (M1 test): static anchor, no canvas, all text visible; static spreads checked (stills, every line visible, page drawn, no 3D). The Samsung “Remove animations” → Chrome mapping itself: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T4.1">
+      <label><input type="radio" name="r-T4.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T4.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T4.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T4.1" rows="2"></textarea></label>
+</article>
+<article class="test" id="T4.2" data-id="T4.2">
+  <header><h3><span class="tid">T4.2</span> Preview flag (setting OFF)</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#reduced-perf">U7</a></header>
+  <h4>Steps</h4><ol><li>Turn Remove animations OFF. Open U7 in a new tab and scroll through.</li></ol>
+  <h4>Expected</h4><p>Identical to T4.1.</p>
+  <p class="ev"><b>Evidence:</b> One screenshot of Chapter 3.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Static spreads e2e test with the reduced flag, desktop and mobile.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T4.2">
+      <label><input type="radio" name="r-T4.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T4.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T4.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T4.2" rows="2"></textarea></label>
+</article>
+<article class="test" id="T4.3" data-id="T4.3">
+  <header><h3><span class="tid">T4.3</span> Back to normal</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>With the setting OFF, open U1 in a new tab.</li></ol>
+  <h4>Expected</h4><p>Motion is back (hair moves, chapters animate).</p>
+  <p class="ev"><b>Evidence:</b> Notes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Every live e2e test runs with motion on, after reduced-motion tests in the same suite.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T4.3">
+      <label><input type="radio" name="r-T4.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T4.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T4.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T4.3" rows="2"></textarea></label>
+</article>
+</div></section><section class="band sec" id="sec-T5"><div class="wrap">
+<span class="kindtag">A · Manual: your eyes and hands</span>
+<h2>T5 · Touch interactions and mobile layout integrity</h2>
+<p class="intro">Manual. Every control must be easy to hit (at least a fingertip) and do what it says.</p>
+
+<article class="test" id="T5.1" data-id="T5.1">
+  <header><h3><span class="tid">T5.1</span> Buttons and links</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Tap Menu → the full-screen menu opens. Tap Close → it closes.</li><li>Open Menu again; tap “02 The Craft” → the menu closes and the page jumps to Chapter 2. Repeat for “01 Arrival” and “03 The Unbraiding”, and the menu&#39;s “Make an enquiry”.</li><li>At the top, tap “Make an enquiry” → enquiry section. Scroll up, tap “Discover FUTURA” → the end card. Tap “Back to the top” → top.</li></ol>
+  <h4>Expected</h4><p>Each control works on the first tap. After a jump, the screen settles to the right chapter: jumping to Chapter 3 lands at its start, where the page has not opened yet; scroll on to see it.</p>
+  <p class="ev"><b>Evidence:</b> Notes; recording if anything misfires.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Menu dialog opens, closes and returns focus (e2e); CTA targets (#enquire, #next) and the skip link are tested. Tapping on the phone and the landing position after a jump: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.1">
+      <label><input type="radio" name="r-T5.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T5.1" rows="2"></textarea></label>
+</article>
+<article class="test" id="T5.2" data-id="T5.2">
+  <header><h3><span class="tid">T5.2</span> Finger on the hair</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>In Chapter 1 and Chapter 3, place a finger on the hair and drag slowly; then lift.</li></ol>
+  <h4>Expected</h4><p>The page scrolls normally (the hair never blocks scrolling). Strands may part slightly at the start of a drag; nothing stays parted or jitters after you lift the finger.</p>
+  <p class="ev"><b>Evidence:</b> Notes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">The M1 pointer test is skipped on touch by design.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.2">
+      <label><input type="radio" name="r-T5.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T5.2" rows="2"></textarea></label>
+</article>
+<article class="test" id="T5.3" data-id="T5.3">
+  <header><h3><span class="tid">T5.3</span> Enquiry form and keyboard</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Go to “Make an enquiry”. Tap Name: the keyboard opens; type a few letters. Repeat for Email and Message. Tap Topic: the picker opens.</li><li>Close the keyboard. Look at the send button.</li></ol>
+  <h4>Expected</h4><p>The field you type in stays visible above the keyboard. The page does not jump, and the 3D does not fade or restart when the keyboard opens or closes. The button reads “Sending is not enabled in the preview” and cannot be pressed. Nothing is sent.</p>
+  <p class="ev"><b>Evidence:</b> Notes; screenshot with the keyboard open.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">The send button is disabled and nothing is ever sent (M1 test). On-screen keyboard behaviour: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.3">
+      <label><input type="radio" name="r-T5.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T5.3" rows="2"></textarea></label>
+</article>
+<article class="test" id="T5.4" data-id="T5.4">
+  <header><h3><span class="tid">T5.4</span> Layout at every chapter</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Scroll through slowly and look at the edges of the screen, the header and the bottom banner.</li></ol>
+  <h4>Expected</h4><p>Nothing cut off at the left or right edge. Header readable on dark and on ivory. The grey preview banner at the bottom never covers a button or the Chapter 3 line completely. No text over the hair in Chapter 3.</p>
+  <p class="ev"><b>Evidence:</b> Screenshot of any problem.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">No horizontal overflow at 384 px; axe finds no WCAG 2.1 A/AA violations (static, reduced, live). Banner overlap reviewed on headless sheets only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.4">
+      <label><input type="radio" name="r-T5.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T5.4" rows="2"></textarea></label>
+</article>
+<article class="test" id="T5.5" data-id="T5.5">
+  <header><h3><span class="tid">T5.5</span> Pinch zoom</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Pinch to zoom into the headline, then zoom back out.</li></ol>
+  <h4>Expected</h4><p>Zoom works and the page returns to normal without broken layout.</p>
+  <p class="ev"><b>Evidence:</b> Notes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Pinch zoom: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.5">
+      <label><input type="radio" name="r-T5.5" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.5" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.5" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T5.5" rows="2"></textarea></label>
+</article>
+<article class="test" id="T5.6" data-id="T5.6">
+  <header><h3><span class="tid">T5.6</span> Rotation</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Turn auto-rotate on. In Chapter 1, rotate to landscape, wait 5 s, rotate back.</li><li>Repeat with the Chapter 3 page at rest.</li></ol>
+  <h4>Expected</h4><p>Each rotation: a short fade to the still image, then the landscape composition (in Chapter 3 the page comes from the right side), then the portrait composition again after rotating back. The page stays in the same chapter. No permanent black screen.</p>
+  <p class="ev"><b>Evidence:</b> Screen recording.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Emulated rotation round-trip at Chapter 1 and the Chapter 3 rest: no errors, live 3D restored in both orientations. OPEN RISK: in emulation, rotating at the Chapter 3 rest moved the scroll position to the end card (380 vh → 865 vh in landscape → 679 vh back in portrait). Real Chrome may keep the place by scroll anchoring; only the phone can tell.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.6">
+      <label><input type="radio" name="r-T5.6" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.6" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.6" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T5.6" rows="2"></textarea></label>
+</article>
+<article class="test" id="T5.7" data-id="T5.7">
+  <header><h3><span class="tid">T5.7</span> Large text</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Settings → Display → Font size and style: set Font size to the largest. Reload U1 and scroll through.</li><li>Reset the font size afterwards.</li></ol>
+  <h4>Expected</h4><p>Text larger, still readable, no text running off the screen. Record any overlap; it is informational.</p>
+  <p class="ev"><b>Evidence:</b> Screenshots of any overlap.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Large system font: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.7">
+      <label><input type="radio" name="r-T5.7" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.7" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.7" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T5.7" rows="2"></textarea></label>
+</article>
+<article class="test" id="T5.8" data-id="T5.8">
+  <header><h3><span class="tid">T5.8</span> Samsung Internet (optional)</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>In Samsung Internet, sign in to claude.ai, open U1 and repeat T2.1 quickly.</li></ol>
+  <h4>Expected</h4><p>Same as T2.1. Note any difference.</p>
+  <p class="ev"><b>Evidence:</b> Notes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Samsung Internet: not available here.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.8">
+      <label><input type="radio" name="r-T5.8" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.8" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.8" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T5.8" rows="2"></textarea></label>
+</article>
+</div></section><section class="band sec" id="sec-T6"><div class="wrap">
+<span class="kindtag">A · Manual: your eyes and hands</span>
+<h2>T6 · TalkBack</h2>
+<p class="intro known">Gestures: swipe right = next item; swipe left = previous; double-tap = activate; two-finger swipe = scroll; swipe up or down with one finger = change what a swipe moves by (for example Headings); swipe down then left = back. Wording varies by TalkBack version; what matters is the order and that nothing is missing or extra. TalkBack first reads claude.ai&#39;s own viewer controls; the test starts at the first item of the preview, “Skip to main content”. Fixed in this build (27 Nov 2026): before, in normal (moving) mode, Chapter 2 and 3 content was hidden from TalkBack unless that chapter was on screen. T6.2 and T6.3 now verify the fix: the reading order must be the same in both modes. One thing to watch in normal mode: when TalkBack reads Chapter 2 or 3 text that has not scrolled into view yet, its focus outline may sit over the current picture, because the text only appears visually when you reach it. Record whether that is confusing; it is an observation, not a failure.</p>
+
+<article class="test" id="T6.1" data-id="T6.1">
+  <header><h3><span class="tid">T6.1</span> Reading order, reduced motion</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#reduced-perf">U7</a></header>
+  <h4>Steps</h4><ol><li>Open U7. Turn TalkBack on (hold both volume keys 3 s).</li><li>Swipe right until you reach “Skip to main content”. From there, swipe right item by item to the footer, writing down (or recording) what TalkBack says.</li></ol>
+  <h4>Expected</h4><ul><li>Skip to main content, link</li><li>SLAY BRAIDS, home, link</li><li>Menu, button (may add “pop-up”)</li><li>Premium look. Affordable price., heading 1</li><li>Make an enquiry, link · Discover FUTURA, link</li><li>The craft (working title), heading 2</li><li>Manifesto line one … · Manifesto line two … · Manifesto line three … · Placeholder copy</li><li>The unbraiding (working title), heading 2</li><li>Portrait awaiting approved photography · Photo credit pending (figure)</li><li>Chapter 3 line — wording to come from SLAY BRAIDS. Placeholder copy</li><li>Next review · Chapter 4 · FUTURA, heading 2 · Chapters 4–7 are built after this preview is approved. · Back to the top, link</li><li>Make an enquiry, heading 2 · status text · Name, edit box · Email, edit box · Topic, drop-down (General enquiry) · Message, edit box · Sending is not enabled in the preview, button, disabled · note</li><li>© SLAY BRAIDS · FUTURA is a SLAY BRAIDS product line. · Legal pages to follow.</li><li>M2 preview · Chapters 1–3 · not for publication · placeholder copy is marked</li><li>Never read: “01”, “02”, “03”, “Scroll”, images, canvas, graphics.</li></ul>
+  <p class="ev"><b>Evidence:</b> Recording with speech, or the list of announcements, marking any difference.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Chromium&#39;s accessibility tree (what TalkBack reads), reduced motion: every heading and line present once, in this order; no decorative items; axe clean. TalkBack&#39;s speech itself: not heard.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.1">
+      <label><input type="radio" name="r-T6.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T6.1" rows="2"></textarea></label>
+</article>
+<article class="test" id="T6.2" data-id="T6.2">
+  <header><h3><span class="tid">T6.2</span> Reading order, normal motion</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Open U1 (motion on). With TalkBack on, start at “Skip to main content” and swipe right through the page, as in T6.1.</li></ol>
+  <h4>Expected</h4><p>Exactly the same order as T6.1: nothing missing (in particular the Chapter 2 and Chapter 3 headings, the three manifesto lines, the portrait placeholder and the Chapter 3 line), nothing read twice, no numerals. Note where the focus outline appears while it reads Chapter 2–3 text.</p>
+  <p class="ev"><b>Evidence:</b> Recording or list of announcements.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Live-mode tree identical to reduced motion at 0, 160, 380 and 470 vh (e2e; the test fails on the build before the fix).</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.2">
+      <label><input type="radio" name="r-T6.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T6.2" rows="2"></textarea></label>
+</article>
+<article class="test" id="T6.3" data-id="T6.3">
+  <header><h3><span class="tid">T6.3</span> Headings navigation</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn#reduced-perf">U7</a> <span class="u">then U1</span></header>
+  <h4>Steps</h4><ol><li>In U7: swipe down (or up) until TalkBack says “Headings”. Then swipe right repeatedly from the top.</li><li>Repeat in U1.</li></ol>
+  <h4>Expected</h4><p>In both U7 and U1: Premium look. Affordable price. (1) → The craft (2) → The unbraiding (2) → Chapter 4 · FUTURA (2) → Make an enquiry (2).</p>
+  <p class="ev"><b>Evidence:</b> List of headings heard, for each URL.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Headings in order (h1, then four h2) in the tree, in both modes.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.3">
+      <label><input type="radio" name="r-T6.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T6.3" rows="2"></textarea></label>
+</article>
+<article class="test" id="T6.4" data-id="T6.4">
+  <header><h3><span class="tid">T6.4</span> Skip link</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Go to the top. Focus “Skip to main content” and double-tap.</li></ol>
+  <h4>Expected</h4><p>Focus moves to the headline: TalkBack reads “Premium look. Affordable price., heading 1”.</p>
+  <p class="ev"><b>Evidence:</b> Notes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">The skip link moves focus to the h1 (e2e, keyboard). TalkBack double-tap: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.4">
+      <label><input type="radio" name="r-T6.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T6.4" rows="2"></textarea></label>
+</article>
+<article class="test" id="T6.5" data-id="T6.5">
+  <header><h3><span class="tid">T6.5</span> Menu dialog</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Focus Menu, double-tap.</li><li>Swipe right through the menu until nothing new is read.</li><li>Focus Close, double-tap.</li><li>Open the menu again and use the Android back gesture (swipe down then left, or the system back).</li></ol>
+  <h4>Expected</h4><p>On opening, focus moves into the menu (TalkBack reads “Close, button” or the menu name). Swiping reads: Close, Arrival, The Craft, The Unbraiding (links), the note, Make an enquiry. It does not continue into the page behind. Close returns focus to the Menu button. Back closes the menu and stays on the page. If back leaves the page instead, record it as a failure.</p>
+  <p class="ev"><b>Evidence:</b> Notes; recording if focus escapes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Focus moves into the dialog, Escape closes it, focus returns to Menu (e2e). Android back gesture and TalkBack swipe containment: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.5">
+      <label><input type="radio" name="r-T6.5" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.5" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.5" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T6.5" rows="2"></textarea></label>
+</article>
+<article class="test" id="T6.6" data-id="T6.6">
+  <header><h3><span class="tid">T6.6</span> Header focus after scrolling down</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>With TalkBack, two-finger scroll down into Chapter 2 (the header hides), then swipe left back to the Menu button.</li></ol>
+  <h4>Expected</h4><p>The focus outline is visible on screen, or the header comes back into view. Record if the focus outline is off screen.</p>
+  <p class="ev"><b>Evidence:</b> Screenshot.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">TalkBack focus outline position: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.6">
+      <label><input type="radio" name="r-T6.6" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.6" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.6" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T6.6" rows="2"></textarea></label>
+</article>
+<article class="test" id="T6.7" data-id="T6.7">
+  <header><h3><span class="tid">T6.7</span> Explore by touch (normal motion)</h3><a class="u" href="https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn">U1</a></header>
+  <h4>Steps</h4><ol><li>Two-finger scroll until Chapter 2&#39;s lines are visible; tap a line once with one finger.</li></ol>
+  <h4>Expected</h4><p>TalkBack reads the line you touched, once.</p>
+  <p class="ev"><b>Evidence:</b> Notes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Explore by touch: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.7">
+      <label><input type="radio" name="r-T6.7" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.7" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.7" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-T6.7" rows="2"></textarea></label>
+</article>
+</div></section><section class="band sec" id="sec-C"><div class="wrap">
+<span class="kindtag">C · Needs a connected computer</span>
+<h2>C · Measurements that need a connected computer</h2>
+<p class="intro">Optional and separate from the tests above. They need a Windows or Mac computer with Chrome and a USB cable, and USB debugging on the phone (Settings → About phone → Software information → tap Build number 7 times → Developer options → USB debugging). The in-page readout cannot see these. Alternatively, connect that computer to this session (Claude desktop app → Settings → Claude Code → Remote Control) and I can run C1–C3 myself while you hold the phone.</p>
+
+<article class="test" id="C1" data-id="C1">
+  <header><h3><span class="tid">C1</span> Performance trace of the full scroll</h3></header>
+  <h4>Steps</h4><ol><li>Phone connected by USB, U1 open in Chrome. On the computer: Chrome → chrome://inspect#devices → find the claude.ai tab → inspect.</li><li>Performance panel → enable Screenshots → Record → on the phone, do the T2.1 slow pass → Stop. Save the profile (Save profile… → .json).</li></ol>
+  <h4>Expected</h4><p>Gives what the readout cannot: frame-by-frame presentation (dropped and partially presented frames), main-thread long tasks with their causes, raster/GPU time, and the source of any layout shift.</p>
+  <p class="ev"><b>Evidence:</b> The saved trace file.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a computer connected to the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for C1">
+      <label><input type="radio" name="r-C1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-C1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-C1" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-C1" rows="2"></textarea></label>
+</article>
+<article class="test" id="C2" data-id="C2">
+  <header><h3><span class="tid">C2</span> Long-task attribution: start-up vs scrolling</h3></header>
+  <h4>Steps</h4><ol><li>From the C1 trace: list tasks over 50 ms with their time and source.</li></ol>
+  <h4>Expected</h4><p>Approved phone criterion: no long task over 200 ms while scrolling. Start-up tasks (shader compile, geometry) are reported separately.</p>
+  <p class="ev"><b>Evidence:</b> From the C1 trace (I can read it from the file).</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a computer connected to the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for C2">
+      <label><input type="radio" name="r-C2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-C2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-C2" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-C2" rows="2"></textarea></label>
+</article>
+<article class="test" id="C3" data-id="C3">
+  <header><h3><span class="tid">C3</span> Memory after a full scroll</h3></header>
+  <h4>Steps</h4><ol><li>DevTools → Memory → take a heap snapshot after T2.1 and after T2.3.</li></ol>
+  <h4>Expected</h4><p>No steady growth between the two snapshots (no leak from repeated scrolling).</p>
+  <p class="ev"><b>Evidence:</b> Snapshot sizes.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a computer connected to the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for C3">
+      <label><input type="radio" name="r-C3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-C3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-C3" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-C3" rows="2"></textarea></label>
+</article>
+<article class="test" id="C4" data-id="C4">
+  <header><h3><span class="tid">C4</span> Thermal state (optional)</h3></header>
+  <h4>Steps</h4><ol><li>With adb installed: adb shell dumpsys thermalservice, before T1 and after T3.</li></ol>
+  <h4>Expected</h4><p>Status 0–1 (none or light). Throttling would explain slower results.</p>
+  <p class="ev"><b>Evidence:</b> Both outputs.</p>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a computer connected to the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for C4">
+      <label><input type="radio" name="r-C4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-C4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-C4" value="not tested" checked><span>Not tested</span></label>
+    </div>
+  </div>
+  <label class="notes">Notes<textarea name="n-C4" rows="2"></textarea></label>
+</article>
+</div></section>
+
+<section class="band"><div class="wrap">
+<h2>Sending results</h2>
+<p>Tap “Copy all results” and paste into the chat together with the copied lab and readout results (T1, T3). If copying is blocked, tap “Show as text”, select all and copy. Attach or describe recordings and screenshots for every failure. I will analyse failures and propose only the corrections they require; nothing changes before you approve.</p>
+</div></section>
+
+<div class="bar"><span class="count" id="count" aria-live="polite"></span><span>
+<button type="button" id="copyall">Copy all results</button>
+<button type="button" class="sec2" id="show">Show as text</button></span>
+<textarea id="out" aria-label="All results as text" readonly></textarea></div>
+
+<script>
+{
+  const KEY = "a26-protocol-v1";
+  const ids = [...document.querySelectorAll(".test")].map((t) => t.dataset.id);
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} };
+  for (const id of ids) {
+    const s = saved[id] || {};
+    if (s.r === "not run") s.r = "not tested";
+    if (s.r) { const el = document.querySelector('input[name="r-' + id + '"][value="' + s.r + '"]'); if (el) el.checked = true; }
+    const ta = document.querySelector('textarea[name="n-' + id + '"]'); if (ta && s.n) ta.value = s.n;
+  }
+  const count = document.getElementById("count");
+  const update = () => {
+    const done = ids.filter((id) => saved[id] && (saved[id].r === "pass" || saved[id].r === "fail")).length;
+    const fails = ids.filter((id) => saved[id] && saved[id].r === "fail").length;
+    count.textContent = "A26: " + done + " of " + ids.length + " tested" + (fails ? " · " + fails + " fail" : "");
+  };
+  document.addEventListener("change", (e) => {
+    const t = e.target; const m = /^(r|n)-(.+)$/.exec(t.name || ""); if (!m) return;
+    saved[m[2]] = saved[m[2]] || {}; saved[m[2]][m[1]] = t.value; save(); update();
+  });
+  document.addEventListener("input", (e) => {
+    const t = e.target; const m = /^n-(.+)$/.exec(t.name || ""); if (!m) return;
+    saved[m[1]] = saved[m[1]] || {}; saved[m[1]].n = t.value; save();
+  });
+  const text = () => {
+    const lines = ["Galaxy A26 5G — Chapters 1–3 real-device results", "Recorded: " + new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC", ""];
+    for (const id of ids) {
+      const s = saved[id] || {}; const name = document.querySelector('[data-id="' + id + '"] h3').textContent.trim();
+      const auto = document.querySelector('[data-id="' + id + '"] .badge').textContent.trim();
+      lines.push(name + " · " + auto + " · A26: " + (s.r ? s.r.toUpperCase() : "NOT TESTED") + (s.n ? "\n    " + s.n.replace(/\n/g, "\n    ") : ""));
+    }
+    return lines.join("\n");
+  };
+  const out = document.getElementById("out");
+  const copy = async (s, btn, label) => {
+    try { await navigator.clipboard.writeText(s); btn.textContent = "Copied"; }
+    catch (e) { btn.textContent = "Copy blocked: use Show as text"; out.style.display = "block"; out.value = text(); }
+    setTimeout(() => (btn.textContent = label), 2500);
+  };
+  document.getElementById("copyall").addEventListener("click", (e) => copy(text(), e.currentTarget, "Copy all results"));
+  document.getElementById("show").addEventListener("click", () => { out.style.display = out.style.display === "block" ? "none" : "block"; out.value = text(); if (out.style.display === "block") out.select(); });
+  document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", (e) => copy(b.dataset.copy, e.currentTarget, "Copy")));
+  update();
+}
+</script>
+</body></html>

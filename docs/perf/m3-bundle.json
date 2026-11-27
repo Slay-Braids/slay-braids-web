@@ -1,0 +1,65 @@
+{
+  "initialJS": {
+    "files": 6,
+    "raw": 460495,
+    "gzip": 138406,
+    "brotli": 114977
+  },
+  "lazyJS": {
+    "files": 28,
+    "raw": 1138540,
+    "gzip": 338191
+  },
+  "legacyBrowsersOnly": [
+    "/_next/static/chunks/polyfills-42372ed130431b0a.js"
+  ],
+  "css": [
+    {
+      "file": "/_next/static/css/2ff7e7593c144b88.css",
+      "raw": 35792,
+      "gzip": 8605
+    }
+  ],
+  "labelledLazy": [
+    {
+      "label": "Lenis",
+      "gzipKB": 5.3,
+      "rawKB": 18.4
+    },
+    {
+      "label": "Lenis",
+      "gzipKB": 0.5,
+      "rawKB": 0.9
+    },
+    {
+      "label": "GSAP + ScrollTrigger",
+      "gzipKB": 24.3,
+      "rawKB": 60.9
+    },
+    {
+      "label": "geometry worker",
+      "gzipKB": 2.1,
+      "rawKB": 4.3
+    },
+    {
+      "label": "geometry worker",
+      "gzipKB": 2.3,
+      "rawKB": 4.6
+    },
+    {
+      "label": "Lenis",
+      "gzipKB": 2.3,
+      "rawKB": 5.3
+    },
+    {
+      "label": "three.js + CascadeScene",
+      "gzipKB": 82.4,
+      "rawKB": 348.3
+    },
+    {
+      "label": "GSAP + ScrollTrigger",
+      "gzipKB": 19.5,
+      "rawKB": 50.8
+    }
+  ]
+}

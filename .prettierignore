@@ -1,0 +1,6 @@
+.next
+out
+dist-preview
+pnpm-lock.yaml
+public/anchors
+docs/perf

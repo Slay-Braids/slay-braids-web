@@ -1,0 +1,1895 @@
+@import "tailwindcss";
+
+/* Self-hosted, Latin-only variable fonts (SIL OFL 1.1, licences beside the files). */
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("./fonts/bodoni-moda-latin-opsz-normal.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("./fonts/bodoni-moda-latin-opsz-italic.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* I7: metric-matched fallbacks. While the web fonts load (font-display: swap), text is set in a
+   local Times New Roman / Arial scaled to the web font's average glyph width and vertical metrics,
+   so the swap does not reflow lines or shift layout. Computed from the font files with
+   fontTools against the metric-compatible Liberation Serif / Sans. */
+@font-face {
+  font-family: "Bodoni Moda Fallback";
+  src:
+    local("Times New Roman"), local("TimesNewRomanPSMT"), local("Liberation Serif"),
+    local("Georgia");
+  size-adjust: 108.95%;
+  ascent-override: 103.25%;
+  descent-override: 36.71%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Bodoni Moda Fallback";
+  font-style: italic;
+  src:
+    local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT"),
+    local("Liberation Serif Italic"), local("Georgia Italic");
+  size-adjust: 106.82%;
+  ascent-override: 105.31%;
+  descent-override: 37.44%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Helvetica");
+  size-adjust: 104.33%;
+  ascent-override: 92.85%;
+  descent-override: 23.12%;
+  line-gap-override: 0%;
+}
+
+/* Design tokens: the official SLAY BRAIDS palette, red, black and white (red sampled from the
+   original logo file: #C60D13). Red is for large type, graphics, rules and button fields; small
+   text stays white on black or black on white (red on black is 3.2:1, below AA for body text). */
+@theme {
+  --color-ink: #0a0a0a;
+  --color-ink-2: #151515;
+  --color-white: #ffffff;
+  --color-mist: #b8b8b8;
+  --color-red: #c60d13;
+  --color-red-deep: #9e0a0f;
+
+  --font-display: "Bodoni Moda", "Bodoni Moda Fallback", Georgia, serif;
+  --font-sans:
+    "Inter", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-hero: clamp(2.6rem, 1.2rem + 6.2vw, 7.5rem);
+  --text-display: clamp(2rem, 1.2rem + 3.4vw, 4.5rem);
+  --text-lead: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
+  --text-label: 0.75rem;
+
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --scene-bg: var(--color-ink);
+}
+
+html {
+  background: var(--scene-bg);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  margin: 0;
+  overflow-x: clip;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+.label {
+  font-size: var(--text-label);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Shared film grain: one overlay above both the anchor still and the live canvas,
+   so the handoff never changes texture. Static under reduced motion. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-3%, 2%);
+  }
+  40% {
+    transform: translate(2%, -3%);
+  }
+  60% {
+    transform: translate(-2%, -1%);
+  }
+  80% {
+    transform: translate(3%, 2%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}
+:root[data-reduced-motion="true"] .grain {
+  animation: none;
+}
+
+/* Stage: anchor still + live canvas share one fixed layer behind the editorial content. */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--scene-bg);
+}
+.stage picture,
+.stage img,
+.stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.stage img {
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.stage canvas {
+  opacity: 0;
+  transition: opacity 600ms var(--ease-cinematic);
+}
+.stage[data-live="true"] canvas {
+  opacity: 1;
+}
+/* Legibility scrim for type over imagery. */
+.scrim-bottom {
+  background: linear-gradient(to top, rgb(10 10 10 / 0.85), rgb(10 10 10 / 0) 60%);
+}
+/* Mobile headline scrim: pinned to the viewport and faded on the scroll clock as Chapter 2's
+   bottom field arrives, so its edge never travels up across the hair. In the static spreads it
+   stays part of Chapter 1. */
+.ch1-scrim {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: calc(var(--vh) * 52);
+  pointer-events: none;
+}
+:root[data-static="true"] .ch1-scrim {
+  position: absolute;
+  height: 52%;
+  opacity: 1 !important;
+}
+
+/* Text reveals (only once JS has marked the document; content is visible without JS). */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 900ms var(--ease-cinematic),
+    transform 900ms var(--ease-cinematic);
+}
+.js [data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+:root[data-reduced-motion="true"] [data-reveal] {
+  transition: none;
+  transform: none;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.stage[data-mode="static"] canvas {
+  display: none;
+}
+
+/* Hero entrance: transform only (never opacity), CSS only, so the LCP text and still paint at
+   first render without waiting for JavaScript. */
+.hero-rise {
+  animation: hero-rise 1100ms var(--ease-cinematic) both;
+}
+.hero-rise:nth-child(2) {
+  animation-delay: 80ms;
+}
+.hero-rise:nth-child(3) {
+  animation-delay: 160ms;
+}
+@keyframes hero-rise {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise {
+    animation: none;
+  }
+}
+
+/* Legibility over imagery (static/reduced-motion paths show text over the lit still). */
+.legible {
+  text-shadow:
+    0 1px 2px rgb(10 10 10 / 0.8),
+    0 0 22px rgb(10 10 10 / 0.85);
+}
+
+/* =====================================================================================
+   M2 — Chapters 1–3
+   ===================================================================================== */
+:root {
+  --vh: 1vh; /* set from innerHeight by the controller so CSS and the camera timeline agree */
+  --espresso: #0a0a0a; /* text on the white page */
+  --ivory-deep: #f1f1f1; /* mounts on the white page */
+  --past-line: 0.72; /* dimmed Chapter 2 lines: 0.62 measured 6.71:1 (below 7:1); 0.72 clears 7:1 with margin */
+  --margin: max(5vw, 24px);
+}
+@media (max-width: 767px) {
+  :root {
+    --margin: 20px;
+  }
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.placeholder-tag {
+  display: inline-block;
+  margin-left: 0.6em;
+  padding: 2px 6px;
+  vertical-align: middle;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  opacity: 0.55;
+  font: 500 10px/1.4 var(--font-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.chapter {
+  position: relative;
+}
+.ch1 {
+  height: calc(var(--vh) * 100);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 var(--margin) calc(var(--vh) * 14);
+}
+/* Sections are the scroll track (their heights ARE the chapter extents of the camera timeline);
+   each chapter's frame is fixed to the viewport and driven by the same scroll clock as the camera.
+   M3: Chapter 3 ends where Chapter 4 begins (500 vh landscape, 450 vh portrait); the covering
+   page carries straight on into Chapter 4, so the M2 one-screen tail is no longer needed. */
+.ch2 {
+  height: calc(var(--vh) * 150);
+}
+.ch3 {
+  height: calc(var(--vh) * 250);
+}
+.ch4,
+.ch5,
+.ch6,
+.ch7 {
+  height: calc(var(--vh) * var(--h-l));
+}
+@media (orientation: portrait) {
+  .ch1 {
+    padding-bottom: calc(var(--vh) * 11);
+  }
+  .ch2 {
+    height: calc(var(--vh) * 130);
+  }
+  .ch3 {
+    height: calc(var(--vh) * 220);
+  }
+  .ch4,
+  .ch5,
+  .ch6,
+  .ch7 {
+    height: calc(var(--vh) * var(--h-p));
+  }
+}
+.chapter-frame {
+  position: fixed;
+  inset: 0;
+  height: calc(var(--vh) * 100);
+  overflow: hidden;
+  pointer-events: none;
+  /* Hidden off-screen with opacity, not visibility: visibility would also remove the chapter's
+     headings and text from the accessibility tree, so screen readers would skip Chapters 2–3
+     unless they happened to be on screen. Decorative parts stay aria-hidden in the markup. */
+  opacity: 0;
+}
+.chapter-frame[data-visible="true"] {
+  opacity: 1;
+}
+.chapter-frame[data-visible="true"] a,
+.chapter-frame[data-visible="true"] button {
+  pointer-events: auto;
+}
+
+/* Chapter 1 */
+.ch1-content {
+  position: relative;
+  will-change: opacity, transform;
+}
+.numeral-label {
+  margin-bottom: 1rem;
+  color: var(--color-white);
+}
+.hero-title {
+  font-size: clamp(3.25rem, 1rem + 7.4vw, 8rem);
+  line-height: 0.93;
+  font-weight: 500;
+  max-width: 7em;
+  text-wrap: balance;
+} /* em, not ch (ch changes when the web font swaps in); 7em: "Premium look." fits and "Affordable price." wraps in both the web font and its fallback */
+@media (orientation: portrait) {
+  .hero-title {
+    font-size: clamp(2.9rem, 1.2rem + 7vw, 4.5rem);
+  }
+}
+.hero-ctas {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.btn-primary,
+.btn-secondary,
+.btn-disabled {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-weight: 500;
+  transition:
+    background-color 240ms,
+    color 240ms,
+    border-color 240ms,
+    opacity 240ms;
+}
+.btn-primary {
+  background: var(--color-red);
+  color: var(--color-white);
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+.btn-secondary {
+  border: 1px solid rgb(255 255 255 / 0.4);
+  color: var(--color-white);
+}
+.btn-secondary:hover {
+  border-color: var(--color-white);
+}
+.btn-disabled {
+  background: rgb(255 255 255 / 0.18);
+  color: rgb(255 255 255 / 0.6);
+  cursor: not-allowed;
+}
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--vh) * 4);
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+  transition: opacity 400ms;
+}
+.scroll-cue i {
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: var(--color-red);
+  transform-origin: top;
+  animation: cue-draw 1400ms 1200ms var(--ease-cinematic) both;
+}
+.scroll-cue[data-hidden="true"] {
+  opacity: 0;
+}
+@keyframes cue-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Chapter numerals (decorative) */
+.numeral {
+  font-family: var(--font-display);
+  font-size: clamp(88px, 11vw, 160px);
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 0.75px var(--color-red);
+  margin: 0 0 1.5rem;
+}
+
+/* Chapter 2 — controlled text region */
+.ch2-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--ch2-field, 0);
+  background: linear-gradient(
+    to right,
+    rgb(10 10 10 / var(--field, 0.82)) 0%,
+    rgb(10 10 10 / var(--field, 0.82)) 34%,
+    rgb(10 10 10 / 0) 50%
+  );
+}
+.ch2-copy {
+  position: absolute;
+  left: var(--margin);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(40vw, 560px);
+  opacity: var(--ch2-copy, 0);
+}
+.ch2-lines {
+  display: grid;
+  gap: 1.1rem;
+}
+.ch2-line {
+  font-size: clamp(2rem, 1rem + 2.4vw, 3.5rem);
+  line-height: 1.04;
+  color: var(--color-white);
+  margin: 0;
+  transition:
+    opacity 900ms var(--ease-cinematic),
+    transform 900ms var(--ease-cinematic),
+    clip-path 900ms var(--ease-cinematic);
+}
+.ch2-line[data-state="hidden"] {
+  opacity: 0;
+  transform: translateY(20px);
+  clip-path: inset(0 0 100% 0);
+}
+.ch2-line[data-state="active"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+.ch2-line[data-state="past"] {
+  opacity: var(--past-line);
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+@media (orientation: portrait) {
+  .ch2-field {
+    background: linear-gradient(
+      to top,
+      rgb(10 10 10 / var(--field, 0.9)) 0%,
+      rgb(10 10 10 / var(--field, 0.9)) 38%,
+      rgb(10 10 10 / 0) 58%
+    );
+  }
+  .ch2-copy {
+    top: auto;
+    bottom: calc(var(--vh) * 10);
+    transform: none;
+    width: auto;
+    right: var(--margin);
+  }
+  .ch2-copy .numeral {
+    margin-bottom: 0.75rem;
+  }
+  .ch2-lines {
+    grid-template-areas: "line";
+  }
+  .ch2-lines > .ch2-line {
+    grid-area: line;
+    font-size: clamp(1.75rem, 1rem + 3.4vw, 2.25rem);
+  }
+  .ch2-line[data-state="past"] {
+    opacity: 0;
+  }
+}
+
+/* Chapter 3 — content on the ivory page */
+.ch3-content {
+  position: absolute;
+  inset: 0;
+  color: var(--espresso);
+  will-change: transform;
+}
+.numeral-ivory {
+  position: absolute;
+  left: 58%;
+  top: calc(var(--vh) * 12);
+  -webkit-text-stroke-color: var(--color-red);
+}
+.ch3-portrait {
+  position: absolute;
+  left: 71%;
+  top: calc(var(--vh) * 14);
+  width: min(19vw, 320px);
+  margin: 0;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.portrait-mount {
+  aspect-ratio: 4 / 5;
+  background: var(--ivory-deep);
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 0 0 1px rgb(10 10 10 / 0.08);
+}
+.portrait-placeholder {
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  font: 500 11px/1.6 var(--font-sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(10 10 10 / 0.78);
+}
+.portrait-caption {
+  margin-top: 0.6rem;
+  font: 500 11px/1.4 var(--font-sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(10 10 10 / 0.6);
+}
+.ch3-line {
+  position: absolute;
+  left: 58%;
+  right: calc(var(--margin) + 24px);
+  bottom: calc(var(--vh) * 12);
+  margin: 0;
+  font-style: italic;
+  font-size: clamp(1.6rem, 0.9rem + 1.9vw, 3rem);
+  line-height: 1.06;
+  color: var(--espresso);
+  transition:
+    opacity 900ms var(--ease-cinematic),
+    transform 900ms var(--ease-cinematic);
+}
+.ch3-line[data-state="hidden"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.ch3-line[data-state="active"] {
+  opacity: 1;
+  transform: none;
+}
+@media (orientation: portrait) {
+  .numeral-ivory {
+    left: var(--margin);
+    top: calc(var(--vh) * 50);
+    font-size: 64px;
+    margin: 0;
+  }
+  .ch3-portrait {
+    left: 50%;
+    top: calc(var(--vh) * 53);
+    width: 42vw;
+    translate: -50% 0;
+  }
+  .ch3-line {
+    left: var(--margin);
+    bottom: calc(var(--vh) * 6);
+    font-size: clamp(1.4rem, 1rem + 2.6vw, 1.9rem);
+  }
+}
+
+/* Paper layer and chapter stills (fixed, behind the editorial content, above the canvas) */
+.paper-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  visibility: hidden;
+}
+/* Static spreads: stills and the page live inside their chapter frame (scroll together). */
+.spread-still,
+.spread-still img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.paper-static {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+:root[data-static="true"] .ch2-field,
+:root[data-static="true"] .ch2-copy,
+:root[data-static="true"] .ch3-content {
+  z-index: 1;
+}
+
+/* Header */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 18px var(--margin);
+  color: var(--color-white);
+  transition:
+    transform 500ms var(--ease-cinematic),
+    color 300ms;
+}
+/* Hidden on scroll down, but never while it holds focus: keyboard users always reach the
+   header and its footage pause control. */
+.site-header[data-hidden="true"]:not(:focus-within) {
+  transform: translateY(-110%);
+}
+.site-header [data-ground="ivory"] {
+  color: var(--espresso);
+}
+.logo-slot,
+.header-actions {
+  transition: color 300ms;
+}
+/* The original logo (red on black and on white alike); no box, no recolouring. */
+.logo-slot {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+.logo-slot img,
+.footer-logo img,
+.ch3-logo img {
+  display: block;
+  height: auto;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.menu-button,
+.header-enquire {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: 500 14px/1 var(--font-sans);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.header-enquire {
+  padding: 0 1.1rem;
+  border: 1px solid color-mix(in srgb, currentColor 55%, transparent);
+  border-radius: 999px;
+}
+@media (max-width: 767px) {
+  .header-enquire {
+    display: none;
+  }
+}
+.site-menu {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgb(16 16 16 / 0.97);
+  color: var(--color-white);
+}
+.site-menu::backdrop {
+  background: rgb(10 10 10 / 0.6);
+}
+.site-menu-inner {
+  min-height: 100%;
+  padding: 22px var(--margin) 48px;
+  display: grid;
+  align-content: start;
+  gap: 2rem;
+}
+.menu-close {
+  justify-self: end;
+  min-height: 44px;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: 500 14px var(--font-sans);
+  cursor: pointer;
+}
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.menu-list a {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 1.2rem + 4vw, 4.5rem);
+  line-height: 1.05;
+}
+.menu-num {
+  font: 500 12px var(--font-sans);
+  letter-spacing: 0.2em;
+  color: var(--color-white);
+  vertical-align: super;
+  margin-right: 0.6rem;
+}
+.menu-note {
+  color: var(--color-mist);
+  font-size: 14px;
+}
+.menu-enquire {
+  justify-self: start;
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  background: var(--color-red);
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+/* Chapter index (desktop) */
+.chapter-index {
+  position: fixed;
+  right: calc(var(--margin) * 0.5);
+  top: 50%;
+  z-index: 25;
+  transform: translateY(-50%);
+  display: none;
+  flex-direction: column;
+  gap: 18px;
+  padding: 8px 0;
+  color: var(--color-white);
+}
+@media (min-width: 768px) {
+  .chapter-index {
+    display: flex;
+  }
+}
+.chapter-index::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in srgb, currentColor 30%, transparent);
+}
+.chapter-index a {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+.chapter-index a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 9px;
+  height: 1px;
+  translate: -50% -50%;
+  background: currentColor;
+  opacity: 0.6;
+  transition:
+    width 300ms,
+    background-color 300ms,
+    opacity 300ms;
+}
+.chapter-index a[aria-current="true"]::after {
+  width: 17px;
+  background: var(--color-red);
+  opacity: 1;
+}
+.chapter-index[data-ground="ivory"] {
+  color: var(--espresso);
+}
+.chapter-index[data-ground="ivory"] a[aria-current="true"]::after {
+  background: var(--color-red);
+}
+
+/* Enquiry, footer, banner */
+.btn-on-ivory {
+  border-color: rgb(10 10 10 / 0.45);
+  color: var(--espresso);
+}
+.btn-on-ivory:hover {
+  border-color: var(--espresso);
+}
+.enquire-section {
+  position: relative;
+  z-index: 2; /* rises over the fixed Chapter 7 frame */
+  background: var(--color-ink);
+  padding: calc(var(--vh) * 14) var(--margin) calc(var(--vh) * 12);
+  min-height: calc(var(--vh) * 100);
+}
+.field {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 14px;
+}
+.field input,
+.field select,
+.field textarea {
+  min-height: 48px;
+  border-radius: 2px;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  background: var(--color-ink-2);
+  padding: 0 1rem;
+  color: var(--color-white);
+  font-size: 16px;
+}
+.field textarea {
+  padding: 0.75rem 1rem;
+}
+.site-footer {
+  position: relative;
+  z-index: 10;
+  background: var(--color-ink);
+  padding: 2.5rem var(--margin) 5rem;
+  font-size: 14px;
+  color: var(--color-mist);
+}
+.preview-banner {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 30;
+  margin: 0;
+  padding: 6px 16px;
+  background: rgb(10 10 10 / 0.8);
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+
+/* =====================================================================================
+   M3 — Chapters 4–7, enquiry, footer
+   ===================================================================================== */
+.chapter-frame[data-visible="true"] label,
+.chapter-frame[data-visible="true"] input {
+  pointer-events: auto;
+}
+/* Dark reading fields behind type on the hair (as Chapter 2): opacity follows the type. */
+.ch4-frame::before,
+.ch5-frame::before,
+.ch7-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgb(10 10 10 / 0.86) 0%, rgb(10 10 10 / 0.7) 34%, rgb(10 10 10 / 0) 62%);
+  opacity: var(--field, 0);
+}
+.ch5-frame::before {
+  background: linear-gradient(90deg, rgb(10 10 10 / 0.9) 0%, rgb(10 10 10 / 0.78) 44%, rgb(10 10 10 / 0) 72%);
+}
+@media (orientation: portrait) {
+  .ch4-frame::before,
+  .ch5-frame::before,
+  .ch7-frame::before {
+    background: linear-gradient(0deg, rgb(10 10 10 / 0.92) 0%, rgb(10 10 10 / 0.82) 45%, rgb(10 10 10 / 0) 72%);
+  }
+  .ch5-frame::before {
+    background: linear-gradient(0deg, rgb(10 10 10 / 0.95) 0%, rgb(10 10 10 / 0.9) 72%, rgb(10 10 10 / 0) 94%);
+  }
+}
+
+/* Chapter 4 — FUTURA */
+.ch4-printed {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.5rem;
+  color: var(--espresso);
+  opacity: 0;
+}
+.ch4-printed .numeral-ivory,
+.ch6-intro .numeral-ivory {
+  position: static;
+  margin: 0;
+}
+.ch4-printed-name {
+  margin: 0;
+  font-size: clamp(2.6rem, 1rem + 6vw, 7rem);
+  letter-spacing: 0.32em;
+  margin-right: -0.32em; /* optical centring of the tracked word */
+  line-height: 1;
+}
+.ch4-content {
+  position: absolute;
+  left: var(--margin);
+  top: 50%;
+  translate: 0 -50%;
+  max-width: min(40vw, 620px);
+}
+.ch4-title {
+  margin: 0;
+  font-size: clamp(4rem, 1rem + 9vw, 10.5rem);
+  line-height: 0.9;
+  letter-spacing: 0.06em;
+  color: var(--color-white);
+  opacity: 0;
+}
+.ch4-title .placeholder-tag {
+  display: table;
+  margin: 1.1rem 0 0;
+  color: var(--color-mist);
+  opacity: 1;
+  letter-spacing: 0.14em;
+}
+.ch4-line {
+  margin: 1.5rem 0 0;
+  max-width: 30ch;
+  font-size: clamp(1.05rem, 0.9rem + 0.4vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--color-white);
+  opacity: 0;
+}
+@media (orientation: portrait) {
+  .ch4-content {
+    top: auto;
+    bottom: calc(var(--vh) * 11);
+    translate: none;
+    max-width: none;
+    right: var(--margin);
+  }
+  .ch4-title {
+    font-size: clamp(3.4rem, 1rem + 12vw, 6rem);
+  }
+}
+
+/* Chapter 5 — The Collection (pinned showcase; static: all products in flow) */
+.ch5-frame {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: calc(var(--vh) * 3);
+  padding: calc(var(--vh) * 11) var(--margin) calc(var(--vh) * 8);
+  --field: var(--ch5-shown, 0);
+}
+.ch5-head,
+.showcase {
+  position: relative;
+  opacity: var(--ch5-shown, 0);
+  max-width: min(56vw, 820px);
+  width: 100%;
+}
+.ch5-head .numeral {
+  font-size: clamp(56px, 8vh, 104px);
+  margin: 0 0 0.75rem;
+}
+.ch5-title {
+  margin: 0;
+  font-size: clamp(2.2rem, 1rem + 2.6vw, 3.6rem);
+  line-height: 1;
+}
+.ch5-intro {
+  margin: 0.9rem 0 0;
+  max-width: 44ch;
+  color: var(--color-mist);
+  line-height: 1.55;
+}
+.showcase-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.showcase-btn {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  background: none;
+  color: var(--color-white);
+  font: 500 14px/1 var(--font-sans);
+  cursor: pointer;
+  transition: border-color 240ms;
+}
+.showcase-btn:hover {
+  border-color: var(--color-white);
+}
+.showcase-counter {
+  margin: 0;
+  font: 500 12px var(--font-sans);
+  letter-spacing: 0.2em;
+  color: var(--color-mist);
+  font-variant-numeric: tabular-nums;
+}
+.showcase-counter span {
+  color: var(--color-white);
+}
+.products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.product {
+  grid-area: 1 / 1;
+  transition:
+    opacity 520ms var(--ease-cinematic),
+    transform 520ms var(--ease-cinematic);
+}
+.product[data-active="false"] {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+}
+.chapter-frame[data-visible="true"] .product[data-active="false"] :is(a, button, label, input) {
+  pointer-events: none;
+}
+.product-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(20px, 2.4vw, 40px);
+  align-items: end;
+}
+.product-photo {
+  height: min(40vh, 400px);
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(255 255 255 / 0.05);
+  border: 1px solid rgb(255 255 255 / 0.2);
+}
+.product-photo-placeholder,
+.look-placeholder {
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+.product-photo-placeholder {
+  color: var(--color-mist);
+}
+.product-info {
+  display: grid;
+  justify-items: start;
+  gap: 0.7rem;
+}
+.product-count {
+  margin: 0;
+  font: 500 12px var(--font-sans);
+  letter-spacing: 0.2em;
+  color: var(--color-white);
+}
+.product-name {
+  margin: 0;
+  font-size: clamp(1.7rem, 1rem + 1.4vw, 2.6rem);
+  line-height: 1.05;
+}
+.product-info > .placeholder-tag {
+  margin: 0;
+  color: var(--color-mist);
+  opacity: 1;
+}
+.shades {
+  margin: 0.4rem 0 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+}
+.shades-legend {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+.swatch {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  min-width: 48px;
+  cursor: pointer;
+}
+.swatch input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.swatch-chip {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 11px;
+  color: var(--color-mist);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.3);
+  transition: box-shadow 200ms;
+}
+.swatch-pending {
+  background: repeating-linear-gradient(135deg, rgb(255 255 255 / 0.08) 0 4px, transparent 4px 8px);
+}
+.swatch input:checked + .swatch-chip {
+  box-shadow:
+    0 0 0 2px var(--color-ink),
+    0 0 0 3px var(--color-red);
+}
+.swatch input:focus-visible + .swatch-chip {
+  outline: 2px solid var(--color-red);
+  outline-offset: 5px;
+}
+.swatch-name {
+  font-size: 12px;
+  color: var(--color-white);
+}
+.product-price {
+  margin: 0.3rem 0 0;
+  font-size: 15px;
+  color: var(--color-white);
+}
+.product-claims {
+  margin: 0;
+  padding-left: 1.1em;
+  color: var(--color-mist);
+  font-size: 14px;
+}
+.product-enquire {
+  margin-top: 0.4rem;
+}
+@media (orientation: portrait) {
+  .ch5-frame {
+    align-content: end;
+    gap: calc(var(--vh) * 2);
+    padding: calc(var(--vh) * 10) var(--margin) calc(var(--vh) * 7);
+  }
+  .ch5-head,
+  .showcase {
+    max-width: none;
+  }
+  .ch5-head .numeral {
+    display: none;
+  }
+  .ch5-title {
+    font-size: 2rem;
+  }
+  .ch5-intro {
+    font-size: 14px;
+    margin-top: 0.5rem;
+  }
+  .showcase-controls {
+    margin-bottom: 0.75rem;
+  }
+  .product-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .product-photo {
+    height: calc(var(--vh) * 21);
+  }
+  .product-info {
+    gap: 0.5rem;
+  }
+  .product-name {
+    font-size: 1.6rem;
+  }
+}
+
+/* Chapter 6 — Lookbook (printed on the ivory page) */
+.ch6-frame {
+  color: var(--espresso);
+}
+.ch6-intro {
+  position: absolute;
+  right: calc(var(--margin) + 32px);
+  top: calc(var(--vh) * 11);
+  width: min(26vw, 380px);
+  display: grid;
+  justify-items: end;
+  text-align: right;
+  opacity: calc(var(--ch6-intro, 0) * var(--ride, 1));
+}
+.ch6-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 1rem + 2.6vw, 4rem);
+  line-height: 1;
+}
+.ch6-spread {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr 1fr;
+  grid-template-rows: 1fr auto;
+  column-gap: clamp(20px, 2.6vw, 44px);
+  row-gap: calc(var(--vh) * 3);
+  align-items: start;
+  padding: calc(var(--vh) * 14) calc(var(--margin) + 32px) calc(var(--vh) * 9) var(--margin);
+  opacity: 0;
+}
+.look {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.look-2 {
+  margin-top: calc(var(--vh) * 9);
+}
+.look-3 {
+  margin-top: calc(var(--vh) * 3);
+}
+.look-mount {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: var(--ivory-deep);
+  border: 1px solid rgb(10 10 10 / 0.12);
+}
+.look-1 .look-mount {
+  aspect-ratio: 4 / 5;
+  max-height: calc(var(--vh) * 52);
+}
+.look-2 .look-mount {
+  aspect-ratio: 3 / 4;
+  max-height: calc(var(--vh) * 40);
+}
+.look-3 .look-mount {
+  aspect-ratio: 4 / 5;
+  max-height: calc(var(--vh) * 46);
+}
+.look-placeholder {
+  color: rgb(10 10 10 / 0.72);
+}
+.look-caption {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgb(10 10 10 / 0.72);
+}
+.ch6-line .placeholder-tag {
+  opacity: 1;
+  color: rgb(10 10 10 / 0.72);
+}
+.ch6-line {
+  grid-column: 1 / 3;
+  margin: 0;
+  font-size: clamp(1.4rem, 1rem + 1vw, 2rem);
+  line-height: 1.25;
+}
+.ch6-status {
+  grid-column: 3;
+  align-self: end;
+  margin: 0;
+  font-size: 13px;
+  color: rgb(10 10 10 / 0.72);
+}
+@media (orientation: portrait) {
+  .ch6-intro {
+    left: var(--margin);
+    right: var(--margin);
+    top: auto;
+    bottom: calc(var(--vh) * 12);
+    width: auto;
+    justify-items: start;
+    text-align: left;
+  }
+  .ch6-intro .numeral-ivory {
+    font-size: 64px;
+  }
+  .ch6-spread {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    align-content: start;
+    column-gap: 14px;
+    row-gap: 14px;
+    padding: calc(var(--vh) * 11) var(--margin) calc(var(--vh) * 6);
+  }
+  .look-1 {
+    grid-column: 1 / -1;
+  }
+  .look-1 .look-mount {
+    aspect-ratio: 4 / 3;
+    max-height: calc(var(--vh) * 30);
+  }
+  .look-2,
+  .look-3 {
+    margin-top: 0;
+  }
+  .look-2 .look-mount,
+  .look-3 .look-mount {
+    aspect-ratio: 4 / 5;
+    max-height: calc(var(--vh) * 25);
+  }
+  .ch6-line,
+  .ch6-status {
+    grid-column: 1 / -1;
+  }
+  .ch6-line {
+    font-size: 1.3rem;
+  }
+}
+
+/* Chapter 7 — The promise */
+.ch7-frame {
+  --field: var(--ch7-field, 0);
+}
+.ch7-content {
+  position: absolute;
+  left: var(--margin);
+  right: var(--margin);
+  bottom: calc(var(--vh) * 14);
+  opacity: 0;
+}
+.ch7-content .numeral {
+  font-size: clamp(64px, 8vh, 110px);
+  margin: 0 0 1rem;
+}
+.ch7-title {
+  margin: 0;
+}
+.ch7-note {
+  margin: 1.5rem 0 0;
+  max-width: 52ch;
+  font-size: 14px;
+  color: var(--color-mist);
+}
+@media (orientation: portrait) {
+  .ch7-content {
+    bottom: calc(var(--vh) * 10);
+  }
+  .ch7-content .numeral {
+    font-size: 64px;
+  }
+}
+
+/* Enquiry */
+.enquire-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2rem clamp(2rem, 6vw, 7rem);
+  align-items: start;
+}
+.enquire-inner > .label,
+.enquire-title,
+.enquire-status {
+  grid-column: 1;
+}
+.enquire-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 1rem + 3.4vw, 4.6rem);
+  line-height: 1;
+}
+.enquire-status {
+  margin: 0;
+  max-width: 38ch;
+  color: var(--color-mist);
+  line-height: 1.6;
+}
+.enquire-form {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  display: grid;
+  gap: 1.25rem;
+}
+.field label {
+  color: var(--color-white);
+}
+.field-error {
+  margin: 0;
+  color: #f2a491;
+  font-size: 13px;
+}
+.field [aria-invalid="true"] {
+  border-color: #f2a491;
+}
+.field :is(input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
+.enquire-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.enquire-actions .btn-primary {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+}
+.enquire-result:empty {
+  display: none;
+}
+.enquire-result {
+  padding: 0.9rem 1rem;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.enquire-result[data-state="ok"] {
+  border-color: var(--color-red);
+}
+.enquire-result[data-state="error"] {
+  border-color: #f2a491;
+}
+.enquire-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-mist);
+}
+@media (max-width: 899px) {
+  .enquire-inner {
+    grid-template-columns: 1fr;
+  }
+  .enquire-form {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 1rem;
+  }
+}
+
+/* Footer */
+.footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+}
+.footer-logo {
+  justify-self: start;
+  color: var(--color-white);
+}
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+.footer-links a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--color-white);
+}
+.footer-links a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--color-red);
+  text-underline-offset: 6px;
+}
+.footer-legal {
+  margin: 0;
+}
+
+/* Static / reduced-motion spreads: no pins, everything visible, printed-page layout */
+:root[data-static="true"] .ch2,
+:root[data-static="true"] .ch3 {
+  height: auto;
+}
+:root[data-static="true"] .chapter-frame {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+}
+:root[data-static="true"] .ch2-field,
+:root[data-static="true"] .ch2-copy {
+  opacity: 1;
+}
+:root[data-static="true"] .ch2-line {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+  transition: none;
+}
+@media (orientation: portrait) {
+  :root[data-static="true"] .ch2-lines {
+    grid-template-areas: none;
+  }
+  :root[data-static="true"] .ch2-lines > .ch2-line {
+    grid-area: auto;
+  }
+}
+:root[data-static="true"] .ch3-content {
+  visibility: visible;
+  transform: none !important;
+}
+:root[data-static="true"] .ch3-portrait {
+  opacity: 1 !important;
+  transform: none !important;
+}
+:root[data-static="true"] .ch3-line {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+:root[data-static="true"] .ch1-content {
+  opacity: 1 !important;
+  transform: none !important;
+}
+:root[data-static="true"] .paper-layer {
+  display: none;
+}
+
+/* M3: static / reduced-motion Chapters 4–7: printed spreads in normal flow. */
+:root[data-static="true"] :is(.ch4, .ch5, .ch6, .ch7) {
+  height: auto;
+}
+:root[data-static="true"] :is(.ch4-frame, .ch5-frame, .ch6-frame, .ch7-frame) {
+  height: auto;
+  min-height: calc(var(--vh) * 100);
+  overflow: hidden;
+  --field: 1;
+}
+:root[data-static="true"] .ch4-printed {
+  display: none;
+}
+:root[data-static="true"] :is(.ch4-title, .ch4-line, .ch7-content, .ch6-spread) {
+  opacity: 1 !important;
+  transform: none !important;
+}
+:root[data-static="true"] .ch4-frame,
+:root[data-static="true"] .ch7-frame {
+  display: grid;
+  align-items: center;
+}
+:root[data-static="true"] .ch4-content,
+:root[data-static="true"] .ch7-content {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  top: auto;
+  translate: none;
+  z-index: 1;
+  margin: calc(var(--vh) * 16) var(--margin);
+}
+:root[data-static="true"] .ch5-frame {
+  --ch5-shown: 1;
+  padding-top: calc(var(--vh) * 14);
+}
+:root[data-static="true"] :is(.ch5-head, .showcase) {
+  z-index: 1;
+  max-width: 1180px;
+}
+:root[data-static="true"] .products {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2.5rem 2rem;
+}
+:root[data-static="true"] .product {
+  grid-area: auto;
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+:root[data-static="true"] .product-card {
+  grid-template-columns: 1fr;
+}
+:root[data-static="true"] .product-photo {
+  height: auto;
+  width: 100%;
+  max-width: 320px;
+}
+:root[data-static="true"] .ch6-frame {
+  background: var(--color-white);
+  display: grid;
+  align-content: start;
+  padding: calc(var(--vh) * 14) 0 calc(var(--vh) * 8);
+}
+:root[data-static="true"] .ch6-intro {
+  justify-items: start;
+  text-align: left;
+  position: relative;
+  inset: auto;
+  width: auto;
+  margin: 0 var(--margin) calc(var(--vh) * 4);
+  opacity: 1;
+  transform: none !important;
+}
+:root[data-static="true"] .ch6-spread {
+  position: relative;
+  inset: auto;
+  padding-top: 0;
+}
+:root[data-static="true"] .spread-still {
+  z-index: 0;
+}
+/* Static Chapter 5: the products sit on ink below the still's hair (contrast for all text). */
+:root[data-static="true"] .ch5-frame::before {
+  z-index: 1;
+  background: linear-gradient(180deg, rgb(10 10 10 / 0.5) 0, rgb(10 10 10 / 0.9) calc(var(--vh) * 40), rgb(10 10 10 / 0.96) 100%);
+}
+:root[data-static="true"] :is(.ch5-head, .showcase) {
+  z-index: 2;
+}
+/* 404 */
+.not-found {
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 1.25rem;
+  padding: 0 var(--margin);
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+.not-found-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 1rem + 4vw, 4.5rem);
+  line-height: 1;
+}
+.not-found-text {
+  margin: 0 0 0.75rem;
+  color: var(--color-mist);
+}
+
+/* =====================================================================================
+   Production identity: logo, footage, motion control
+   ===================================================================================== */
+.motion-toggle {
+  min-height: 44px;
+  padding: 0 0.2rem;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: 500 14px/1 var(--font-sans);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.loop-video,
+.portrait-mount img,
+.look-mount img,
+.product-photo .loop-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--color-ink-2);
+}
+.portrait-mount picture,
+.look-mount picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.portrait-mount {
+  overflow: hidden;
+}
+/* Chapter 2: the title and one film of the craft */
+.ch2-title {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2.2rem, 1rem + 2.6vw, 3.6rem);
+  line-height: 1;
+}
+.ch2-film {
+  margin: 0;
+  width: min(100%, calc(var(--vh) * 34));
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-top: 2px solid var(--color-red);
+}
+@media (orientation: portrait) {
+  .ch2-film {
+    width: min(46vw, calc(var(--vh) * 26));
+  }
+}
+/* Chapter 3: the logo is printed on the white page */
+.ch3-line {
+  font-size: inherit;
+}
+.ch3-logo img {
+  width: clamp(150px, 16vw, 260px);
+}
+/* Chapter 4: FUTURA by SLAY BRAIDS */
+.ch4-by,
+.ch4-printed-by {
+  display: block;
+  margin-top: 0.9rem;
+  font: 500 clamp(0.8rem, 0.7rem + 0.3vw, 1rem) / 1 var(--font-sans);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
+.ch4-by {
+  color: var(--color-white);
+}
+.ch4-printed-by {
+  margin: 0.5rem 0 0;
+  color: var(--color-red);
+}
+.ch4-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 2px;
+  margin-top: 1.4rem;
+  background: var(--color-red);
+}
+/* Chapter 5: each look is a film */
+.product-photo {
+  padding: 0;
+  overflow: hidden;
+  border-color: rgb(255 255 255 / 0.14);
+  height: min(58vh, 580px);
+  aspect-ratio: 9 / 16;
+}
+.product-name {
+  font-size: clamp(2rem, 1rem + 2vw, 3.2rem);
+}
+.product-count::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin-top: 0.6rem;
+  background: var(--color-red);
+}
+@media (orientation: portrait) {
+  .product-photo {
+    height: calc(var(--vh) * 44);
+  }
+  .product-card {
+    grid-template-columns: auto 1fr;
+    align-items: end;
+  }
+}
+/* Chapter 6: the lookbook spread */
+.look-mount {
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-ink-2);
+  border: 0;
+}
+.look-1 .look-mount,
+.look-2 .look-mount,
+.look-3 .look-mount {
+  aspect-ratio: 9 / 16;
+}
+@media (orientation: landscape) {
+  .ch6-spread {
+    grid-template-rows: 1fr;
+    align-items: center;
+  }
+  .look-1 .look-mount {
+    max-height: calc(var(--vh) * 70);
+  }
+  .look-2 .look-mount {
+    max-height: calc(var(--vh) * 58);
+  }
+  .look-3 .look-mount {
+    max-height: calc(var(--vh) * 64);
+  }
+  .look-2,
+  .look-3 {
+    margin-top: 0;
+  }
+}
+@media (orientation: portrait) {
+  .look-1 .look-mount {
+    aspect-ratio: 4 / 3;
+  }
+  .look-2 .look-mount,
+  .look-3 .look-mount {
+    aspect-ratio: 4 / 5;
+  }
+}
+/* Enquiries: a plain statement until a destination exists */
+.enquire-section {
+  min-height: calc(var(--vh) * 60);
+}
+.enquire-inner {
+  display: block;
+}
+.enquire-title {
+  margin-bottom: 1rem;
+}
+.enquire-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 2px;
+  margin-top: 1.4rem;
+  background: var(--color-red);
+}
+.footer-logo {
+  justify-self: start;
+  display: inline-flex;
+  min-height: 44px;
+}
+:root[data-static="true"] .product-photo {
+  height: auto;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 9 / 16;
+}
+:root[data-static="true"] .ch6-frame {
+  padding-bottom: calc(var(--vh) * 10);
+}

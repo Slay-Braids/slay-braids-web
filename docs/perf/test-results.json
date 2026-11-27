@@ -1,0 +1,33 @@
+{
+  "build": "final with TalkBack fix (out/index.html md5 9c3bbabfc03425d0f2beb48509508ebb)",
+  "date": "2026-11-27T09:19Z",
+  "environment": "headless Chromium + SwiftShader; Playwright projects desktop 1440\u00d7900 and Pixel 7",
+  "suites": [
+    {
+      "name": "Unit (Vitest)",
+      "passed": 36,
+      "failed": 0,
+      "skipped": 0,
+      "note": "includes the anchor_v1 foundation lock test, 6/6"
+    },
+    {
+      "name": "M1 e2e (tests/e2e/experience.spec.ts, unmodified)",
+      "passed": 15,
+      "failed": 0,
+      "skipped": 1,
+      "note": "skipped: pointer test on mobile (touch), skipped by design since M1"
+    },
+    {
+      "name": "M2 e2e (tests/e2e/chapters.spec.ts)",
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "note": "structure, skip link, modal menu, axe \u00d73, accessibility tree identical live vs reduced at 4 positions (new; fails on the pre-fix build), chapter states, I4 pause/resume, page-edge accuracy, static spreads; desktop + mobile"
+    }
+  ],
+  "m1HandoffTest": {
+    "desktop": "raw 4.40 \u00b7 perceptual 1.19 /255 (M1: 4.40 / 1.19)",
+    "mobile": "raw 3.18 \u00b7 perceptual 1.44 /255 (M1: 3.18 / 1.44)"
+  },
+  "visualRegression": "TalkBack fix: 24 live frames (desktop + mobile, fixed wind, grain frozen) and 10 reduced-motion spreads pixel-identical to the pre-fix build (0 changed pixels)"
+}
