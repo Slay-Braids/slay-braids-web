@@ -1,0 +1,651 @@
+{
+  "version": "brand_media_v1",
+  "generated": "2026-11-27T13:47:52.493Z",
+  "source": "Google Drive · Slay shoot footages",
+  "files": [
+    {
+      "name": "craft-720.mp4",
+      "bytes": 3943713,
+      "sha256": "1d8fa1167da128d201f639737aa62e99bc81c2a024c4b59e1108bab162027bd8",
+      "source": "IMG_2209.MOV",
+      "driveId": "1oJ8N843Abw3nFjn8r2yc13xUxaIKj2_8",
+      "segment": [
+        9,
+        17
+      ]
+    },
+    {
+      "name": "craft-1080.mp4",
+      "bytes": 6527561,
+      "sha256": "c9c6c79062b76744d0646e2938ed98a1a063786c499a89673b8db6fdd57d4af3",
+      "source": "IMG_2209.MOV",
+      "driveId": "1oJ8N843Abw3nFjn8r2yc13xUxaIKj2_8",
+      "segment": [
+        9,
+        17
+      ]
+    },
+    {
+      "name": "craft-poster-540.avif",
+      "bytes": 33203,
+      "sha256": "3a6621ffbc38c0a7789a5ce36f0caf3442dfc8f9e2c3faf84cd9cc3bc5fb7cd1",
+      "source": "IMG_2209.MOV",
+      "driveId": "1oJ8N843Abw3nFjn8r2yc13xUxaIKj2_8",
+      "at": 9
+    },
+    {
+      "name": "craft-poster-540.webp",
+      "bytes": 41518,
+      "sha256": "bda2426efff14528ee068d7469415c874ff755f76a091e07cb50bf7f35dc1a7b",
+      "source": "IMG_2209.MOV",
+      "driveId": "1oJ8N843Abw3nFjn8r2yc13xUxaIKj2_8",
+      "at": 9
+    },
+    {
+      "name": "craft-poster-540.jpg",
+      "bytes": 55420,
+      "sha256": "720c578a480837b768ef7d8edeb60b33032937c2c48f56db3ef6a1d48d72bd6a",
+      "source": "IMG_2209.MOV",
+      "driveId": "1oJ8N843Abw3nFjn8r2yc13xUxaIKj2_8",
+      "at": 9
+    },
+    {
+      "name": "craft-poster-1080.avif",
+      "bytes": 100920,
+      "sha256": "fc204662fc611d040e4a6e9895e79dce85d63b9b73b916adf899b3f92f9a58c4",
+      "source": "IMG_2209.MOV",
+      "driveId": "1oJ8N843Abw3nFjn8r2yc13xUxaIKj2_8",
+      "at": 9
+    },
+    {
+      "name": "craft-poster-1080.webp",
+      "bytes": 120510,
+      "sha256": "f7fc8e8498511d53a867e56f79454528438d75c4e2ca333ce72f1915bc948992",
+      "source": "IMG_2209.MOV",
+      "driveId": "1oJ8N843Abw3nFjn8r2yc13xUxaIKj2_8",
+      "at": 9
+    },
+    {
+      "name": "craft-poster-1080.jpg",
+      "bytes": 178745,
+      "sha256": "da15d517877fe4a56cf219d4565e0e40e7b810cbdf6c1f13737ba04fb3e35288",
+      "source": "IMG_2209.MOV",
+      "driveId": "1oJ8N843Abw3nFjn8r2yc13xUxaIKj2_8",
+      "at": 9
+    },
+    {
+      "name": "look-copper-720.mp4",
+      "bytes": 2983668,
+      "sha256": "e6c5bb27382b0170d604417a8c45ca23e155194e33379983f678e3099ebe4c38",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "segment": [
+        12,
+        18
+      ]
+    },
+    {
+      "name": "look-copper-1080.mp4",
+      "bytes": 4650905,
+      "sha256": "5e75f6943ba5dec21b894353c6bb117205b109321f68aaab7b48aa3c2e304cb8",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "segment": [
+        12,
+        18
+      ]
+    },
+    {
+      "name": "look-copper-poster-540.avif",
+      "bytes": 35949,
+      "sha256": "d9f1ff89edccf46eaec248542509e2c0e59dd96594d26e943acd447c018d4cd1",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 12
+    },
+    {
+      "name": "look-copper-poster-540.webp",
+      "bytes": 51154,
+      "sha256": "4208c278a3c29e002bfc5dd94f90ba77bca45f4c85064992ed7dc4926abc0cfe",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 12
+    },
+    {
+      "name": "look-copper-poster-540.jpg",
+      "bytes": 69297,
+      "sha256": "50fb95b858c7ef2d74a50a5efdb5cabbb96ee488bc5bae97fd73c90b77552023",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 12
+    },
+    {
+      "name": "look-copper-poster-1080.avif",
+      "bytes": 80137,
+      "sha256": "e6a7ac5e845c7c6100b93d0ecee7733a7419ead0767d314d0638ffa9ad1c9a54",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 12
+    },
+    {
+      "name": "look-copper-poster-1080.webp",
+      "bytes": 115118,
+      "sha256": "13a635ad1ee498c148cd7e1a4656c10eff123cc6d783b50119061767ed1fd7e1",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 12
+    },
+    {
+      "name": "look-copper-poster-1080.jpg",
+      "bytes": 179499,
+      "sha256": "f7f97ef7130e47bad63cab99e1b6cb89790bdb6d01b735dbb3582bf29f680867",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 12
+    },
+    {
+      "name": "look-platinum-720.mp4",
+      "bytes": 3366336,
+      "sha256": "5e8a1173d8efd464d7f3e4124dc5a17b0d22336151485b78e0244214bf4eb492",
+      "source": "IMG_2471.MOV",
+      "driveId": "1gyPazlT8s3c30_bbALN4pOt_F_34lLYK",
+      "segment": [
+        10,
+        16
+      ]
+    },
+    {
+      "name": "look-platinum-1080.mp4",
+      "bytes": 5024697,
+      "sha256": "d2cbb98d3cae27b203cf8ca38132cf7896eefcb2051247f55e6a90a57e211696",
+      "source": "IMG_2471.MOV",
+      "driveId": "1gyPazlT8s3c30_bbALN4pOt_F_34lLYK",
+      "segment": [
+        10,
+        16
+      ]
+    },
+    {
+      "name": "look-platinum-poster-540.avif",
+      "bytes": 46913,
+      "sha256": "68e777a7dfa5e3252416700115dfc2fdea1eccab993b5f3257d8790f181e0349",
+      "source": "IMG_2471.MOV",
+      "driveId": "1gyPazlT8s3c30_bbALN4pOt_F_34lLYK",
+      "at": 10
+    },
+    {
+      "name": "look-platinum-poster-540.webp",
+      "bytes": 74526,
+      "sha256": "f8ccb75d9d87e6661710a068a8ffc362fce7d92438de7c03763b5717669ddb50",
+      "source": "IMG_2471.MOV",
+      "driveId": "1gyPazlT8s3c30_bbALN4pOt_F_34lLYK",
+      "at": 10
+    },
+    {
+      "name": "look-platinum-poster-540.jpg",
+      "bytes": 85022,
+      "sha256": "29167f993a075a9299a38731e6a8731ac2338aca40fd597c887f5a8223dc07df",
+      "source": "IMG_2471.MOV",
+      "driveId": "1gyPazlT8s3c30_bbALN4pOt_F_34lLYK",
+      "at": 10
+    },
+    {
+      "name": "look-platinum-poster-1080.avif",
+      "bytes": 112771,
+      "sha256": "9901dffe23c122980a69dd1752e8f87c2b8341095c42f119b9505d3b9ee8ddb9",
+      "source": "IMG_2471.MOV",
+      "driveId": "1gyPazlT8s3c30_bbALN4pOt_F_34lLYK",
+      "at": 10
+    },
+    {
+      "name": "look-platinum-poster-1080.webp",
+      "bytes": 186194,
+      "sha256": "239d1f7c1b8f45e919f5060e6b4dd0867f18039d57430f6c99c3413ff1d82fef",
+      "source": "IMG_2471.MOV",
+      "driveId": "1gyPazlT8s3c30_bbALN4pOt_F_34lLYK",
+      "at": 10
+    },
+    {
+      "name": "look-platinum-poster-1080.jpg",
+      "bytes": 238291,
+      "sha256": "d2a95a01261129e8f57994bcc999ef88b00ef3233bb7db71a423877e70a77e5c",
+      "source": "IMG_2471.MOV",
+      "driveId": "1gyPazlT8s3c30_bbALN4pOt_F_34lLYK",
+      "at": 10
+    },
+    {
+      "name": "look-honey-720.mp4",
+      "bytes": 2778401,
+      "sha256": "ce3634559056566277eca715fbac8b428e8fa933aae85032783cad53a30d98d3",
+      "source": "IMG_2466.MOV",
+      "driveId": "1l-myvXVEP8EdzuqHkSmHKa8afXFhBhcq",
+      "segment": [
+        13,
+        19
+      ]
+    },
+    {
+      "name": "look-honey-1080.mp4",
+      "bytes": 4667288,
+      "sha256": "0d1cce34fd1dadf6779dd17ead4e985bb249dbee99d401418b69ee2655c383b4",
+      "source": "IMG_2466.MOV",
+      "driveId": "1l-myvXVEP8EdzuqHkSmHKa8afXFhBhcq",
+      "segment": [
+        13,
+        19
+      ]
+    },
+    {
+      "name": "look-honey-poster-540.avif",
+      "bytes": 30765,
+      "sha256": "75a889c0fdd2067ef52c94f92e537936741d408dfe46faeb0116cc07536c766c",
+      "source": "IMG_2466.MOV",
+      "driveId": "1l-myvXVEP8EdzuqHkSmHKa8afXFhBhcq",
+      "at": 13
+    },
+    {
+      "name": "look-honey-poster-540.webp",
+      "bytes": 43790,
+      "sha256": "be1aa6d151dc375ed4fc197f5bbd3037555be749cd2a73d2901afd5612debebf",
+      "source": "IMG_2466.MOV",
+      "driveId": "1l-myvXVEP8EdzuqHkSmHKa8afXFhBhcq",
+      "at": 13
+    },
+    {
+      "name": "look-honey-poster-540.jpg",
+      "bytes": 58825,
+      "sha256": "759b278ede349463a742cb3287775c6d7b93918084681ea900b4426a52af587d",
+      "source": "IMG_2466.MOV",
+      "driveId": "1l-myvXVEP8EdzuqHkSmHKa8afXFhBhcq",
+      "at": 13
+    },
+    {
+      "name": "look-honey-poster-1080.avif",
+      "bytes": 72765,
+      "sha256": "ffe039baef132259aa7f819781569ec8c751d5e724cbc6d30fb02ce64d94049a",
+      "source": "IMG_2466.MOV",
+      "driveId": "1l-myvXVEP8EdzuqHkSmHKa8afXFhBhcq",
+      "at": 13
+    },
+    {
+      "name": "look-honey-poster-1080.webp",
+      "bytes": 102834,
+      "sha256": "c06271fb8e1a448581dbb5ae4547db1443ca2e783bd1883fabe10b5525949996",
+      "source": "IMG_2466.MOV",
+      "driveId": "1l-myvXVEP8EdzuqHkSmHKa8afXFhBhcq",
+      "at": 13
+    },
+    {
+      "name": "look-honey-poster-1080.jpg",
+      "bytes": 159348,
+      "sha256": "7ca2c8ed26d2c08c72225f96e4cd56ef98e4ec2f1810b45f669405d14ca19b8f",
+      "source": "IMG_2466.MOV",
+      "driveId": "1l-myvXVEP8EdzuqHkSmHKa8afXFhBhcq",
+      "at": 13
+    },
+    {
+      "name": "look-black-720.mp4",
+      "bytes": 1503226,
+      "sha256": "f8bc810ec4a21ba9a31694279e8be2d99d570b39ff82954f4f4d5df7fc8d447f",
+      "source": "IMG_2470.MOV",
+      "driveId": "1DvYYtQIipcM8QQ6FSkay9cbzZ3ndpLOh",
+      "segment": [
+        8,
+        14
+      ]
+    },
+    {
+      "name": "look-black-1080.mp4",
+      "bytes": 2593017,
+      "sha256": "d26ad3675c02425e26f2f30a60ca9e4d151831a6fd0c07bbd31db08064b4dcd9",
+      "source": "IMG_2470.MOV",
+      "driveId": "1DvYYtQIipcM8QQ6FSkay9cbzZ3ndpLOh",
+      "segment": [
+        8,
+        14
+      ]
+    },
+    {
+      "name": "look-black-poster-540.avif",
+      "bytes": 24862,
+      "sha256": "ba669e82a4a1284803c864489d8191047001f9ebcb62bc601adb737796b6cb84",
+      "source": "IMG_2470.MOV",
+      "driveId": "1DvYYtQIipcM8QQ6FSkay9cbzZ3ndpLOh",
+      "at": 8
+    },
+    {
+      "name": "look-black-poster-540.webp",
+      "bytes": 33048,
+      "sha256": "9e531cc397fa17b1ac4b08a4a590ce41c8c1ecae91f59dbc7196bd96bdb4a07a",
+      "source": "IMG_2470.MOV",
+      "driveId": "1DvYYtQIipcM8QQ6FSkay9cbzZ3ndpLOh",
+      "at": 8
+    },
+    {
+      "name": "look-black-poster-540.jpg",
+      "bytes": 50264,
+      "sha256": "c5de4606701c85e5dafe471c8a59dc1aae726cc4779c136b2f75a20a38b37c33",
+      "source": "IMG_2470.MOV",
+      "driveId": "1DvYYtQIipcM8QQ6FSkay9cbzZ3ndpLOh",
+      "at": 8
+    },
+    {
+      "name": "look-black-poster-1080.avif",
+      "bytes": 55284,
+      "sha256": "768971621bf453b9233bcbb62d40aa184dc455098d3e49051be8ff924bf1ede7",
+      "source": "IMG_2470.MOV",
+      "driveId": "1DvYYtQIipcM8QQ6FSkay9cbzZ3ndpLOh",
+      "at": 8
+    },
+    {
+      "name": "look-black-poster-1080.webp",
+      "bytes": 75008,
+      "sha256": "aae3fb2fd3549688e21cbb5954a2c33ebdec7ddbd86d4575f9fb51d9f528c7fb",
+      "source": "IMG_2470.MOV",
+      "driveId": "1DvYYtQIipcM8QQ6FSkay9cbzZ3ndpLOh",
+      "at": 8
+    },
+    {
+      "name": "look-black-poster-1080.jpg",
+      "bytes": 129382,
+      "sha256": "088025da81b5863720dd6377e5eb5c8ded8cc70de8c41f0310ddcb0c2bcb8417",
+      "source": "IMG_2470.MOV",
+      "driveId": "1DvYYtQIipcM8QQ6FSkay9cbzZ3ndpLOh",
+      "at": 8
+    },
+    {
+      "name": "lookbook-copper-720.mp4",
+      "bytes": 3994540,
+      "sha256": "00d23265cf53ab8ddf7c222708e07a62d8b240298fd87cb744ac4d0971dfa9ca",
+      "source": "IMG_2464.MOV",
+      "driveId": "1wJXNRGGSuwWUKUW4VPoqRO-D3tSIi3gd",
+      "segment": [
+        2,
+        8
+      ]
+    },
+    {
+      "name": "lookbook-copper-1080.mp4",
+      "bytes": 4966530,
+      "sha256": "5bdf3c861d9fbb29bdce0f64b457ca40669e3a0815b54e8396a7d1042169b752",
+      "source": "IMG_2464.MOV",
+      "driveId": "1wJXNRGGSuwWUKUW4VPoqRO-D3tSIi3gd",
+      "segment": [
+        2,
+        8
+      ]
+    },
+    {
+      "name": "lookbook-copper-poster-540.avif",
+      "bytes": 48252,
+      "sha256": "f1bd344051dd949d146f88751df0ffed00deade6003e7beb346a0cee93655de1",
+      "source": "IMG_2464.MOV",
+      "driveId": "1wJXNRGGSuwWUKUW4VPoqRO-D3tSIi3gd",
+      "at": 2
+    },
+    {
+      "name": "lookbook-copper-poster-540.webp",
+      "bytes": 66122,
+      "sha256": "3b7dfa45d419675347bdb8b6dc065953a261af01ec862f75df69146f04238b18",
+      "source": "IMG_2464.MOV",
+      "driveId": "1wJXNRGGSuwWUKUW4VPoqRO-D3tSIi3gd",
+      "at": 2
+    },
+    {
+      "name": "lookbook-copper-poster-540.jpg",
+      "bytes": 83436,
+      "sha256": "d1219a1209172a4a2027a6cfebfc97530bb1f6cd13a271db810d47407d797770",
+      "source": "IMG_2464.MOV",
+      "driveId": "1wJXNRGGSuwWUKUW4VPoqRO-D3tSIi3gd",
+      "at": 2
+    },
+    {
+      "name": "lookbook-copper-poster-1080.avif",
+      "bytes": 110098,
+      "sha256": "7f3c084d8de3e9e8f0d9065aec4ec2555c9292d97701575eaf52868f31c6c38e",
+      "source": "IMG_2464.MOV",
+      "driveId": "1wJXNRGGSuwWUKUW4VPoqRO-D3tSIi3gd",
+      "at": 2
+    },
+    {
+      "name": "lookbook-copper-poster-1080.webp",
+      "bytes": 144986,
+      "sha256": "1abd02990ad3b412d2c13b33c93483bfd17e494531273f82a899a68fae9ccdc5",
+      "source": "IMG_2464.MOV",
+      "driveId": "1wJXNRGGSuwWUKUW4VPoqRO-D3tSIi3gd",
+      "at": 2
+    },
+    {
+      "name": "lookbook-copper-poster-1080.jpg",
+      "bytes": 220390,
+      "sha256": "1e04f44cdf00b77ecfa2fab3107a9a0bd21f28dc4813ba62a1910dd3abee9208",
+      "source": "IMG_2464.MOV",
+      "driveId": "1wJXNRGGSuwWUKUW4VPoqRO-D3tSIi3gd",
+      "at": 2
+    },
+    {
+      "name": "portrait-copper-540.avif",
+      "bytes": 39973,
+      "sha256": "d73db6d2eafff6b0012d977485491f0be8b79311c431b120f9f3ea0adc409bf4",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 22
+    },
+    {
+      "name": "portrait-copper-540.webp",
+      "bytes": 55836,
+      "sha256": "39eeea43ffbf3649f1595c28d21fc47d2488355530336e84729e2ec4032625eb",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 22
+    },
+    {
+      "name": "portrait-copper-540.jpg",
+      "bytes": 73115,
+      "sha256": "2a48c88edce0fcb3898c3b220e56e073be7c620357450086459fe871bb158cf2",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 22
+    },
+    {
+      "name": "portrait-copper-1080.avif",
+      "bytes": 93507,
+      "sha256": "28e602d0fdb769cefd34126ad6b4bde6024222cc9ce294d1bf1a81df271864a7",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 22
+    },
+    {
+      "name": "portrait-copper-1080.webp",
+      "bytes": 125474,
+      "sha256": "fd01269150c25b7c783e1ffbcdddaad50ded837ebf31f5e6921920f4042d1f5b",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 22
+    },
+    {
+      "name": "portrait-copper-1080.jpg",
+      "bytes": 194829,
+      "sha256": "d8b5e80230f40382f75936c577184d2514393e897dca8d1136281c590840eb5a",
+      "source": "IMG_2465.MOV",
+      "driveId": "1UAyOjNKTGmoLhIKfOwjLpmlA7T6eBWBI",
+      "at": 22
+    },
+    {
+      "name": "lookbook-honey-540.avif",
+      "bytes": 42044,
+      "sha256": "7efc8e230713a25f55f40828f84be14ad68b8d32d45f70b00dfac5cdf3a2fcc8",
+      "source": "IMG_2468.MOV",
+      "driveId": "1YlyMoIdDHCLqRBa-R2qG7FZLaGXgX5j6",
+      "at": 3
+    },
+    {
+      "name": "lookbook-honey-540.webp",
+      "bytes": 67512,
+      "sha256": "d7609071443539dfe4f97eca4c2e4e730897145b7af63b790c638c889e07bc76",
+      "source": "IMG_2468.MOV",
+      "driveId": "1YlyMoIdDHCLqRBa-R2qG7FZLaGXgX5j6",
+      "at": 3
+    },
+    {
+      "name": "lookbook-honey-540.jpg",
+      "bytes": 78360,
+      "sha256": "1e6924d9ff86c485268caf1ee360f85322fe2a8052cbe9191d6c04bcafb7a53c",
+      "source": "IMG_2468.MOV",
+      "driveId": "1YlyMoIdDHCLqRBa-R2qG7FZLaGXgX5j6",
+      "at": 3
+    },
+    {
+      "name": "lookbook-honey-1080.avif",
+      "bytes": 103291,
+      "sha256": "79ecb5c541122af5f94c4e3093b5a8f0cbf94e90e1d548ad714c6efd88f2b3c1",
+      "source": "IMG_2468.MOV",
+      "driveId": "1YlyMoIdDHCLqRBa-R2qG7FZLaGXgX5j6",
+      "at": 3
+    },
+    {
+      "name": "lookbook-honey-1080.webp",
+      "bytes": 168690,
+      "sha256": "d2c9b30ec93169c7488d984609604e237c8e6b9b206e4365b363a6246b6d2f1c",
+      "source": "IMG_2468.MOV",
+      "driveId": "1YlyMoIdDHCLqRBa-R2qG7FZLaGXgX5j6",
+      "at": 3
+    },
+    {
+      "name": "lookbook-honey-1080.jpg",
+      "bytes": 227774,
+      "sha256": "2a5b011fc40247dfae604d10295432403ad48608d9b246389fdeea694ef1ac01",
+      "source": "IMG_2468.MOV",
+      "driveId": "1YlyMoIdDHCLqRBa-R2qG7FZLaGXgX5j6",
+      "at": 3
+    },
+    {
+      "name": "lookbook-platinum-540.avif",
+      "bytes": 37254,
+      "sha256": "d7780058343cb77d086366f5b1eb53291e4dbec5269c88fcb61616efe8114077",
+      "source": "IMG_2463.MOV",
+      "driveId": "1sFScc8YuZLVUzq9-PhZcSnjjT_uP0A91",
+      "at": 6
+    },
+    {
+      "name": "lookbook-platinum-540.webp",
+      "bytes": 58072,
+      "sha256": "a77034c998d3f1d75f4daecd5f8edbe9d492dc90e2b77b747184ac804bdd9745",
+      "source": "IMG_2463.MOV",
+      "driveId": "1sFScc8YuZLVUzq9-PhZcSnjjT_uP0A91",
+      "at": 6
+    },
+    {
+      "name": "lookbook-platinum-540.jpg",
+      "bytes": 74991,
+      "sha256": "e097f7d43266f0083be5c95d495136e30dbc2e5abd1a3619f44f91cfbf98b364",
+      "source": "IMG_2463.MOV",
+      "driveId": "1sFScc8YuZLVUzq9-PhZcSnjjT_uP0A91",
+      "at": 6
+    },
+    {
+      "name": "lookbook-platinum-1080.avif",
+      "bytes": 81518,
+      "sha256": "5d3a38c31bff9d8ee91889c77db4aed07de05232ad8dba25d76fc7b77fbba977",
+      "source": "IMG_2463.MOV",
+      "driveId": "1sFScc8YuZLVUzq9-PhZcSnjjT_uP0A91",
+      "at": 6
+    },
+    {
+      "name": "lookbook-platinum-1080.webp",
+      "bytes": 127812,
+      "sha256": "228af0e4143a21d2707806b401a17dfc84ff88d33c2117a5fa5cf4b508c0ab8d",
+      "source": "IMG_2463.MOV",
+      "driveId": "1sFScc8YuZLVUzq9-PhZcSnjjT_uP0A91",
+      "at": 6
+    },
+    {
+      "name": "lookbook-platinum-1080.jpg",
+      "bytes": 195077,
+      "sha256": "a1fcde31a994f9bcde2a9a0a730642cb74024dd05386b0e7a195dd3074dd6906",
+      "source": "IMG_2463.MOV",
+      "driveId": "1sFScc8YuZLVUzq9-PhZcSnjjT_uP0A91",
+      "at": 6
+    },
+    {
+      "name": "logo-red-320.png",
+      "bytes": 44775,
+      "sha256": "6bc12e02b1dbdfead69e9316b88699d169ad4f311932ef2f2f8042cce682edd2",
+      "source": "20261029_161903-Photoroom.png",
+      "driveId": "1FuJC9OURO0hI2O0y4FfLU8Rr0wwe_p7G",
+      "trimmedFrom": "1388×952 (after trim)"
+    },
+    {
+      "name": "logo-red-320.webp",
+      "bytes": 30730,
+      "sha256": "6e1b20bcb29d5335a52935104b194e663893aa0d15c1bd8b31a1d6bbb95460c3",
+      "source": "20261029_161903-Photoroom.png",
+      "driveId": "1FuJC9OURO0hI2O0y4FfLU8Rr0wwe_p7G",
+      "trimmedFrom": "1388×952 (after trim)"
+    },
+    {
+      "name": "logo-red-640.png",
+      "bytes": 133433,
+      "sha256": "405c72f252297054fd8a3e5c140140b29756a23484935c9e862b49e214f6974a",
+      "source": "20261029_161903-Photoroom.png",
+      "driveId": "1FuJC9OURO0hI2O0y4FfLU8Rr0wwe_p7G",
+      "trimmedFrom": "1388×952 (after trim)"
+    },
+    {
+      "name": "logo-red-640.webp",
+      "bytes": 71326,
+      "sha256": "f7c7144ccf55040c1c54ca695167e42c6235434812174545df29571ecdfcfbc5",
+      "source": "20261029_161903-Photoroom.png",
+      "driveId": "1FuJC9OURO0hI2O0y4FfLU8Rr0wwe_p7G",
+      "trimmedFrom": "1388×952 (after trim)"
+    },
+    {
+      "name": "logo-red-1280.png",
+      "bytes": 472391,
+      "sha256": "088d644694178ae442895a0bb07346ba5f7e199de05639071d135e0f2e9f2d4d",
+      "source": "20261029_161903-Photoroom.png",
+      "driveId": "1FuJC9OURO0hI2O0y4FfLU8Rr0wwe_p7G",
+      "trimmedFrom": "1388×952 (after trim)"
+    },
+    {
+      "name": "logo-red-1280.webp",
+      "bytes": 143324,
+      "sha256": "3aaf832253b9f919843bb54d7b43b9cd979f0be4ffdb996526a0e9a9aabe23bb",
+      "source": "20261029_161903-Photoroom.png",
+      "driveId": "1FuJC9OURO0hI2O0y4FfLU8Rr0wwe_p7G",
+      "trimmedFrom": "1388×952 (after trim)"
+    },
+    {
+      "name": "logo-red.png",
+      "bytes": 460866,
+      "sha256": "010dbea04fc85a522cc50bedc48cb599c82c8f476caa8838604adf2246acc09c",
+      "source": "20261029_161903-Photoroom.png",
+      "driveId": "1FuJC9OURO0hI2O0y4FfLU8Rr0wwe_p7G",
+      "size": "1388×952"
+    },
+    {
+      "name": "logo-white-320.png",
+      "bytes": 33752,
+      "sha256": "1cfe2113eb0a381ed1966349b444ef2c200e3e05433ae2b1bf76fe7c392ae692",
+      "source": "IMG-20261123-WA0135-removebg-preview.png",
+      "driveId": "1YXzbaz6yXTFei0yJLb5t0jlKPJJjCj8k",
+      "trimmedFrom": "338×232 (after trim)"
+    },
+    {
+      "name": "logo-white-320.webp",
+      "bytes": 24816,
+      "sha256": "be241864702a3eef776fe7e8a7a284064b22fca13beaae6ea4ff0a37224f4fd0",
+      "source": "IMG-20261123-WA0135-removebg-preview.png",
+      "driveId": "1YXzbaz6yXTFei0yJLb5t0jlKPJJjCj8k",
+      "trimmedFrom": "338×232 (after trim)"
+    },
+    {
+      "name": "logo-white.png",
+      "bytes": 33537,
+      "sha256": "855016e33a66372cb77256f48982dda3ed1d2a59696189328c377c176ffa0441",
+      "source": "IMG-20261123-WA0135-removebg-preview.png",
+      "driveId": "1YXzbaz6yXTFei0yJLb5t0jlKPJJjCj8k",
+      "size": "338×232"
+    }
+  ]
+}

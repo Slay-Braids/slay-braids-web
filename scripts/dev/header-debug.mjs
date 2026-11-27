@@ -1,0 +1,12 @@
+import { chromium } from "@playwright/test";
+const b = await chromium.launch({ args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto("http://127.0.0.1:4173/?tier=A&nodowngrade=1&windt=3&nodamp=1");
+await p.waitForFunction(() => window.__slay?.live === true, null, { timeout: 120000 });
+await p.evaluate(() => scrollTo(0, 770 * parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--vh"))));
+await p.waitForTimeout(2500);
+await p.locator("[data-motion-toggle]").focus();
+await p.waitForTimeout(1500);
+console.log(await p.evaluate(() => { const h0 = document.querySelector("[data-site-header]"); const rules=[...document.styleSheets].flatMap(ss=>{try{return [...ss.cssRules]}catch{return []}}).flatMap(r=>r.cssRules?[...r.cssRules]:[r]).filter(r=>r.selectorText&&h0.matches(r.selectorText.split(',').filter(x=>x.includes('site-header')).join(',')||'#none')).map(r=>r.cssText.slice(0,120)); h0.style.transition='none'; return {rules, t2:getComputedStyle(h0).transform, anim: h0.getAnimations().map(a=>a.playState)}; }));
+console.log(await p.evaluate(() => { const h = document.querySelector("[data-site-header]"); const r = h.getBoundingClientRect(); return { hidden: h.dataset.hidden, t: getComputedStyle(h).transform, top: r.top, fw: h.matches(":focus-within"), active: document.activeElement?.className, btnTop: document.querySelector("[data-motion-toggle]").getBoundingClientRect().top }; }));
+await b.close();

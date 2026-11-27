@@ -31,9 +31,10 @@ const opacity = (page: Page, sel: string) =>
   page.locator(sel).evaluate((e) => parseFloat(getComputedStyle(e).opacity));
 
 // Settled positions per chapter (story.ts): landing points used by the chapter links.
+// Production: four looks (one step each) in Chapter 5.
 const AT = {
-  landscape: { cover: 530, ch4: 685, p: [770, 820, 870], ch6: 1065, ch7: 1245 },
-  portrait: { cover: 475, ch4: 605, p: [720, 800, 880], ch6: 1045, ch7: 1205 },
+  landscape: { cover: 530, ch4: 685, p: [770, 820, 870, 920], ch6: 1115, ch7: 1295 },
+  portrait: { cover: 475, ch4: 605, p: [720, 800, 880, 960], ch6: 1125, ch7: 1285 },
 };
 
 test.describe("structure", () => {
@@ -47,27 +48,47 @@ test.describe("structure", () => {
       "Premium",
       "The",
       "The",
-      "FUTURA,",
+      "FUTURA",
       "The",
       "Lookbook",
       "Premium",
-      "Make",
+      "Enquiries",
     ]);
     await expect(page.locator("[data-chapter-tick]")).toHaveCount(7);
     await expect(page.locator("main section.chapter")).toHaveCount(7);
-    await expect(page.locator("[data-product]")).toHaveCount(3);
+    await expect(page.locator("[data-product]")).toHaveCount(4);
     await expect(page.locator("footer nav a")).toHaveCount(8);
   });
 
-  test("no invented prices, contacts or testimonials: gaps are marked", async ({ page }) => {
+  test("no invented prices, contacts, testimonials or placeholder copy", async ({ page }) => {
     await page.goto("/?tier=C");
     const text = (await page.locator("body").innerText()).toLowerCase();
-    expect(text).not.toMatch(/[£$€]\s?\d/);
+    expect(text).not.toMatch(/[£$€₦]\s?\d/);
     expect(text).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}/); // no email address
     expect(text).not.toMatch(/\+?\d[\d\s-]{8,}\d/); // no phone number
-    expect(text).not.toMatch(/testimonial|★/);
-    await expect(page.locator(".product-price")).toHaveText(Array(3).fill("Price to be confirmed"));
-    expect(await page.locator(".placeholder-tag").count()).toBeGreaterThan(6);
+    expect(text).not.toMatch(/testimonial|★|wording to come|placeholder|pending|preview/);
+    await expect(page.locator(".placeholder-tag")).toHaveCount(0);
+  });
+
+  test("the original logo and the brand media load", async ({ page }) => {
+    await page.goto("/?tier=C");
+    const logo = page.locator("header .logo-slot img");
+    await expect(logo).toHaveAttribute("src", /media\/logo-red/);
+    await expect.poll(() => logo.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+    for (const img of await page.locator("main figure img").all()) {
+      await img.scrollIntoViewIfNeeded();
+      await expect.poll(() => img.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+    }
+    // Every clip has 720p/1080p sources that exist and a poster.
+    const srcs = await page.locator("video source").evaluateAll((ss) => ss.map((x) => (x as HTMLSourceElement).src));
+    expect(srcs.length).toBe(12);
+    for (const u of [...new Set(srcs)]) {
+      const r = await page.request.head(u);
+      expect(r.status(), u).toBe(200);
+      expect(r.headers()["content-type"]).toContain("video/mp4");
+    }
+    const posters = await page.locator("video").evaluateAll((vs) => vs.map((v) => (v as HTMLVideoElement).poster));
+    for (const u of posters) expect((await page.request.head(u)).status(), u).toBe(200);
   });
 
   test("404 page is on brand with a way back", async ({ page }) => {
@@ -120,7 +141,7 @@ test.describe("static and reduced-motion spreads (Chapters 4–7)", () => {
 test.describe("live Chapters 4–7", () => {
   test.setTimeout(300_000);
 
-  test("FUTURA, Collection, Lookbook and Promise states follow the one scroll clock", async ({ page }) => {
+  test("FUTURA, the Looks, Lookbook and Promise states follow the one scroll clock", async ({ page }) => {
     await page.goto(LIVE);
     await waitLive(page);
     const A = AT[isPortrait(page) ? "portrait" : "landscape"];
@@ -144,6 +165,16 @@ test.describe("live Chapters 4–7", () => {
       await scrollVh(page, v);
       await expect(page.locator(`[data-product='${i}']`)).toHaveAttribute("data-active", "true");
       await expect(page.locator("[data-counter]")).toHaveText(`0${i + 1}`);
+      // Only the active look plays.
+      await expect
+        .poll(() => page.locator(`[data-product='${i}'] video`).evaluate((v: HTMLVideoElement) => !v.paused), { timeout: 45_000 })
+        .toBe(true);
+      await expect
+        .poll(
+          () => page.locator("[data-product] video").evaluateAll((vs) => vs.filter((v) => !(v as HTMLVideoElement).paused).length),
+          { timeout: 15_000 },
+        )
+        .toBe(1);
     }
     await expect(page.locator("[data-ch4-frame]")).toHaveAttribute("data-visible", "false");
 
@@ -193,52 +224,57 @@ test.describe("live Chapters 4–7", () => {
     await expect(page.locator("#ch4-title")).toBeFocused();
     expect(await opacity(page, "[data-ch4-title]")).toBeGreaterThan(0.9);
 
-    await page.getByRole("link", { name: "The Collection" }).first().evaluate((a: HTMLElement) => a.click());
+    await page.getByRole("link", { name: "The Looks" }).first().evaluate((a: HTMLElement) => a.click());
     await page.waitForTimeout(1500);
     await expect(page.locator("[data-product='0']")).toHaveAttribute("data-active", "true");
     await page.locator("[data-next]").click();
     await expect(page.locator("[data-product='1']")).toHaveAttribute("data-active", "true", { timeout: 20_000 });
-    await expect(page.locator("[data-showcase-status]")).toHaveText(/Product 2 of 3/);
-
-    // Keyboard focus on a product that is not on screen brings it on screen.
-    await page.locator("[data-product='2'] [data-enquire-product]").focus();
-    await expect(page.locator("[data-product='2']")).toHaveAttribute("data-active", "true", { timeout: 20_000 });
-    // Focus on Chapter 7's call to action brings Chapter 7 on screen.
+    await expect(page.locator("[data-showcase-status]")).toHaveText(/Look 2 of 4/);
+    // Keyboard focus on Chapter 7's call to action brings Chapter 7 on screen.
     await page.locator("#ch7 a.btn-secondary").focus();
     await expect(page.locator("[data-ch7-frame]")).toHaveAttribute("data-visible", "true", { timeout: 20_000 });
     void portrait;
   });
 });
 
-test.describe("enquiry", () => {
-  test("validates, explains, and never sends", async ({ page }) => {
+test.describe("enquiries and motion", () => {
+  test("no form without a verified destination; nothing is ever sent", async ({ page }) => {
     const posts: string[] = [];
-    page.on("request", (r) => r.method() !== "GET" && posts.push(r.url()));
+    page.on("request", (r) => r.method() !== "GET" && r.method() !== "HEAD" && posts.push(r.url()));
     await page.goto("/?tier=C");
-    const form = page.locator("[data-enquiry-form]");
-    await form.getByRole("button", { name: "Check my enquiry" }).click();
-    await expect(page.locator("#enq-name")).toBeFocused();
-    await expect(page.locator("#enq-name")).toHaveAttribute("aria-invalid", "true");
-    await expect(page.locator("[data-error-for='email']")).toBeVisible();
-    await expect(page.locator("[data-enquiry-status]")).toHaveText("Please check 3 fields above.");
-    await page.fill("#enq-name", "Test Visitor");
-    await page.fill("#enq-email", "not-an-email");
-    await page.fill("#enq-message", "Hello");
-    await form.getByRole("button", { name: "Check my enquiry" }).click();
-    await expect(page.locator("#enq-email")).toBeFocused();
-    await page.fill("#enq-email", "visitor@example.com");
-    await form.getByRole("button", { name: "Check my enquiry" }).click();
-    await expect(page.locator("[data-enquiry-status]")).toContainText("nothing has been sent");
-    await expect(page.locator("[data-error-for='email']")).toBeHidden();
+    await expect(page.locator("#enquire h2")).toHaveText("Enquiries");
+    await expect(page.locator("#enquire")).toContainText("Online enquiries are not open yet.");
+    await expect(page.locator("form, input, textarea, select")).toHaveCount(0);
+    await page.locator("#enquire").scrollIntoViewIfNeeded();
     expect(posts).toEqual([]);
   });
 
-  test("'Enquire about this product' fills in the topic and the product and shade", async ({ page }) => {
-    await page.goto("/?tier=C");
-    await page.locator("[data-product='1'] .swatch").nth(2).click();
-    await page.locator("[data-product='1'] [data-enquire-product]").click();
-    await expect(page.locator("#enq-topic")).toHaveValue("FUTURA products");
-    await expect(page.locator("#enq-message")).toHaveValue(/FUTURA product 2, Shade 3/);
+  test("the header control pauses and resumes the brand footage (WCAG 2.2.2)", async ({ page }) => {
+    test.setTimeout(240_000);
+    await page.goto(LIVE);
+    await waitLive(page);
+    await scrollVh(page, AT[isPortrait(page) ? "portrait" : "landscape"].p[0]!);
+    const v = page.locator("[data-product='0'] video");
+    await expect.poll(() => v.evaluate((x: HTMLVideoElement) => !x.paused), { timeout: 45_000 }).toBe(true);
+    // Keyboard: focusing the control brings the (scroll-hidden) header back.
+    const toggle = page.locator("[data-motion-toggle]");
+    await toggle.focus();
+    await expect(toggle).toBeInViewport({ timeout: 20_000 }); // 500 ms slide; slow on the CPU renderer
+    await page.keyboard.press("Enter");
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    await expect.poll(() => v.evaluate((x: HTMLVideoElement) => x.paused), { timeout: 15_000 }).toBe(true);
+    await page.keyboard.press("Enter");
+    await expect.poll(() => v.evaluate((x: HTMLVideoElement) => !x.paused), { timeout: 45_000 }).toBe(true);
+  });
+
+  test("reduced motion: footage never plays by itself; posters show", async ({ page }) => {
+    await page.goto("/?reduced=1");
+    await page.waitForTimeout(1500);
+    await page.locator("#ch5").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1200);
+    const playing = await page.locator("video").evaluateAll((vs) => vs.filter((v) => !(v as HTMLVideoElement).paused).length);
+    expect(playing).toBe(0);
+    await expect(page.locator("[data-motion-toggle]")).toHaveAttribute("aria-pressed", "true");
   });
 });
 

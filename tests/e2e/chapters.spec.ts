@@ -47,10 +47,11 @@ test.describe("document structure and accessibility", () => {
       .locator("main h1, main h2")
       .evaluateAll((hs) => hs.map((h) => `${h.tagName}:${h.textContent?.trim()}`));
     expect(headings[0]).toMatch(/^H1:Premium look\./);
-    expect(headings[1]).toBe("H2:The craft (working title)");
-    expect(headings[2]).toBe("H2:The unbraiding (working title)");
-    await expect(page.locator("main #ch2 p[data-ch2-line]")).toHaveCount(3);
-    await expect(page.locator("main #ch3 figure")).toHaveCount(1);
+    // Production: real headings, the craft film and the portrait replace the placeholder copy.
+    expect(headings[1]).toBe("H2:The Craft");
+    expect(headings[2]).toBe("H2:The Unbraiding");
+    await expect(page.locator("main #ch2 video[data-loop-video]")).toHaveCount(1);
+    await expect(page.locator("main #ch3 figure img")).toHaveCount(1);
     await expect(page.getByRole("link", { name: "SLAY BRAIDS, home" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Menu" })).toBeVisible();
   });
@@ -112,20 +113,15 @@ test.describe("document structure and accessibility", () => {
 test.describe("screen readers get every chapter, whatever the scroll position", () => {
   test.setTimeout(240_000);
 
-  const MANIFESTO = [
-    "Manifesto line one — wording to come from SLAY BRAIDS.",
-    "Manifesto line two — wording to come from SLAY BRAIDS.",
-    "Manifesto line three — wording to come from SLAY BRAIDS.",
-  ];
   const check = (tree: string) => {
-    expect(tree).toContain('heading "The craft (working title)" [level=2]');
-    expect(tree).toContain('heading "The unbraiding (working title)" [level=2]');
-    expect(tree).toContain("Portrait awaiting approved photography");
-    expect(tree).toContain("Chapter 3 line — wording to come from SLAY BRAIDS.");
-    // Each line exactly once (no duplicates), decorative numerals and the scroll cue never.
-    for (const line of MANIFESTO) expect(tree.split(line).length - 1).toBe(1);
+    expect(tree).toContain('heading "The Craft" [level=2]');
+    expect(tree).toContain('heading "The Unbraiding" [level=2]');
+    expect(tree).toContain("Portrait of a model with long copper curls");
+    expect(tree).toContain('img "SLAY BRAIDS"');
+    // Decorative numerals and the scroll cue never.
+    // A decorative numeral would appear as its own text node ("Look 01" is a real heading).
     for (const deco of ["01", "02", "03", "Scroll"])
-      expect(tree).not.toMatch(new RegExp(`(^|[:\\s"])${deco}($|["\\s])`, "m"));
+      expect(tree).not.toMatch(new RegExp(`^\\s*- (text|paragraph): "?${deco}"?$`, "m"));
   };
 
   test("live: same accessibility tree at the top, in Chapter 2, in Chapter 3 and after the page closes, matching reduced motion", async ({
@@ -151,7 +147,7 @@ test.describe("screen readers get every chapter, whatever the scroll position", 
 test.describe("live chapters", () => {
   test.setTimeout(240_000);
 
-  test("Chapter 2 lines reveal in order; Chapter 3 page opens, covers, and the loop pauses (I4)", async ({
+  test("Chapter 2 shows the craft film; Chapter 3 page opens, covers, and the loop pauses (I4)", async ({
     page,
   }) => {
     await page.goto(LIVE);
@@ -161,10 +157,10 @@ test.describe("live chapters", () => {
       ? { l2: 190, ch3: 380, cover: 470, back: 300 }
       : { l2: 200, ch3: 400, cover: 520, back: 300 };
     await scrollVh(page, L.l2);
-    const states = await page
-      .locator("[data-ch2-line]")
-      .evaluateAll((ls) => ls.map((l) => (l as HTMLElement).dataset.state));
-    expect(states).toEqual(["past", "active", "hidden"]);
+    await expect(page.locator("[data-ch2-frame]")).toHaveAttribute("data-visible", "true");
+    await expect
+      .poll(() => page.locator("#ch2 video").evaluate((v: HTMLVideoElement) => !v.paused), { timeout: 45_000 })
+      .toBe(true);
 
     await scrollVh(page, L.ch3);
     await expect(page.locator("[data-ch3-frame]")).toHaveAttribute("data-visible", "true");
@@ -209,15 +205,16 @@ test.describe("live chapters", () => {
 });
 
 test.describe("static and reduced-motion spreads", () => {
-  test("stills from the locked scene, every line visible, the page drawn once", async ({
+  test("stills from the locked scene, every chapter visible, the page drawn once", async ({
     page,
   }) => {
     await page.goto("/?reduced=1");
     await expect(page.locator("html")).toHaveAttribute("data-static", "true");
     await expect(page.locator("[data-ch2-frame] .spread-still img")).toHaveCount(1);
     await expect(page.locator("[data-ch3-frame] .spread-still img")).toHaveCount(1);
-    for (const l of await page.locator("[data-ch2-line]").all())
-      await expect(l).toHaveCSS("opacity", "1");
+    // Reduced motion: the craft film shows its poster and never plays by itself.
+    await expect(page.locator("#ch2 video")).toHaveAttribute("poster", /craft-poster/);
+    expect(await page.locator("#ch2 video").evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
     await page.locator("#ch3").scrollIntoViewIfNeeded();
     await expect(page.locator("[data-ch3-frame] .paper-static path").first()).toBeAttached();
     await expect(page.locator(".ch3-portrait")).toHaveCSS("opacity", "1");

@@ -8,7 +8,6 @@
  */
 import { landingVh, productVh } from "./chapters/story";
 import { vhPx } from "./chapters/viewport";
-import { products } from "../content/products";
 
 type LenisLike = { scrollTo: (y: number, o?: Record<string, unknown>) => void };
 
@@ -100,7 +99,7 @@ function initShowcase(root: HTMLElement) {
       // Not live yet (still loading): the controls still work on the DOM.
       items.forEach((p, k) => (p.dataset.active = String(k === i)));
     }
-    if (status) status.textContent = `Product ${i + 1} of ${items.length}: ${products[i]?.name ?? ""}`;
+    if (status) status.textContent = `Look ${i + 1} of ${items.length}`;
   };
   sc.querySelector("[data-prev]")?.addEventListener("click", () => go(-1));
   sc.querySelector("[data-next]")?.addEventListener("click", () => go(1));

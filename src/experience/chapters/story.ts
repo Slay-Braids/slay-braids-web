@@ -11,7 +11,8 @@
  */
 import type { Orientation } from "../cascade/geometry";
 import { CHAPTER_LAYOUT, CH3 } from "./cameraTimeline";
-import { products } from "../../content/products";
+// Chapter 5 has one step per look (original brand footage, src/content/media.ts).
+import { lookClips as products } from "../../content/media";
 
 type R = [number, number];
 

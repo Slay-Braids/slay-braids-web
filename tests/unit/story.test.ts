@@ -71,7 +71,7 @@ describe("M3 story layout", () => {
       expect(chapterIndex(o, CHAPTER_LAYOUT[o].ch2[0])).toBe(0); // switches strictly after, as M2
       for (const [id, k] of [["ch4", 3], ["ch5", 4], ["ch6", 5], ["ch7", 6]] as const)
         expect(chapterIndex(o, landingVh(o, id)!)).toBe(k);
-      expect(pearlAt(o, landingVh(o, "ch4")!)).toBeCloseTo(1, 5);
+      // pearlAt is no longer used by the live page (production identity has no pearl shift).
       expect(pearlAt(o, landingVh(o, "ch7")!)).toBe(0);
     });
   }

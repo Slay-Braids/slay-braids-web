@@ -1,15 +1,16 @@
 "use client";
 
 import { useRef } from "react";
-import { enquiry } from "@/content/site";
 import { CHAPTERS } from "@/content/chapters";
+import { Logo } from "../Media";
 
 /**
- * Site header (M2, menu extended to seven chapters in M3). The logo slot is a labelled placeholder: the original SLAY BRAIDS logo file has not
- * been supplied and is never recreated. The menu is a native modal <dialog>: focus moves into it
- * and is trapped, Escape closes it, focus returns to the Menu button.
+ * Site header: the original SLAY BRAIDS logo (red, from the brand Drive), a motion control for
+ * the brand footage (WCAG 2.2.2: moving content can be paused), and the chapter menu. The menu
+ * is a native modal <dialog>: focus moves into it and is trapped, Escape closes it, focus
+ * returns to the Menu button.
  */
-export function Header() {
+export function Header({ assetBase = "/" }: { assetBase?: string }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const button = useRef<HTMLButtonElement>(null);
   const open = () => dialog.current?.showModal();
@@ -20,17 +21,13 @@ export function Header() {
   return (
     <>
       <header data-site-header className="site-header">
-        {/* Placeholder slot: plain text, not a recreation of the logo (the file is pending). */}
-        <a
-          href="#top"
-          className="logo-slot"
-          data-ground="ink"
-          aria-label="SLAY BRAIDS, home"
-          title="Logo file pending"
-        >
-          SLAY BRAIDS
+        <a href="#top" className="logo-slot" data-ground="ink" aria-label="SLAY BRAIDS, home">
+          <Logo base={assetBase} width={112} alt="" />
         </a>
         <div className="header-actions" data-ground="ink">
+          <button type="button" className="motion-toggle" data-motion-toggle aria-pressed="false">
+            <span data-motion-label>Pause video</span>
+          </button>
           <button
             ref={button}
             type="button"
@@ -41,9 +38,6 @@ export function Header() {
           >
             Menu
           </button>
-          <a href={enquiry.href} className="header-enquire">
-            Enquire
-          </a>
         </div>
       </header>
       <dialog
@@ -71,9 +65,8 @@ export function Header() {
               ))}
             </ol>
           </nav>
-          <p className="menu-note">Chapter titles are working titles until SLAY BRAIDS approves them.</p>
-          <a href={enquiry.href} className="menu-enquire" onClick={close}>
-            {enquiry.ctaLabel}
+          <a href="#enquire" className="menu-enquire" onClick={close}>
+            Enquiries
           </a>
         </div>
       </dialog>

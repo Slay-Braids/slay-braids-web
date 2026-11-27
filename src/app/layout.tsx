@@ -4,14 +4,14 @@ import { anchorSrcSet } from "@/components/AnchorStage";
 
 export const metadata: Metadata = {
   title: "SLAY BRAIDS — Premium look. Affordable price.",
-  description: "Preview of the SLAY BRAIDS website. Not for publication.",
+  description: "SLAY BRAIDS. Premium look. Affordable price. FUTURA by SLAY BRAIDS.",
   robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0a0908",
+  themeColor: "#0a0a0a",
   colorScheme: "dark",
 };
 
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // the inline script removes it before first paint when JavaScript runs.
     <html lang="en" data-static="true" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="data:," />
+        <link rel="icon" type="image/png" href="/media/favicon.png" />
         {/* Marks JS availability before paint so reveal styles never hide content without JS. */}
         <script
           dangerouslySetInnerHTML={{ __html:

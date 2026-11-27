@@ -2,7 +2,7 @@
  * Chapter 3 ivory page (isolated change I3): an SVG layer above the hair canvas and below the
  * type. The hair is never cut out or re-lit; the page lies on top and only its edge meets the
  * ink. Edge treatments (each switchable in the lab):
- *  - highlight: 1 px champagne line at 35 %
+ *  - highlight: 1 px line in the brand red (production identity; was champagne in M2)
  *  - paper shadow: soft inner shadow on the paper side (its thickness)
  *  - contact shadow: soft darkening on the hair side, so the page reads as resting on the hair
  *  - light spill: warm glow on the paper near the projected softbox pool, same light colour
@@ -34,15 +34,16 @@ export interface PaperFrame {
 }
 
 const NS = "http://www.w3.org/2000/svg";
-const IVORY = "#F2ECE2";
-const ESPRESSO = "28,22,18";
-const CHAMPAGNE = "216,195,160";
+// Production identity (red, black, white): a white page with a fine red edge.
+const IVORY = "#FFFFFF";
+const ESPRESSO = "0,0,0";
+const CHAMPAGNE = "198,13,19";
 
 export const DEFAULT_TOGGLES: PaperToggles = {
   highlight: true,
   paperShadow: true,
   contactShadow: true,
-  spill: true,
+  spill: false, // the warm light spill belonged to the champagne look
 };
 
 function el<K extends keyof SVGElementTagNameMap>(name: K, attrs: Record<string, string> = {}) {
@@ -141,7 +142,7 @@ export class Paper {
     }
     this.highlight = el("path", {
       fill: "none",
-      stroke: `rgba(${CHAMPAGNE},0.35)`,
+      stroke: `rgba(${CHAMPAGNE},0.9)`,
       "stroke-width": "1",
       "stroke-linejoin": "round",
     });

@@ -9,6 +9,7 @@ export function ExperienceBoot() {
     if (!root) return;
     void import("@/experience/reveal").then((m) => m.initReveals(root));
     void import("@/experience/interactions").then((m) => m.initInteractions(root));
+    void import("@/experience/media").then((m) => m.initMedia(root));
     void import("@/experience/controller").then((m) => m.initExperience(root));
   }, []);
   return null;

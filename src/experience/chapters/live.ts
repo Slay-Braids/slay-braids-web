@@ -11,8 +11,8 @@ import type { Orientation } from "../cascade/geometry";
 import { FRAMING } from "../framing";
 import { CHAPTER_LAYOUT, cameraTimeline, storyStops } from "./cameraTimeline";
 import { ChapterDriver, smooth, type Ch3State } from "./driver";
-import { STORY, chapterIndex, pageState, pearlAt, productVh, type PageState } from "./story";
-import { products } from "../../content/products";
+import { STORY, chapterIndex, pageState, productVh, type PageState } from "./story";
+import { lookClips as products } from "../../content/media";
 import { GuideStrand, project } from "./guideStrand";
 import { DEFAULT_TOGGLES, Paper, type PaperToggles } from "./paper";
 import type { ChapterFlags } from "./flags";
@@ -93,9 +93,8 @@ export class LiveChapters {
     this.driver.orientation = orientation;
     const S = STORY[orientation];
     const centres = products.map((_, i) => productVh(orientation, i));
-    scene.setCameraTimeline(cameraTimeline(orientation, storyStops(orientation, S, centres)), (vh) =>
-      pearlAt(orientation, vh),
-    );
+    // Production identity: no pearl light shift (the locked default light throughout).
+    scene.setCameraTimeline(cameraTimeline(orientation, storyStops(orientation, S, centres)));
     if (this.flags.windT != null) scene.freezeWindAt(this.flags.windT);
     this.guide = new GuideStrand(scene.geometry, orientation);
     this.reselect();

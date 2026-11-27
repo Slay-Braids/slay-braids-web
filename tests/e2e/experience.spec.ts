@@ -201,11 +201,11 @@ test("publishes no unapproved product claims", async ({ page }) => {
   }
 });
 
-test("enquiry CTA is flexible and never pretends to send", async ({ page }) => {
+// Production (27 Nov 2026): no verified enquiry destination exists, so there is no form at all
+// (the M1 version checked a disabled "not enabled" button). The site must never pretend to send.
+test("enquiries never pretend to send", async ({ page }) => {
   await page.goto("/?tier=C");
-  await expect(page.getByRole("link", { name: "Make an enquiry" }).first()).toHaveAttribute(
-    "href",
-    "#enquire",
-  );
-  await expect(page.getByRole("button", { name: /not enabled/i })).toBeDisabled();
+  await expect(page.locator("#enquire")).toContainText("Online enquiries are not open yet.");
+  await expect(page.locator("form")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /send|submit/i })).toHaveCount(0);
 });

@@ -33,8 +33,8 @@ const MASTERS = path.resolve("assets/chapters"); // gitignored, like the anchor 
 const SIZE = { landscape: [2560, 1440], portrait: [1440, 2560] };
 const WIDTHS = { landscape: [1280, 1920, 2560], portrait: [720, 1080, 1440] };
 const POSES = {
-  landscape: { ch4: 685, ch5: 820, ch7: 1245 },
-  portrait: { ch4: 605, ch5: 800, ch7: 1205 },
+  landscape: { ch4: 685, ch5: 845, ch7: 1295 },
+  portrait: { ch4: 605, ch5: 840, ch7: 1285 },
 };
 
 await mkdir(DEST, { recursive: true });

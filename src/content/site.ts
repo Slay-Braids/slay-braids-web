@@ -1,11 +1,14 @@
 import type { Claim } from "./claims";
 
 /**
- * Site copy for the M1 prototype.
- * - The positioning line was supplied by the project owner in the brief (2026-11-26).
- * - Everything marked `placeholder: true` is layout copy awaiting management wording and is
- *   visibly labelled as such in the prototype.
- * - There are deliberately NO product claims here yet: the FUTURA range data is pending.
+ * Production site copy. Only verified wording is used:
+ * - The positioning line: project owner brief (2026-11-26).
+ * - "FUTURA by SLAY BRAIDS" / "FUTURA is a SLAY BRAIDS product line.": project owner brief and
+ *   instruction (2026-11-27).
+ * - Factual descriptions of the site itself ("Looks from the SLAY BRAIDS shoot", "Online
+ *   enquiries are not open yet").
+ * No product names, shades, prices, specifications, claims, contacts or testimonials exist in
+ * the brand material, so none are published. See docs/production-assets.md for what is missing.
  */
 export const positioning = {
   line1: "Premium look.",
@@ -16,67 +19,46 @@ export const positioning = {
 export const brand = {
   name: "SLAY BRAIDS",
   productLine: "FUTURA",
-  /** Logos must be the original files from management; nothing is recreated. */
-  logoStatus: "awaiting original files",
+  /** Original logo files from the SLAY BRAIDS Drive (trimmed only): public/media/logo-*. */
+  logo: { red: "media/logo-red", white: "media/logo-white", alt: "SLAY BRAIDS" },
 } as const;
 
-export interface PlaceholderCopy {
-  text: string;
-  placeholder: true;
-}
-
-export const manifesto: PlaceholderCopy[] = [
-  { text: "Manifesto line one — wording to come from SLAY BRAIDS.", placeholder: true },
-  { text: "Manifesto line two — wording to come from SLAY BRAIDS.", placeholder: true },
-  { text: "Manifesto line three — wording to come from SLAY BRAIDS.", placeholder: true },
-];
-
-/** Product claims for FUTURA. Empty until management approves wording. */
+/** Product claims for FUTURA. Empty: none have been approved. */
 export const futuraClaims: Claim[] = [];
 
 /**
- * Flexible enquiry routing until management confirms whether the site supports direct
- * product sales, salon services, or both.
+ * Enquiries: no verified submission destination (email, form endpoint or CRM) exists, so the
+ * site carries no form. The section says so plainly; nothing pretends to send.
  */
 export const enquiry = {
-  ctaLabel: "Make an enquiry",
   href: "#enquire",
-  topics: ["General enquiry", "FUTURA products", "Braiding services"],
-  status: "Enquiry routing is being set up — this prototype does not send messages.",
+  title: "Enquiries",
+  status: "Online enquiries are not open yet.",
+  /** Set when SLAY BRAIDS confirms a destination; the form is rendered only when this is set. */
+  destination: null as null | { kind: "email" | "endpoint"; value: string },
 } as const;
 
-/**
- * Chapters 4–7 copy. The FUTURA fact ("a SLAY BRAIDS product line") comes from the project
- * owner's brief (2026-11-26); its exact wording still needs management sign-off. Everything else
- * is placeholder copy, visibly labelled.
- */
 export const futura = {
   name: "FUTURA",
+  by: "by SLAY BRAIDS",
   line: "FUTURA is a SLAY BRAIDS product line.",
-  lineSource: "Project owner brief, 2026-11-26 (wording to approve)",
-  /** The original FUTURA logo file has not been supplied; nothing is recreated. */
-  logoStatus: "awaiting original file",
+  lineSource: "Project owner brief, 2026-11-26; instruction 2026-11-27",
 } as const;
 
-export const collection = {
-  title: "The Collection",
-  intro: "Each FUTURA product, its shades and its price. Range details to come from SLAY BRAIDS.",
-  priceMissing: "Price to be confirmed",
+export const craft = {
+  title: "The Craft",
+} as const;
+
+export const looks = {
+  title: "The Looks",
+  intro: "Looks from the SLAY BRAIDS shoot.",
 } as const;
 
 export const lookbook = {
   title: "Lookbook",
-  line: { text: "Lookbook line — wording to come from SLAY BRAIDS.", placeholder: true } as PlaceholderCopy,
-  items: [
-    { id: "look-1", kind: "photo", caption: "Lookbook photograph", placeholder: true },
-    { id: "look-2", kind: "photo", caption: "Lookbook photograph", placeholder: true },
-    { id: "look-3", kind: "video", caption: "Lookbook film loop", placeholder: true },
-  ] as const,
-  /** Photography and footage need signed model releases before they can be shown. */
-  status: "Awaiting approved photography and signed model releases",
 } as const;
 
 export const promise = {
-  secondary: { label: "See the collection", href: "#ch5" },
-  note: "Products, braiding services, or both: the enquiry form takes either until SLAY BRAIDS confirms.",
+  primary: { label: "See the looks", href: "#ch5" },
+  secondary: { label: "Back to the start", href: "#top" },
 } as const;
