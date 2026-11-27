@@ -1,73 +1,21 @@
 {
   "summary": {
-    "generated": "2026-11-27T19:15:19.496Z",
+    "generated": "2026-11-27T19:56:15.677Z",
     "renderer": "headless Chromium, SwiftShader (simulated GPU)",
     "theme": "light",
     "samples": 520,
-    "failingAA": 23,
+    "failingAA": 4,
     "belowAAA": 198,
     "worst": [
       {
-        "viewport": "desktop 1440×900",
+        "viewport": "mobile 390×844",
         "phase": 0,
-        "where": "ch1",
-        "vh": 0,
-        "text": "Affordable price.",
-        "size": 122.56,
-        "large": true,
-        "ratio": 1.83,
-        "need": 3,
-        "pass": false,
-        "aaa": false
-      },
-      {
-        "viewport": "desktop 1440×900",
-        "phase": 2.1,
-        "where": "ch1",
-        "vh": 0,
-        "text": "Affordable price.",
-        "size": 122.56,
-        "large": true,
-        "ratio": 1.84,
-        "need": 3,
-        "pass": false,
-        "aaa": false
-      },
-      {
-        "viewport": "mobile 412×915",
-        "phase": 2.1,
-        "where": "ch4feat",
-        "vh": 685,
-        "text": "Feels like real hair",
+        "where": "ch7",
+        "vh": 1365,
+        "text": "Back to the start",
         "size": 16,
         "large": false,
-        "ratio": 2.78,
-        "need": 4.5,
-        "pass": false,
-        "aaa": false
-      },
-      {
-        "viewport": "mobile 390×844",
-        "phase": 2.1,
-        "where": "ch4feat",
-        "vh": 685,
-        "text": "Smooth and soft, and easy to comb through.",
-        "size": 13,
-        "large": false,
-        "ratio": 2.78,
-        "need": 4.5,
-        "pass": false,
-        "aaa": false
-      },
-      {
-        "viewport": "mobile 390×844",
-        "phase": 0,
-        "where": "ch4feat",
-        "vh": 685,
-        "text": "Smooth and soft, and easy to comb through.",
-        "size": 13,
-        "large": false,
-        "ratio": 2.83,
+        "ratio": 2.38,
         "need": 4.5,
         "pass": false,
         "aaa": false
@@ -80,7 +28,7 @@
         "text": "Back to the start",
         "size": 16,
         "large": false,
-        "ratio": 2.88,
+        "ratio": 2.74,
         "need": 4.5,
         "pass": false,
         "aaa": false
@@ -88,27 +36,79 @@
       {
         "viewport": "mobile 390×844",
         "phase": 2.1,
-        "where": "ch4feat",
-        "vh": 685,
-        "text": "Body and bounce",
+        "where": "ch7",
+        "vh": 1365,
+        "text": "Back to the start",
         "size": 16,
         "large": false,
-        "ratio": 3.04,
+        "ratio": 3.1,
         "need": 4.5,
         "pass": false,
         "aaa": false
       },
       {
         "viewport": "mobile 412×915",
-        "phase": 2.1,
-        "where": "ch4feat",
-        "vh": 685,
-        "text": "Smooth and soft, and easy to comb through.",
-        "size": 13,
+        "phase": 0,
+        "where": "ch7",
+        "vh": 1365,
+        "text": "Back to the start",
+        "size": 16,
         "large": false,
-        "ratio": 3.07,
+        "ratio": 3.69,
         "need": 4.5,
         "pass": false,
+        "aaa": false
+      },
+      {
+        "viewport": "desktop 1440×900",
+        "phase": 0,
+        "where": "ch1",
+        "vh": 0,
+        "text": "Affordable price.",
+        "size": 122.56,
+        "large": true,
+        "ratio": 3.03,
+        "need": 3,
+        "pass": true,
+        "aaa": false
+      },
+      {
+        "viewport": "desktop 1440×900",
+        "phase": 0,
+        "where": "ch4",
+        "vh": 700,
+        "text": "A SLAY BRAIDS product",
+        "size": 12,
+        "large": false,
+        "ratio": 4.59,
+        "need": 4.5,
+        "pass": true,
+        "aaa": false
+      },
+      {
+        "viewport": "desktop 1440×900",
+        "phase": 0,
+        "where": "ch4feat",
+        "vh": 765,
+        "text": "A SLAY BRAIDS product",
+        "size": 12,
+        "large": false,
+        "ratio": 4.59,
+        "need": 4.5,
+        "pass": true,
+        "aaa": false
+      },
+      {
+        "viewport": "desktop 1440×900",
+        "phase": 2.1,
+        "where": "ch1",
+        "vh": 0,
+        "text": "Affordable price.",
+        "size": 122.56,
+        "large": true,
+        "ratio": 3.06,
+        "need": 3,
+        "pass": true,
         "aaa": false
       }
     ]
@@ -148,7 +148,7 @@
       "text": "Premium look.",
       "size": 122.56,
       "large": true,
-      "ratio": 4.78,
+      "ratio": 8.45,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -161,9 +161,9 @@
       "text": "Affordable price.",
       "size": 122.56,
       "large": true,
-      "ratio": 1.83,
+      "ratio": 3.03,
       "need": 3,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -200,7 +200,7 @@
       "text": "See the looks",
       "size": 16,
       "large": false,
-      "ratio": 14.03,
+      "ratio": 12.58,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1045,7 +1045,7 @@
       "text": "Premium look.",
       "size": 122.56,
       "large": true,
-      "ratio": 15.66,
+      "ratio": 15.63,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -1097,7 +1097,7 @@
       "text": "Back to the start",
       "size": 16,
       "large": false,
-      "ratio": 12.45,
+      "ratio": 10.53,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1136,7 +1136,7 @@
       "text": "Premium look.",
       "size": 122.56,
       "large": true,
-      "ratio": 4.56,
+      "ratio": 8.16,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -1149,9 +1149,9 @@
       "text": "Affordable price.",
       "size": 122.56,
       "large": true,
-      "ratio": 1.84,
+      "ratio": 3.06,
       "need": 3,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -1188,7 +1188,7 @@
       "text": "See the looks",
       "size": 16,
       "large": false,
-      "ratio": 14.03,
+      "ratio": 12.58,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1357,7 +1357,7 @@
       "text": "Body and bounce",
       "size": 16,
       "large": false,
-      "ratio": 5.96,
+      "ratio": 5.97,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -2033,7 +2033,7 @@
       "text": "Premium look.",
       "size": 122.56,
       "large": true,
-      "ratio": 15.57,
+      "ratio": 15.56,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -2085,7 +2085,7 @@
       "text": "Back to the start",
       "size": 16,
       "large": false,
-      "ratio": 12.45,
+      "ratio": 10.53,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -2124,7 +2124,7 @@
       "text": "Premium look.",
       "size": 128,
       "large": true,
-      "ratio": 14.05,
+      "ratio": 18,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -2137,7 +2137,7 @@
       "text": "Affordable price.",
       "size": 128,
       "large": true,
-      "ratio": 5.75,
+      "ratio": 6,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -2176,7 +2176,7 @@
       "text": "See the looks",
       "size": 16,
       "large": false,
-      "ratio": 14.03,
+      "ratio": 12.58,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3073,7 +3073,7 @@
       "text": "Back to the start",
       "size": 16,
       "large": false,
-      "ratio": 12.45,
+      "ratio": 10.53,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3112,7 +3112,7 @@
       "text": "Premium look.",
       "size": 128,
       "large": true,
-      "ratio": 13.68,
+      "ratio": 17.99,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -3164,7 +3164,7 @@
       "text": "See the looks",
       "size": 16,
       "large": false,
-      "ratio": 14.03,
+      "ratio": 12.58,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3333,7 +3333,7 @@
       "text": "Body and bounce",
       "size": 16,
       "large": false,
-      "ratio": 5.99,
+      "ratio": 6,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -3346,7 +3346,7 @@
       "text": "Keeps its curl, tight or loose, and looks just a",
       "size": 14,
       "large": false,
-      "ratio": 5.21,
+      "ratio": 5.22,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -4061,7 +4061,7 @@
       "text": "Back to the start",
       "size": 16,
       "large": false,
-      "ratio": 12.45,
+      "ratio": 10.53,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4152,7 +4152,7 @@
       "text": "See the looks",
       "size": 16,
       "large": false,
-      "ratio": 19.63,
+      "ratio": 18,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4165,9 +4165,9 @@
       "text": "What futura fibre brings",
       "size": 12,
       "large": false,
-      "ratio": 3.32,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -4178,9 +4178,9 @@
       "text": "Feels like real hair",
       "size": 16,
       "large": false,
-      "ratio": 3.11,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -4191,9 +4191,9 @@
       "text": "Smooth and soft, and easy to comb through.",
       "size": 13,
       "large": false,
-      "ratio": 3.09,
+      "ratio": 5.22,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -4204,9 +4204,9 @@
       "text": "Body and bounce",
       "size": 16,
       "large": false,
-      "ratio": 4.13,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -4217,7 +4217,7 @@
       "text": "Keeps its curl, tight or loose, and looks just a",
       "size": 13,
       "large": false,
-      "ratio": 4.55,
+      "ratio": 5.22,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -4230,7 +4230,7 @@
       "text": "Heat-styling friendly",
       "size": 16,
       "large": false,
-      "ratio": 5.86,
+      "ratio": 6.02,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -4308,7 +4308,7 @@
       "text": "Made for wigs and weaves",
       "size": 16,
       "large": false,
-      "ratio": 6,
+      "ratio": 6.01,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -4737,7 +4737,7 @@
       "text": "That is the SLAY BRAIDS promise: the look you ca",
       "size": 16,
       "large": false,
-      "ratio": 19.68,
+      "ratio": 19.8,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4763,7 +4763,7 @@
       "text": "Back to the start",
       "size": 16,
       "large": false,
-      "ratio": 3.46,
+      "ratio": 3.69,
       "need": 4.5,
       "pass": false,
       "aaa": false
@@ -4854,7 +4854,7 @@
       "text": "See the looks",
       "size": 16,
       "large": false,
-      "ratio": 19.63,
+      "ratio": 18,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4867,9 +4867,9 @@
       "text": "What futura fibre brings",
       "size": 12,
       "large": false,
-      "ratio": 3.26,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -4880,9 +4880,9 @@
       "text": "Feels like real hair",
       "size": 16,
       "large": false,
-      "ratio": 2.78,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -4893,9 +4893,9 @@
       "text": "Smooth and soft, and easy to comb through.",
       "size": 13,
       "large": false,
-      "ratio": 3.07,
+      "ratio": 5.22,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -4906,9 +4906,9 @@
       "text": "Body and bounce",
       "size": 16,
       "large": false,
-      "ratio": 4.25,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -4919,7 +4919,7 @@
       "text": "Keeps its curl, tight or loose, and looks just a",
       "size": 13,
       "large": false,
-      "ratio": 4.66,
+      "ratio": 5.22,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -4932,7 +4932,7 @@
       "text": "Heat-styling friendly",
       "size": 16,
       "large": false,
-      "ratio": 5.72,
+      "ratio": 6.02,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -5010,7 +5010,7 @@
       "text": "Made for wigs and weaves",
       "size": 16,
       "large": false,
-      "ratio": 6,
+      "ratio": 6.01,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -5465,7 +5465,7 @@
       "text": "Back to the start",
       "size": 16,
       "large": false,
-      "ratio": 2.88,
+      "ratio": 2.74,
       "need": 4.5,
       "pass": false,
       "aaa": false
@@ -5556,7 +5556,7 @@
       "text": "See the looks",
       "size": 16,
       "large": false,
-      "ratio": 13.89,
+      "ratio": 12.45,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5569,7 +5569,7 @@
       "text": "What futura fibre brings",
       "size": 12,
       "large": false,
-      "ratio": 4.94,
+      "ratio": 6,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -5582,9 +5582,9 @@
       "text": "Feels like real hair",
       "size": 16,
       "large": false,
-      "ratio": 3.43,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -5595,9 +5595,9 @@
       "text": "Smooth and soft, and easy to comb through.",
       "size": 13,
       "large": false,
-      "ratio": 2.83,
+      "ratio": 5.22,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -5608,9 +5608,9 @@
       "text": "Body and bounce",
       "size": 16,
       "large": false,
-      "ratio": 3.29,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -5621,9 +5621,9 @@
       "text": "Keeps its curl, tight or loose, and looks just a",
       "size": 13,
       "large": false,
-      "ratio": 3.28,
+      "ratio": 5.22,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -5634,7 +5634,7 @@
       "text": "Heat-styling friendly",
       "size": 16,
       "large": false,
-      "ratio": 5.02,
+      "ratio": 6.01,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -5647,7 +5647,7 @@
       "text": "Can be styled with irons. Kaneka recommends 180 ",
       "size": 13,
       "large": false,
-      "ratio": 5.21,
+      "ratio": 5.23,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -5712,7 +5712,7 @@
       "text": "Made for wigs and weaves",
       "size": 16,
       "large": false,
-      "ratio": 6,
+      "ratio": 6.01,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -6167,7 +6167,7 @@
       "text": "Back to the start",
       "size": 16,
       "large": false,
-      "ratio": 3.41,
+      "ratio": 2.38,
       "need": 4.5,
       "pass": false,
       "aaa": false
@@ -6258,7 +6258,7 @@
       "text": "See the looks",
       "size": 16,
       "large": false,
-      "ratio": 13.89,
+      "ratio": 12.45,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -6271,9 +6271,9 @@
       "text": "What futura fibre brings",
       "size": 12,
       "large": false,
-      "ratio": 4.39,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -6284,9 +6284,9 @@
       "text": "Feels like real hair",
       "size": 16,
       "large": false,
-      "ratio": 3.31,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -6297,9 +6297,9 @@
       "text": "Smooth and soft, and easy to comb through.",
       "size": 13,
       "large": false,
-      "ratio": 2.78,
+      "ratio": 5.22,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -6310,9 +6310,9 @@
       "text": "Body and bounce",
       "size": 16,
       "large": false,
-      "ratio": 3.04,
+      "ratio": 6,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -6323,9 +6323,9 @@
       "text": "Keeps its curl, tight or loose, and looks just a",
       "size": 13,
       "large": false,
-      "ratio": 3.19,
+      "ratio": 5.22,
       "need": 4.5,
-      "pass": false,
+      "pass": true,
       "aaa": false
     },
     {
@@ -6336,7 +6336,7 @@
       "text": "Heat-styling friendly",
       "size": 16,
       "large": false,
-      "ratio": 5.13,
+      "ratio": 6.01,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -6349,7 +6349,7 @@
       "text": "Can be styled with irons. Kaneka recommends 180 ",
       "size": 13,
       "large": false,
-      "ratio": 5.19,
+      "ratio": 5.23,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -6414,7 +6414,7 @@
       "text": "Made for wigs and weaves",
       "size": 16,
       "large": false,
-      "ratio": 6,
+      "ratio": 6.01,
       "need": 4.5,
       "pass": true,
       "aaa": false
@@ -6869,7 +6869,7 @@
       "text": "Back to the start",
       "size": 16,
       "large": false,
-      "ratio": 3.64,
+      "ratio": 3.1,
       "need": 4.5,
       "pass": false,
       "aaa": false
