@@ -109,6 +109,45 @@ test.describe("document structure and accessibility", () => {
   });
 });
 
+test.describe("screen readers get every chapter, whatever the scroll position", () => {
+  test.setTimeout(240_000);
+
+  const MANIFESTO = [
+    "Manifesto line one — wording to come from SLAY BRAIDS.",
+    "Manifesto line two — wording to come from SLAY BRAIDS.",
+    "Manifesto line three — wording to come from SLAY BRAIDS.",
+  ];
+  const check = (tree: string) => {
+    expect(tree).toContain('heading "The craft (working title)" [level=2]');
+    expect(tree).toContain('heading "The unbraiding (working title)" [level=2]');
+    expect(tree).toContain("Portrait awaiting approved photography");
+    expect(tree).toContain("Chapter 3 line — wording to come from SLAY BRAIDS.");
+    // Each line exactly once (no duplicates), decorative numerals and the scroll cue never.
+    for (const line of MANIFESTO) expect(tree.split(line).length - 1).toBe(1);
+    for (const deco of ["01", "02", "03", "Scroll"])
+      expect(tree).not.toMatch(new RegExp(`(^|[:\\s"])${deco}($|["\\s])`, "m"));
+  };
+
+  test("live: same accessibility tree at the top, in Chapter 2, in Chapter 3 and after the page closes, matching reduced motion", async ({
+    page,
+  }) => {
+    await page.goto("/?reduced=1");
+    await page.waitForTimeout(1500);
+    const reduced = await page.locator("main").ariaSnapshot();
+    check(reduced);
+
+    await page.goto(LIVE);
+    await waitLive(page);
+    const portrait = page.viewportSize()!.width < page.viewportSize()!.height;
+    for (const vh of portrait ? [0, 160, 380, 470] : [0, 160, 400, 520]) {
+      await scrollVh(page, vh);
+      const live = await page.locator("main").ariaSnapshot();
+      check(live);
+      expect(live, `accessibility tree at ${vh} vh`).toBe(reduced);
+    }
+  });
+});
+
 test.describe("live chapters", () => {
   test.setTimeout(240_000);
 

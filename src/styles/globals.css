@@ -346,13 +346,16 @@ body {
   height: calc(var(--vh) * 100);
   overflow: hidden;
   pointer-events: none;
-  visibility: hidden;
+  /* Hidden off-screen with opacity, not visibility: visibility would also remove the chapter's
+     headings and text from the accessibility tree, so screen readers would skip Chapters 2–3
+     unless they happened to be on screen. Decorative parts stay aria-hidden in the markup. */
+  opacity: 0;
 }
 .chapter-frame[data-visible="true"] {
-  visibility: visible;
+  opacity: 1;
 }
-.chapter-frame a,
-.chapter-frame button {
+.chapter-frame[data-visible="true"] a,
+.chapter-frame[data-visible="true"] button {
   pointer-events: auto;
 }
 
@@ -936,7 +939,7 @@ body {
 }
 :root[data-static="true"] .chapter-frame {
   position: relative;
-  visibility: visible;
+  opacity: 1;
   pointer-events: auto;
 }
 :root[data-static="true"] .ch2-field,
