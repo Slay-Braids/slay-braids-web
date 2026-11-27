@@ -50,7 +50,28 @@ declare global {
 
 const now = () => Math.round(performance.now());
 
+/**
+ * M3 error state: whatever fails while starting the live experience (a chunk that does not
+ * load, a WebGL error), the visitor gets the static spreads, never a blank or broken page.
+ */
 export async function initExperience(root: HTMLElement): Promise<void> {
+  try {
+    await startExperience(root);
+  } catch (err) {
+    console.error("[slay] live experience failed, showing the static spreads", err);
+    const stage = root.querySelector<HTMLElement>("[data-stage]");
+    if (stage) {
+      stage.dataset.live = "false";
+      stage.dataset.mode = "static";
+    }
+    if (window.__slay) window.__slay.downgrades.push(`error → still: ${String(err)}`);
+    document.documentElement.dataset.static = "true";
+    const { initStaticSpreads } = await import("./chapters/staticSpreads");
+    initStaticSpreads(root, orientationFor(innerWidth, innerHeight));
+  }
+}
+
+async function startExperience(root: HTMLElement): Promise<void> {
   const stage = root.querySelector<HTMLElement>("[data-stage]");
   const canvas = stage?.querySelector("canvas");
   const img = stage?.querySelector("img");
@@ -123,6 +144,17 @@ export async function initExperience(root: HTMLElement): Promise<void> {
     antialias: settings.antialias,
   });
   scene.setSize(innerWidth, innerHeight);
+  // M3: a lost WebGL context (GPU reset, memory pressure) falls back to the static spreads.
+  canvas.addEventListener(
+    "webglcontextlost",
+    (e) => {
+      e.preventDefault();
+      state.downgrades.push(`context lost at ${now()} ms`);
+      state.tier = "B";
+      void downgrade();
+    },
+    { once: true },
+  );
   if (chapterFlags.vh != null) scrollTo(0, chapterFlags.vh * vhPx());
   const chapters = new LiveChapters(root, scene, orientation, chapterFlags);
   (window as unknown as { __chapters?: unknown }).__chapters = chapters;
@@ -168,6 +200,25 @@ export async function initExperience(root: HTMLElement): Promise<void> {
 
   const onVisibility = () => (document.hidden ? scene.stop() : scene.start(onFrame));
   document.addEventListener("visibilitychange", onVisibility);
+
+  // M3: rotation keeps the reader's place (chapter + progress), not the raw scroll offset.
+  const { mapVh } = await import("./chapters/story");
+  let place = { o: orientation, vh: scrollY / vhPx() };
+  addEventListener(
+    "scroll",
+    () => {
+      if (orientationFor(innerWidth, innerHeight) === place.o) place = { o: place.o, vh: scrollY / vhPx() };
+    },
+    { passive: true },
+  );
+  addEventListener("resize", () => {
+    const o = orientationFor(innerWidth, innerHeight);
+    if (o === place.o) return;
+    syncVh(true);
+    const vh = mapVh(place.o, o, place.vh);
+    place = { o, vh };
+    scrollTo(0, vh * vhPx());
+  });
 
   let resizeTimer = 0;
   addEventListener("resize", () => {

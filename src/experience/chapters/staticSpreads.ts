@@ -1,5 +1,5 @@
 /**
- * Static / reduced-motion Chapters 1–3 (tier C, reduced motion, B→still downgrade). No three.js.
+ * Static / reduced-motion Chapters 1–7 (M3 adds Chapters 4–7) (tier C, reduced motion, B→still downgrade). No three.js.
  *
  * The chapters become printed spreads: every line visible, no pins. Chapters 2 and 3 show stills
  * rendered from the locked scene at K1 and K2 (scripts/render-chapter-stills.mjs, I5), placed in
@@ -9,6 +9,7 @@
  */
 import type { Orientation } from "../cascade/geometry";
 import { DEFAULT_TOGGLES, Paper } from "./paper";
+import { CHAPTERS } from "../../content/chapters";
 
 interface StillManifest {
   version: string;
@@ -24,9 +25,11 @@ const WIDTHS: Record<Orientation, number[]> = {
   portrait: [720, 1080, 1440],
 };
 
-function picture(base: string, ch: "ch2" | "ch3") {
+function picture(base: string, ch: "ch2" | "ch3" | "ch4" | "ch5" | "ch7") {
+  // M3 stills (Chapters 4, 5, 7) are a separate set with their own manifest (m3-manifest.json).
+  const set_ = ch === "ch2" || ch === "ch3" ? "m2" : "m3";
   const set = (o: Orientation, ext: string) =>
-    WIDTHS[o].map((w) => `${base}chapters/m2-${ch}-${o}-${w}.${ext} ${w}w`).join(", ");
+    WIDTHS[o].map((w) => `${base}chapters/${set_}-${ch}-${o}-${w}.${ext} ${w}w`).join(", ");
   const p = document.createElement("picture");
   p.className = "spread-still";
   p.setAttribute("aria-hidden", "true");
@@ -36,7 +39,7 @@ function picture(base: string, ch: "ch2" | "ch3") {
     <source media="(orientation: portrait)" srcset="${set("portrait", "jpg")}" sizes="100vw">
     <source type="image/avif" srcset="${set("landscape", "avif")}" sizes="100vw">
     <source type="image/webp" srcset="${set("landscape", "webp")}" sizes="100vw">
-    <img src="${base}chapters/m2-${ch}-landscape-1920.jpg" srcset="${set("landscape", "jpg")}" sizes="100vw" alt="" loading="lazy" decoding="async">`;
+    <img src="${base}chapters/${set_}-${ch}-landscape-1920.jpg" srcset="${set("landscape", "jpg")}" sizes="100vw" alt="" loading="lazy" decoding="async">`;
   return p;
 }
 
@@ -46,16 +49,35 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
   const ch3 = root.querySelector<HTMLElement>("[data-ch3-frame]");
   if (ch2 && !ch2.querySelector(".spread-still")) ch2.prepend(picture(base, "ch2"));
   if (ch3 && !ch3.querySelector(".spread-still")) ch3.prepend(picture(base, "ch3"));
+  // M3: Chapters 4, 5 and 7 over stills of their poses; Chapter 6 is printed on ivory.
+  for (const ch of ["ch4", "ch5", "ch7"] as const) {
+    const f = root.querySelector<HTMLElement>(`[data-${ch}-frame]`);
+    if (f && !f.querySelector(".spread-still")) f.prepend(picture(base, ch));
+  }
 
   root
     .querySelectorAll<HTMLElement>("[data-ch2-line]")
     .forEach((l) => (l.dataset.state = "active"));
   root.querySelector<HTMLElement>("[data-ch3-line]")?.setAttribute("data-state", "active");
   // Live-mode inline styles (after a B→still downgrade) must not survive into the spreads.
-  for (const sel of ["[data-hero]", "[data-ch3-content]", "[data-ch3-portrait]"]) {
+  for (const sel of [
+    "[data-hero]",
+    "[data-ch3-content]",
+    "[data-ch3-portrait]",
+    "[data-ch4-frame]",
+    "[data-ch4-printed]",
+    "[data-ch4-title]",
+    "[data-ch4-line]",
+    "[data-ch5-frame]",
+    "[data-ch6-intro]",
+    "[data-ch6-spread]",
+    "[data-ch7-frame]",
+    "[data-ch7-content]",
+  ]) {
     const el = root.querySelector<HTMLElement>(sel);
     if (el) el.removeAttribute("style");
   }
+  root.querySelectorAll<HTMLElement>("[data-product]").forEach((p) => (p.dataset.active = "true"));
 
   // Chapter 3 page, drawn once per frame size.
   let paperRef: Paper | undefined;
@@ -135,7 +157,7 @@ export function initStaticSpreads(root: HTMLElement, _orientation: Orientation) 
 
   // Chapter index follows the section in view.
   const ticks = [...root.querySelectorAll<HTMLElement>("[data-chapter-tick]")];
-  const sections = ["top", "ch2", "ch3"].map((id) => document.getElementById(id));
+  const sections = CHAPTERS.map((c) => document.getElementById(c.id));
   if (!("IntersectionObserver" in window)) return;
   const io = new IntersectionObserver(
     (entries) => {

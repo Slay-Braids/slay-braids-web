@@ -5,6 +5,8 @@
  */
 import type { Orientation } from "../cascade/geometry";
 import { CH2_LINES, CH3, CHAPTER_LAYOUT, chapterProgress } from "./cameraTimeline";
+import { chapterIndex } from "./story";
+import { StoryDriver } from "./storyDriver";
 
 export const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 export const smooth = (x: number) => {
@@ -50,6 +52,8 @@ export class ChapterDriver {
   private lastScrollY = 0;
   private lastLine = -2;
   private lastTick = -1;
+  /** M3: Chapters 4–7. */
+  readonly story: StoryDriver;
 
   constructor(
     private readonly root: HTMLElement,
@@ -65,6 +69,7 @@ export class ChapterDriver {
     this.ch3Line = root.querySelector("[data-ch3-line]");
     this.ticks = [...root.querySelectorAll<HTMLElement>("[data-chapter-tick]")];
     this.header = root.querySelector("[data-site-header]");
+    this.story = new StoryDriver(root);
   }
 
   /** Apply the state for scroll position `vh`. Returns the Chapter 3 state for the page. */
@@ -116,9 +121,10 @@ export class ChapterDriver {
     }
     if (this.ch3Line) this.ch3Line.dataset.state = s3.line ? "active" : "hidden";
     if (this.ch3Frame) this.ch3Frame.dataset.visible = String(s3.open > 0.02 && s3.away < 0.999);
-    // Chapter index.
-    const p = chapterProgress(o, vh);
-    const tick = p.ch3 > 0 ? 2 : p.ch2 > 0 ? 1 : 0;
+    // M3: Chapters 4–7.
+    this.story.update(o, vh);
+    // Chapter index (7 chapters; Chapters 1–3 switch at the same points as before).
+    const tick = chapterIndex(o, vh);
     if (tick !== this.lastTick) {
       this.ticks.forEach((t, i) =>
         i === tick ? t.setAttribute("aria-current", "true") : t.removeAttribute("aria-current"),

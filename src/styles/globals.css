@@ -322,12 +322,19 @@ body {
 }
 /* Sections are the scroll track (their heights ARE the chapter extents of the camera timeline);
    each chapter's frame is fixed to the viewport and driven by the same scroll clock as the camera.
-   Chapter 3 has a one-screen tail: the next section may only rise once the page covers the screen. */
+   M3: Chapter 3 ends where Chapter 4 begins (500 vh landscape, 450 vh portrait); the covering
+   page carries straight on into Chapter 4, so the M2 one-screen tail is no longer needed. */
 .ch2 {
   height: calc(var(--vh) * 150);
 }
 .ch3 {
-  height: calc(var(--vh) * 350);
+  height: calc(var(--vh) * 250);
+}
+.ch4,
+.ch5,
+.ch6,
+.ch7 {
+  height: calc(var(--vh) * var(--h-l));
 }
 @media (orientation: portrait) {
   .ch1 {
@@ -337,7 +344,13 @@ body {
     height: calc(var(--vh) * 130);
   }
   .ch3 {
-    height: calc(var(--vh) * 320);
+    height: calc(var(--vh) * 220);
+  }
+  .ch4,
+  .ch5,
+  .ch6,
+  .ch7 {
+    height: calc(var(--vh) * var(--h-p));
   }
 }
 .chapter-frame {
@@ -855,23 +868,7 @@ body {
   background: var(--color-champagne-deep);
 }
 
-/* End card, enquiry, footer, banner */
-/* The end card is printed on the same ivory as the Chapter 3 page, which covers the screen when
-   the chapter ends, so the card's top edge is invisible: its type simply rises into view. */
-.end-card {
-  position: relative;
-  min-height: calc(var(--vh) * 100);
-  display: grid;
-  align-content: start;
-  justify-items: start;
-  gap: 1rem;
-  padding: calc(var(--vh) * 22) var(--margin) calc(var(--vh) * 12); /* type rises soon after the page has covered the screen */
-  background: #f2ece2;
-  color: var(--espresso);
-}
-.end-card .label {
-  color: rgb(28 22 18 / 0.72);
-}
+/* Enquiry, footer, banner */
 .btn-on-ivory {
   border-color: rgb(28 22 18 / 0.45);
   color: var(--espresso);
@@ -879,17 +876,12 @@ body {
 .btn-on-ivory:hover {
   border-color: var(--espresso);
 }
-.end-title {
-  font-size: clamp(2.4rem, 1rem + 4vw, 4.5rem);
-  margin: 0;
-}
-.end-note {
-  color: rgb(28 22 18 / 0.72);
-  margin: 0 0 1rem;
-}
 .enquire-section {
+  position: relative;
+  z-index: 2; /* rises over the fixed Chapter 7 frame */
   background: var(--color-ink);
-  padding: 6rem var(--margin);
+  padding: calc(var(--vh) * 14) var(--margin) calc(var(--vh) * 12);
+  min-height: calc(var(--vh) * 100);
 }
 .field {
   display: grid;
@@ -930,6 +922,635 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-mist);
+}
+
+/* =====================================================================================
+   M3 — Chapters 4–7, enquiry, footer
+   ===================================================================================== */
+.chapter-frame[data-visible="true"] label,
+.chapter-frame[data-visible="true"] input {
+  pointer-events: auto;
+}
+/* Dark reading fields behind type on the hair (as Chapter 2): opacity follows the type. */
+.ch4-frame::before,
+.ch5-frame::before,
+.ch7-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgb(10 9 8 / 0.86) 0%, rgb(10 9 8 / 0.7) 34%, rgb(10 9 8 / 0) 62%);
+  opacity: var(--field, 0);
+}
+.ch5-frame::before {
+  background: linear-gradient(90deg, rgb(10 9 8 / 0.9) 0%, rgb(10 9 8 / 0.78) 44%, rgb(10 9 8 / 0) 72%);
+}
+@media (orientation: portrait) {
+  .ch4-frame::before,
+  .ch5-frame::before,
+  .ch7-frame::before {
+    background: linear-gradient(0deg, rgb(10 9 8 / 0.92) 0%, rgb(10 9 8 / 0.82) 45%, rgb(10 9 8 / 0) 72%);
+  }
+  .ch5-frame::before {
+    background: linear-gradient(0deg, rgb(10 9 8 / 0.95) 0%, rgb(10 9 8 / 0.9) 72%, rgb(10 9 8 / 0) 94%);
+  }
+}
+
+/* Chapter 4 — FUTURA */
+.ch4-printed {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.5rem;
+  color: var(--espresso);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.ch4-printed .numeral-ivory,
+.ch6-intro .numeral-ivory {
+  position: static;
+  margin: 0;
+}
+.ch4-printed-name {
+  margin: 0;
+  font-size: clamp(2.6rem, 1rem + 6vw, 7rem);
+  letter-spacing: 0.32em;
+  margin-right: -0.32em; /* optical centring of the tracked word */
+  line-height: 1;
+}
+.ch4-content {
+  position: absolute;
+  left: var(--margin);
+  top: 50%;
+  translate: 0 -50%;
+  max-width: min(40vw, 620px);
+}
+.ch4-title {
+  margin: 0;
+  font-size: clamp(4rem, 1rem + 9vw, 10.5rem);
+  line-height: 0.9;
+  letter-spacing: 0.06em;
+  color: #eef0f0; /* pearl: the light has cooled to pearl in this chapter */
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.ch4-title .placeholder-tag {
+  display: table;
+  margin: 1.1rem 0 0;
+  color: var(--color-mist);
+  opacity: 1;
+  letter-spacing: 0.14em;
+}
+.ch4-line {
+  margin: 1.5rem 0 0;
+  max-width: 30ch;
+  font-size: clamp(1.05rem, 0.9rem + 0.4vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--color-ivory);
+  opacity: 0;
+}
+@media (orientation: portrait) {
+  .ch4-content {
+    top: auto;
+    bottom: calc(var(--vh) * 11);
+    translate: none;
+    max-width: none;
+    right: var(--margin);
+  }
+  .ch4-title {
+    font-size: clamp(3.4rem, 1rem + 12vw, 6rem);
+  }
+}
+
+/* Chapter 5 — The Collection (pinned showcase; static: all products in flow) */
+.ch5-frame {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: calc(var(--vh) * 3);
+  padding: calc(var(--vh) * 11) var(--margin) calc(var(--vh) * 8);
+  --field: var(--ch5-shown, 0);
+}
+.ch5-head,
+.showcase {
+  position: relative;
+  opacity: var(--ch5-shown, 0);
+  max-width: min(56vw, 820px);
+  width: 100%;
+}
+.ch5-head .numeral {
+  font-size: clamp(56px, 8vh, 104px);
+  margin: 0 0 0.75rem;
+}
+.ch5-title {
+  margin: 0;
+  font-size: clamp(2.2rem, 1rem + 2.6vw, 3.6rem);
+  line-height: 1;
+}
+.ch5-intro {
+  margin: 0.9rem 0 0;
+  max-width: 44ch;
+  color: var(--color-mist);
+  line-height: 1.55;
+}
+.showcase-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.showcase-btn {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgb(242 236 226 / 0.35);
+  background: none;
+  color: var(--color-ivory);
+  font: 500 14px/1 var(--font-sans);
+  cursor: pointer;
+  transition: border-color 240ms;
+}
+.showcase-btn:hover {
+  border-color: var(--color-ivory);
+}
+.showcase-counter {
+  margin: 0;
+  font: 500 12px var(--font-sans);
+  letter-spacing: 0.2em;
+  color: var(--color-mist);
+  font-variant-numeric: tabular-nums;
+}
+.showcase-counter span {
+  color: var(--color-champagne);
+}
+.products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.product {
+  grid-area: 1 / 1;
+  transition:
+    opacity 520ms var(--ease-cinematic),
+    transform 520ms var(--ease-cinematic);
+}
+.product[data-active="false"] {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+}
+.chapter-frame[data-visible="true"] .product[data-active="false"] :is(a, button, label, input) {
+  pointer-events: none;
+}
+.product-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(20px, 2.4vw, 40px);
+  align-items: end;
+}
+.product-photo {
+  height: min(40vh, 400px);
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(242 236 226 / 0.05);
+  border: 1px solid rgb(242 236 226 / 0.2);
+}
+.product-photo-placeholder,
+.look-placeholder,
+.portrait-placeholder {
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+.product-photo-placeholder {
+  color: var(--color-mist);
+}
+.product-info {
+  display: grid;
+  justify-items: start;
+  gap: 0.7rem;
+}
+.product-count {
+  margin: 0;
+  font: 500 12px var(--font-sans);
+  letter-spacing: 0.2em;
+  color: var(--color-champagne);
+}
+.product-name {
+  margin: 0;
+  font-size: clamp(1.7rem, 1rem + 1.4vw, 2.6rem);
+  line-height: 1.05;
+}
+.product-info > .placeholder-tag {
+  margin: 0;
+  color: var(--color-mist);
+  opacity: 1;
+}
+.shades {
+  margin: 0.4rem 0 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+}
+.shades-legend {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+.swatch {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  min-width: 48px;
+  cursor: pointer;
+}
+.swatch input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.swatch-chip {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 11px;
+  color: var(--color-mist);
+  box-shadow: 0 0 0 1px rgb(242 236 226 / 0.3);
+  transition: box-shadow 200ms;
+}
+.swatch-pending {
+  background: repeating-linear-gradient(135deg, rgb(242 236 226 / 0.08) 0 4px, transparent 4px 8px);
+}
+.swatch input:checked + .swatch-chip {
+  box-shadow:
+    0 0 0 2px var(--color-ink),
+    0 0 0 3px var(--color-champagne);
+}
+.swatch input:focus-visible + .swatch-chip {
+  outline: 2px solid var(--color-champagne);
+  outline-offset: 5px;
+}
+.swatch-name {
+  font-size: 12px;
+  color: var(--color-ivory);
+}
+.product-price {
+  margin: 0.3rem 0 0;
+  font-size: 15px;
+  color: var(--color-ivory);
+}
+.product-claims {
+  margin: 0;
+  padding-left: 1.1em;
+  color: var(--color-mist);
+  font-size: 14px;
+}
+.product-enquire {
+  margin-top: 0.4rem;
+}
+@media (orientation: portrait) {
+  .ch5-frame {
+    align-content: end;
+    gap: calc(var(--vh) * 2);
+    padding: calc(var(--vh) * 10) var(--margin) calc(var(--vh) * 7);
+  }
+  .ch5-head,
+  .showcase {
+    max-width: none;
+  }
+  .ch5-head .numeral {
+    display: none;
+  }
+  .ch5-title {
+    font-size: 2rem;
+  }
+  .ch5-intro {
+    font-size: 14px;
+    margin-top: 0.5rem;
+  }
+  .showcase-controls {
+    margin-bottom: 0.75rem;
+  }
+  .product-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .product-photo {
+    height: calc(var(--vh) * 21);
+  }
+  .product-info {
+    gap: 0.5rem;
+  }
+  .product-name {
+    font-size: 1.6rem;
+  }
+}
+
+/* Chapter 6 — Lookbook (printed on the ivory page) */
+.ch6-frame {
+  color: var(--espresso);
+}
+.ch6-intro {
+  position: absolute;
+  right: calc(var(--margin) + 32px);
+  top: calc(var(--vh) * 11);
+  width: min(26vw, 380px);
+  display: grid;
+  justify-items: end;
+  text-align: right;
+  opacity: calc(var(--ch6-intro, 0) * var(--ride, 1));
+  will-change: opacity, transform;
+}
+.ch6-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 1rem + 2.6vw, 4rem);
+  line-height: 1;
+}
+.ch6-spread {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr 1fr;
+  grid-template-rows: 1fr auto;
+  column-gap: clamp(20px, 2.6vw, 44px);
+  row-gap: calc(var(--vh) * 3);
+  align-items: start;
+  padding: calc(var(--vh) * 14) calc(var(--margin) + 32px) calc(var(--vh) * 9) var(--margin);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.look {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.look-2 {
+  margin-top: calc(var(--vh) * 9);
+}
+.look-3 {
+  margin-top: calc(var(--vh) * 3);
+}
+.look-mount {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: var(--ivory-deep);
+  border: 1px solid rgb(28 22 18 / 0.12);
+}
+.look-1 .look-mount {
+  aspect-ratio: 4 / 5;
+  max-height: calc(var(--vh) * 52);
+}
+.look-2 .look-mount {
+  aspect-ratio: 3 / 4;
+  max-height: calc(var(--vh) * 40);
+}
+.look-3 .look-mount {
+  aspect-ratio: 4 / 5;
+  max-height: calc(var(--vh) * 46);
+}
+.look-placeholder {
+  color: rgb(28 22 18 / 0.72);
+}
+.look-caption {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgb(28 22 18 / 0.72);
+}
+.ch6-line .placeholder-tag {
+  opacity: 1;
+  color: rgb(28 22 18 / 0.72);
+}
+.ch6-line {
+  grid-column: 1 / 3;
+  margin: 0;
+  font-size: clamp(1.4rem, 1rem + 1vw, 2rem);
+  line-height: 1.25;
+}
+.ch6-status {
+  grid-column: 3;
+  align-self: end;
+  margin: 0;
+  font-size: 13px;
+  color: rgb(28 22 18 / 0.72);
+}
+@media (orientation: portrait) {
+  .ch6-intro {
+    left: var(--margin);
+    right: var(--margin);
+    top: auto;
+    bottom: calc(var(--vh) * 12);
+    width: auto;
+    justify-items: start;
+    text-align: left;
+  }
+  .ch6-intro .numeral-ivory {
+    font-size: 64px;
+  }
+  .ch6-spread {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    align-content: start;
+    column-gap: 14px;
+    row-gap: 14px;
+    padding: calc(var(--vh) * 11) var(--margin) calc(var(--vh) * 6);
+  }
+  .look-1 {
+    grid-column: 1 / -1;
+  }
+  .look-1 .look-mount {
+    aspect-ratio: 4 / 3;
+    max-height: calc(var(--vh) * 30);
+  }
+  .look-2,
+  .look-3 {
+    margin-top: 0;
+  }
+  .look-2 .look-mount,
+  .look-3 .look-mount {
+    aspect-ratio: 4 / 5;
+    max-height: calc(var(--vh) * 25);
+  }
+  .ch6-line,
+  .ch6-status {
+    grid-column: 1 / -1;
+  }
+  .ch6-line {
+    font-size: 1.3rem;
+  }
+}
+
+/* Chapter 7 — The promise */
+.ch7-frame {
+  --field: var(--ch7-field, 0);
+}
+.ch7-content {
+  position: absolute;
+  left: var(--margin);
+  right: var(--margin);
+  bottom: calc(var(--vh) * 14);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.ch7-content .numeral {
+  font-size: clamp(64px, 8vh, 110px);
+  margin: 0 0 1rem;
+}
+.ch7-title {
+  margin: 0;
+}
+.ch7-note {
+  margin: 1.5rem 0 0;
+  max-width: 52ch;
+  font-size: 14px;
+  color: var(--color-mist);
+}
+@media (orientation: portrait) {
+  .ch7-content {
+    bottom: calc(var(--vh) * 10);
+  }
+  .ch7-content .numeral {
+    font-size: 64px;
+  }
+}
+
+/* Enquiry */
+.enquire-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2rem clamp(2rem, 6vw, 7rem);
+  align-items: start;
+}
+.enquire-inner > .label,
+.enquire-title,
+.enquire-status {
+  grid-column: 1;
+}
+.enquire-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 1rem + 3.4vw, 4.6rem);
+  line-height: 1;
+}
+.enquire-status {
+  margin: 0;
+  max-width: 38ch;
+  color: var(--color-mist);
+  line-height: 1.6;
+}
+.enquire-form {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  display: grid;
+  gap: 1.25rem;
+}
+.field label {
+  color: var(--color-ivory);
+}
+.field-error {
+  margin: 0;
+  color: #f2a491;
+  font-size: 13px;
+}
+.field [aria-invalid="true"] {
+  border-color: #f2a491;
+}
+.field :is(input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-champagne);
+  outline-offset: 2px;
+}
+.enquire-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.enquire-actions .btn-primary {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+}
+.enquire-result:empty {
+  display: none;
+}
+.enquire-result {
+  padding: 0.9rem 1rem;
+  border: 1px solid rgb(242 236 226 / 0.25);
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.enquire-result[data-state="ok"] {
+  border-color: var(--color-champagne);
+}
+.enquire-result[data-state="error"] {
+  border-color: #f2a491;
+}
+.enquire-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-mist);
+}
+@media (max-width: 899px) {
+  .enquire-inner {
+    grid-template-columns: 1fr;
+  }
+  .enquire-form {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 1rem;
+  }
+}
+
+/* Footer */
+.footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+}
+.footer-logo {
+  justify-self: start;
+  color: var(--color-ivory);
+}
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+.footer-links a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--color-ivory);
+}
+.footer-links a:hover {
+  color: var(--color-champagne);
+}
+.footer-legal {
+  margin: 0;
 }
 
 /* Static / reduced-motion spreads: no pins, everything visible, printed-page layout */
@@ -979,4 +1600,116 @@ body {
 }
 :root[data-static="true"] .paper-layer {
   display: none;
+}
+
+/* M3: static / reduced-motion Chapters 4–7: printed spreads in normal flow. */
+:root[data-static="true"] :is(.ch4, .ch5, .ch6, .ch7) {
+  height: auto;
+}
+:root[data-static="true"] :is(.ch4-frame, .ch5-frame, .ch6-frame, .ch7-frame) {
+  height: auto;
+  min-height: calc(var(--vh) * 100);
+  overflow: hidden;
+  --field: 1;
+}
+:root[data-static="true"] .ch4-printed {
+  display: none;
+}
+:root[data-static="true"] :is(.ch4-title, .ch4-line, .ch7-content, .ch6-spread) {
+  opacity: 1 !important;
+  transform: none !important;
+}
+:root[data-static="true"] .ch4-frame,
+:root[data-static="true"] .ch7-frame {
+  display: grid;
+  align-items: center;
+}
+:root[data-static="true"] .ch4-content,
+:root[data-static="true"] .ch7-content {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  top: auto;
+  translate: none;
+  z-index: 1;
+  margin: calc(var(--vh) * 16) var(--margin);
+}
+:root[data-static="true"] .ch5-frame {
+  --ch5-shown: 1;
+  padding-top: calc(var(--vh) * 14);
+}
+:root[data-static="true"] :is(.ch5-head, .showcase) {
+  z-index: 1;
+  max-width: 1180px;
+}
+:root[data-static="true"] .products {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2.5rem 2rem;
+}
+:root[data-static="true"] .product {
+  grid-area: auto;
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+:root[data-static="true"] .product-card {
+  grid-template-columns: 1fr;
+}
+:root[data-static="true"] .product-photo {
+  height: auto;
+  width: 100%;
+  max-width: 320px;
+}
+:root[data-static="true"] .ch6-frame {
+  background: var(--color-ivory);
+  display: grid;
+  align-content: start;
+  padding: calc(var(--vh) * 14) 0 calc(var(--vh) * 8);
+}
+:root[data-static="true"] .ch6-intro {
+  justify-items: start;
+  text-align: left;
+  position: relative;
+  inset: auto;
+  width: auto;
+  margin: 0 var(--margin) calc(var(--vh) * 4);
+  opacity: 1;
+  transform: none !important;
+}
+:root[data-static="true"] .ch6-spread {
+  position: relative;
+  inset: auto;
+  padding-top: 0;
+}
+:root[data-static="true"] .spread-still {
+  z-index: 0;
+}
+/* Static Chapter 5: the products sit on ink below the still's hair (contrast for all text). */
+:root[data-static="true"] .ch5-frame::before {
+  z-index: 1;
+  background: linear-gradient(180deg, rgb(10 9 8 / 0.5) 0, rgb(10 9 8 / 0.9) calc(var(--vh) * 40), rgb(10 9 8 / 0.96) 100%);
+}
+:root[data-static="true"] :is(.ch5-head, .showcase) {
+  z-index: 2;
+}
+/* 404 */
+.not-found {
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 1.25rem;
+  padding: 0 var(--margin);
+  background: var(--color-ink);
+  color: var(--color-ivory);
+}
+.not-found-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 1rem + 4vw, 4.5rem);
+  line-height: 1;
+}
+.not-found-text {
+  margin: 0 0 0.75rem;
+  color: var(--color-mist);
 }

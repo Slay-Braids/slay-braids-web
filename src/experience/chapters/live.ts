@@ -1,5 +1,5 @@
 /**
- * Live Chapters 1–3: binds the scene's chapter camera, the DOM driver and the Chapter 3 page to
+ * Live Chapters 1–7 (M3 extends M2): binds the scene's chapter camera, the DOM driver and the Chapter 3 page to
  * one clock. Loaded lazily with the scene chunk (never on tier C).
  *
  * Per animation frame, in this order (all in the same task, so they reach the screen together):
@@ -9,8 +9,10 @@
 import type { CascadeScene, FrameState } from "../cascade/CascadeScene";
 import type { Orientation } from "../cascade/geometry";
 import { FRAMING } from "../framing";
-import { CHAPTER_LAYOUT, cameraTimeline } from "./cameraTimeline";
-import { ChapterDriver, ch3State, smooth, type Ch3State } from "./driver";
+import { CHAPTER_LAYOUT, cameraTimeline, storyStops } from "./cameraTimeline";
+import { ChapterDriver, smooth, type Ch3State } from "./driver";
+import { STORY, chapterIndex, pageState, pearlAt, productVh, type PageState } from "./story";
+import { products } from "../../content/products";
 import { GuideStrand, project } from "./guideStrand";
 import { DEFAULT_TOGGLES, Paper, type PaperToggles } from "./paper";
 import type { ChapterFlags } from "./flags";
@@ -21,15 +23,20 @@ export const PAPER_GAP = 7;
 export interface ChapterFrameInfo {
   fs: FrameState;
   s3: Ch3State;
+  page: PageState | null;
   edge?: [number, number][];
   edgeMs: number;
   inTransition: boolean;
 }
 
+type GuideId = PageState["guide"];
+
 export class LiveChapters {
   readonly driver: ChapterDriver;
   readonly paper: Paper;
   guide: GuideStrand;
+  /** Guide strands for the later page moments (Chapter 4 lift, Chapter 6 lookbook). */
+  guides: Partial<Record<GuideId, GuideStrand>> = {};
   toggles: PaperToggles = { ...DEFAULT_TOGGLES };
   /** Extra hook for the HUD and the lab. */
   onChapterFrame?: (info: ChapterFrameInfo) => void;
@@ -39,6 +46,10 @@ export class LiveChapters {
   private opaque: HTMLElement | null;
   private groundSections: HTMLElement[];
   private ch3Content: HTMLElement | null;
+  private ch4Printed: HTMLElement | null;
+  private ch6Intro: HTMLElement | null;
+  private ch6Spread: HTMLElement | null;
+  private onJump = (e: Event) => this.setScrollPx((e as CustomEvent<number>).detail, true);
   private paused = false;
   private onScroll = () => this.maybeResume();
   private tmp = new Float64Array(2);
@@ -58,9 +69,13 @@ export class LiveChapters {
     this.opaque = root.querySelector("[data-opaque]");
     this.groundSections = [...root.querySelectorAll<HTMLElement>("[data-ground-section]")];
     this.ch3Content = root.querySelector("[data-ch3-content]");
+    this.ch4Printed = root.querySelector("[data-ch4-printed]");
+    this.ch6Intro = root.querySelector("[data-ch6-intro]");
+    this.ch6Spread = root.querySelector("[data-ch6-spread]");
     this.guide = new GuideStrand(scene.geometry, orientation);
     this.attach(scene, orientation);
     addEventListener("scroll", this.onScroll, { passive: true });
+    addEventListener("slay:jump", this.onJump);
   }
 
   get currentScene() {
@@ -76,7 +91,11 @@ export class LiveChapters {
     this.scene = scene;
     this.orientation = orientation;
     this.driver.orientation = orientation;
-    scene.setCameraTimeline(cameraTimeline(orientation));
+    const S = STORY[orientation];
+    const centres = products.map((_, i) => productVh(orientation, i));
+    scene.setCameraTimeline(cameraTimeline(orientation, storyStops(orientation, S, centres)), (vh) =>
+      pearlAt(orientation, vh),
+    );
     if (this.flags.windT != null) scene.freezeWindAt(this.flags.windT);
     this.guide = new GuideStrand(scene.geometry, orientation);
     this.reselect();
@@ -87,6 +106,15 @@ export class LiveChapters {
   reselect() {
     const k2 = CHAPTER_LAYOUT[this.orientation].stops[3];
     this.guide.select(this.scene.frameStateAt(k2));
+    const S = STORY[this.orientation];
+    // M3: one guide per pose at which the page meets the hair (K3 in Chapter 4, K5 in Chapter 6).
+    const at: Record<"ch4" | "ch6", number> = { ch4: S.ch4Lift[1], ch6: S.ch6Arrive[1] };
+    for (const id of ["ch4", "ch6"] as const) {
+      const g = new GuideStrand(this.scene.geometry, this.orientation);
+      g.select(this.scene.frameStateAt(at[id]));
+      this.guides[id] = g;
+    }
+    this.guides.ch3 = this.guide;
   }
 
   setScrollPx(y: number, immediate = false) {
@@ -98,7 +126,13 @@ export class LiveChapters {
     ch1: [] as number[],
     ch2: [] as number[],
     ch3: [] as number[],
+    ch4: [] as number[],
+    ch5: [] as number[],
+    ch6: [] as number[],
+    ch7: [] as number[],
     transition: [] as number[],
+    /** Every frame in which a page edge is on screen (Chapters 3, 4, 6, 7). */
+    page: [] as number[],
     edgeMs: [] as number[],
   };
 
@@ -112,21 +146,28 @@ export class LiveChapters {
   frame(dt?: number) {
     const fs = this.scene.frameState();
     const s3 = this.driver.update(fs.scroll);
+    const page = pageState(this.orientation, fs.scroll);
     let edge: [number, number][] | undefined;
     let edgeMs = 0;
-    const inTransition = s3.open > 0 && s3.away < 1;
-    if (s3.open > 0) {
+    const inTransition = !!page && page.guide === "ch3" && page.away < 1;
+    const landscape = this.orientation === "landscape";
+    const along = (dx: number) =>
+      `translate3d(${(landscape ? dx : 0).toFixed(2)}px, ${(landscape ? 0 : dx).toFixed(2)}px, 0)`;
+    if (page) {
       const t0 = performance.now();
-      edge = this.guide.edge(fs);
-      let spill: { x: number; y: number } | undefined;
+      edge =
+        page.straighten === 1
+          ? straightEdge(this.orientation, fs.cssWidth, fs.cssHeight, page.guide === "ch4" ? (landscape ? 0.6 : 1) : 0.5)
+          : (this.guides[page.guide] ?? this.guide).edge(fs);
       const kp = FRAMING[this.orientation].keyPool;
       project(kp[0], kp[1], kp[2], fs, this.tmp);
-      spill = { x: this.tmp[0]!, y: this.tmp[1]! };
+      const spill = { x: this.tmp[0]!, y: this.tmp[1]! };
       const placed = this.paper.render({
         edge,
-        side: this.orientation === "landscape" ? "right" : "bottom",
-        open: s3.open,
-        away: s3.away,
+        side: landscape ? "right" : "bottom",
+        open: page.open,
+        away: page.away,
+        straighten: page.straighten,
         width: fs.cssWidth,
         height: fs.cssHeight,
         gap: PAPER_GAP,
@@ -135,26 +176,36 @@ export class LiveChapters {
       });
       edgeMs = performance.now() - t0;
       // Content printed on the page travels with it, and fades as the page closes over the hair.
-      if (this.ch3Content && placed) {
-        const landscape = this.orientation === "landscape";
-        const dx = landscape ? placed.off : 0;
-        const dy = landscape ? 0 : placed.off;
-        this.ch3Content.style.transform = `translate3d(${dx.toFixed(2)}px, ${dy.toFixed(2)}px, 0)`;
-        this.ch3Content.style.opacity = (1 - smooth((s3.away - 0.05) / 0.45)).toFixed(3);
+      if (placed) {
+        const fade = (1 - smooth((page.away - 0.05) / 0.45)).toFixed(3);
+        if (page.guide === "ch3" && this.ch3Content) {
+          this.ch3Content.style.transform = along(placed.off);
+          this.ch3Content.style.opacity = fade;
+        }
+        if (page.guide === "ch6" && this.ch6Intro && !page.straighten) {
+          this.ch6Intro.style.transform = along(placed.off);
+          this.ch6Intro.style.setProperty("--ride", fade);
+        }
+        // Chapter 4: the printed FUTURA rides the page as it draws back from full cover.
+        if (page.guide === "ch4" && this.ch4Printed) this.ch4Printed.style.transform = along(placed.fromCover);
+        // Chapter 7: the lookbook spread rides the last lift off the screen.
+        if (page.guide === "ch6" && page.straighten && this.ch6Spread)
+          this.ch6Spread.style.transform = along(placed.fromCover);
       }
     } else {
       this.paper.hide();
     }
     this.updateGrounds();
     if (dt != null) {
-      const L = CHAPTER_LAYOUT[this.orientation];
-      this.record(fs.scroll < L.ch2[0] ? "ch1" : fs.scroll < L.ch3[0] ? "ch2" : "ch3", dt);
+      const keys = ["ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "ch7"] as const;
+      this.record(keys[chapterIndex(this.orientation, fs.scroll)]!, dt);
       if (inTransition) {
         this.record("transition", dt);
         this.record("edgeMs", edgeMs);
       }
+      if (page && !page.full) this.record("page", dt);
     }
-    this.onChapterFrame?.({ fs, s3, edge, edgeMs, inTransition });
+    this.onChapterFrame?.({ fs, s3, page, edge, edgeMs, inTransition });
     this.maybePause();
   }
 
@@ -180,11 +231,12 @@ export class LiveChapters {
   }
 
   /**
-   * I4: stop rendering only while nothing of the hair can be seen: the Chapter 3 page covers the
-   * whole screen, or an opaque section does. Judged from the raw scroll position.
+   * I4: stop rendering only while nothing of the hair can be seen: a page covers the whole
+   * screen (end of Chapter 3, start of Chapter 4, the Chapter 6 spread), or an opaque section
+   * does. Judged from the raw scroll position.
    */
   private covered() {
-    if (ch3State(this.orientation, scrollY / vhPx()).away >= 0.9995) return true;
+    if (pageState(this.orientation, scrollY / vhPx())?.full) return true;
     return !!this.opaque && this.opaque.getBoundingClientRect().top <= 0;
   }
 
@@ -219,6 +271,21 @@ export class LiveChapters {
 
   dispose() {
     removeEventListener("scroll", this.onScroll);
+    removeEventListener("slay:jump", this.onJump);
     this.paper.hide();
   }
+}
+
+/**
+ * A straight page edge, the page lifted clear of the hair: Chapter 4 (rests beside the FUTURA
+ * title on desktop; on mobile it lifts straight off, as the title sits where it would rest) and
+ * the last lift in Chapter 7.
+ */
+function straightEdge(o: Orientation, w: number, h: number, at: number): [number, number][] {
+  const n = 12;
+  const out: [number, number][] = [];
+  for (let i = 0; i <= n; i++) {
+    out.push(o === "landscape" ? [w * at, (h * i) / n] : [(w * i) / n, h * at]);
+  }
+  return out;
 }

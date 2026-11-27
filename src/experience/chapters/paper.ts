@@ -23,6 +23,8 @@ export interface PaperFrame {
   open: number;
   /** 0 = resting against the hair, 1 = covering the whole screen. */
   away: number;
+  /** M3: forced edge straightening 0–1 (default: derived from `away`, as in Chapter 3). */
+  straighten?: number;
   width: number;
   height: number;
   /** Gap between the hair envelope and the page edge, px. */
@@ -170,7 +172,7 @@ export class Paper {
    *    from the hair's shape to a straight line on the way (a hair-shaped cut-out never travels
    *    away from the hair it was cut to).
    */
-  render(fr: PaperFrame): { off: number } | undefined {
+  render(fr: PaperFrame): { off: number; fromCover: number } | undefined {
     if (fr.open <= 0.0005 || fr.edge.length < 2) {
       this.hide();
       return undefined;
@@ -197,14 +199,14 @@ export class Paper {
         p.style.display = "none";
       this.spill.style.display = "none";
       this.last = { edge: [], side: fr.side, visible: true, full: true };
-      return { off: -extent };
+      return { off: -extent, fromCover: 0 };
     }
 
     const vals = fr.edge.map((p) => p[o]);
     const min = Math.min(...vals);
     const max = Math.max(...vals);
     const mean = vals.reduce((s, v) => s + v, 0) / vals.length;
-    const straighten = smoothstep(fr.away / 0.6);
+    const straighten = fr.straighten ?? smoothstep(fr.away / 0.6);
     const off = (1 - fr.open) * (extent - min + 80) - fr.away * (max + fr.gap + 80);
     const placed: [number, number][] = fr.edge.map((p) => {
       const v = p[o] + (mean - p[o]) * straighten + off + fr.gap;
@@ -256,7 +258,9 @@ export class Paper {
       this.spill.style.display = "none";
     }
     this.last = { edge: placed, side: fr.side, visible: true, full: false };
-    return { off };
+    // fromCover: how far the page has travelled from the place it covers the screen from, so
+    // type printed on the covering page can ride it as it draws back (Chapter 4).
+    return { off, fromCover: off + (max + fr.gap + 80) };
   }
 }
 

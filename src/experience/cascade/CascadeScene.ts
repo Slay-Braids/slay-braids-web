@@ -90,6 +90,7 @@ export class CascadeScene {
   private onFrame?: (dtMs: number) => void;
   // M2 (isolated, outside the locked look): timeline camera and deterministic review controls.
   private timeline?: (vh: number) => CameraKey;
+  private pearlCurve?: (vh: number) => number;
   private timeFrozen = false;
   private cssWidth = 1;
   private cssHeight = 1;
@@ -192,8 +193,10 @@ export class CascadeScene {
     (this.material.uniforms.uCamUp!.value as Vector3).set(e[4]!, e[5]!, e[6]!);
     // FUTURA chapter (between keys 2 and 3) cools the light towards pearl. In the M2 chapter
     // timeline the pearl shift belongs to Chapter 4, so Chapters 1–3 keep the default light.
+    // M3: the timeline may supply its own pearl curve (0 throughout Chapters 1–3); the locked
+    // uniform itself and its range are unchanged.
     const pearl = this.timeline
-      ? 0
+      ? (this.pearlCurve?.(progress) ?? 0)
       : smooth(0.42, 0.55, progress) * (1 - smooth(0.82, 0.95, progress));
     this.material.uniforms.uPearl!.value = pearl;
   }
@@ -203,8 +206,9 @@ export class CascadeScene {
   }
 
   /** M2: drive the camera from the chapter timeline (scroll position in vh). */
-  setCameraTimeline(fn: (vh: number) => CameraKey) {
+  setCameraTimeline(fn: (vh: number) => CameraKey, pearl?: (vh: number) => number) {
     this.timeline = fn;
+    this.pearlCurve = pearl;
     this.scroll = 0;
     this.scrollTarget = 0;
   }

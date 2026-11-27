@@ -49,8 +49,8 @@ function build(o: Orientation): StoryLayout {
       ch6: [ch5End, ch6End],
       ch7: [ch6End, ch6End + 200],
       ch4Cover: [end3, end3 + 60],
-      ch4Lift: [end3 + 60, end3 + 120],
-      ch4Retreat: [end3 + 140, end3 + 190],
+      ch4Lift: [end3 + 60, end3 + 110],
+      ch4Retreat: [end3 + 125, end3 + 165],
       ch5Intro: 25,
       ch5Step: 50,
       ch6Arrive: [ch5End, ch5End + 50],
@@ -68,8 +68,8 @@ function build(o: Orientation): StoryLayout {
     ch6: [ch5End, ch6End],
     ch7: [ch6End, ch6End + 180],
     ch4Cover: [end3, end3 + 50],
-    ch4Lift: [end3 + 50, end3 + 100],
-    ch4Retreat: [end3 + 115, end3 + 160],
+    ch4Lift: [end3 + 50, end3 + 95],
+    ch4Retreat: [end3 + 110, end3 + 145],
     ch5Intro: 40,
     ch5Step: 80,
     ch6Arrive: [ch5End, ch5End + 40],
@@ -127,15 +127,17 @@ export function pageState(o: Orientation, vh: number): PageState | null {
     if (open <= 0) return null;
     return { guide: "ch3", open, away, full: away >= 0.9995 };
   }
-  // Chapter 4: full cover → the edge forms on the hair (away 1 → 0) → the page draws back.
-  if (vh < S.ch4Lift[0]) return { guide: "ch4", open: 1, away: 1, full: true };
+  // Chapter 4: full cover → the page lifts with a straight edge and rests beside the FUTURA
+  // title (at K3 the hair reaches the screen's far side, so there is no hair edge to meet) →
+  // it draws back off the screen.
+  if (vh < S.ch4Lift[0]) return { guide: "ch4", open: 1, away: 1, straighten: 1, full: true };
   if (vh < S.ch4Retreat[0]) {
     const away = 1 - ease(range(vh, S.ch4Lift));
-    return { guide: "ch4", open: 1, away, full: away >= 0.9995 };
+    return { guide: "ch4", open: 1, away, straighten: 1, full: away >= 0.9995 };
   }
   if (vh < S.ch4Retreat[1]) {
     const open = 1 - ease(range(vh, S.ch4Retreat));
-    return open > 0.0005 ? { guide: "ch4", open, away: 0, full: false } : null;
+    return open > 0.0005 ? { guide: "ch4", open, away: 0, straighten: 1, full: false } : null;
   }
   // Chapter 6: the page meets the hair again, then closes to full cover for the spread.
   if (vh < S.ch6Arrive[0]) return null;
@@ -161,7 +163,8 @@ export function chapterIndex(o: Orientation, vh: number): number {
   const S = STORY[o];
   const starts = [0, L.ch2[0], L.ch3[0], S.ch4[0], S.ch5[0], S.ch6[0], S.ch7[0]];
   let i = 0;
-  for (let k = 0; k < starts.length; k++) if (vh >= starts[k]!) i = k;
+  // Strictly after a chapter's first position, as the M2 index did (Chapter 2 at 100 vh is still 1).
+  for (let k = 1; k < starts.length; k++) if (vh > starts[k]!) i = k;
   return i;
 }
 
@@ -190,8 +193,9 @@ export function pearlAt(o: Orientation, vh: number): number {
 export function ch4State(o: Orientation, vh: number) {
   const S = STORY[o];
   const printed = vh >= S.ch4[0] ? 1 - smooth(range(vh, [S.ch4Lift[0] - 5, S.ch4Lift[0] + 25])) : 0;
-  const title = smooth(range(vh, [S.ch4Lift[1] - 10, S.ch4Lift[1] + 30])) * (1 - smooth(range(vh, [S.ch4[1] - 30, S.ch4[1] + 5])));
-  const line = smooth(range(vh, [S.ch4Retreat[0], S.ch4Retreat[0] + 30])) * (1 - smooth(range(vh, [S.ch4[1] - 30, S.ch4[1] + 5])));
+  const out = 1 - smooth(range(vh, [S.ch4[1] - 25, S.ch4[1] + 5]));
+  const title = smooth(range(vh, [S.ch4Lift[1] - 10, S.ch4Lift[1] + 30])) * out;
+  const line = smooth(range(vh, [S.ch4Retreat[0] + 15, S.ch4Retreat[0] + 45])) * out;
   return { printed, title, line, visible: printed > 0.001 || title > 0.001 || line > 0.001 };
 }
 
@@ -209,8 +213,8 @@ export function ch6State(o: Orientation, vh: number) {
   const S = STORY[o];
   const intro = smooth(range(vh, [S.ch6Arrive[0] + 15, S.ch6Arrive[1] + 10]));
   const spread = smooth(range(vh, [S.ch6Close[1] - 10, S.ch6Close[1] + 15]));
-  const out = smooth(range(vh, [S.ch7Lift[0] - 5, S.ch7Lift[0] + 20]));
-  return { intro: intro * (1 - spread), spread: spread * (1 - out), visible: intro > 0.001 && out < 0.999 };
+  // The spread is printed on the page: in Chapter 7 it rides the page off the screen.
+  return { intro: intro * (1 - spread), spread, visible: intro > 0.001 && vh < S.ch7Lift[1] };
 }
 
 /** Ch 7 DOM: the promise returns. */
@@ -218,4 +222,56 @@ export function ch7State(o: Orientation, vh: number) {
   const S = STORY[o];
   const line = smooth(range(vh, [S.ch7Line - 20, S.ch7Line + 20]));
   return { line, visible: line > 0.001 };
+}
+
+/**
+ * Where the chapter links land in the live experience (vh): each chapter at its settled state,
+ * not at its first frame (Chapter 4 would otherwise open on the covering page).
+ */
+export function landingVh(o: Orientation, id: string): number | undefined {
+  const S = STORY[o];
+  switch (id) {
+    case "ch4":
+      return S.ch4[1] - 35;
+    case "ch5":
+      return productVh(o, 0);
+    case "ch6":
+      return S.ch6Close[1] + 25;
+    case "ch7":
+      return S.ch7Line + 25;
+    default:
+      return undefined;
+  }
+}
+
+/** Whole story length in vh (Chapters 1–7), i.e. where the enquiry section begins. */
+export const STORY_END: Record<Orientation, number> = {
+  landscape: STORY.landscape.ch7[1],
+  portrait: STORY.portrait.ch7[1],
+};
+
+/** Chapter (and Chapter 5 product) boundaries in vh, in reading order, to the end of Chapter 7. */
+export function boundaries(o: Orientation): number[] {
+  const L = CHAPTER_LAYOUT[o];
+  const S = STORY[o];
+  // Chapter 5 is split at each product step, so a rotation keeps the same product on screen.
+  const steps = Array.from({ length: N }, (_, i) => S.ch5[0] + S.ch5Intro + i * S.ch5Step);
+  return [0, L.ch2[0], L.ch3[0], S.ch4[0], S.ch5[0], ...steps, S.ch6[0], S.ch7[0], S.ch7[1]].filter(
+    (v, i, a) => i === 0 || v > a[i - 1]!,
+  );
+}
+
+/**
+ * The same place in the story after a rotation: the position keeps its chapter and its
+ * progress through that chapter (the two orientations have different chapter lengths).
+ * Past Chapter 7 (enquiry, footer) the distance from the end is kept.
+ */
+export function mapVh(from: Orientation, to: Orientation, vh: number): number {
+  const a = boundaries(from);
+  const b = boundaries(to);
+  if (vh >= a.at(-1)!) return b.at(-1)! + (vh - a.at(-1)!);
+  for (let i = 0; i < a.length - 1; i++) {
+    if (vh < a[i + 1]!) return b[i]! + ((vh - a[i]!) / (a[i + 1]! - a[i]!)) * (b[i + 1]! - b[i]!);
+  }
+  return vh;
 }

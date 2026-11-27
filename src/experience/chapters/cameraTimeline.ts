@@ -164,6 +164,10 @@ export function cameraTimeline(o: Orientation, extra: Stop[] = []): (vh: number)
     while (i < n - 2 && vh > stops[i + 1]!.at) i++;
     const a = stops[i]!;
     const b = stops[i + 1]!;
+    // A hold between two rest stops of the same pose returns that pose exactly (as the M2
+    // timeline did after K2), not a Hermite evaluation of it.
+    if (a.rest && b.rest && a.key === b.key) return a.key;
+    if (vh === b.at && b.rest) return b.key; // at a rest stop: the pose itself
     const h = b.at - a.at;
     const u = (vh - a.at) / h;
     const key: CameraKey = {

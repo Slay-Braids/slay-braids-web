@@ -4,7 +4,7 @@ import { anchorSrcSet } from "@/components/AnchorStage";
 
 export const metadata: Metadata = {
   title: "SLAY BRAIDS — Premium look. Affordable price.",
-  description: "Preview of the SLAY BRAIDS website (Chapters 1–3). Not for publication.",
+  description: "Preview of the SLAY BRAIDS website. Not for publication.",
   robots: { index: false, follow: false },
 };
 
@@ -17,12 +17,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    // data-static is on by default so the page is complete without JavaScript (the printed spreads);
+    // the inline script removes it before first paint when JavaScript runs.
+    <html lang="en" data-static="true" suppressHydrationWarning>
       <head>
         <link rel="icon" href="data:," />
         {/* Marks JS availability before paint so reveal styles never hide content without JS. */}
         <script
-          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+          dangerouslySetInnerHTML={{ __html:
+              "document.documentElement.classList.add('js');document.documentElement.removeAttribute('data-static')" }}
         />
         {/* The anchor still is the LCP element: preload the right orientation. */}
         <link

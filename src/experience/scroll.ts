@@ -54,8 +54,11 @@ export async function bindSmoothScroll(opts: { smooth: boolean }): Promise<() =>
   const tick = (time: number) => instance.raf(time * 1000);
   gsap.ticker.add(tick);
   gsap.ticker.lagSmoothing(0);
+  // M3: in-page navigation (chapter links, the showcase) scrolls through Lenis when it is active.
+  (window as unknown as { __lenis?: Lenis }).__lenis = instance;
   return () => {
     gsap.ticker.remove(tick);
     instance.destroy();
+    delete (window as unknown as { __lenis?: Lenis }).__lenis;
   };
 }
