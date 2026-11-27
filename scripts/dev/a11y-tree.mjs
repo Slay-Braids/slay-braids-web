@@ -1,0 +1,11 @@
+import { chromium } from "@playwright/test";
+const [, , flags = "?tier=A&nodowngrade=1", vh = "0"] = process.argv;
+const browser = await chromium.launch({ args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const page = await browser.newPage({ viewport: { width: 384, height: 832 }, deviceScaleFactor: 2.8125, isMobile: true, hasTouch: true });
+await page.goto(`http://127.0.0.1:4173/${flags}`);
+if (flags.includes("tier=A")) await page.waitForFunction(() => window.__slay?.live === true, null, { timeout: 180000 });
+else await page.waitForTimeout(2000);
+await page.evaluate((v) => scrollTo(0, v * parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--vh"))), +vh);
+await page.waitForTimeout(2500);
+console.log(await page.locator("#experience").ariaSnapshot());
+await browser.close();

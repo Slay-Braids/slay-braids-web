@@ -1,0 +1,18 @@
+import { chromium } from "@playwright/test";
+const [, , file, out] = process.argv;
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 384, height: 832 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
+const errs = []; page.on("pageerror", (e) => errs.push(e.message));
+await page.goto("file://" + file);
+await page.waitForTimeout(1500);
+await page.click('input[name="r-T1.1"][value="pass"] + span').catch((e) => errs.push("click " + e.message));
+await page.fill('textarea[name="n-T1.1"]', "probed 120, P99 0.01");
+await page.click("#show");
+const txt = await page.inputValue("#out");
+console.log(JSON.stringify(errs), "\n", txt.split("\n").slice(0, 6).join("\n"));
+const w = await page.evaluate(() => document.documentElement.scrollWidth);
+console.log("scrollWidth", w);
+await page.screenshot({ path: out, fullPage: false });
+await page.evaluate(() => document.getElementById("T2.1").scrollIntoView());
+await page.screenshot({ path: out.replace(".png", "-2.png") });
+await browser.close();
