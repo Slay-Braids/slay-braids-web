@@ -143,6 +143,12 @@ test.describe("lazy loading and fallbacks", () => {
     });
     await page.goto(url);
     await page.waitForLoadState("networkidle");
+    // Tier A: the scene chunk loads after the still has decoded and the browser is idle, which
+    // on a slow CI runner is later than network-idle. Wait for the experience to report it.
+    if (!url.includes("tier=C"))
+      await page
+        .waitForFunction(() => window.__slay?.marks.chunkLoaded != null, null, { timeout: 120_000 })
+        .catch(() => undefined);
     await page.waitForTimeout(1500);
     return { bytes, threeAt, anchorAt };
   }

@@ -191,19 +191,27 @@ test.describe("live chapters", () => {
     await page.waitForFunction(() => window.__slay?.live === true && !!window.__lab, null, {
       timeout: 120_000,
     });
-    // CI's CPU-rendered frames are slow: sample for longer there so the run has enough probe
-    // frames (> 3). The accuracy limits below are unchanged.
-    const runMs = process.env.CI ? 60_000 : 15_000;
-    const res = await page.evaluate((ms) => window.__lab!.run(ms, 1), runMs);
-    console.log(
-      `[accuracy] ${res.orientation} points ${res.guidePoints} · frames ${res.probedFrames} · point P99 ${res.pointError.p99.toFixed(4)} max ${res.pointError.max.toFixed(4)} · edge P99 ${res.edgeError.p99.toFixed(4)} max ${res.edgeError.max.toFixed(4)} px · pointer ${res.conditions.framesWithPointer} frames`,
-    );
-    expect(res.probedFrames).toBeGreaterThan(3);
-    expect(res.conditions.framesWithPointer).toBeGreaterThan(0);
-    expect(res.pointError.p99).toBeLessThanOrEqual(2);
-    expect(res.pointError.max).toBeLessThanOrEqual(3);
-    expect(res.edgeError.p99).toBeLessThanOrEqual(2);
-    expect(res.edgeError.max).toBeLessThanOrEqual(3);
+    // On CI's 2-core CPU renderer a probed frame can take many seconds, so one run may hold only
+    // 1–2 probes. Runs are repeated until more than 3 frames are probed in total, and EVERY run
+    // must meet the limits (P99 ≤ 2 px, max ≤ 3 px): stricter than a single run, never looser.
+    if (process.env.CI) test.setTimeout(480_000);
+    let probed = 0;
+    let pointerFrames = 0;
+    for (let i = 0; i < 6 && probed <= 3; i++) {
+      const res = await page.evaluate(() => window.__lab!.run(15_000, 1));
+      console.log(
+        `[accuracy] ${res.orientation} run ${i + 1} · points ${res.guidePoints} · frames ${res.probedFrames} · point P99 ${res.pointError.p99.toFixed(4)} max ${res.pointError.max.toFixed(4)} · edge P99 ${res.edgeError.p99.toFixed(4)} max ${res.edgeError.max.toFixed(4)} px · pointer ${res.conditions.framesWithPointer} frames`,
+      );
+      probed += res.probedFrames;
+      pointerFrames += res.conditions.framesWithPointer;
+      if (res.probedFrames === 0) continue;
+      expect(res.pointError.p99).toBeLessThanOrEqual(2);
+      expect(res.pointError.max).toBeLessThanOrEqual(3);
+      expect(res.edgeError.p99).toBeLessThanOrEqual(2);
+      expect(res.edgeError.max).toBeLessThanOrEqual(3);
+    }
+    expect(probed).toBeGreaterThan(3);
+    expect(pointerFrames).toBeGreaterThan(0);
   });
 });
 
