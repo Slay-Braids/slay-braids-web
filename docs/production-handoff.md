@@ -91,3 +91,10 @@ Source: `main`, merged from `claude/cool-ramanujan-0ln9mf` via [Slay-Braids/slay
 - **Header:** each part takes its colour from what lies under it; the white logo is used on red.
 - **New sections:** a red brand ribbon (motion off for reduced motion), "Find your look" (the four looks, linking into Chapter 5), and "Braids in full colour" (the studio photographs).
 - **Inspiration:** Lush Hair Africa (bold section heads, ribbon, style tiles). darlinghair.com refused automated access. Nothing was copied.
+- **Studio photographs:** 12 photos from the Drive upload of 27 Nov ("Braids in full colour"); one is also the Chapter 3 portrait, and the logo card is the share image. Their provenance still needs to be confirmed (see `docs/production-assets.md`).
+
+### Verification (27 Nov 2026, production deployment dpl_BqCCZ1Rf26Lg2zsFkP4TvvhtXKkc from main 4eb07e0, merged via [Slay-Braids/slay-braids-web#2](https://github.com/Slay-Braids/slay-braids-web/pull/2))
+- **Public access:** https://slaybraids.vercel.app returns 200 with no login, with indexing allowed. robots.txt, sitemap.xml, og.jpg, the studio photos and the anchor_v3 stills are served with the correct types. Previews still redirect to Vercel login (302).
+- **Smoke test, desktop 1440×900 and mobile 412×915:** 0 console errors and 0 failed requests. Every image in view loaded; the studio photos further down load lazily as you scroll. The 404 page works and the security headers are present. Screenshots are in `docs/review/prod-v3/`.
+- **Local suite on the release build:** unit 51/51; end-to-end 71 passed, 1 skipped (by design).
+- **Not done:** real-device testing (Galaxy A26, iPhone Safari, Samsung Internet).
