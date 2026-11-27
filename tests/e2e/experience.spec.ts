@@ -83,8 +83,13 @@ test.describe("anchor still → live 3D handoff", () => {
   });
 });
 
+// CI: GitHub's 2-core runner renders WebGL on the CPU (SwiftShader); these screenshot tests need
+// more time there (assertions unchanged). Both failed the same way before the production redesign.
+const CI_SLOW = "SwiftShader on a 2-core CI runner: frames take seconds";
+
 test("pointer parts the loose strands", async ({ page }, info) => {
   test.skip(info.project.name === "mobile", "touch drag covered on real devices");
+  test.slow(!!process.env.CI, CI_SLOW);
   await page.goto("/?tier=A&freeze=1&nodowngrade=1");
   await waitLive(page);
   await page.addStyleTag({ content: ISOLATE_STAGE });
@@ -107,6 +112,7 @@ test("pointer parts the loose strands", async ({ page }, info) => {
 });
 
 test("scroll drives the camera", async ({ page }) => {
+  test.slow(!!process.env.CI, CI_SLOW);
   await page.goto("/?tier=A&freeze=1&nodowngrade=1");
   await waitLive(page);
   await page.addStyleTag({ content: ISOLATE_STAGE });
@@ -145,6 +151,7 @@ test.describe("lazy loading and fallbacks", () => {
     page,
     browser,
   }) => {
+    test.slow(!!process.env.CI, CI_SLOW);
     const c = await loadAndRecord(page, "/?tier=C");
     const pageA = await browser.newPage({ viewport: page.viewportSize()! });
     const a = await loadAndRecord(pageA, "/?tier=A&freeze=1&nodowngrade=1");

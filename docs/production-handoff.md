@@ -1,0 +1,40 @@
+# SLAY BRAIDS website: production handoff (27 Nov 2026)
+
+**Production URL:** https://slaybraids.vercel.app (also https://slay-braids-web.vercel.app)
+Source: `main`, merged from `claude/cool-ramanujan-0ln9mf` via [Slay-Braids/slay-braids-web#1](https://github.com/Slay-Braids/slay-braids-web/pull/1).
+
+## What changed for production
+- **Identity:**
+  - The site palette is red #C60D13, sampled from the original logo, plus black and white.
+  - The page that meets the hair is white, with a red edge line.
+  - Gold/champagne accents, ivory and the pearl light shift are removed.
+- **Kept as approved:** the 3D braid scene (anchor_v1), its lighting and the seven-chapter scroll, all unchanged. The lock test passes.
+- **Logo:** the original SLAY BRAIDS logo file appears in the header, on the Chapter 3 page and in the footer, and as the favicon. It is trimmed of its transparent margin only.
+- **Footage:**
+  - Original footage from the brand Drive, with no grading and no audio.
+  - Where it appears: the Chapter 2 craft film, the Chapter 3 portrait, Chapter 5 "The Looks" (4 looks) and the Chapter 6 lookbook.
+  - Inventory: `docs/production-assets.md`; per-file provenance: `public/media/manifest.json`.
+- **Copy:**
+  - Only verified wording: the positioning line and "FUTURA by SLAY BRAIDS / FUTURA is a SLAY BRAIDS product line".
+  - Placeholder copy is removed. No names, prices, claims, contacts or testimonials are published.
+- **Enquiries:** no form, because there is no verified destination. The section says online enquiries are not open yet. `src/content/site.ts` (`enquiry.destination`) is where a confirmed destination goes.
+- **Footage behaviour:**
+  - Plays only while on screen, and loads only when first needed.
+  - A header control pauses and resumes it (WCAG 2.2.2), and the header reappears when focused.
+  - In reduced motion, footage never plays by itself.
+
+## Hosting (Vercel, team slay-braids, project slay-braids-web)
+- **Builds:**
+  - Production builds from `main` (Next.js static export, Node 22).
+  - Branch pushes and pull requests build protected Previews.
+- **Access:**
+  - Deployment protection (Vercel Authentication) covers deployment URLs.
+  - The production domains are public.
+- **Headers:** security headers (nosniff, referrer policy, frame options, permissions policy) and long-lived caching for hashed assets.
+  - `X-Robots-Tag: noindex` is still on, so search engines are asked not to index the site until model releases are confirmed.
+  - To allow indexing, remove that header from `vercel.json` and `robots` from `src/app/layout.tsx`.
+- **Rollback:** every deployment stays listed in Vercel. Promote an earlier one, or revert the merge commit on `main`.
+
+## Deployment history
+- 27 Nov 2026: three unintended production records were created while setting up the project. All were removed or cancelled; one was briefly public (about 3 minutes) with no custom domain involved.
+- See `docs/M3-handoff.md` §6 for the full account.

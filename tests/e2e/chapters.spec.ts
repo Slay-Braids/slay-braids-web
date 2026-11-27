@@ -191,7 +191,10 @@ test.describe("live chapters", () => {
     await page.waitForFunction(() => window.__slay?.live === true && !!window.__lab, null, {
       timeout: 120_000,
     });
-    const res = await page.evaluate(() => window.__lab!.run(15_000, 1));
+    // CI's CPU-rendered frames are slow: sample for longer there so the run has enough probe
+    // frames (> 3). The accuracy limits below are unchanged.
+    const runMs = process.env.CI ? 60_000 : 15_000;
+    const res = await page.evaluate((ms) => window.__lab!.run(ms, 1), runMs);
     console.log(
       `[accuracy] ${res.orientation} points ${res.guidePoints} · frames ${res.probedFrames} · point P99 ${res.pointError.p99.toFixed(4)} max ${res.pointError.max.toFixed(4)} · edge P99 ${res.edgeError.p99.toFixed(4)} max ${res.edgeError.max.toFixed(4)} px · pointer ${res.conditions.framesWithPointer} frames`,
     );
