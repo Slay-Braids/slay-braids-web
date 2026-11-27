@@ -2269,6 +2269,15 @@ html {
 :root[data-theme="dark"] .theme-toggle svg {
   transform: rotate(180deg);
 }
+.header-actions button {
+  white-space: nowrap;
+}
+/* Narrow phones: the hero buttons stack, so the scroll cue would sit on the second one. */
+@media (max-width: 380px) {
+  .ch1 .scroll-cue {
+    display: none;
+  }
+}
 @media (max-width: 480px) {
   .header-actions {
     gap: 0;
