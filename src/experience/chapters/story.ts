@@ -247,7 +247,9 @@ export function landingVh(o: Orientation, id: string): number | undefined {
   const S = STORY[o];
   switch (id) {
     case "ch4":
-      return S.ch4[1] - 35;
+      // Phones: the title and intro (the feature list then replaces both as the reader scrolls);
+      // landscape shows all three together.
+      return o === "portrait" ? S.ch4Retreat[0] + 50 : S.ch4[1] - 35;
     case "ch5":
       return productVh(o, 0);
     case "ch6":
