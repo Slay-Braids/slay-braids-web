@@ -692,6 +692,9 @@ const AUTO = {
 };
 const ALL_TESTS = SECTIONS.flatMap((s) => s.tests);
 for (const t of ALL_TESTS) if (!AUTO[t.id]) throw new Error(`no automated status for ${t.id}`);
+// Recorded decision (27 Nov 2026). The same sentence appears in every document.
+export const APPROVAL =
+  "Chapters 1–3 are provisionally approved as the technical and design baseline, on automated evidence only. Real-device validation is outstanding. Not approved for public release.";
 const AUTO_COUNT = { PASSED: 0, PARTIAL: 0, NONE: 0 };
 for (const t of ALL_TESTS) AUTO_COUNT[AUTO[t.id][0]]++;
 
@@ -711,6 +714,10 @@ md.push(
   "**How the tests are split**",
   "",
   ...Object.entries(KIND).map(([k, v]) => `- **${k}** — ${v}`),
+  "",
+  `**Recorded 27 Nov 2026:** ${APPROVAL}`,
+  "",
+  `**Status:** automated PASSED ${AUTO_COUNT.PASSED} · automated PARTIAL ${AUTO_COUNT.PARTIAL} · no automated evidence ${AUTO_COUNT.NONE} · on the A26: 0 of ${ALL_TESTS.length} tested (all NOT TESTED).`,
   "",
   "Total time: about 60–75 minutes (S0–T6). C is optional.",
   "",
@@ -853,7 +860,8 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
 <div><b>${AUTO_COUNT.NONE}</b>no automated evidence</div>
 <div><b>0 of ${ALL_TESTS.length}</b>tested on the A26</div>
 </div>
-<p style="margin-top:14px">Technical assessment and recommendation: <a style="color:#d8c3a0" href="${ASSESSMENT}">${ASSESSMENT.replace("https://", "")}</a></p>
+<p style="margin-top:14px;border-left:3px solid #d8c3a0;padding-left:12px"><b>Recorded 27 Nov 2026:</b> ${esc(APPROVAL)}</p>
+<p style="margin-top:14px">Technical assessment: <a style="color:#d8c3a0" href="${ASSESSMENT}">${ASSESSMENT.replace("https://", "")}</a></p>
 <ul class="kinds">${Object.entries(KIND)
   .map(([k, v]) => `<li><b>${k}</b>${esc(v)}</li>`)
   .join("")}</ul>
@@ -939,6 +947,27 @@ ${s.tests.map(card).join("")}
 `;
 
 await mkdir("docs/review/a26", { recursive: true });
+// Shared status (single source for the checklist, the review pack, the report and the assessment).
+const STATUS = {
+  date: "2026-11-27",
+  approval: APPROVAL,
+  counts: {
+    automatedPassed: AUTO_COUNT.PASSED,
+    automatedPartial: AUTO_COUNT.PARTIAL,
+    noAutomatedEvidence: AUTO_COUNT.NONE,
+    total: ALL_TESTS.length,
+    a26Tested: 0,
+    a26NotTested: ALL_TESTS.length,
+  },
+  tests: ALL_TESTS.map((t) => ({
+    id: t.id,
+    name: t.name,
+    automated: AUTO[t.id][0],
+    automatedEvidence: AUTO[t.id][1],
+    a26: "NOT TESTED",
+  })),
+};
+await writeFile("docs/review/status.json", JSON.stringify(STATUS, null, 2) + "\n");
 await writeFile("docs/real-device-test-a26.md", md.join("\n"));
 await writeFile("docs/review/a26/index.html", html);
 console.log(

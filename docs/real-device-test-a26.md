@@ -8,6 +8,10 @@ Build under test: the Chapters 1–3 preview with the TalkBack fix (27 Nov 2026)
 - **B** — On-device automated: built into the preview, no cable
 - **C** — Needs a connected computer
 
+**Recorded 27 Nov 2026:** Chapters 1–3 are provisionally approved as the technical and design baseline, on automated evidence only. Real-device validation is outstanding. Not approved for public release.
+
+**Status:** automated PASSED 9 · automated PARTIAL 14 · no automated evidence 15 · on the A26: 0 of 38 tested (all NOT TESTED).
+
 Total time: about 60–75 minutes (S0–T6). C is optional.
 
 ## Preview URLs

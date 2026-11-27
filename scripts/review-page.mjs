@@ -19,6 +19,7 @@ const esc = (s) =>
   );
 const n = (v, d = 2) => (v == null || Number.isNaN(v) ? "—" : Number(v).toFixed(d));
 const NM = '<span class="nm">not measured</span>';
+const NT = '<span class="nm">NOT TESTED</span>';
 
 const PREVIEW = "https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn";
 const acc = {};
@@ -40,6 +41,12 @@ const sim = {
   matched: await j("docs/perf/perf-sim-mobile-stillmatched.json"),
 };
 const tests = await j("docs/perf/test-results.json");
+const emu = await j("docs/perf/a26-emulated-evidence.json");
+const status = await j("docs/review/status.json");
+const CHECKLIST = "https://claude.ai/artifact/G8pcwwkBQxrFwJbTJK798q";
+const ASSESSMENT = "https://claude.ai/artifact/VXfMtBQUMRiXXmJ7mDiYx5";
+// Every accuracy run: tier A (desktop, mobile) and tier B at an A26-sized screen.
+const allAcc = [...Object.values(acc).filter(Boolean), ...Object.values(emu?.accuracyTierB ?? {})];
 
 // ---------- sections ----------
 const accRows = Object.entries(acc)
@@ -52,6 +59,19 @@ const accRows = Object.entries(acc)
       <td class="r">${n(d.pointError.p50, 4)} / ${n(d.pointError.p95, 4)} / ${n(d.pointError.p99, 4)}</td><td class="r">${n(d.pointError.max, 3)}</td>
       <td class="r">${n(d.edgeError.p99, 3)} / ${n(d.edgeError.max, 3)}</td><td>${d.pass ? '<b class="ok">pass</b>' : '<b class="bad">fail</b>'}</td></tr>`;
   })
+  .join("");
+
+const tierBRows = Object.entries(emu?.accuracyTierB ?? {})
+  .map(
+    ([
+      k,
+      d,
+    ]) => `<tr><td>A26-sized, tier B<br><small>384×832 @2.8125x</small></td><td>every ${k.replace("every", "")} frame${k === "every1" ? "" : "s"}</td>
+      <td class="r">${d.probedFrames}</td><td class="r">${d.guidePoints.toLocaleString("en")}</td>
+      <td class="r">${n(d.conditions.windMin)}–${n(d.conditions.windMax)}<br><small>pointer ${n(d.conditions.pointerForceMax)} in ${d.conditions.framesWithPointer}/${d.probedFrames}</small></td>
+      <td class="r">${n(d.pointError.p50, 4)} / ${n(d.pointError.p95, 4)} / ${n(d.pointError.p99, 4)}</td><td class="r">${n(d.pointError.max, 3)}</td>
+      <td class="r">${n(d.edgeError.p99, 3)} / ${n(d.edgeError.max, 3)}</td><td>${d.pass ? '<b class="ok">pass</b>' : '<b class="bad">fail</b>'}</td></tr>`,
+  )
   .join("");
 
 const cRows = [];
@@ -104,7 +124,7 @@ const devices = [
   "Desktop, dedicated GPU",
 ];
 const realTable = `<table><thead><tr><th>Real devices</th><th>Frame P50/P95/P99</th><th>Median fps</th><th>Ch3 transition</th><th>Long tasks</th><th>LCP</th><th>CLS</th><th>Handoff Δ</th><th>Edge accuracy (lab)</th></tr></thead><tbody>
-${devices.map((d) => `<tr><td>${d}</td>${Array(8).fill(`<td>${NM}</td>`).join("")}</tr>`).join("")}</tbody></table>
+${devices.map((d) => `<tr><td>${d}</td>${Array(8).fill(`<td>${NT}</td>`).join("")}</tr>`).join("")}</tbody></table>
 <p class="note">No device or computer is connected to this session, so nothing here was measured on real hardware. Protocol: <code>docs/real-device-test-protocol.md</code> (M2 addendum). Open the preview with <code>#perf</code> and <code>#lab-transition</code> on each device and paste the copied results.</p>`;
 
 const lhRows = Object.entries(lh)
@@ -115,7 +135,9 @@ const lhRows = Object.entries(lh)
   )
   .join("");
 
-const handoffNote = tests?.m1HandoffTest ? `M1 handoff test: desktop ${esc(tests.m1HandoffTest.desktop)}; mobile ${esc(tests.m1HandoffTest.mobile)}.` : "";
+const handoffNote = tests?.m1HandoffTest
+  ? `M1 handoff test: desktop ${esc(tests.m1HandoffTest.desktop)}; mobile ${esc(tests.m1HandoffTest.mobile)}.`
+  : "";
 const testRows = tests
   ? tests.suites
       .map(
@@ -257,33 +279,61 @@ figure{margin:0 0 34px}figure img{width:100%;height:auto;display:block;border:1p
 .check{list-style:none;padding:0;margin:0;display:grid;gap:10px}.check li{display:grid;grid-template-columns:2.2em 1fr;gap:10px;padding:12px 14px;background:var(--card)}
 .check .n{font-family:"Bodoni Moda",serif;font-size:22px;color:var(--ch);line-height:1}
 code{font-size:13px;overflow-wrap:anywhere}
+.approval{margin-top:22px;border-left:3px solid var(--chl);padding:12px 16px;background:#16130f;color:#efe6d8;max-width:80ch}.approval b{display:block;font:600 13px Inter;color:var(--chl);margin-bottom:4px}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin:14px 0 6px}
+.counts div{padding:14px 16px;background:var(--card);border-left:4px solid var(--rule)}.counts b{display:block;font:600 26px Inter;line-height:1.1}
+.c-pass{border-left-color:light-dark(#2f6b2f,#8fd08a)!important}.c-part{border-left-color:light-dark(#a07a2a,#e2c98f)!important}.c-none{border-left-color:var(--mute)!important}.c-dev{border-left-color:light-dark(#1c1612,#efe8dc)!important}
+table.st td:first-child{min-width:12em}
 @media(max-width:600px){table{font-size:13px}td,th{padding:7px 6px}}
 </style></head><body>
 <header class="band cover"><div class="wrap">
 <h1>Chapters 1–3: the review pack</h1>
 <p>The private preview, the transition lab, frame sheets from the final build and every measured result, gathered for your visual review. This is the evidence for the approved phase only. It is not a request to start Chapters 4–7.</p>
-<div class="links"><a class="primary" href="${PREVIEW}">Open the preview</a><a href="${PREVIEW}#lab-transition">Transition lab</a><a href="${PREVIEW}#perf">Performance readout</a><a href="${PREVIEW}#reduced">Reduced-motion spreads</a></div>
+<div class="approval"><b>Recorded 27 Nov 2026</b>${esc(status.approval)}</div>
+<div class="links"><a class="primary" href="${PREVIEW}">Open the preview</a><a href="${CHECKLIST}">Test checklist</a><a href="${ASSESSMENT}">Technical assessment</a><a href="${PREVIEW}#lab-transition">Transition lab</a><a href="${PREVIEW}#perf">Performance readout</a><a href="${PREVIEW}#reduced">Reduced-motion spreads</a></div>
 <div class="verdict">
 <div><b>anchor_v1 lock</b>Lock test 6 / 6. Masters, manifest and all 18 encodes unchanged (sha256).</div>
-<div><b>Page-edge accuracy</b>${Object.values(acc).every((d) => d?.pass) ? "Pass in all four runs" : "See results"}: worst point P99 ${n(
-  Math.max(
-    ...Object.values(acc)
-      .filter(Boolean)
-      .map((d) => d.pointError.p99),
-  ),
-  3,
-)} px, worst max ${n(
-  Math.max(
-    ...Object.values(acc)
-      .filter(Boolean)
-      .map((d) => Math.max(d.pointError.max, d.edgeError.max)),
-  ),
-  2,
-)} px (limits 2 / 3). Simulated GPU.</div>
+<div><b>Page-edge accuracy</b>${allAcc.every((d) => d.pass) ? `Pass in all ${allAcc.length} runs` : "See results"} (tier A and tier B): worst point P99 ${n(Math.max(...allAcc.map((d) => d.pointError.p99)), 3)} px; worst point max ${n(Math.max(...allAcc.map((d) => d.pointError.max)), 2)} px; worst edge max ${n(Math.max(...allAcc.map((d) => d.edgeError.max)), 2)} px (limits 2 / 3). Simulated GPU.</div>
 <div><b>Chapter 2 contrast</b>${contrastDone ? (cFails.length ? `${cFails.length} failing samples` : "Every shown line ≥ 7:1") : "not finished"}${contrastDone ? `. Worst case ${n(Math.min(...contrast.map((c) => c.summary.minRatio)))}:1 over ${cJudged} judged samples.` : ""}</div>
-<div><b>Real devices</b>Not measured. No device or computer is connected to this session.</div>
+<div><b>Real devices</b>NOT TESTED: 0 of ${status.counts.total} A26 checks performed. No result here is a device result.</div>
 </div></div></header>
-<nav class="toc" aria-label="Sections"><a href="#checklist">Checklist</a><a href="#sheets">Frame sheets</a><a href="#lab">Transition lab</a><a href="#contrast">Chapter 2 contrast</a><a href="#perf">Performance</a><a href="#tests">Tests</a><a href="#register">Change register</a><a href="#open">Open items</a></nav>
+<nav class="toc" aria-label="Sections"><a href="#status">Validation status</a><a href="#checklist">Checklist</a><a href="#sheets">Frame sheets</a><a href="#lab">Transition lab</a><a href="#contrast">Chapter 2 contrast</a><a href="#perf">Performance</a><a href="#tests">Tests</a><a href="#register">Change register</a><a href="#open">Open items</a><a href="#history">History</a></nav>
+
+<section class="band" id="status"><div class="wrap">
+<h2>Validation status</h2>
+<p class="note">One status per test in the A26 checklist (${status.counts.total} tests), from the same data file as the checklist (<code>docs/review/status.json</code>). Automated means headless Chromium with SwiftShader (CPU WebGL) and an emulated phone: never the A26.</p>
+<div class="counts">
+<div class="c-pass"><b>${status.counts.automatedPassed}</b>Automated: passed</div>
+<div class="c-part"><b>${status.counts.automatedPartial}</b>Partial automated coverage</div>
+<div class="c-none"><b>${status.counts.noAutomatedEvidence}</b>No automated evidence</div>
+<div class="c-dev"><b>${status.counts.a26NotTested} of ${status.counts.total}</b>Real-device: NOT TESTED</div>
+</div>
+${[
+  [
+    "PASSED",
+    "Automated results",
+    "An automated check with explicit pass criteria passed. Still NOT TESTED on the A26.",
+  ],
+  [
+    "PARTIAL",
+    "Partial automated coverage",
+    "Part of the test is covered automatically; the rest is named and NOT TESTED.",
+  ],
+  ["NONE", "No automated evidence", "Only the device can answer these. NOT TESTED."],
+]
+  .map(
+    ([k, title, note]) => `<h3 style="margin-top:24px">${title}</h3><p class="note">${note}</p>
+<div class="scroll"><table class="st"><thead><tr><th>Test</th><th>Automated evidence</th><th>A26</th></tr></thead><tbody>${status.tests
+      .filter((t) => t.automated === k)
+      .map(
+        (t) =>
+          `<tr><td><b>${esc(t.id)}</b> ${esc(t.name)}</td><td>${esc(t.automatedEvidence)}</td><td>${NT}</td></tr>`,
+      )
+      .join("")}</tbody></table></div>`,
+  )
+  .join("")}
+<p class="note">Real-device tests: all ${status.counts.total} are NOT TESTED; none is marked as failed. The checklist to run them: <a href="${CHECKLIST}">${CHECKLIST.replace("https://", "")}</a>.</p>
+</div></section>
 
 <section class="band" id="checklist"><div class="wrap">
 <h2>Your seven checks</h2>
@@ -292,7 +342,7 @@ code{font-size:13px;overflow-wrap:anywhere}
 <li><span class="n">2</span><div><b>Frame sheets</b> regenerated from the final build, desktop and mobile, including the one-screen Chapter 3 tail.</div></li>
 <li><span class="n">3</span><div><b>Test suites</b> on the final build: ${tests ? tests.suites.map((s) => `${esc(s.name)} ${s.passed} passed${s.failed ? `, <b class="bad">${s.failed} failed</b>` : ""}${s.skipped ? `, ${s.skipped} skipped` : ""}`).join(" · ") : NM}.</div></li>
 <li><span class="n">4</span><div><b>Lighthouse, bundle, CLS, page-edge accuracy, performance:</b> below. All lab or simulated.</div></li>
-<li><span class="n">5</span><div><b>Simulated and real kept apart:</b> two separate tables. Every real-device cell reads “not measured”.</div></li>
+<li><span class="n">5</span><div><b>Simulated and real kept apart:</b> two separate tables. Every real-device cell reads “NOT TESTED”.</div></li>
 <li><span class="n">6</span><div><b>anchor_v1:</b> lock test 6 / 6. Masters and manifest match their pre-M2 checksums. Locked files are identical to the lock commit.</div></li>
 <li><span class="n">7</span><div><b>This page:</b> sheets, lab results, performance and the change register.</div></li>
 </ol></div></section>
@@ -306,8 +356,14 @@ ${sheets.map(([f, c]) => `<figure><a href="${f}"><img src="${f}" alt="${esc(c)}"
 <section class="band" id="lab"><div class="wrap">
 <h2>Transition lab: page edge vs the locked shader</h2>
 <p class="note">The lab compiles the locked vertex shader's own source at runtime: its declarations, plus <code>main()</code> up to the ribbon expansion. It renders every guide point into a float texture, reads it back, and compares that with the CPU guide strand that places the page edge. It runs 30 s, scripted, with live wind and a moving pointer. Readback is every 10th frame as specified, plus a dense run with every frame. GPU here: SwiftShader.</p>
-<div class="scroll"><table><thead><tr><th>Viewport</th><th>Readback</th><th>Frames</th><th>Guide points</th><th>Wind · pointer</th><th>Point error P50 / P95 / P99 px</th><th>Point max px</th><th>Edge P99 / max px</th><th>Result</th></tr></thead><tbody>${accRows}</tbody></table></div>
-<p class="note">Limits: P99 ≤ 2 CSS px and max ≤ 3 CSS px, applied to the points and to the edge itself. The same check runs in the e2e suite. Real-GPU accuracy: ${NM}. Tap “Run accuracy test” in <code>#lab-transition</code> on a device.</p>
+<div class="scroll"><table><thead><tr><th>Viewport</th><th>Readback</th><th>Frames</th><th>Guide points</th><th>Wind · pointer</th><th>Point error P50 / P95 / P99 px</th><th>Point max px</th><th>Edge P99 / max px</th><th>Result</th></tr></thead><tbody>${accRows}${tierBRows}</tbody></table></div>
+<p class="note">Rows 1–4: tier A. Last two rows: tier B (the A26's default tier) at an A26-sized screen, 384×832 @2.8125x. The single 2.23 px edge sample is the thinnest margin under the 3 px limit; it comes from the edge algorithm's row switching, not from the GPU.</p>
+<h3 style="margin-top:28px">Layout and rotation at an A26-sized screen (emulated)</h3>
+<div class="scroll"><table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody>
+<tr><td>Horizontal overflow, 41 scroll positions, live and reduced motion</td><td>${emu ? (emu.horizontalOverflow.live.pass && emu.horizontalOverflow.reduced.pass ? '<b class="ok">pass</b>: page never wider than 384 px' : '<b class="bad">fail</b>') : NM}</td></tr>
+<tr><td>Rotation round-trip at Chapter 1 and the Chapter 3 rest</td><td>${emu ? (emu.rotation.every((r) => r.pass) ? '<b class="ok">pass</b>: no errors, live 3D restored in both orientations' : '<b class="bad">fail</b>') : NM}<br><small>Open risk: at the Chapter 3 rest the scroll position moved to the end card (380 → 865 vh in landscape). Real Chrome may keep the place; NOT TESTED on a phone.</small></td></tr>
+</tbody></table></div>
+<p class="note">Limits: P99 ≤ 2 CSS px and max ≤ 3 CSS px, applied to the points and to the edge itself. The same check runs in the e2e suite. Real-GPU accuracy: ${NT}. Tap “Run accuracy test” in <code>#lab-transition</code> on a device.</p>
 </div></section>
 
 <section class="band" id="contrast"><div class="wrap">
@@ -349,12 +405,33 @@ ${bundle ? `<p>Initial JS <b>${(bundle.initialJS.gzip / 1024).toFixed(1)} KB</b>
 
 <section class="band" id="open"><div class="wrap">
 <h2>Open items</h2>
+<p>From the technical assessment (<a href="${ASSESSMENT}">${ASSESSMENT.replace("https://", "")}</a>).</p>
+<h3>Blockers for the provisional approval</h3><p>None.</p>
+<h3>Must be resolved before any public release</h3>
+<ol>
+<li>Real-device evidence on at least one mid-range Android (the A26) and one iPhone. A short smoke subset is enough.</li>
+<li>Rotation position confirmed on a device; if it jumps, a small fix that keeps the chapter-relative position.</li>
+<li>Approved content: copy, the Chapter 3 portrait photography and the logo file (placeholders today).</li>
+<li>A short manual screen-reader pass (TalkBack; VoiceOver on the iPhone).</li>
+<li>Hosting and deployment approval (the site exists only as a private preview).</li>
+</ol>
+<h3>Watch items (not blockers)</h3>
 <ul>
-<li>Real-device runs: performance, lab accuracy on real GPUs, and the I6 decision. ${NM}.</li>
-<li>Manual VoiceOver and TalkBack passes: not done; needs devices. Automated: axe clean on static, reduced-motion and live pages. Reading order, skip link and the modal menu are e2e-tested.</li>
-<li>Approved copy, the Chapter 3 portrait and the logo file are still to come from SLAY BRAIDS.</li>
+<li>The edge max of 2.23 px (tier B, 1 sample) leaves the thinnest margin under the 3 px limit.</li>
+<li>TalkBack's focus outline can sit over the current picture while it reads chapter text that has not scrolled into view.</li>
+<li>The density-matched still (I6) remains undecided.</li>
+<li>Start-up long tasks are unattributed (needs a connected-device trace).</li>
+<li>iOS Safari and Samsung Internet: never tested in any form.</li>
 </ul>
-<p class="note">Generated ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC from <code>docs/perf/*.json</code> by <code>scripts/review-page.mjs</code>.</p>
+</div></section>
+
+<section class="band" id="history"><div class="wrap">
+<h2>History</h2>
+<div class="scroll"><table><thead><tr><th>Date</th><th>Revision</th></tr></thead><tbody>
+<tr><td>26 Nov 2026</td><td>First publication: final build, frame sheets, transition lab, Chapter 2 contrast, performance, tests, change register.</td></tr>
+<tr><td>27 Nov 2026</td><td>TalkBack fix added to the change register and tests (M2 e2e 18 → 20). Tier-B accuracy, overflow and rotation evidence at an A26-sized screen. Validation status split into automated / partial / none / real-device NOT TESTED. Provisional approval of Chapters 1–3 recorded as the technical and design baseline, excluding public release.</td></tr>
+</tbody></table></div>
+<p class="note">Earlier versions remain in this page's version history. Generated ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC from <code>docs/perf/*.json</code> and <code>docs/review/status.json</code> by <code>scripts/review-page.mjs</code>.</p>
 </div></section>
 </body></html>
 `;
