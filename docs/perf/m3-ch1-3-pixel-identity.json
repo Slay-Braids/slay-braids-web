@@ -1,0 +1,164 @@
+[
+  {
+    "frame": "desktop-000.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-060.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-100.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-150.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-200.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-250.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-290.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-325.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-375.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-400.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-430.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-470.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-485.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "desktop-495.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 74351
+  },
+  {
+    "frame": "mobile-000.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-060.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-100.png",
+    "differingPixels": 23256,
+    "maxChannelDelta": 1,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-130.png",
+    "differingPixels": 21568,
+    "maxChannelDelta": 1,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-190.png",
+    "differingPixels": 21061,
+    "maxChannelDelta": 1,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-230.png",
+    "differingPixels": 21019,
+    "maxChannelDelta": 1,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-260.png",
+    "differingPixels": 27790,
+    "maxChannelDelta": 1,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-290.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-345.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-380.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-420.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-435.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 17716
+  },
+  {
+    "frame": "mobile-445.png",
+    "differingPixels": 0,
+    "maxChannelDelta": 0,
+    "maskedPixels": 17716
+  }
+]

@@ -73,5 +73,5 @@ const report = {
     })),
 };
 await mkdir("docs/perf", { recursive: true });
-await writeFile("docs/perf/bundle.json", JSON.stringify(report, null, 2) + "\n");
+await writeFile(`docs/perf/${process.env.PREFIX ?? ""}bundle.json`, JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify(report, null, 2));

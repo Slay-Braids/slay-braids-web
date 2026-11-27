@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLAY BRAIDS — complete build handoff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a quiet, exact studio handoff — the brand's own ink and ivory, nothing loud.
+   IDEA: the page behaves like a campaign proof book: printed spreads with a status slip.
+   PICTURE: the full-site frame sheet (the work itself), large, at the top.
+   COLOUR and TYPE: ink #0a0908 ground, ivory #f2ece2 text, champagne #d8c3a0 accent; Cormorant titles, Inter body.
+   LAYOUT: status slip, sheet, then decision-first sections in one 1100px column. */
+:root{color-scheme:dark;--bg:#0a0908;--bg2:#141210;--ink:#f2ece2;--mist:#b9b0a3;--ch:#d8c3a0;--line:rgb(242 236 226/.14);--warn:#f2a491;--ok:#b9d3a8}
+:root[data-theme=light]{color-scheme:light;--bg:#f2ece2;--bg2:#e8e0d2;--ink:#1c1612;--mist:#5b5047;--ch:#8a6a3c;--line:rgb(28 22 18/.16);--warn:#a2391f;--ok:#3e6a2c}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:1100px;margin:0 auto;padding:0 max(5vw,16px)}
+header{padding:56px 0 28px}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5vw,52px)}
+h2{font-size:clamp(28px,3.4vw,38px);margin-bottom:14px}
+h3{font-size:17px;margin:24px 0 8px}
+.sub{color:var(--mist);margin:10px 0 0}
+.slip{margin:26px 0 0;border:1px solid var(--ch);padding:16px 18px;display:grid;gap:6px}
+.slip b{color:var(--ch);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.links a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);color:var(--ink);text-decoration:none}
+.links a.primary{background:var(--ch);color:#0a0908;border-color:var(--ch);font-weight:500}
+figure{margin:0}
+.sheet img{display:block;width:100%;height:auto;border:1px solid var(--line)}
+figcaption{color:var(--mist);font-size:14px;margin-top:8px}
+section{padding:44px 0;border-top:1px solid var(--line)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-bottom:1px solid var(--line)}
+th{color:var(--mist);font-weight:500;font-size:13px}
+td:first-child{white-space:nowrap;color:var(--ch)}
+.scroll{overflow-x:auto}
+.pass{color:var(--ok)}.warn{color:var(--warn)}
+ol,ul{padding-left:1.2em}li{margin:4px 0}
+.note{border-left:2px solid var(--warn);padding:4px 0 4px 16px;margin:16px 0}
+code{font-size:14px;overflow-wrap:anywhere}
+footer{padding:36px 0 60px;color:var(--mist);font-size:14px;border-top:1px solid var(--line)}
+@media(max-width:600px){table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start;white-space:normal}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;color:var(--mist)}.stack td:empty{display:none}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>The SLAY BRAIDS website is built end to end: seven chapters, one continuous scroll</h1>
+  <p class="sub">Management handoff · 27 November 2026 · branch <code>claude/cool-ramanujan-0ln9mf</code></p>
+  <div class="slip">
+    <div><b>Status:</b> complete technical build on automated evidence only. Real-device validation is outstanding. Not approved for public release.</div>
+    <div><b>Vercel:</b> not deployed. Vercel made the first deployment a production deployment; I removed it within about 3 minutes. A protected preview needs your decision (see Deployment).</div>
+    <div><b>Content:</b> every missing logo, product detail, price, photograph and approved line is shown as a marked placeholder. Nothing is invented.</div>
+  </div>
+  <div class="links">
+    <a class="primary" href="https://claude.ai/artifact/JzJ18xCxDRpcuqzUsRYoUy">Open the private preview</a>
+    <a href="#deploy">Deployment decision</a>
+    <a href="#gaps">Content still required</a>
+  </div>
+</header>
+
+<figure class="sheet">
+  <img src="sequence-desktop.jpg" width="2112" height="2132" alt="Desktop frame sheet of the live site from 0 to 1345 vh: hero, Chapter 2 manifesto, Chapter 3 page on the hair, Chapter 4 FUTURA on the covering page and in pearl light, Chapter 5 product showcase, Chapter 6 page meeting the hair and the lookbook spread, Chapter 7 positioning line, and the enquiry form.">
+  <figcaption>Live desktop, 1440×900, at 24 scroll positions (deterministic wind, simulated GPU).</figcaption>
+</figure>
+
+<section>
+  <h2>The seven chapters</h2>
+  <p>One camera, one ivory page and one light carry the whole story, so nothing resets at a chapter boundary. Chapters 1–3 are the approved baseline, unchanged.</p>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Chapter</th><th>What happens</th><th>Mobile</th></tr></thead>
+    <tbody>
+      <tr><td>1 Arrival</td><td>The approved anchor and <em>Premium look. Affordable price.</em></td><td>Unchanged</td></tr>
+      <tr><td>2 The Craft</td><td>Close on the woven braids; three manifesto lines reveal in order.</td><td>Unchanged</td></tr>
+      <tr><td>3 The Unbraiding</td><td>The ivory page meets the loose hair along its edge, then closes over it.</td><td>Unchanged</td></tr>
+      <tr><td>4 FUTURA</td><td>The covering page carries “04 FUTURA” printed on it. The page lifts with a straight edge and FUTURA appears in pearl light beside the hair.</td><td>The page lifts straight off; the title sits low.</td></tr>
+      <tr><td>5 The Collection</td><td>Pinned showcase: one product per scroll step, Previous/Next, shade selector, price slot and “Enquire about this product”.</td><td>The card sits in the lower screen, the hair above.</td></tr>
+      <tr><td>6 Lookbook</td><td>The page meets the hair again at a new pose, closes, and becomes the printed lookbook spread.</td><td>One large mount and two small ones.</td></tr>
+      <tr><td>7 The Promise</td><td>The last lift. The camera pulls back, the light returns to champagne, and the positioning line returns with both calls to action.</td><td>Stacked</td></tr>
+      <tr><td>Enquiry, footer</td><td>The form validates and explains, but never sends. Footer navigation follows.</td><td>Single column</td></tr>
+    </tbody>
+  </table></div>
+  <div class="two" style="margin-top:24px">
+    <figure><img src="sequence-mobile.jpg" width="1256" height="1085" alt="Mobile frame sheet of the live site, 412×915, from the hero to the enquiry form." style="width:100%;height:auto;border:1px solid var(--line)"><figcaption>Live mobile, 412×915.</figcaption></figure>
+    <figure><img src="static-desktop.jpg" width="1768" height="908" alt="Reduced-motion desktop spreads for every chapter, the enquiry and the footer." style="width:100%;height:auto;border:1px solid var(--line)"><figcaption>Reduced motion and slow devices: printed spreads with stills from the locked scene.</figcaption></figure>
+  </div>
+  <figure style="margin-top:24px"><img src="static-mobile.jpg" width="1256" height="726" alt="Reduced-motion mobile spreads for every chapter, the enquiry and the footer." style="width:100%;height:auto;border:1px solid var(--line)"><figcaption>Reduced motion, mobile.</figcaption></figure>
+</section>
+
+<section>
+  <h2>What works</h2>
+  <div class="two">
+    <div>
+      <h3>Navigation and interaction</h3>
+      <ul>
+        <li>The menu, the chapter index (7) and the footer reach every chapter. In the live site each link lands the chapter at its settled state and moves focus to its heading.</li>
+        <li>Keyboard focus brings off-screen products and calls to action on screen.</li>
+        <li>Showcase controls announce “Product 2 of 3”.</li>
+        <li>Enquiry:
+          <ul>
+            <li>Validates with field-level errors and says plainly that nothing was sent.</li>
+            <li>Product enquiries prefill the topic, product and shade.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Loading, errors and resilience</h3>
+      <ul>
+        <li>The anchor still loads first; the 3D loads after it.</li>
+        <li>If start-up fails or the WebGL context is lost, visitors get the printed spreads.</li>
+        <li>Without JavaScript, every chapter is readable. There is a branded 404 page.</li>
+        <li>Rotating a phone keeps the reader's chapter and product (emulated).</li>
+        <li>Rendering pauses whenever a page covers the screen.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Automated results — no failures; none of this is a real device</h2>
+  <p>Headless Chromium with SwiftShader (WebGL on the CPU) and emulated phones. Frame-time numbers from this setup say nothing about real hardware, so none are reported.</p>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Check</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Locked foundation</td><td class="pass">Lock test 6/6. The anchor_v1 encodes and M2 stills match their manifests; the masters are unmodified.</td></tr>
+      <tr><td>Unit tests</td><td class="pass">49/49</td></tr>
+      <tr><td>End-to-end tests</td><td class="pass">M1 15 + 1 skipped by design · M2 20/20 · new M3 26/26</td></tr>
+      <tr><td>Chapters 1–3 pixels</td><td>22 of 27 frames identical to the approved build. 5 mobile frames differ by at most 1/255 on 5–7 % of pixels in the Chapter 2 field, caused by browser compositing; not visible.</td></tr>
+      <tr><td>Accessibility</td><td class="pass">axe: no WCAG 2.1 A/AA violations (static, reduced and live). Live and reduced accessibility trees are identical at 8 positions per device. Lighthouse accessibility 100.</td></tr>
+      <tr><td>Contrast, Chapters 4–7</td><td class="pass">448 samples, none below AA; worst 6.08:1. All text over the hair is 7:1 or better.</td></tr>
+      <tr><td>Loading (lab, compressed)</td><td>LCP 0.75 s mobile (approved build 0.76 s), 0.24 s desktop · CLS 0</td></tr>
+      <tr><td>Static-mode cost</td><td class="warn">Mobile static Lighthouse performance 86 (approved build 96): TBT 559 ms vs 246 ms</td></tr>
+      <tr><td>Bundle (gzip)</td><td>Initial JS 138.4 KB (134.9) · lazy JS 338.2 KB (333.2)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="deploy">
+  <h2>Deployment: one decision needed from you</h2>
+  <p>The Vercel team <code>slay-braids</code> had no project, deployment or domain. I created the project <code>slay-braids-web</code> and deployed the build through the API, expecting a preview.</p>
+  <div class="note"><strong>What went wrong:</strong> Vercel makes a new project's first deployment a production deployment. It went live at <code>slay-braids-web.vercel.app</code> and was publicly reachable from about 12:19 to 12:22 UTC, when I deleted it. It showed this build, with the preview banner and noindex. No custom domain existed, so nothing was overwritten. A second attempt with an explicit preview target was also made production; the deploy guard deleted it at once. Today the project has 0 deployments and its default address returns 404.</div>
+  <h3>Choose a route</h3>
+  <ol>
+    <li><strong>Staged deployment (recommended).</strong> It is built and reachable only at its own protected URL. No domain is assigned and nothing is promoted; launch is a later “Promote” click. The script is ready. This session's permission check stopped the action, so it needs your explicit go-ahead.</li>
+    <li><strong>Connect the GitHub repository to the Vercel project.</strong> Branch pushes then create preview deployments. Note that pushes to <code>main</code> would deploy to production.</li>
+    <li><strong>Deploy from your own machine</strong> with <code>vercel deploy</code>, knowing that the first deployment goes to production.</li>
+  </ol>
+  <p>Rollback: every Vercel deployment is immutable and stays listed, so rolling back means promoting an earlier one. Every step of the build is a git commit on the branch.</p>
+</section>
+
+<section id="gaps">
+  <h2>Content still required before launch</h2>
+  <div class="two">
+    <ol>
+      <li>SLAY BRAIDS and FUTURA logo files (never recreated).</li>
+      <li>The FUTURA range:
+        <ul>
+          <li>Product names and approved shades, with swatches from photographed samples.</li>
+          <li>Prices, product photography and any approved claims.</li>
+        </ul>
+      </li>
+      <li>Lookbook photography and film, with <strong>signed model releases</strong>.</li>
+      <li>Chapter 3 portrait, with a release.</li>
+      <li>Approved wording:
+        <ul>
+          <li>Manifesto lines, the Chapter 3 line and the lookbook line.</li>
+          <li>Chapter titles, the FUTURA line and the CTA wording.</li>
+        </ul>
+      </li>
+    </ol>
+    <ol start="6">
+      <li>Business model: products, braiding services or both. This decides the enquiry topics.</li>
+      <li>Enquiry routing (where messages go) and a privacy notice.</li>
+      <li>Contact details, legal pages and social links.</li>
+      <li>Recolour variant: needs approved shades first. Photography-only is the fallback.</li>
+    </ol>
+  </div>
+  <h3>Known technical limits</h3>
+  <ul>
+    <li>No real-device evidence for any chapter: frame rate, heat, page-edge accuracy on a real GPU, touch feel, TalkBack and VoiceOver.</li>
+    <li>iOS Safari and Samsung Internet are untested.</li>
+    <li>The slow-device fallback judges only the first 1–3 seconds of a visit.</li>
+    <li>The preview banner and noindex must be removed at launch.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Recommended path to launch</h2>
+  <ol>
+    <li>Supply the logos, range data, approved copy and model releases.</li>
+    <li>Run a 12-minute device smoke test on the Galaxy A26, plus one pass through Chapters 4–7 on an iPhone in Safari.</li>
+    <li>Choose the deployment route above, then share the protected preview with a Vercel share link.</li>
+    <li>For launch:
+      <ul>
+        <li>Remove the banner and noindex; add the legal pages and the custom domain.</li>
+        <li>Re-run Lighthouse and axe on the live URL, then promote.</li>
+      </ul>
+    </li>
+  </ol>
+</section>
+
+<footer>Evidence in the repository: <code>docs/M3-handoff.md</code>, <code>docs/perf/m3-*.json</code>, <code>docs/review/m3/</code>. The private preview is the same build, bundled for claude.ai.</footer>
+</div>
+</body>
+</html>

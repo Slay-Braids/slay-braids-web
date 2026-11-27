@@ -1,113 +1,113 @@
 {
   "summary": {
-    "generated": "2026-11-27T12:16:06.209Z",
+    "generated": "2026-11-27T12:30:37.990Z",
     "renderer": "headless Chromium, SwiftShader (simulated GPU)",
     "samples": 448,
-    "failingAA": 8,
-    "belowAAA": 72,
+    "failingAA": 0,
+    "belowAAA": 64,
     "worst": [
       {
         "viewport": "desktop 1440×900",
         "phase": 0,
-        "where": "ch7",
-        "vh": 1245,
-        "text": "Make an enquiry",
-        "size": 16,
+        "where": "ch6",
+        "vh": 1065,
+        "text": "Photograph awaiting approved photography",
+        "size": 11,
         "large": false,
-        "ratio": 1.01,
+        "ratio": 6.08,
         "need": 4.5,
-        "pass": false,
+        "pass": true,
+        "aaa": false
+      },
+      {
+        "viewport": "desktop 1440×900",
+        "phase": 0,
+        "where": "ch6",
+        "vh": 1065,
+        "text": "Photograph awaiting approved photography",
+        "size": 11,
+        "large": false,
+        "ratio": 6.08,
+        "need": 4.5,
+        "pass": true,
+        "aaa": false
+      },
+      {
+        "viewport": "desktop 1440×900",
+        "phase": 0,
+        "where": "ch6",
+        "vh": 1065,
+        "text": "Film loop awaiting approved footage",
+        "size": 11,
+        "large": false,
+        "ratio": 6.08,
+        "need": 4.5,
+        "pass": true,
         "aaa": false
       },
       {
         "viewport": "desktop 1440×900",
         "phase": 2.1,
-        "where": "ch7",
-        "vh": 1245,
-        "text": "Make an enquiry",
-        "size": 16,
+        "where": "ch6",
+        "vh": 1065,
+        "text": "Photograph awaiting approved photography",
+        "size": 11,
         "large": false,
-        "ratio": 1.01,
+        "ratio": 6.08,
         "need": 4.5,
-        "pass": false,
+        "pass": true,
+        "aaa": false
+      },
+      {
+        "viewport": "desktop 1440×900",
+        "phase": 2.1,
+        "where": "ch6",
+        "vh": 1065,
+        "text": "Photograph awaiting approved photography",
+        "size": 11,
+        "large": false,
+        "ratio": 6.08,
+        "need": 4.5,
+        "pass": true,
+        "aaa": false
+      },
+      {
+        "viewport": "desktop 1440×900",
+        "phase": 2.1,
+        "where": "ch6",
+        "vh": 1065,
+        "text": "Film loop awaiting approved footage",
+        "size": 11,
+        "large": false,
+        "ratio": 6.08,
+        "need": 4.5,
+        "pass": true,
         "aaa": false
       },
       {
         "viewport": "desktop 1920×1080",
         "phase": 0,
-        "where": "ch7",
-        "vh": 1245,
-        "text": "Make an enquiry",
-        "size": 16,
+        "where": "ch6",
+        "vh": 1065,
+        "text": "Photograph awaiting approved photography",
+        "size": 11,
         "large": false,
-        "ratio": 1.01,
+        "ratio": 6.08,
         "need": 4.5,
-        "pass": false,
+        "pass": true,
         "aaa": false
       },
       {
         "viewport": "desktop 1920×1080",
-        "phase": 2.1,
-        "where": "ch7",
-        "vh": 1245,
-        "text": "Make an enquiry",
-        "size": 16,
-        "large": false,
-        "ratio": 1.01,
-        "need": 4.5,
-        "pass": false,
-        "aaa": false
-      },
-      {
-        "viewport": "mobile 412×915",
         "phase": 0,
-        "where": "ch7",
-        "vh": 1205,
-        "text": "Make an enquiry",
-        "size": 16,
+        "where": "ch6",
+        "vh": 1065,
+        "text": "Photograph awaiting approved photography",
+        "size": 11,
         "large": false,
-        "ratio": 1.01,
+        "ratio": 6.08,
         "need": 4.5,
-        "pass": false,
-        "aaa": false
-      },
-      {
-        "viewport": "mobile 412×915",
-        "phase": 2.1,
-        "where": "ch7",
-        "vh": 1205,
-        "text": "Make an enquiry",
-        "size": 16,
-        "large": false,
-        "ratio": 1.01,
-        "need": 4.5,
-        "pass": false,
-        "aaa": false
-      },
-      {
-        "viewport": "mobile 390×844",
-        "phase": 0,
-        "where": "ch7",
-        "vh": 1205,
-        "text": "Make an enquiry",
-        "size": 16,
-        "large": false,
-        "ratio": 1.01,
-        "need": 4.5,
-        "pass": false,
-        "aaa": false
-      },
-      {
-        "viewport": "mobile 390×844",
-        "phase": 2.1,
-        "where": "ch7",
-        "vh": 1205,
-        "text": "Make an enquiry",
-        "size": 16,
-        "large": false,
-        "ratio": 1.01,
-        "need": 4.5,
-        "pass": false,
+        "pass": true,
         "aaa": false
       }
     ]
@@ -121,7 +121,7 @@
       "text": "FUTURA",
       "size": 145.6,
       "large": true,
-      "ratio": 17.08,
+      "ratio": 17.06,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -199,7 +199,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.9,
+      "ratio": 9.95,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -264,7 +264,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.74,
+      "ratio": 16.76,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -277,7 +277,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.74,
+      "ratio": 16.76,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -316,7 +316,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 7.71,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -329,7 +329,7 @@
       "text": "The Collection",
       "size": 53.44,
       "large": true,
-      "ratio": 8.67,
+      "ratio": 8.65,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -368,7 +368,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.94,
+      "ratio": 9.95,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -420,7 +420,7 @@
       "text": "Shade",
       "size": 12,
       "large": false,
-      "ratio": 9.18,
+      "ratio": 9.19,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -446,7 +446,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.74,
+      "ratio": 16.76,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -472,7 +472,7 @@
       "text": "Price to be confirmed",
       "size": 15,
       "large": false,
-      "ratio": 16.74,
+      "ratio": 16.76,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -485,7 +485,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 7.71,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -537,7 +537,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.95,
+      "ratio": 9.9,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -563,7 +563,7 @@
       "text": "FUTURA product 3",
       "size": 36.16,
       "large": true,
-      "ratio": 15.75,
+      "ratio": 15.76,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -602,7 +602,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.74,
+      "ratio": 16.76,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -615,7 +615,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.76,
+      "ratio": 16.74,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -654,7 +654,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 7.71,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -797,7 +797,7 @@
       "text": "Affordable price.",
       "size": 122.56,
       "large": true,
-      "ratio": 7.35,
+      "ratio": 7.36,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -810,10 +810,10 @@
       "text": "Make an enquiry",
       "size": 16,
       "large": false,
-      "ratio": 1.01,
+      "ratio": 11.59,
       "need": 4.5,
-      "pass": false,
-      "aaa": false
+      "pass": true,
+      "aaa": true
     },
     {
       "viewport": "desktop 1440×900",
@@ -823,7 +823,7 @@
       "text": "See the collection",
       "size": 16,
       "large": false,
-      "ratio": 12.65,
+      "ratio": 12.66,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -849,7 +849,7 @@
       "text": "FUTURA",
       "size": 145.6,
       "large": true,
-      "ratio": 17.01,
+      "ratio": 17.06,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -862,7 +862,7 @@
       "text": "Logo file pending",
       "size": 10,
       "large": false,
-      "ratio": 9.18,
+      "ratio": 9.19,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -888,7 +888,7 @@
       "text": "The Collection",
       "size": 53.44,
       "large": true,
-      "ratio": 10.66,
+      "ratio": 10.61,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -901,7 +901,7 @@
       "text": "Each FUTURA product, its shades and its price. R",
       "size": 16,
       "large": false,
-      "ratio": 9.22,
+      "ratio": 9.19,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -914,7 +914,7 @@
       "text": "Previous",
       "size": 14,
       "large": false,
-      "ratio": 10.24,
+      "ratio": 10.1,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -927,7 +927,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.83,
+      "ratio": 9.94,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -966,7 +966,7 @@
       "text": "Name, shades and price pending",
       "size": 10,
       "large": false,
-      "ratio": 9.19,
+      "ratio": 9.18,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -979,7 +979,7 @@
       "text": "Shade",
       "size": 12,
       "large": false,
-      "ratio": 9.19,
+      "ratio": 9.18,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1018,7 +1018,7 @@
       "text": "Shade 3",
       "size": 12,
       "large": false,
-      "ratio": 16.76,
+      "ratio": 16.74,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1031,7 +1031,7 @@
       "text": "Price to be confirmed",
       "size": 15,
       "large": false,
-      "ratio": 16.76,
+      "ratio": 16.74,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1044,7 +1044,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 7.71,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1057,7 +1057,7 @@
       "text": "The Collection",
       "size": 53.44,
       "large": true,
-      "ratio": 9.01,
+      "ratio": 9.03,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -1096,7 +1096,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.95,
+      "ratio": 9.98,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1161,7 +1161,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.76,
+      "ratio": 16.74,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1174,7 +1174,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.76,
+      "ratio": 16.74,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1213,7 +1213,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 7.71,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1226,7 +1226,7 @@
       "text": "The Collection",
       "size": 53.44,
       "large": true,
-      "ratio": 7.3,
+      "ratio": 7.31,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -1304,7 +1304,7 @@
       "text": "Name, shades and price pending",
       "size": 10,
       "large": false,
-      "ratio": 9.12,
+      "ratio": 9.11,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1330,7 +1330,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.76,
+      "ratio": 16.74,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1343,7 +1343,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.76,
+      "ratio": 16.74,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1369,7 +1369,7 @@
       "text": "Price to be confirmed",
       "size": 15,
       "large": false,
-      "ratio": 16.76,
+      "ratio": 16.74,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1382,7 +1382,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 7.71,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1512,7 +1512,7 @@
       "text": "Premium look.",
       "size": 122.56,
       "large": true,
-      "ratio": 11.17,
+      "ratio": 11.1,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -1525,7 +1525,7 @@
       "text": "Affordable price.",
       "size": 122.56,
       "large": true,
-      "ratio": 7.22,
+      "ratio": 7.19,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -1538,10 +1538,10 @@
       "text": "Make an enquiry",
       "size": 16,
       "large": false,
-      "ratio": 1.01,
+      "ratio": 11.59,
       "need": 4.5,
-      "pass": false,
-      "aaa": false
+      "pass": true,
+      "aaa": true
     },
     {
       "viewport": "desktop 1440×900",
@@ -1564,7 +1564,7 @@
       "text": "Products, braiding services, or both: the enquir",
       "size": 14,
       "large": false,
-      "ratio": 9.18,
+      "ratio": 9.16,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1616,7 +1616,7 @@
       "text": "The Collection",
       "size": 57.6,
       "large": true,
-      "ratio": 16.16,
+      "ratio": 16.14,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -1772,7 +1772,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1785,7 +1785,7 @@
       "text": "The Collection",
       "size": 57.6,
       "large": true,
-      "ratio": 14.82,
+      "ratio": 14.84,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -1889,7 +1889,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.81,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1902,7 +1902,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.81,
+      "ratio": 16.76,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1928,7 +1928,7 @@
       "text": "Price to be confirmed",
       "size": 15,
       "large": false,
-      "ratio": 16.81,
+      "ratio": 16.76,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1941,7 +1941,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -1954,7 +1954,7 @@
       "text": "The Collection",
       "size": 57.6,
       "large": true,
-      "ratio": 14.04,
+      "ratio": 14.03,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -2058,7 +2058,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.81,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -2110,7 +2110,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -2240,7 +2240,7 @@
       "text": "Premium look.",
       "size": 128,
       "large": true,
-      "ratio": 14.69,
+      "ratio": 14.64,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -2253,7 +2253,7 @@
       "text": "Affordable price.",
       "size": 128,
       "large": true,
-      "ratio": 10.74,
+      "ratio": 10.69,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -2266,10 +2266,10 @@
       "text": "Make an enquiry",
       "size": 16,
       "large": false,
-      "ratio": 1.01,
+      "ratio": 11.59,
       "need": 4.5,
-      "pass": false,
-      "aaa": false
+      "pass": true,
+      "aaa": true
     },
     {
       "viewport": "desktop 1920×1080",
@@ -2279,7 +2279,7 @@
       "text": "See the collection",
       "size": 16,
       "large": false,
-      "ratio": 12.63,
+      "ratio": 12.64,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -2344,7 +2344,7 @@
       "text": "The Collection",
       "size": 57.6,
       "large": true,
-      "ratio": 16.14,
+      "ratio": 16.13,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -2500,7 +2500,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -2552,7 +2552,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.91,
+      "ratio": 9.95,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -2669,7 +2669,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -2838,7 +2838,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -2994,10 +2994,10 @@
       "text": "Make an enquiry",
       "size": 16,
       "large": false,
-      "ratio": 1.01,
+      "ratio": 11.59,
       "need": 4.5,
-      "pass": false,
-      "aaa": false
+      "pass": true,
+      "aaa": true
     },
     {
       "viewport": "desktop 1920×1080",
@@ -3007,7 +3007,7 @@
       "text": "See the collection",
       "size": 16,
       "large": false,
-      "ratio": 12.64,
+      "ratio": 12.65,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3059,7 +3059,7 @@
       "text": "FUTURA is a SLAY BRAIDS product line.",
       "size": 16.8,
       "large": false,
-      "ratio": 16.91,
+      "ratio": 16.9,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3228,7 +3228,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3345,7 +3345,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3358,7 +3358,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3371,7 +3371,7 @@
       "text": "Shade 3",
       "size": 12,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3384,7 +3384,7 @@
       "text": "Price to be confirmed",
       "size": 15,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3397,7 +3397,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3566,7 +3566,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3722,10 +3722,10 @@
       "text": "Make an enquiry",
       "size": 16,
       "large": false,
-      "ratio": 1.01,
+      "ratio": 11.59,
       "need": 4.5,
-      "pass": false,
-      "aaa": false
+      "pass": true,
+      "aaa": true
     },
     {
       "viewport": "mobile 412×915",
@@ -3735,7 +3735,7 @@
       "text": "See the collection",
       "size": 16,
       "large": false,
-      "ratio": 12.79,
+      "ratio": 12.68,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3787,7 +3787,7 @@
       "text": "FUTURA is a SLAY BRAIDS product line.",
       "size": 16.8,
       "large": false,
-      "ratio": 16.91,
+      "ratio": 16.86,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3800,7 +3800,7 @@
       "text": "The Collection",
       "size": 32,
       "large": true,
-      "ratio": 11.88,
+      "ratio": 11.87,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -3904,7 +3904,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.84,
+      "ratio": 16.83,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3917,7 +3917,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.84,
+      "ratio": 16.83,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3930,7 +3930,7 @@
       "text": "Shade 3",
       "size": 12,
       "large": false,
-      "ratio": 16.84,
+      "ratio": 16.83,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3943,7 +3943,7 @@
       "text": "Price to be confirmed",
       "size": 15,
       "large": false,
-      "ratio": 16.84,
+      "ratio": 16.83,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3956,7 +3956,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -3969,7 +3969,7 @@
       "text": "The Collection",
       "size": 32,
       "large": true,
-      "ratio": 11.25,
+      "ratio": 11.24,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -3995,7 +3995,7 @@
       "text": "Previous",
       "size": 14,
       "large": false,
-      "ratio": 10.09,
+      "ratio": 10.1,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4125,7 +4125,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4138,7 +4138,7 @@
       "text": "The Collection",
       "size": 32,
       "large": true,
-      "ratio": 11.48,
+      "ratio": 11.45,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -4177,7 +4177,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.75,
+      "ratio": 9.76,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4190,7 +4190,7 @@
       "text": "Product photograph awaiting approved photography",
       "size": 11,
       "large": false,
-      "ratio": 8.21,
+      "ratio": 8.22,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4294,7 +4294,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 10.98,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4450,10 +4450,10 @@
       "text": "Make an enquiry",
       "size": 16,
       "large": false,
-      "ratio": 1.01,
+      "ratio": 11.59,
       "need": 4.5,
-      "pass": false,
-      "aaa": false
+      "pass": true,
+      "aaa": true
     },
     {
       "viewport": "mobile 412×915",
@@ -4463,7 +4463,7 @@
       "text": "See the collection",
       "size": 16,
       "large": false,
-      "ratio": 12.78,
+      "ratio": 12.69,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4515,7 +4515,7 @@
       "text": "FUTURA is a SLAY BRAIDS product line.",
       "size": 16.8,
       "large": false,
-      "ratio": 16.86,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4567,7 +4567,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.67,
+      "ratio": 9.66,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4684,7 +4684,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 11.09,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4697,7 +4697,7 @@
       "text": "The Collection",
       "size": 32,
       "large": true,
-      "ratio": 8.74,
+      "ratio": 8.72,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -4723,7 +4723,7 @@
       "text": "Previous",
       "size": 14,
       "large": false,
-      "ratio": 9.96,
+      "ratio": 9.93,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4853,7 +4853,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 11.09,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -4866,7 +4866,7 @@
       "text": "The Collection",
       "size": 32,
       "large": true,
-      "ratio": 8.3,
+      "ratio": 8.29,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -5022,7 +5022,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 11.09,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5152,7 +5152,7 @@
       "text": "Premium look.",
       "size": 46.5,
       "large": true,
-      "ratio": 15.92,
+      "ratio": 15.93,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -5178,10 +5178,10 @@
       "text": "Make an enquiry",
       "size": 16,
       "large": false,
-      "ratio": 1.01,
+      "ratio": 11.59,
       "need": 4.5,
-      "pass": false,
-      "aaa": false
+      "pass": true,
+      "aaa": true
     },
     {
       "viewport": "mobile 390×844",
@@ -5191,7 +5191,7 @@
       "text": "See the collection",
       "size": 16,
       "large": false,
-      "ratio": 12.7,
+      "ratio": 12.79,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5256,7 +5256,7 @@
       "text": "The Collection",
       "size": 32,
       "large": true,
-      "ratio": 9.32,
+      "ratio": 9.33,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -5295,7 +5295,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.51,
+      "ratio": 9.48,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5412,7 +5412,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 11.09,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5425,7 +5425,7 @@
       "text": "The Collection",
       "size": 32,
       "large": true,
-      "ratio": 8.54,
+      "ratio": 8.56,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -5451,7 +5451,7 @@
       "text": "Previous",
       "size": 14,
       "large": false,
-      "ratio": 9.92,
+      "ratio": 9.91,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5464,7 +5464,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.76,
+      "ratio": 9.69,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5581,7 +5581,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 11.09,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5594,7 +5594,7 @@
       "text": "The Collection",
       "size": 32,
       "large": true,
-      "ratio": 8.25,
+      "ratio": 8.26,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -5633,7 +5633,7 @@
       "text": "Next ",
       "size": 14,
       "large": false,
-      "ratio": 9.51,
+      "ratio": 9.48,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5698,7 +5698,7 @@
       "text": "Shade 1",
       "size": 12,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5711,7 +5711,7 @@
       "text": "Shade 2",
       "size": 12,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5724,7 +5724,7 @@
       "text": "Shade 3",
       "size": 12,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5737,7 +5737,7 @@
       "text": "Price to be confirmed",
       "size": 15,
       "large": false,
-      "ratio": 16.83,
+      "ratio": 16.84,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5750,7 +5750,7 @@
       "text": "Enquire about this product",
       "size": 16,
       "large": false,
-      "ratio": 11.09,
+      "ratio": 11.59,
       "need": 4.5,
       "pass": true,
       "aaa": true
@@ -5880,7 +5880,7 @@
       "text": "Premium look.",
       "size": 46.5,
       "large": true,
-      "ratio": 15.91,
+      "ratio": 15.92,
       "need": 3,
       "pass": true,
       "aaa": true
@@ -5906,10 +5906,10 @@
       "text": "Make an enquiry",
       "size": 16,
       "large": false,
-      "ratio": 1.01,
+      "ratio": 11.59,
       "need": 4.5,
-      "pass": false,
-      "aaa": false
+      "pass": true,
+      "aaa": true
     },
     {
       "viewport": "mobile 390×844",

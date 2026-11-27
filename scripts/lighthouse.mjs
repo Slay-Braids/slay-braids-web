@@ -10,8 +10,12 @@ import * as chromeLauncher from "chrome-launcher";
 import { createServer } from "node:http";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
+import { gzipSync } from "node:zlib";
 
-const OUT = path.resolve("out");
+const OUT = path.resolve(process.env.OUT_DIR ?? "out");
+// COMPRESS=1 gzips text responses, as any production host does (M3: the page HTML doubled in
+// size with Chapters 4–7, so uncompressed lab numbers overstate the cost).
+const COMPRESS = process.env.COMPRESS === "1";
 const types = {
   ".html": "text/html",
   ".js": "text/javascript",
@@ -27,11 +31,18 @@ const server = createServer(async (req, res) => {
   let p = path.join(OUT, decodeURIComponent(new URL(req.url, "http://x").pathname));
   if (p.endsWith("/")) p += "index.html";
   try {
-    const body = await readFile(p);
-    res.writeHead(200, {
-      "content-type": types[path.extname(p)] ?? "application/octet-stream",
+    let body = await readFile(p);
+    const ext = path.extname(p);
+    const text = [".html", ".js", ".css", ".json", ".txt"].includes(ext);
+    const headers = {
+      "content-type": types[ext] ?? "application/octet-stream",
       "cache-control": "public, max-age=31536000, immutable",
-    });
+    };
+    if (COMPRESS && text) {
+      body = gzipSync(body);
+      headers["content-encoding"] = "gzip";
+    }
+    res.writeHead(200, headers);
     res.end(body);
   } catch {
     res.writeHead(404);
@@ -106,7 +117,7 @@ for (const r of runs.filter((x) => !only || x.name === only)) {
     .map((i) => ({ score: i.score, node: i.node?.snippet }))
     .slice(0, 5);
   await writeFile(
-    `docs/perf/lighthouse-${r.name}.json`,
+    `docs/perf/${process.env.PREFIX ?? ""}lighthouse-${r.name}.json`,
     JSON.stringify(summary[r.name], null, 2) + "\n",
   );
 }

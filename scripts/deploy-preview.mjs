@@ -1,14 +1,18 @@
 /**
  * Deploys the static export (out/) to Vercel as a PREVIEW deployment (never production).
  *
- *   node scripts/deploy-preview.mjs        (after `pnpm build`)
+ *   NODE_USE_ENV_PROXY=1 node scripts/deploy-preview.mjs        (after `pnpm build`)
+ *
+ * NOT YET RUN in this (staged) form: it needs the project owner's go-ahead (docs/M3-handoff.md §6).
  *
  * - Uses the Vercel REST API. In this environment the API token is injected by the network
  *   proxy; elsewhere set VERCEL_TOKEN.
  * - Team slay-braids, project slay-braids-web (created on first run if it does not exist).
- * - No `target` is sent, so the deployment is a preview: it gets its own immutable URL and
- *   does not touch any production deployment or domain. Every preview stays available, which
- *   is the rollback path (promote or alias an earlier deployment).
+ * - `target: "preview"` is sent explicitly. (Without it, the API made the project's first
+ *   deployment a production deployment on 27 Nov 2026; that deployment was deleted within
+ *   minutes.) A guard deletes any deployment that comes back with target production.
+ *   A preview gets its own immutable URL and touches no production deployment or domain.
+ *   Every preview stays available, which is the rollback path.
  * - vercel.json (headers, clean URLs) is uploaded with the files.
  */
 import { createHash } from "node:crypto";
@@ -84,11 +88,17 @@ const commit = process.env.GIT_SHA ?? "";
 const dep = await api("POST", "/v13/deployments", {
   name: PROJECT,
   project: project.id,
+  target: "preview",
   files: manifest,
   projectSettings: { framework: null, buildCommand: null, installCommand: null, outputDirectory: null },
   meta: { source: "scripts/deploy-preview.mjs", gitCommitSha: commit, branch: "claude/cool-ramanujan-0ln9mf" },
 });
 console.log(`deployment ${dep.id} ${dep.url} (${dep.readyState}) target=${dep.target ?? "preview"}`);
+if (dep.target === "production") {
+  await api("DELETE", `/v13/deployments/${dep.id}`);
+  console.error("GUARD: the API created a production deployment; it has been deleted. Nothing published.");
+  process.exit(2);
+}
 
 // 4. Wait until ready.
 let d = dep;
