@@ -20,6 +20,10 @@ export interface DeviceSignals {
   /** Unmasked GPU renderer string, if available. */
   gpu?: string;
   viewportWidth: number;
+  /** navigator.connection.effectiveType, if exposed ("slow-2g" | "2g" | "3g" | "4g"). */
+  effectiveType?: string;
+  /** The visitor's own choice from the "Simple view / Immersive view" switch, if any. */
+  view?: "simple" | "immersive";
 }
 
 const WEAK_GPU =
@@ -28,9 +32,16 @@ const WEAK_GPU =
 export function decideTier(s: DeviceSignals): { tier: Tier; reason: string } {
   if (!s.webgl2) return { tier: "C", reason: "WebGL2 unavailable" };
   if (s.reducedMotion) return { tier: "C", reason: "prefers-reduced-motion" };
-  if (s.saveData) return { tier: "C", reason: "Data Saver" };
-  if (s.deviceMemory !== undefined && s.deviceMemory < 3)
+  if (s.view === "simple") return { tier: "C", reason: "simple view chosen" };
+  // A visitor who asked for the immersive view skips the soft limits below (not the hard ones).
+  const soft = s.view !== "immersive";
+  if (soft && s.saveData) return { tier: "C", reason: "Data Saver" };
+  if (soft && s.deviceMemory !== undefined && s.deviceMemory < 3)
     return { tier: "C", reason: "low device memory" };
+  if (soft && s.hardwareConcurrency !== undefined && s.hardwareConcurrency <= 2 && (s.deviceMemory ?? 8) <= 4)
+    return { tier: "C", reason: "≤2 CPU cores and ≤4 GB memory" };
+  if (soft && (s.effectiveType === "slow-2g" || s.effectiveType === "2g"))
+    return { tier: "C", reason: "slow connection" };
   if (s.gpu && WEAK_GPU.test(s.gpu)) {
     // Software rasterisers and old mobile GPUs get the light tier; the runtime monitor
     // drops further to the still if frame rate is not held.
@@ -63,8 +74,14 @@ export const TIER_SETTINGS: Record<Exclude<Tier, "C">, TierSettings> = {
   },
 };
 
-/** The anchor pose: frozen seed. Changing this invalidates anchor_v1 and the film's end frame. */
-export const ANCHOR = { version: "anchor_v1", seed: 20261126 } as const;
+/**
+ * The anchor pose: frozen seed. anchor_v2 (27 Nov 2026, owner-approved colour correction for the
+ * red/black/white identity): same geometry, shader, pose and framing as anchor_v1, with a neutral
+ * white key light instead of the champagne key. anchor_v3 (same day, owner request for a bright
+ * site): the anchor world is white instead of black; light, geometry, shader, pose and framing
+ * as anchor_v2. Earlier versions' files are kept in public/anchors.
+ */
+export const ANCHOR = { version: "anchor_v3", seed: 20261126 } as const;
 
 /** Anchor stills are always rendered from the tier-A cascade. */
 export function anchorConfig(orientation: Orientation): CascadeConfig {
@@ -107,7 +124,7 @@ export function parseFlags(search: string, hash: string): Flags {
 export function probeDevice(): DeviceSignals {
   const nav = navigator as Navigator & {
     deviceMemory?: number;
-    connection?: { saveData?: boolean };
+    connection?: { saveData?: boolean; effectiveType?: string };
   };
   let webgl2 = false;
   let gpu: string | undefined;
@@ -134,5 +151,23 @@ export function probeDevice(): DeviceSignals {
     coarsePointer: matchMedia("(pointer: coarse)").matches,
     gpu,
     viewportWidth: innerWidth,
+    effectiveType: nav.connection?.effectiveType,
+    view: readViewChoice(),
   };
+}
+
+/** The "Simple view / Immersive view" choice: `?view=` in the URL (remembered), or remembered. */
+export const VIEW_KEY = "slay-view";
+export function readViewChoice(): "simple" | "immersive" | undefined {
+  try {
+    const q = new URLSearchParams(location.search).get("view");
+    if (q === "simple" || q === "immersive") {
+      localStorage.setItem(VIEW_KEY, q);
+      return q;
+    }
+    const v = localStorage.getItem(VIEW_KEY);
+    return v === "simple" || v === "immersive" ? v : undefined;
+  } catch {
+    return undefined;
+  }
 }

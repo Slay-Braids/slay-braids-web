@@ -75,7 +75,11 @@ test.describe("anchor still → live 3D handoff", () => {
     const msg = `raw ${raw.mean.toFixed(2)}/255 · perceptual ${perceptual.mean.toFixed(2)}/255 · content ${content.mean.toFixed(2)}/255 · luminance ${lumStill.toFixed(2)} vs ${lumLive.toFixed(2)}`;
     info.annotations.push({ type: "handoff", description: msg });
     console.log(`[${info.project.name}] handoff ${msg}`);
-    expect(perceptual.mean).toBeLessThan(2);
+    // M1 set < 2/255 on a black world, where the braids stand only ~12/255 off the background
+    // (≈ 16 % of the contrast). The bright identity (anchor_v3) puts them on white (~195/255), so
+    // the same fibre sampling reads larger in absolute terms: the bound is now 2 % of the
+    // contrast (stricter than M1 in relative terms), and never less than M1's 2/255.
+    expect(perceptual.mean).toBeLessThan(Math.max(2, content.mean * 0.02));
     // 0.15: on high-DPR phones the canvas is capped at 2x, so it is marginally softer than the
     // full-resolution still (documented in the M1 report as a known item for M2).
     expect(perceptual.mean).toBeLessThan(content.mean * 0.15);
@@ -194,24 +198,28 @@ test.describe("lazy loading and fallbacks", () => {
   });
 });
 
+// 27 Nov 2026: the owner approved publishing futura fibre features from Kaneka's page (M1 banned
+// all Kaneka information). Claims must still come only from that approved list: Kaneka's heat
+// figure only with its own caveat, the source credited, and nothing beyond the approved features.
 test("publishes no unapproved product claims", async ({ page }) => {
   await page.goto("/?tier=C");
   const text = (await page.locator("body").innerText()).toLowerCase();
   for (const banned of [
-    "°c",
     "°f",
-    "flame",
-    "heat friendly",
     "heat resistant",
     "tangle",
     "curl retention",
     "polyester",
-    "kanekalon",
-    "kaneka",
     "fibre composition",
+    "guaranteed to",
+    "100%",
   ]) {
     expect(text, `found "${banned}"`).not.toContain(banned);
   }
+  // The only temperature on the site is Kaneka's recommendation, with its caveat, credited.
+  expect(text.match(/\d+\s?°c/g)).toEqual(["180 °c"]);
+  expect(text).toContain("not a guaranteed value");
+  expect(text).toContain("fibre information: kaneka corporation");
 });
 
 // Production (27 Nov 2026): no verified enquiry destination exists, so there is no form at all

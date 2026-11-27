@@ -22,7 +22,8 @@ export function Header({ assetBase = "/" }: { assetBase?: string }) {
     <>
       <header data-site-header className="site-header">
         <a href="#top" className="logo-slot" data-ground="ink" aria-label="SLAY BRAIDS, home">
-          <Logo base={assetBase} width={112} alt="" />
+          <Logo base={assetBase} width={112} alt="" className="logo-red" />
+          <Logo base={assetBase} variant="white" width={112} alt="" className="logo-white" />
         </a>
         <div className="header-actions" data-ground="ink">
           <button type="button" className="motion-toggle" data-motion-toggle aria-pressed="false">
@@ -68,6 +69,14 @@ export function Header({ assetBase = "/" }: { assetBase?: string }) {
           <a href="#enquire" className="menu-enquire" onClick={close}>
             Enquiries
           </a>
+          <div className="menu-view">
+            <button type="button" className="menu-view-btn" data-view-toggle>
+              Simple view
+            </button>
+            <p className="menu-view-note" data-view-note>
+              A lighter version without the 3D scroll, for phones that struggle with it.
+            </p>
+          </div>
         </div>
       </dialog>
     </>

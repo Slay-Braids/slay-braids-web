@@ -18,7 +18,7 @@ import sharp from "sharp";
 const OUT = path.resolve("out");
 const DEST = path.resolve("public/anchors");
 const draft = process.argv.includes("--draft");
-const VERSION = "anchor_v1";
+const VERSION = process.env.ANCHOR_VERSION ?? "anchor_v3";
 const WIDTHS = { landscape: [1280, 1920, 2560], portrait: [720, 1080, 1440] };
 
 const types = {
@@ -107,7 +107,10 @@ for (const orientation of ["landscape", "portrait"]) {
     }
   }
 }
-if (!draft)
-  await writeFile(path.join(DEST, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+if (!draft) {
+  // anchor_v1 keeps public/anchors/manifest.json; later versions get their own manifest.
+  const manifestName = VERSION === "anchor_v1" ? "manifest.json" : `manifest-${VERSION}.json`;
+  await writeFile(path.join(DEST, manifestName), JSON.stringify(manifest, null, 2) + "\n");
+}
 await browser.close();
 server.close();

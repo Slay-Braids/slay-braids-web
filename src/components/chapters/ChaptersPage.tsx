@@ -2,8 +2,8 @@ import { AnchorStage } from "../AnchorStage";
 import { ExperienceBoot } from "../ExperienceBoot";
 import { Header } from "./Header";
 import { LoopVideo, Logo, StillPicture } from "../Media";
-import { craft, enquiry, futura, lookbook, looks, positioning, promise } from "@/content/site";
-import { craftClip, lookClips, lookbookMedia, portraitStill } from "@/content/media";
+import { craft, enquiry, futura, lookbook, looks, positioning, promise, unbraiding } from "@/content/site";
+import { craftClip, lookClips, lookbookMedia, portraitStudio, studioPhotos } from "@/content/media";
 import { SECTION_VH } from "@/experience/chapters/story";
 import { CHAPTERS } from "@/content/chapters";
 import type { CSSProperties } from "react";
@@ -43,6 +43,7 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
               <span className="block">{positioning.line1}</span>
               <span className="block italic text-red">{positioning.line2}</span>
             </h1>
+            <p className="hero-rise hero-sub">{positioning.sub}</p>
             <div className="hero-rise hero-ctas">
               <a href="#ch4" className="btn-primary">
                 Discover FUTURA
@@ -69,8 +70,10 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
               <h2 id="ch2-title" className="ch2-title font-display">
                 {craft.title}
               </h2>
+              <p className="ch2-text">{craft.text}</p>
               <figure className="ch2-film">
                 <LoopVideo clip={craftClip} base={assetBase} />
+                <figcaption className="film-caption">{craft.caption}</figcaption>
               </figure>
             </div>
           </div>
@@ -84,15 +87,21 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
                 03
               </p>
               <h2 id="ch3-title" className="sr-only">
-                The Unbraiding
+                {unbraiding.title}
               </h2>
               <figure className="ch3-portrait" data-ch3-portrait>
                 <div className="portrait-mount">
-                  <StillPicture still={portraitStill} base={assetBase} sizes="(max-width: 900px) 46vw, 18vw" />
+                  <StillPicture
+                    still={{ base: `photo-${portraitStudio.key}`, source: "Drive", alt: portraitStudio.alt, width: portraitStudio.width, height: portraitStudio.height }}
+                    base={assetBase}
+                    sizes="(max-width: 900px) 46vw, 18vw"
+                    widths={[480, 960]}
+                  />
                 </div>
               </figure>
               <div className="ch3-line" data-ch3-line data-state="hidden">
                 <Logo base={assetBase} width={260} className="ch3-logo" />
+                <p className="ch3-text">{unbraiding.text}</p>
               </div>
             </div>
           </div>
@@ -114,9 +123,25 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
                   {futura.by}
                 </span>
               </h2>
-              <p className="ch4-line" data-ch4-line>
-                {futura.line}
-              </p>
+              <div className="ch4-line" data-ch4-line>
+                <p className="ch4-headline font-display">{futura.headline}</p>
+                <p className="ch4-intro">{futura.intro}</p>
+              </div>
+              <div className="ch4-feat">
+                <h3 className="ch4-feat-title">{futura.featuresTitle}</h3>
+                <ul className="ch4-features">
+                  {futura.features.map((f, i) => (
+                    <li key={f.title} style={{ "--i": i } as CSSProperties}>
+                      <span className="ch4-feat-num" aria-hidden="true">
+                        {pad(i + 1)}
+                      </span>
+                      <strong>{f.title}</strong>
+                      <span>{f.text}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="ch4-source">{futura.source}</p>
+              </div>
             </div>
           </div>
         </section>
@@ -160,7 +185,9 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
                         </p>
                         <h3 id={`${clip.id}-name`} className="product-name font-display">
                           Look {pad(i + 1)}
+                          <span className="look-name">{clip.name}</span>
                         </h3>
+                        <p className="look-text">{clip.text}</p>
                       </div>
                     </article>
                   </li>
@@ -180,6 +207,7 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
               <h2 id="ch6-title" className="ch6-title font-display">
                 {lookbook.title}
               </h2>
+              <p className="ch6-text">{lookbook.intro}</p>
             </div>
             <div className="ch6-spread" data-ch6-spread>
               {lookbookMedia.map((item, i) => (
@@ -191,6 +219,9 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
                       <StillPicture still={item.still} base={assetBase} sizes="(max-width: 900px) 46vw, 28vw" />
                     )}
                   </div>
+                  <figcaption className="look-caption">
+                    {item.kind === "video" ? `${item.clip.name}. ${item.clip.text}` : item.still.caption}
+                  </figcaption>
                 </figure>
               ))}
             </div>
@@ -208,6 +239,7 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
                 <span className="block">{positioning.line1}</span>
                 <span className="block italic text-red">{positioning.line2}</span>
               </h2>
+              <p className="ch7-sub">{promise.sub}</p>
               <div className="hero-ctas">
                 <a href={promise.primary.href} className="btn-primary">
                   {promise.primary.label}
@@ -220,11 +252,80 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
           </div>
         </section>
 
+        {/* From here on every section is opaque: the 3D pauses once the ribbon reaches the top. */}
+        <div className="ribbon" data-opaque data-ground-section="red" aria-hidden="true">
+          <div className="ribbon-track">
+            {[0, 1].map((k) => (
+              <span key={k}>
+                Premium look<i />Affordable price<i />FUTURA by SLAY BRAIDS<i />Premium look<i />Affordable price<i />
+                FUTURA by SLAY BRAIDS<i />
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <section className="find-look" data-ground-section="white" aria-labelledby="find-look-title">
+          <div className="find-look-inner">
+            <h2 id="find-look-title" className="find-look-title font-display">
+              Find your <em>look</em>
+            </h2>
+            <p className="find-look-intro">{looks.findIntro}</p>
+            <ul className="find-look-grid">
+              {lookClips.map((clip, i) => (
+                <li key={clip.id}>
+                  <a href="#ch5" data-look={i}>
+                    <span className="tile-media">
+                      <StillPicture
+                        still={{
+                          base: `${clip.base}-poster`,
+                          source: clip.source,
+                          alt: "",
+                          width: 1080,
+                          height: 1920,
+                        }}
+                        base={assetBase}
+                        sizes="(max-width: 760px) 46vw, 24vw"
+                      />
+                    </span>
+                    <span className="tile-num">Look {pad(i + 1)}</span>
+                    <span className="tile-name">{clip.name}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="studio" data-ground-section="black" aria-labelledby="studio-title">
+          <div className="studio-inner">
+            <p className="studio-kicker">The studio edit</p>
+            <h2 id="studio-title" className="studio-title font-display">
+              Braids in <em>full colour</em>
+            </h2>
+            <p className="studio-intro">{looks.studioIntro}</p>
+            <ul className="studio-grid">
+              {studioPhotos.map((p) => (
+                <li key={p.key} className={p.wide ? "is-wide" : undefined}>
+                  <figure>
+                    <StillPicture
+                      still={{ base: `photo-${p.key}`, source: "Drive", alt: p.alt, width: p.width, height: p.height }}
+                      base={assetBase}
+                      sizes={p.wide ? "(max-width: 760px) 92vw, 48vw" : "(max-width: 760px) 46vw, 24vw"}
+                      widths={[480, 960]}
+                    />
+                    <figcaption>{p.alt}</figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         <section
           id="enquire"
           className="enquire-section"
           data-opaque
-          data-ground-section="ink"
+          data-ground-section="white"
           aria-labelledby="enquire-title"
         >
           <div className="enquire-inner">
@@ -248,7 +349,7 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
         ))}
       </nav>
 
-      <footer className="site-footer" data-ground-section="ink">
+      <footer className="site-footer" data-ground-section="black">
         <div className="footer-inner">
           <a href="#top" className="footer-logo" aria-label="SLAY BRAIDS, back to the top">
             <Logo base={assetBase} width={150} alt="" />
@@ -265,9 +366,13 @@ export function ChaptersPage({ assetBase = "/" }: { assetBase?: string }) {
               </li>
             </ul>
           </nav>
+          <button type="button" className="footer-view" data-view-toggle>
+            Simple view
+          </button>
           <p className="footer-legal">© SLAY BRAIDS · {futura.line}</p>
         </div>
       </footer>
+      <p className="view-notice" data-view-notice role="status" aria-live="polite" />
       <ExperienceBoot />
     </div>
   );

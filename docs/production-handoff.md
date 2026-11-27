@@ -38,3 +38,56 @@ Source: `main`, merged from `claude/cool-ramanujan-0ln9mf` via [Slay-Braids/slay
 ## Deployment history
 - 27 Nov 2026: three unintended production records were created while setting up the project. All were removed or cancelled; one was briefly public (about 3 minutes) with no custom domain involved.
 - See `docs/M3-handoff.md` §6 for the full account.
+
+## Verification (27 Nov 2026, production deployment dpl_57g7vYJJf9yPZrQ8LY4xubJgPyZW from main 5ed8134)
+- **Public access:**
+  - https://slaybraids.vercel.app and https://slay-braids-web.vercel.app return 200 with no login, cookie or share token.
+  - Previews still redirect to Vercel login (302).
+- **Full test suite against the live domain (desktop 1440×900 and Pixel 7):** 63 passed, 1 skipped (by design), 2 failed.
+  - The 2 failures are this sandbox's Node request helper, which cannot resolve hosts without the network proxy.
+  - The same checks run with curl: all 18 video and poster files, the stills, the logo and the favicon return 200 with the correct types.
+- **Smoke test, desktop and mobile:** 0 console errors, 0 failed requests, every image loaded; 404 page and security headers confirmed. Screenshots: `docs/review/prod/`.
+- **Local suite on the release build:** unit 49/49; end-to-end 65 passed, 1 skipped.
+- **CI on the final PR commit 1d90736:** 64 passed, 1 skipped, 1 failed. The failure is a runner infrastructure error (the browser lost its context during test setup), not an assertion.
+- **Lighthouse (lab, compressed), static mode:** accessibility 100; LCP 0.76 s mobile, 0.22 s desktop; CLS 0; performance 99.
+- **Not done:** real-device testing (Galaxy A26, iPhone Safari, Samsung Internet).
+
+## Update 2 (27 Nov 2026): copy, FUTURA features, colour, simple view
+- **Write-ups:** a hero subline and a text for each chapter. Each look and lookbook image is named and described (descriptions of what is visible, not official style or shade names).
+- **FUTURA:**
+  - The affordability story ("Made to look expensive. Priced not to be.") and an intro.
+  - Six futura fibre features paraphrased from Kaneka's page (https://www.kanekalon.com/en/futura.html), without its product list.
+  - Kaneka's own caveat on the heat figure ("180 °C … not a guaranteed value") is kept, and Kaneka is credited as the source.
+  - Chapter 4 is longer so this can be read.
+- **Colour:**
+  - anchor_v2 replaces the champagne key light on the 3D braids with a neutral white key, to fit red, black and white.
+  - Geometry, shader, pose and framing are unchanged.
+  - Anchor and chapter stills were re-rendered; anchor_v1 files are kept.
+- **Phone fallback:**
+  - A "Simple view / Immersive view" switch (menu and footer), remembered on the device; `?view=simple` also works.
+  - Phones with 2 or fewer cores and 4 GB or less memory, or on 2G, start in the simple view.
+  - The frame-rate monitor now watches the whole visit. A sustained slowdown (e.g. a phone heating up) steps down to the lighter 3D, then to the simple view, with a short notice.
+- **Search:** indexing is on (model consent confirmed), with a canonical URL, Open Graph and Twitter card (original logo on black), robots.txt and sitemap.xml.
+
+## Adding new photos and clips from the Drive
+1. Put the originals in the Drive folder "Slay shoot footages" (any size).
+2. Add an entry to `CLIPS` (video segment: file, Drive id, start, duration) or `STILLS` (file, Drive id, frame time; a photo can be used directly) in `scripts/encode-brand-media.mjs`, then run it.
+3. Reference the new base name in `src/content/media.ts`, with a short description of what is shown.
+4. Build, test, push. Previews build automatically; merging to `main` deploys production.
+
+## Update 3 (27 Nov 2026): bright identity, studio photographs
+- **White by default:** the braids now sit on white (anchor_v3: white anchor world; light, geometry, shader, pose and framing as anchor_v2). The world behind the braids changes under the pages, so each chapter lifts into a new colour:
+
+  | Chapters | World | Page across the hair |
+  |---|---|---|
+  | 1–3 | white | |
+  | 3 | | black |
+  | 4, FUTURA | SLAY red | |
+  | 5, The Looks | white | |
+  | 6, Lookbook | | red |
+  | 7, The Promise | black | |
+  | Ribbon, "Find your look", studio edit, enquiries | red, white, black, white | |
+
+- **Header:** each part takes its colour from what lies under it; the white logo is used on red.
+- **New sections:** a red brand ribbon (motion off for reduced motion), "Find your look" (the four looks, linking into Chapter 5), and "Braids in full colour" (the studio photographs).
+- **Inspiration:** Lush Hair Africa (bold section heads, ribbon, style tiles). darlinghair.com refused automated access. Nothing was copied.

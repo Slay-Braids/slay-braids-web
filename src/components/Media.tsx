@@ -33,21 +33,23 @@ export function StillPicture({
   className,
   sizes = "(max-width: 900px) 90vw, 36vw",
   eager = false,
+  widths = [540, 1080],
 }: {
   still: Still;
   base: string;
   className?: string;
   sizes?: string;
   eager?: boolean;
+  widths?: [number, number];
 }) {
   const m = `${base}media/${still.base}`;
-  const set = (ext: string) => `${m}-540.${ext} 540w, ${m}-1080.${ext} 1080w`;
+  const set = (ext: string) => widths.map((w) => `${m}-${w}.${ext} ${w}w`).join(", ");
   return (
     <picture className={className}>
       <source type="image/avif" srcSet={set("avif")} sizes={sizes} />
       <source type="image/webp" srcSet={set("webp")} sizes={sizes} />
       <img
-        src={`${m}-1080.jpg`}
+        src={`${m}-${widths[1]}.jpg`}
         srcSet={set("jpg")}
         sizes={sizes}
         alt={still.alt}

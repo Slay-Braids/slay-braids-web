@@ -40,8 +40,9 @@ const N = Math.max(1, products.length);
 
 function build(o: Orientation): StoryLayout {
   const end3 = CHAPTER_LAYOUT[o].ch3[1];
+  // Chapter 4 holds FUTURA's story (title, intro, six features), so it is the longest chapter.
   if (o === "landscape") {
-    const ch5Start = end3 + 220;
+    const ch5Start = end3 + 300;
     const ch5End = ch5Start + 50 + 50 * N;
     const ch6End = ch5End + 220;
     return {
@@ -60,7 +61,7 @@ function build(o: Orientation): StoryLayout {
       ch7Line: ch6End + 80,
     };
   }
-  const ch5Start = end3 + 190;
+  const ch5Start = end3 + 270;
   const ch5End = ch5Start + 40 + 80 * N;
   const ch6End = ch5End + 190;
   return {
@@ -86,9 +87,20 @@ export const STORY: Record<Orientation, StoryLayout> = {
 };
 
 /** Section heights in vh, for the page markup (the sections are the scroll track). */
+const len = (r: R) => r[1] - r[0];
 export const SECTION_VH = {
-  landscape: { ch4: 220, ch5: 50 + 50 * N, ch6: 220, ch7: 200 },
-  portrait: { ch4: 190, ch5: 40 + 80 * N, ch6: 190, ch7: 180 },
+  landscape: {
+    ch4: len(STORY.landscape.ch4),
+    ch5: len(STORY.landscape.ch5),
+    ch6: len(STORY.landscape.ch6),
+    ch7: len(STORY.landscape.ch7),
+  },
+  portrait: {
+    ch4: len(STORY.portrait.ch4),
+    ch5: len(STORY.portrait.ch5),
+    ch6: len(STORY.portrait.ch6),
+    ch7: len(STORY.portrait.ch7),
+  },
 } as const;
 
 export const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
@@ -197,7 +209,9 @@ export function ch4State(o: Orientation, vh: number) {
   const out = 1 - smooth(range(vh, [S.ch4[1] - 25, S.ch4[1] + 5]));
   const title = smooth(range(vh, [S.ch4Lift[1] - 10, S.ch4Lift[1] + 30])) * out;
   const line = smooth(range(vh, [S.ch4Retreat[0] + 15, S.ch4Retreat[0] + 45])) * out;
-  return { printed, title, line, visible: printed > 0.001 || title > 0.001 || line > 0.001 };
+  // The six FUTURA features arrive after the intro (CSS staggers them from this one value).
+  const features = range(vh, [S.ch4Retreat[0] + 55, S.ch4Retreat[0] + 95]) * out;
+  return { printed, title, line, features, visible: printed > 0.001 || title > 0.001 || line > 0.001 };
 }
 
 /** Ch 5 DOM (desktop pinned): entrance/exit of the showcase and the active product. */
@@ -275,4 +289,38 @@ export function mapVh(from: Orientation, to: Orientation, vh: number): number {
     if (vh < a[i + 1]!) return b[i]! + ((vh - a[i]!) / (a[i + 1]! - a[i]!)) * (b[i + 1]! - b[i]!);
   }
   return vh;
+}
+
+/**
+ * Production identity v3 ("bright"): the world behind the braids changes colour, always while a
+ * page covers the screen (or as type fades), so the change is never seen happening on the hair.
+ *   Ch1–3 white · Ch4 SLAY red · Ch5–6 white · Ch7 black. Pages: Ch3/Ch4 black, Ch6/Ch7 red.
+ */
+export type World = "white" | "red" | "black";
+export const WORLD_RGB: Record<World, [number, number, number]> = {
+  white: [1, 1, 1],
+  red: [198 / 255, 13 / 255, 19 / 255],
+  black: [10 / 255, 10 / 255, 10 / 255],
+};
+export const PAGE_COLOR: Record<PageState["guide"], World> = { ch3: "black", ch4: "black", ch6: "red" };
+
+/** Which world (and blend towards the next) at this position. */
+export function worldAt(o: Orientation, vh: number): { rgb: [number, number, number]; name: World } {
+  const S = STORY[o];
+  const L = CHAPTER_LAYOUT[o];
+  const mix = (a: World, b: World, t: number) => {
+    const A = WORLD_RGB[a];
+    const B = WORLD_RGB[b];
+    const k = smooth(t);
+    return { rgb: [0, 1, 2].map((i) => A[i]! + (B[i]! - A[i]!) * k) as [number, number, number], name: k < 0.5 ? a : b };
+  };
+  // Under the full black cover that ends Chapter 3: white → red.
+  if (vh < L.ch3[1] + 10) return { rgb: WORLD_RGB.white, name: "white" };
+  // Chapter 4 ends with its type fading: red → white, before the looks.
+  if (vh < S.ch4[1] - 25) return { rgb: WORLD_RGB.red, name: "red" };
+  if (vh < S.ch4[1] + 5) return mix("red", "white", range(vh, [S.ch4[1] - 25, S.ch4[1] + 5]));
+  // Under the full red cover of the lookbook spread: white → black for the finale.
+  const swap = (S.ch6Close[1] + S.ch7Lift[0]) / 2;
+  if (vh < swap) return { rgb: WORLD_RGB.white, name: "white" };
+  return { rgb: WORLD_RGB.black, name: "black" };
 }

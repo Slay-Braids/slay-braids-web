@@ -5,7 +5,18 @@ import { anchorSrcSet } from "@/components/AnchorStage";
 export const metadata: Metadata = {
   title: "SLAY BRAIDS — Premium look. Affordable price.",
   description: "SLAY BRAIDS. Premium look. Affordable price. FUTURA by SLAY BRAIDS.",
-  robots: { index: false, follow: false },
+  // Indexing on (27 Nov 2026): model consent confirmed by the owner.
+  metadataBase: new URL("https://slaybraids.vercel.app"),
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "https://slaybraids.vercel.app",
+    siteName: "SLAY BRAIDS",
+    title: "SLAY BRAIDS — Premium look. Affordable price.",
+    description: "Braids and hair that look like a splurge, at a price that isn't one. FUTURA by SLAY BRAIDS.",
+    images: [{ url: "/media/og.jpg", width: 1200, height: 630, alt: "SLAY BRAIDS" }],
+  },
+  twitter: { card: "summary_large_image", images: ["/media/og.jpg"] },
 };
 
 export const viewport: Viewport = {

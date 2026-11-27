@@ -58,6 +58,25 @@ export function initInteractions(root: HTMLElement) {
     true,
   );
 
+  // "Find your look" tiles: go straight to that look (live: its step; simple view: its card).
+  document.addEventListener(
+    "click",
+    (e) => {
+      const a = (e.target as Element | null)?.closest?.<HTMLAnchorElement>("a[data-look]");
+      if (!a) return;
+      const i = Number(a.dataset.look);
+      e.preventDefault();
+      if (isLive()) scrollToVh(productVh(orientation(), i));
+      else document.querySelector(`[data-product='${i}']`)?.scrollIntoView({ block: "center" });
+      const h = document.getElementById(`look-${String(i + 1).padStart(2, "0")}-name`);
+      if (h) {
+        h.setAttribute("tabindex", "-1");
+        setTimeout(() => h.focus({ preventScroll: true }), 0);
+      }
+    },
+    true,
+  );
+
   // Keyboard focus follows into the fixed chapter frames.
   root.addEventListener("focusin", (e) => {
     if (!isLive()) return;
@@ -76,6 +95,45 @@ export function initInteractions(root: HTMLElement) {
 
   initShowcase(root);
   initEnquiry(root);
+  initViewToggle();
+}
+
+/**
+ * "Simple view / Immersive view": the visitor's choice, remembered on this device. The simple view
+ * is the static spreads (no 3D, no scroll-driven frames). Reduced motion always gets it.
+ */
+function initViewToggle() {
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>("[data-view-toggle]")];
+  if (!buttons.length) return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const label = () => {
+    const simple = isStatic();
+    for (const b of buttons) {
+      b.textContent = simple ? "Switch to immersive view" : "Switch to simple view";
+      b.hidden = simple && reduced; // reduced motion: the simple view is the right one
+    }
+    const note = document.querySelector<HTMLElement>("[data-view-note]");
+    if (note)
+      note.textContent = simple
+        ? "The full experience with the 3D scroll. Best on recent phones and computers."
+        : "A lighter version without the 3D scroll, for phones that struggle with it.";
+  };
+  label();
+  // The tier is decided after this runs, and can step down later: keep the label in step.
+  new MutationObserver(label).observe(document.documentElement, { attributes: true, attributeFilter: ["data-static"] });
+  for (const b of buttons)
+    b.addEventListener("click", () => {
+      try {
+        localStorage.setItem("slay-view", isStatic() ? "immersive" : "simple");
+      } catch {
+        /* storage blocked: the URL parameter still works */
+      }
+      const u = new URL(location.href);
+      u.searchParams.delete("tier"); // the visitor's choice wins over a forced review tier
+      u.searchParams.set("view", isStatic() ? "immersive" : "simple");
+      u.hash = "";
+      location.assign(u.toString());
+    });
 }
 
 function initShowcase(root: HTMLElement) {

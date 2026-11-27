@@ -11,7 +11,7 @@ import type { Orientation } from "../cascade/geometry";
 import { FRAMING } from "../framing";
 import { CHAPTER_LAYOUT, cameraTimeline, storyStops } from "./cameraTimeline";
 import { ChapterDriver, smooth, type Ch3State } from "./driver";
-import { STORY, chapterIndex, pageState, productVh, type PageState } from "./story";
+import { PAGE_COLOR, STORY, chapterIndex, pageState, productVh, worldAt, type PageState, type World } from "./story";
 import { lookClips as products } from "../../content/media";
 import { GuideStrand, project } from "./guideStrand";
 import { DEFAULT_TOGGLES, Paper, type PaperToggles } from "./paper";
@@ -19,6 +19,7 @@ import type { ChapterFlags } from "./flags";
 import { vhPx } from "./viewport";
 
 export const PAPER_GAP = 7;
+const PAGE_FILL = { white: "#FFFFFF", red: "#C60D13", black: "#0A0A0A" } as const;
 
 export interface ChapterFrameInfo {
   fs: FrameState;
@@ -93,8 +94,10 @@ export class LiveChapters {
     this.driver.orientation = orientation;
     const S = STORY[orientation];
     const centres = products.map((_, i) => productVh(orientation, i));
-    // Production identity: no pearl light shift (the locked default light throughout).
-    scene.setCameraTimeline(cameraTimeline(orientation, storyStops(orientation, S, centres)));
+    // Production identity: no pearl light shift; the world colour follows the story (v3 bright).
+    scene.setCameraTimeline(cameraTimeline(orientation, storyStops(orientation, S, centres)), undefined, (vh) =>
+      worldAt(orientation, vh).rgb,
+    );
     if (this.flags.windT != null) scene.freezeWindAt(this.flags.windT);
     this.guide = new GuideStrand(scene.geometry, orientation);
     this.reselect();
@@ -167,6 +170,8 @@ export class LiveChapters {
         open: page.open,
         away: page.away,
         straighten: page.straighten,
+        fill: PAGE_FILL[PAGE_COLOR[page.guide]],
+        edge_: PAGE_COLOR[page.guide] === "red" ? "rgba(255,255,255,0.85)" : "rgba(198,13,19,0.95)",
         width: fs.cssWidth,
         height: fs.cssHeight,
         gap: PAPER_GAP,
@@ -194,7 +199,8 @@ export class LiveChapters {
     } else {
       this.paper.hide();
     }
-    this.updateGrounds();
+    this.pageColor = page ? PAGE_COLOR[page.guide] : null;
+    this.updateGrounds(fs.scroll);
     if (dt != null) {
       const keys = ["ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "ch7"] as const;
       this.record(keys[chapterIndex(this.orientation, fs.scroll)]!, dt);
@@ -208,25 +214,28 @@ export class LiveChapters {
     this.maybePause();
   }
 
-  /** Header and index text turn espresso wherever ivory lies under them. */
-  private updateGrounds() {
-    const on = (el: HTMLElement | null) => {
-      if (!el) return false;
+  /** v3: the world, page or section under each header part decides its colour (white/red/black). */
+  private world: World = "white";
+  private pageColor: World | null = null;
+  private updateGrounds(vh?: number) {
+    if (vh != null) this.world = worldAt(this.orientation, vh).name;
+    document.documentElement.dataset.world = this.world;
+    const ground = (el: HTMLElement | null): World => {
+      if (!el) return this.world;
       const r = el.getBoundingClientRect();
-      if (!r.width) return false;
+      if (!r.width) return this.world;
       const x = r.left + r.width / 2;
       const y = r.top + r.height / 2;
       for (const sec of this.groundSections) {
         const b = sec.getBoundingClientRect();
-        if (y >= b.top && y <= b.bottom) return sec.dataset.groundSection === "ivory";
+        if (y >= b.top && y <= b.bottom) return (sec.dataset.groundSection as World) ?? "white";
       }
-      return this.paper.covers(x, y);
+      if (this.pageColor && this.paper.covers(x, y)) return this.pageColor;
+      return this.world;
     };
-    const logo = on(this.logo);
-    const actions = on(this.actions);
-    if (this.logo) this.logo.dataset.ground = logo ? "ivory" : "ink";
-    if (this.actions) this.actions.dataset.ground = actions ? "ivory" : "ink";
-    if (this.index) this.index.dataset.ground = on(this.index) ? "ivory" : "ink";
+    if (this.logo) this.logo.dataset.ground = ground(this.logo);
+    if (this.actions) this.actions.dataset.ground = ground(this.actions);
+    if (this.index) this.index.dataset.ground = ground(this.index);
   }
 
   /**
@@ -256,7 +265,9 @@ export class LiveChapters {
     if (this.paused) {
       // Rendering is paused but the page still scrolls: keep header and index in step.
       this.driver.update(scrollY / vhPx());
-      this.updateGrounds();
+      const p = pageState(this.orientation, scrollY / vhPx());
+      this.pageColor = p ? PAGE_COLOR[p.guide] : null;
+      this.updateGrounds(scrollY / vhPx());
     }
     if (this.paused && !this.covered()) {
       this.paused = false;
