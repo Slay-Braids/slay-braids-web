@@ -43,7 +43,7 @@ third-party branding (the venue's name sign is visible in several clips).
   - The logo card as the social share image (cover-fitted to 1200×630).
 - **Skipped:** IMG #0 and #12 are the same photo; two near-identical back views were left out.
 - **Encoding:** resized only, never upscaled: `photo-<key>-{480,960}.{avif,webp,jpg}`; provenance in `public/media/photos-manifest.json`.
-- **To confirm:** the files carry no camera metadata, and several are exactly 1024×1536, 1536×1024 or 1024×1280, typical of AI image generators. You asked not to use AI-generated models or hairstyles, so please confirm these are real photographs. If not, removing them is one line each in `src/content/media.ts`.
+- **Provenance:** the files carry no camera metadata, and several have sizes typical of AI generators (1024×1536 etc.). The owner confirmed on 27 Nov 2026 that they are real photographs.
 
 ### Also available, not yet used
 - **Product clips:** IMG_2202, IMG_2203 and IMG_2213 (hands presenting hair: ash ombré and auburn). They are not labelled as FUTURA, so they are not presented as FUTURA.
@@ -68,6 +68,6 @@ third-party branding (the venue's name sign is visible in several clips).
 4. **Which clips show FUTURA products** (see the open question in the footage brief).
 5. ~~Signed model releases~~: consent confirmed by the owner on 27 Nov 2026.
 6. **Photo and video credits** (photographer or videographer).
-7. **Contact details, enquiry destination, social accounts, legal pages.** No enquiry form is shown until a destination is confirmed.
+7. **Contact details, social accounts, legal pages.** The WhatsApp number (+234 903 685 7758) was confirmed by the owner on 27 Nov 2026 and is the enquiry channel. Email, address, opening hours, social accounts and legal pages are still missing. There is still no form.
 8. **A high-resolution white logo.** Only a 500 px preview exists.
 9. **Approved copy** beyond the positioning line and the FUTURA line.

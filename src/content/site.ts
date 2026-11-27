@@ -3,10 +3,10 @@ import type { Claim } from "./claims";
 /**
  * Production site copy. Only verified wording is used:
  * - The positioning line: project owner brief (2026-11-26).
- * - "FUTURA by SLAY BRAIDS" / "FUTURA is a SLAY BRAIDS product line.": project owner brief and
+ * - "FUTURA by SLAY BRAIDS" / "FUTURA is a SLAY BRAIDS product.": project owner brief and
  *   instruction (2026-11-27).
- * - Factual descriptions of the site itself ("Looks from the SLAY BRAIDS shoot", "Online
- *   enquiries are not open yet").
+ * - Factual descriptions of the site itself ("Looks from the SLAY BRAIDS shoot").
+ * - The WhatsApp number: project owner (2026-11-27).
  * - Write-ups (27 Nov 2026, owner request): descriptions of what each chapter, look and image
  *   shows, written around the brand positioning (premium look, affordable price). They describe
  *   what is visible; they invent no product names, shade codes, prices, contacts or testimonials.
@@ -33,15 +33,30 @@ export const brand = {
 export const futuraClaims: Claim[] = [];
 
 /**
- * Enquiries: no verified submission destination (email, form endpoint or CRM) exists, so the
- * site carries no form. The section says so plainly; nothing pretends to send.
+ * Contact (owner, 27 Nov 2026): the SLAY BRAIDS WhatsApp number, confirmed by the owner. It is
+ * the only verified contact; no email, address or social accounts are published.
+ */
+export const contact = {
+  whatsapp: {
+    display: "+234 903 685 7758",
+    /** wa.me takes the number in international form, digits only. */
+    wa: "2349036857758",
+    greeting: "Hello SLAY BRAIDS, I'd like to know more about your braids.",
+    source: "Project owner, 2026-11-27",
+  },
+} as const;
+export const whatsappHref = `https://wa.me/${contact.whatsapp.wa}?text=${encodeURIComponent(contact.whatsapp.greeting)}`;
+
+/**
+ * Enquiries go to the verified WhatsApp number (owner, 27 Nov 2026). The site still has no form:
+ * nothing is sent from the page itself; the link opens a WhatsApp chat with SLAY BRAIDS.
  */
 export const enquiry = {
   href: "#enquire",
   title: "Enquiries",
-  status: "Online enquiries are not open yet.",
-  /** Set when SLAY BRAIDS confirms a destination; the form is rendered only when this is set. */
-  destination: null as null | { kind: "email" | "endpoint"; value: string },
+  status: "Questions about a look, FUTURA or an order? Chat with us on WhatsApp.",
+  cta: "Chat on WhatsApp",
+  destination: { kind: "whatsapp", value: contact.whatsapp.display } as { kind: "whatsapp" | "email" | "endpoint"; value: string },
 } as const;
 
 export const futura = {

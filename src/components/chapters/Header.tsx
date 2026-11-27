@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { CHAPTERS } from "@/content/chapters";
 import { Logo } from "../Media";
+import { whatsappHref } from "@/content/site";
 
 /**
  * Site header: the original SLAY BRAIDS logo (red, from the brand Drive), a motion control for
@@ -81,6 +82,9 @@ export function Header({ assetBase = "/" }: { assetBase?: string }) {
           </nav>
           <a href="#enquire" className="menu-enquire" onClick={close}>
             Enquiries
+          </a>
+          <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="menu-enquire menu-wa">
+            Chat on WhatsApp<span className="sr-only"> (opens WhatsApp)</span>
           </a>
           <div className="menu-view">
             <button type="button" className="menu-view-btn" data-theme-toggle aria-pressed="false">

@@ -222,11 +222,11 @@ test("publishes no unapproved product claims", async ({ page }) => {
   expect(text).toContain("fibre information: kaneka corporation");
 });
 
-// Production (27 Nov 2026): no verified enquiry destination exists, so there is no form at all
-// (the M1 version checked a disabled "not enabled" button). The site must never pretend to send.
+// Production (27 Nov 2026): enquiries open a WhatsApp chat with the owner-verified number; the
+// site itself has no form at all and must never pretend to send.
 test("enquiries never pretend to send", async ({ page }) => {
   await page.goto("/?tier=C");
-  await expect(page.locator("#enquire")).toContainText("Online enquiries are not open yet.");
+  await expect(page.locator("#enquire a.btn-wa")).toHaveAttribute("href", /^https:\/\/wa\.me\/2349036857758\?text=/);
   await expect(page.locator("form")).toHaveCount(0);
   await expect(page.getByRole("button", { name: /send|submit/i })).toHaveCount(0);
 });

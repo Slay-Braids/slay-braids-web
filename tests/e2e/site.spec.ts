@@ -72,7 +72,9 @@ test.describe("structure", () => {
     const text = (await page.locator("body").innerText()).toLowerCase();
     expect(text).not.toMatch(/[£$€₦]\s?\d/);
     expect(text).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}/); // no email address
-    expect(text).not.toMatch(/\+?\d[\d\s-]{8,}\d/); // no phone number
+    // The only phone number is the owner-verified WhatsApp number (27 Nov 2026).
+    const phones = [...new Set(text.match(/\+?\d[\d\s-]{8,}\d/g) ?? [])];
+    expect(phones).toEqual(["+234 903 685 7758"]);
     expect(text).not.toMatch(/testimonial|★|wording to come|placeholder|pending|preview/);
     await expect(page.locator(".placeholder-tag")).toHaveCount(0);
   });
@@ -245,12 +247,24 @@ test.describe("live Chapters 4–7", () => {
 });
 
 test.describe("enquiries and motion", () => {
-  test("no form without a verified destination; nothing is ever sent", async ({ page }) => {
+  test("enquiries go to the verified WhatsApp number; no form, nothing is ever sent", async ({ page }) => {
     const posts: string[] = [];
     page.on("request", (r) => r.method() !== "GET" && r.method() !== "HEAD" && posts.push(r.url()));
     await page.goto("/?tier=C");
     await expect(page.locator("#enquire h2")).toHaveText("Enquiries");
-    await expect(page.locator("#enquire")).toContainText("Online enquiries are not open yet.");
+    await expect(page.locator("#enquire")).toContainText("+234 903 685 7758");
+    // The floating button, the enquiries button, the menu and the footer all open the same chat.
+    const wa = page.locator('a[href^="https://wa.me/"]');
+    expect(await wa.count()).toBeGreaterThanOrEqual(4);
+    for (const href of await wa.evaluateAll((as) => as.map((a) => (a as HTMLAnchorElement).href)))
+      expect(href.startsWith("https://wa.me/2349036857758?text=")).toBe(true);
+    const float = page.locator("[data-wa-float]");
+    await expect(float).toBeVisible();
+    await expect(float).toHaveAttribute("target", "_blank");
+    await expect(float).toHaveAccessibleName(/WhatsApp/);
+    const box = (await float.boundingBox())!;
+    expect(box.width).toBeGreaterThanOrEqual(44); // touch target
+    expect(box.height).toBeGreaterThanOrEqual(44);
     await expect(page.locator("form, input, textarea, select")).toHaveCount(0);
     await page.locator("#enquire").scrollIntoViewIfNeeded();
     expect(posts).toEqual([]);
