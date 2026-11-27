@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 // The same e2e suites, run against the deployed Vercel preview (not committed; session cookie from the share link).
-const state = process.env.SHARE_STATE!;
+// SHARE_STATE: cookies from a Vercel share link (protected previews); unset for the public production domain.
+const state = process.env.SHARE_STATE || undefined;
 export default defineConfig({
   testDir: "../../tests/e2e",
   timeout: 120_000,

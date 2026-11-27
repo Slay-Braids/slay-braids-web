@@ -38,3 +38,16 @@ Source: `main`, merged from `claude/cool-ramanujan-0ln9mf` via [Slay-Braids/slay
 ## Deployment history
 - 27 Nov 2026: three unintended production records were created while setting up the project. All were removed or cancelled; one was briefly public (about 3 minutes) with no custom domain involved.
 - See `docs/M3-handoff.md` §6 for the full account.
+
+## Verification (27 Nov 2026, production deployment dpl_57g7vYJJf9yPZrQ8LY4xubJgPyZW from main 5ed8134)
+- **Public access:**
+  - https://slaybraids.vercel.app and https://slay-braids-web.vercel.app return 200 with no login, cookie or share token.
+  - Previews still redirect to Vercel login (302).
+- **Full test suite against the live domain (desktop 1440×900 and Pixel 7):** 63 passed, 1 skipped (by design), 2 failed.
+  - The 2 failures are this sandbox's Node request helper, which cannot resolve hosts without the network proxy.
+  - The same checks run with curl: all 18 video and poster files, the stills, the logo and the favicon return 200 with the correct types.
+- **Smoke test, desktop and mobile:** 0 console errors, 0 failed requests, every image loaded; 404 page and security headers confirmed. Screenshots: `docs/review/prod/`.
+- **Local suite on the release build:** unit 49/49; end-to-end 65 passed, 1 skipped.
+- **CI on the final PR commit 1d90736:** 64 passed, 1 skipped, 1 failed. The failure is a runner infrastructure error (the browser lost its context during test setup), not an assertion.
+- **Lighthouse (lab, compressed), static mode:** accessibility 100; LCP 0.76 s mobile, 0.22 s desktop; CLS 0; performance 99.
+- **Not done:** real-device testing (Galaxy A26, iPhone Safari, Samsung Internet).
