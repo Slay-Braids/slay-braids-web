@@ -10,6 +10,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 
 const P = "https://claude.ai/artifact/YW1GEiLiyRxQ9QZ1i2C2sn";
 const REVIEW = "https://claude.ai/artifact/1ezWjMpK1MZt1gUddGyjdy";
+const ASSESSMENT =
+  process.env.ASSESSMENT_URL ?? "https://claude.ai/artifact/VXfMtBQUMRiXXmJ7mDiYx5";
 
 // Mobile (portrait) chapter positions in vh, from the build (cameraTimeline.ts, CH3, CH2_LINES).
 // Ch1 0–100 · Ch2 100–230 (lines at 143 / 174 / 204) · Ch3 230–450 (page arrives 296–362,
@@ -532,8 +534,7 @@ const SECTIONS = [
         steps: [
           "Two-finger scroll until Chapter 2's lines are visible; tap a line once with one finger.",
         ],
-        expected:
-          "TalkBack reads the line you touched, once.",
+        expected: "TalkBack reads the line you touched, once.",
         evidence: "Notes.",
       },
     ],
@@ -582,6 +583,118 @@ const SECTIONS = [
   },
 ];
 
+// Automated evidence per test: PASSED = an automated check with explicit pass criteria passed;
+// PARTIAL = some of the test is covered (the rest is listed); NONE = no automated evidence.
+// All automated runs are headless Chromium with SwiftShader (CPU WebGL) and an emulated phone:
+// never the A26 itself. Sources: docs/perf/*.json and the e2e suites (docs/perf/e2e-final.log).
+const AUTO = {
+  "S0.1": ["NONE", "Device facts: nothing to automate."],
+  "S0.2": ["NONE", "Test conditions on the phone."],
+  "S0.3": [
+    "PARTIAL",
+    "The published preview bundle loads with no failed requests, in live, lab and static modes (smoke test). Signing in and the phone's Chrome: not tested.",
+  ],
+  "T1.1": [
+    "PASSED",
+    "Tier B (the A26 default) at an A26-sized screen (384×832 @2.8125). Spec run: 8 probed frames, point P99 0.005 px / max 0.011 px, edge max 0.018 px. Dense run: 74 frames, point P99 0.005 px / max 0.24 px, edge P99 0.024 px / max 2.23 px (limit 3 px; thinnest margin seen). GPU: SwiftShader, not the A26's Mali GPU.",
+  ],
+  "T1.2": [
+    "PASSED",
+    "Tier A, spec and dense runs, desktop and mobile: worst point max 0.15 px, edge max 0.03 px; repeated in the e2e suite on every run. SwiftShader.",
+  ],
+  "T1.3": [
+    "PARTIAL",
+    "CPU/GPU point agreement is measured (T1.1). The edge's visual position was reviewed on headless frame sheets and close-ups; the overlay itself not viewed on the phone.",
+  ],
+  "T1.4": ["NONE", "Needs a warm phone."],
+  "T2.1": [
+    "PARTIAL",
+    "Automated: M1 handoff test (perceptual Δ 1.44 on mobile, limit 2); Chapter 2 lines reveal in order; the Chapter 3 page opens and covers; render pause at full cover. The look of the sequence was reviewed on headless frame sheets. Smoothness and appearance on the A26: not tested.",
+  ],
+  "T2.2": [
+    "PARTIAL",
+    "Automated: rendering resumes when scrolling back from full cover (I4 test). Reverse visuals: not tested.",
+  ],
+  "T2.3": ["NONE", "Fast flicks: no automated equivalent."],
+  "T2.4": [
+    "PARTIAL",
+    "Reference frames exist for every position (mobile lab sheet, headless). Not compared on the phone.",
+  ],
+  "T3.1": [
+    "PARTIAL",
+    "Handoff Δ passes in emulation (M1 test 1.44, readout 1.13; limit 2). Tier choice rule is unit-tested. Visual seamlessness and absence of downgrades on the A26: not tested.",
+  ],
+  "T3.2": [
+    "PARTIAL",
+    "CLS passes (Lighthouse 0.001 mobile; scripted scroll 0). Frame-time criteria (Ch3 transition P95 ≤ 34 ms, median ≥ 45 fps) have NO valid automated evidence: SwiftShader frames saturate at 100 ms.",
+  ],
+  "T3.3": ["NONE", "Tier A headroom on the A26: device only."],
+  "T3.4": [
+    "PARTIAL",
+    "No horizontal overflow at 41 scroll positions, live and reduced, at 384 px. CLS passes. Address-bar show/hide behaviour: not tested.",
+  ],
+  "T3.5": [
+    "PARTIAL",
+    "Simulated: matched still Δ 1.17 vs 1.13 for the standard still, so I6 stays not adopted. The decision needs the phone.",
+  ],
+  "T4.1": [
+    "PASSED",
+    "prefers-reduced-motion emulated (M1 test): static anchor, no canvas, all text visible; static spreads checked (stills, every line visible, page drawn, no 3D). The Samsung “Remove animations” → Chrome mapping itself: not tested.",
+  ],
+  "T4.2": ["PASSED", "Static spreads e2e test with the reduced flag, desktop and mobile."],
+  "T4.3": [
+    "PASSED",
+    "Every live e2e test runs with motion on, after reduced-motion tests in the same suite.",
+  ],
+  "T5.1": [
+    "PARTIAL",
+    "Menu dialog opens, closes and returns focus (e2e); CTA targets (#enquire, #next) and the skip link are tested. Tapping on the phone and the landing position after a jump: not tested.",
+  ],
+  "T5.2": ["NONE", "The M1 pointer test is skipped on touch by design."],
+  "T5.3": [
+    "PARTIAL",
+    "The send button is disabled and nothing is ever sent (M1 test). On-screen keyboard behaviour: not tested.",
+  ],
+  "T5.4": [
+    "PARTIAL",
+    "No horizontal overflow at 384 px; axe finds no WCAG 2.1 A/AA violations (static, reduced, live). Banner overlap reviewed on headless sheets only.",
+  ],
+  "T5.5": ["NONE", "Pinch zoom: device only."],
+  "T5.6": [
+    "PARTIAL",
+    "Emulated rotation round-trip at Chapter 1 and the Chapter 3 rest: no errors, live 3D restored in both orientations. OPEN RISK: in emulation, rotating at the Chapter 3 rest moved the scroll position to the end card (380 vh → 865 vh in landscape → 679 vh back in portrait). Real Chrome may keep the place by scroll anchoring; only the phone can tell.",
+  ],
+  "T5.7": ["NONE", "Large system font: device only."],
+  "T5.8": ["NONE", "Samsung Internet: not available here."],
+  "T6.1": [
+    "PASSED",
+    "Chromium's accessibility tree (what TalkBack reads), reduced motion: every heading and line present once, in this order; no decorative items; axe clean. TalkBack's speech itself: not heard.",
+  ],
+  "T6.2": [
+    "PASSED",
+    "Live-mode tree identical to reduced motion at 0, 160, 380 and 470 vh (e2e; the test fails on the build before the fix).",
+  ],
+  "T6.3": ["PASSED", "Headings in order (h1, then four h2) in the tree, in both modes."],
+  "T6.4": [
+    "PASSED",
+    "The skip link moves focus to the h1 (e2e, keyboard). TalkBack double-tap: not tested.",
+  ],
+  "T6.5": [
+    "PARTIAL",
+    "Focus moves into the dialog, Escape closes it, focus returns to Menu (e2e). Android back gesture and TalkBack swipe containment: not tested.",
+  ],
+  "T6.6": ["NONE", "TalkBack focus outline position: device only."],
+  "T6.7": ["NONE", "Explore by touch: device only."],
+  C1: ["NONE", "Needs a computer connected to the phone."],
+  C2: ["NONE", "Needs a computer connected to the phone."],
+  C3: ["NONE", "Needs a computer connected to the phone."],
+  C4: ["NONE", "Needs a computer connected to the phone."],
+};
+const ALL_TESTS = SECTIONS.flatMap((s) => s.tests);
+for (const t of ALL_TESTS) if (!AUTO[t.id]) throw new Error(`no automated status for ${t.id}`);
+const AUTO_COUNT = { PASSED: 0, PARTIAL: 0, NONE: 0 };
+for (const t of ALL_TESTS) AUTO_COUNT[AUTO[t.id][0]]++;
+
 const KIND = {
   A: "Manual: your eyes and hands",
   B: "On-device automated: built into the preview, no cable",
@@ -612,6 +725,12 @@ for (const s of SECTIONS) {
   md.push(`## ${s.id} · ${s.title}  _(${KIND[s.kind]})_`, "", s.intro, "");
   for (const t of s.tests) {
     md.push(`### ${t.id} · ${t.name}${t.url ? ` — ${t.url}` : ""}`, "");
+    md.push(
+      `**Automated (headless, emulated phone): ${AUTO[t.id][0]}** — ${AUTO[t.id][1]}`,
+      "",
+      "**On the A26: NOT TESTED**",
+      "",
+    );
     md.push("Steps:", ...t.steps.map((x, i) => `${i + 1}. ${x}`), "");
     md.push(
       "Expected:",
@@ -653,10 +772,14 @@ const card = (t) => `
   <h4>Steps</h4><ol>${t.steps.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
   <h4>Expected</h4>${Array.isArray(t.expected) ? `<ul>${t.expected.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p>${esc(t.expected)}</p>`}
   <p class="ev"><b>Evidence:</b> ${esc(t.evidence)}</p>
-  <div class="res" role="group" aria-label="Result for ${t.id}">
-    <label><input type="radio" name="r-${t.id}" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-${t.id}" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-${t.id}" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-${AUTO[t.id][0].toLowerCase()}">${AUTO[t.id][0] === "NONE" ? "NO AUTOMATED EVIDENCE" : `AUTOMATED: ${AUTO[t.id][0]}`}</span> <span class="auto-what">${esc(AUTO[t.id][1])}</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for ${t.id}">
+      <label><input type="radio" name="r-${t.id}" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-${t.id}" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-${t.id}" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-${t.id}" rows="2"></textarea></label>
 </article>`;
@@ -701,7 +824,16 @@ ol,ul{padding-left:1.2em;margin:4px 0}li{margin:3px 0}.ev{font-size:14px;color:v
 .res input:focus-visible+span{outline:2px solid var(--ch);outline-offset:2px}
 .res input[value=pass]:checked+span{background:light-dark(#dcebd6,#20361e);border-color:light-dark(#2f6b2f,#8fd08a)}
 .res input[value=fail]:checked+span{background:light-dark(#f4d9d5,#3d1f1b);border-color:light-dark(#a3332b,#f19a8f)}
-.res input[value="not run"]:checked+span{background:light-dark(#e7e1d8,#2a2520)}
+.res input[value="not tested"]:checked+span{background:light-dark(#e7e1d8,#2a2520)}
+.status{margin-top:12px;padding-top:10px;border-top:1px solid var(--rule)}
+.auto{margin:0 0 8px;font-size:14px}.auto-what{color:var(--mute)}
+.badge{display:inline-block;font:600 12px Inter;letter-spacing:.02em;padding:3px 8px;border-radius:4px;margin-right:4px}
+.b-passed{background:light-dark(#dcebd6,#20361e);color:light-dark(#1f4d1f,#a9dca5)}
+.b-partial{background:light-dark(#f3e7cf,#3a3020);color:light-dark(#6b4e14,#e2c98f)}
+.b-none{background:light-dark(#e7e1d8,#2a2520);color:var(--mute)}
+.dev-label{margin:6px 0 0;font-size:14px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px;margin-top:16px}
+.summary div{border:1px solid #3b342c;padding:10px 12px}.summary b{display:block;font:600 22px Inter;color:#f2ece2}
 .notes{display:grid;gap:4px;margin-top:10px;font-size:14px;color:var(--mute)}
 textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);border-radius:6px;background:var(--bg);color:var(--fg)}
 .bar{position:sticky;bottom:0;z-index:4;background:var(--ink);color:#f2ece2;padding:10px max(5vw,16px);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
@@ -714,7 +846,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
 </style></head><body>
 <header class="band cover"><div class="wrap">
 <h1>Galaxy A26 5G: real-device tests</h1>
-<p>Chapters 1–3 preview, final build with the TalkBack fix (27 Nov 2026). Work through the cards in order, mark each result, then copy everything back to the chat. Nothing here changes the build. Results are kept in this browser only until you copy them.</p>
+<p>Chapters 1–3 preview, final build with the TalkBack fix (27 Nov 2026). Each card shows two separate results. <b>Automated</b>: what headless Chromium with an emulated phone has verified (never the A26 itself). <b>On the A26</b>: your result, “Not tested” until you mark it. An automated PASS is not a device pass.</p>
+<div class="summary">
+<div><b>${AUTO_COUNT.PASSED}</b>automated: passed</div>
+<div><b>${AUTO_COUNT.PARTIAL}</b>automated: partly covered</div>
+<div><b>${AUTO_COUNT.NONE}</b>no automated evidence</div>
+<div><b>0 of ${ALL_TESTS.length}</b>tested on the A26</div>
+</div>
+<p style="margin-top:14px">Technical assessment and recommendation: <a style="color:#d8c3a0" href="${ASSESSMENT}">${ASSESSMENT.replace("https://", "")}</a></p>
 <ul class="kinds">${Object.entries(KIND)
   .map(([k, v]) => `<li><b>${k}</b>${esc(v)}</li>`)
   .join("")}</ul>
@@ -757,14 +896,15 @@ ${s.tests.map(card).join("")}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} };
   for (const id of ids) {
     const s = saved[id] || {};
+    if (s.r === "not run") s.r = "not tested";
     if (s.r) { const el = document.querySelector('input[name="r-' + id + '"][value="' + s.r + '"]'); if (el) el.checked = true; }
     const ta = document.querySelector('textarea[name="n-' + id + '"]'); if (ta && s.n) ta.value = s.n;
   }
   const count = document.getElementById("count");
   const update = () => {
-    const done = ids.filter((id) => saved[id] && saved[id].r).length;
+    const done = ids.filter((id) => saved[id] && (saved[id].r === "pass" || saved[id].r === "fail")).length;
     const fails = ids.filter((id) => saved[id] && saved[id].r === "fail").length;
-    count.textContent = done + " of " + ids.length + " marked" + (fails ? " · " + fails + " fail" : "");
+    count.textContent = "A26: " + done + " of " + ids.length + " tested" + (fails ? " · " + fails + " fail" : "");
   };
   document.addEventListener("change", (e) => {
     const t = e.target; const m = /^(r|n)-(.+)$/.exec(t.name || ""); if (!m) return;
@@ -778,7 +918,8 @@ ${s.tests.map(card).join("")}
     const lines = ["Galaxy A26 5G — Chapters 1–3 real-device results", "Recorded: " + new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC", ""];
     for (const id of ids) {
       const s = saved[id] || {}; const name = document.querySelector('[data-id="' + id + '"] h3').textContent.trim();
-      lines.push(name + ": " + (s.r ? s.r.toUpperCase() : "—") + (s.n ? "\\n    " + s.n.replace(/\\n/g, "\\n    ") : ""));
+      const auto = document.querySelector('[data-id="' + id + '"] .badge').textContent.trim();
+      lines.push(name + " · " + auto + " · A26: " + (s.r ? s.r.toUpperCase() : "NOT TESTED") + (s.n ? "\\n    " + s.n.replace(/\\n/g, "\\n    ") : ""));
     }
     return lines.join("\\n");
   };

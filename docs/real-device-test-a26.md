@@ -35,6 +35,10 @@ Do this once before any test. Record what you find; several results depend on it
 
 ### S0.1 · Record the device and software
 
+**Automated (headless, emulated phone): NONE** — Device facts: nothing to automate.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Settings → About phone: note the model name and RAM; Software information → One UI version and Android version.
 2. Chrome → ⋮ → Settings → About Chrome: note the Chrome version.
@@ -46,6 +50,10 @@ Galaxy A26 5G, Chrome (not the Claude app, not Samsung Internet) for every test 
 Evidence: Write the values in the notes field.
 
 ### S0.2 · Conditions
+
+**Automated (headless, emulated phone): NONE** — Test conditions on the phone.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Battery ≥ 50 %, charger unplugged, Power saving OFF (Settings → Battery). Power saving lowers the frame rate and changes every result.
@@ -61,6 +69,10 @@ All conditions met, or the exception written in the notes.
 Evidence: Notes.
 
 ### S0.3 · Access and tools
+
+**Automated (headless, emulated phone): PARTIAL** — The published preview bundle loads with no failed requests, in live, lab and static modes (smoke test). Signing in and the phone's Chrome: not tested.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. In Chrome on the phone, sign in to claude.ai with the same account. The preview is private and only opens for you.
@@ -79,6 +91,10 @@ Measured on the phone by the transition lab: it runs the locked shader on this p
 
 ### T1.1 · Accuracy run, default tier — U4
 
+**Automated (headless, emulated phone): PASSED** — Tier B (the A26 default) at an A26-sized screen (384×832 @2.8125). Spec run: 8 probed frames, point P99 0.005 px / max 0.011 px, edge max 0.018 px. Dense run: 74 frames, point P99 0.005 px / max 0.24 px, edge P99 0.024 px / max 2.23 px (limit 3 px; thinnest margin seen). GPU: SwiftShader, not the A26's Mali GPU.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Open U4. Wait until the hair moves and the lab panel appears (about 10–20 s). The panel covers most of the screen on a phone; that is expected.
 2. Do not touch the screen except to start the run. Tap “Run accuracy test (30 s)”. Put the phone down, screen up, for 35 s.
@@ -91,6 +107,10 @@ Evidence: Copied JSON + screenshot(s) of the panel.
 
 ### T1.2 · Accuracy run, tier A forced — U5
 
+**Automated (headless, emulated phone): PASSED** — Tier A, spec and dense runs, desktop and mobile: worst point max 0.15 px, edge max 0.03 px; repeated in the e2e suite on every run. SwiftShader.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Same as T1.1 with U5.
 
@@ -100,6 +120,10 @@ PASS, same criteria. Fewer probed frames is acceptable if the phone renders tier
 Evidence: Copied JSON + screenshot.
 
 ### T1.3 · Visual check of the guide points — U4
+
+**Automated (headless, emulated phone): PARTIAL** — CPU/GPU point agreement is measured (T1.1). The edge's visual position was reviewed on headless frame sheets and close-ups; the overlay itself not viewed on the phone.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. In U4 (no run needed), tick “show guide points”.
@@ -112,6 +136,10 @@ Green dots lie on the outer strands of the hair and move with them. The white li
 Evidence: Two screenshots: slider ~60 % and ~80 %.
 
 ### T1.4 · Accuracy after warm-up (optional) — U4
+
+**Automated (headless, emulated phone): NONE** — Needs a warm phone.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. After T2 and T3 (phone warm, about 10 minutes of use), repeat T1.1 once.
@@ -126,6 +154,10 @@ Evidence: Copied JSON.
 Manual, recorded. Scroll positions on this phone (portrait): Chapter 1 0–100 vh, Chapter 2 100–230 vh, Chapter 3 230–450 vh (page arrives 296–362, rests 362–415, closes 415–450), then about one screen of ivory and the end card. One “vh” is one screen height.
 
 ### T2.1 · Slow pass, top to end card — U1
+
+**Automated (headless, emulated phone): PARTIAL** — Automated: M1 handoff test (perceptual Δ 1.44 on mobile, limit 2); Chapter 2 lines reveal in order; the Chapter 3 page opens and covers; render pause at full cover. The look of the sequence was reviewed on headless frame sheets. Smoothness and appearance on the A26: not tested.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Open U1. Wait until the hair starts moving (about 3–5 s after the image appears).
@@ -145,6 +177,10 @@ Evidence: Screen recording (keep the file; send it or note timestamps of any pro
 
 ### T2.2 · Slow pass back up — U1
 
+**Automated (headless, emulated phone): PARTIAL** — Automated: rendering resumes when scrolling back from full cover (I4 test). Reverse visuals: not tested.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Continue from T2.1: record again and scroll slowly back to the top.
 
@@ -154,6 +190,10 @@ Everything reverses in order: the ivory page re-opens from full cover, settles a
 Evidence: Screen recording.
 
 ### T2.3 · Fast flicks — U1
+
+**Automated (headless, emulated phone): NONE** — Fast flicks: no automated equivalent.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Flick hard to the bottom, wait 2 s, flick hard to the top. Repeat twice.
@@ -165,6 +205,10 @@ No black or blank screen longer than a moment. The page edge stays on the hair e
 Evidence: Screen recording; note the time of any frame where the page edge is detached from the hair.
 
 ### T2.4 · Exact positions vs the frame sheet — U6a–U6f
+
+**Automated (headless, emulated phone): PARTIAL** — Reference frames exist for every position (mobile lab sheet, headless). Not compared on the phone.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Open U6a, wait 15 s without touching, screenshot. Repeat for U6b–U6f.
@@ -181,6 +225,10 @@ The #perf readout measures on the phone itself; no cable needed. It counts every
 
 ### T3.1 · Load and handoff — U2
 
+**Automated (headless, emulated phone): PARTIAL** — Handoff Δ passes in emulation (M1 test 1.44, readout 1.13; limit 2). Tier choice rule is unit-tested. Visual seamlessness and absence of downgrades on the A26: not tested.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Open U2 in a fresh tab. Do not touch the screen for 10 s.
 2. Read the box: tier, viewport, “handoff Δ”, “live at … ms”.
@@ -191,6 +239,10 @@ Tier B, reason “GPU class (… Mali …)” or “mobile / touch device”: ph
 Evidence: Screenshot of the box.
 
 ### T3.2 · Scroll pass with measurements — U2
+
+**Automated (headless, emulated phone): PARTIAL** — CLS passes (Lighthouse 0.001 mobile; scripted scroll 0). Frame-time criteria (Ch3 transition P95 ≤ 34 ms, median ≥ 45 fps) have NO valid automated evidence: SwiftShader frames saturate at 100 ms.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Continue in U2: scroll slowly from the top to the end card and back to the top (about 30–40 s in total).
@@ -203,6 +255,10 @@ Evidence: Copied JSON (or screenshot).
 
 ### T3.3 · Tier A headroom (optional) — U3
 
+**Automated (headless, emulated phone): NONE** — Tier A headroom on the A26: device only.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Repeat T3.1–T3.2 with U3.
 
@@ -212,6 +268,10 @@ For information only: shows whether the phone could carry the heavier cascade. N
 Evidence: Copied JSON.
 
 ### T3.4 · Visual stability (watch while scrolling) — U1
+
+**Automated (headless, emulated phone): PARTIAL** — No horizontal overflow at 41 scroll positions, live and reduced, at 384 px. CLS passes. Address-bar show/hide behaviour: not tested.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Scroll down slowly so that Chrome's address bar hides, then scroll up a little so it shows again; repeat in each chapter.
@@ -224,6 +284,10 @@ No jump or resize of the chapters when the address bar hides or shows. No sidewa
 Evidence: Notes; recording if something jumps.
 
 ### T3.5 · I6 matched still (experiment) — U8
+
+**Automated (headless, emulated phone): PARTIAL** — Simulated: matched still Δ 1.17 vs 1.13 for the standard still, so I6 stays not adopted. The decision needs the phone.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Open U8, wait 10 s, read “handoff Δ” and the “stillMatched” value in Copy results.
@@ -239,6 +303,10 @@ Checks the static spreads that replace all motion when the phone asks for reduce
 
 ### T4.1 · Phone setting: Remove animations — U2
 
+**Automated (headless, emulated phone): PASSED** — prefers-reduced-motion emulated (M1 test): static anchor, no canvas, all text visible; static spreads checked (stills, every line visible, page drawn, no 3D). The Samsung “Remove animations” → Chrome mapping itself: not tested.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Settings → Accessibility → Visibility enhancements → Remove animations: ON (or search Settings for “Remove animations”).
 2. Close the Chrome tab, open U2 in a new tab, wait 5 s.
@@ -251,6 +319,10 @@ Evidence: Screenshot of the box + one screenshot per chapter.
 
 ### T4.2 · Preview flag (setting OFF) — U7
 
+**Automated (headless, emulated phone): PASSED** — Static spreads e2e test with the reduced flag, desktop and mobile.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Turn Remove animations OFF. Open U7 in a new tab and scroll through.
 
@@ -260,6 +332,10 @@ Identical to T4.1.
 Evidence: One screenshot of Chapter 3.
 
 ### T4.3 · Back to normal — U1
+
+**Automated (headless, emulated phone): PASSED** — Every live e2e test runs with motion on, after reduced-motion tests in the same suite.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. With the setting OFF, open U1 in a new tab.
@@ -275,6 +351,10 @@ Manual. Every control must be easy to hit (at least a fingertip) and do what it 
 
 ### T5.1 · Buttons and links — U1
 
+**Automated (headless, emulated phone): PARTIAL** — Menu dialog opens, closes and returns focus (e2e); CTA targets (#enquire, #next) and the skip link are tested. Tapping on the phone and the landing position after a jump: not tested.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Tap Menu → the full-screen menu opens. Tap Close → it closes.
 2. Open Menu again; tap “02 The Craft” → the menu closes and the page jumps to Chapter 2. Repeat for “01 Arrival” and “03 The Unbraiding”, and the menu's “Make an enquiry”.
@@ -287,6 +367,10 @@ Evidence: Notes; recording if anything misfires.
 
 ### T5.2 · Finger on the hair — U1
 
+**Automated (headless, emulated phone): NONE** — The M1 pointer test is skipped on touch by design.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. In Chapter 1 and Chapter 3, place a finger on the hair and drag slowly; then lift.
 
@@ -296,6 +380,10 @@ The page scrolls normally (the hair never blocks scrolling). Strands may part sl
 Evidence: Notes.
 
 ### T5.3 · Enquiry form and keyboard — U1
+
+**Automated (headless, emulated phone): PARTIAL** — The send button is disabled and nothing is ever sent (M1 test). On-screen keyboard behaviour: not tested.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Go to “Make an enquiry”. Tap Name: the keyboard opens; type a few letters. Repeat for Email and Message. Tap Topic: the picker opens.
@@ -308,6 +396,10 @@ Evidence: Notes; screenshot with the keyboard open.
 
 ### T5.4 · Layout at every chapter — U1
 
+**Automated (headless, emulated phone): PARTIAL** — No horizontal overflow at 384 px; axe finds no WCAG 2.1 A/AA violations (static, reduced, live). Banner overlap reviewed on headless sheets only.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Scroll through slowly and look at the edges of the screen, the header and the bottom banner.
 
@@ -318,6 +410,10 @@ Evidence: Screenshot of any problem.
 
 ### T5.5 · Pinch zoom — U1
 
+**Automated (headless, emulated phone): NONE** — Pinch zoom: device only.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Pinch to zoom into the headline, then zoom back out.
 
@@ -327,6 +423,10 @@ Zoom works and the page returns to normal without broken layout.
 Evidence: Notes.
 
 ### T5.6 · Rotation — U1
+
+**Automated (headless, emulated phone): PARTIAL** — Emulated rotation round-trip at Chapter 1 and the Chapter 3 rest: no errors, live 3D restored in both orientations. OPEN RISK: in emulation, rotating at the Chapter 3 rest moved the scroll position to the end card (380 vh → 865 vh in landscape → 679 vh back in portrait). Real Chrome may keep the place by scroll anchoring; only the phone can tell.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Turn auto-rotate on. In Chapter 1, rotate to landscape, wait 5 s, rotate back.
@@ -339,6 +439,10 @@ Evidence: Screen recording.
 
 ### T5.7 · Large text — U1
 
+**Automated (headless, emulated phone): NONE** — Large system font: device only.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Settings → Display → Font size and style: set Font size to the largest. Reload U1 and scroll through.
 2. Reset the font size afterwards.
@@ -349,6 +453,10 @@ Text larger, still readable, no text running off the screen. Record any overlap;
 Evidence: Screenshots of any overlap.
 
 ### T5.8 · Samsung Internet (optional) — U1
+
+**Automated (headless, emulated phone): NONE** — Samsung Internet: not available here.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. In Samsung Internet, sign in to claude.ai, open U1 and repeat T2.1 quickly.
@@ -363,6 +471,10 @@ Evidence: Notes.
 Gestures: swipe right = next item; swipe left = previous; double-tap = activate; two-finger swipe = scroll; swipe up or down with one finger = change what a swipe moves by (for example Headings); swipe down then left = back. Wording varies by TalkBack version; what matters is the order and that nothing is missing or extra. TalkBack first reads claude.ai's own viewer controls; the test starts at the first item of the preview, “Skip to main content”. Fixed in this build (27 Nov 2026): before, in normal (moving) mode, Chapter 2 and 3 content was hidden from TalkBack unless that chapter was on screen. T6.2 and T6.3 now verify the fix: the reading order must be the same in both modes. One thing to watch in normal mode: when TalkBack reads Chapter 2 or 3 text that has not scrolled into view yet, its focus outline may sit over the current picture, because the text only appears visually when you reach it. Record whether that is confusing; it is an observation, not a failure.
 
 ### T6.1 · Reading order, reduced motion — U7
+
+**Automated (headless, emulated phone): PASSED** — Chromium's accessibility tree (what TalkBack reads), reduced motion: every heading and line present once, in this order; no decorative items; axe clean. TalkBack's speech itself: not heard.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Open U7. Turn TalkBack on (hold both volume keys 3 s).
@@ -389,6 +501,10 @@ Evidence: Recording with speech, or the list of announcements, marking any diffe
 
 ### T6.2 · Reading order, normal motion — U1
 
+**Automated (headless, emulated phone): PASSED** — Live-mode tree identical to reduced motion at 0, 160, 380 and 470 vh (e2e; the test fails on the build before the fix).
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Open U1 (motion on). With TalkBack on, start at “Skip to main content” and swipe right through the page, as in T6.1.
 
@@ -398,6 +514,10 @@ Exactly the same order as T6.1: nothing missing (in particular the Chapter 2 and
 Evidence: Recording or list of announcements.
 
 ### T6.3 · Headings navigation — U7, then U1
+
+**Automated (headless, emulated phone): PASSED** — Headings in order (h1, then four h2) in the tree, in both modes.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. In U7: swipe down (or up) until TalkBack says “Headings”. Then swipe right repeatedly from the top.
@@ -410,6 +530,10 @@ Evidence: List of headings heard, for each URL.
 
 ### T6.4 · Skip link — U1
 
+**Automated (headless, emulated phone): PASSED** — The skip link moves focus to the h1 (e2e, keyboard). TalkBack double-tap: not tested.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Go to the top. Focus “Skip to main content” and double-tap.
 
@@ -419,6 +543,10 @@ Focus moves to the headline: TalkBack reads “Premium look. Affordable price., 
 Evidence: Notes.
 
 ### T6.5 · Menu dialog — U1
+
+**Automated (headless, emulated phone): PARTIAL** — Focus moves into the dialog, Escape closes it, focus returns to Menu (e2e). Android back gesture and TalkBack swipe containment: not tested.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Focus Menu, double-tap.
@@ -433,6 +561,10 @@ Evidence: Notes; recording if focus escapes.
 
 ### T6.6 · Header focus after scrolling down — U1
 
+**Automated (headless, emulated phone): NONE** — TalkBack focus outline position: device only.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. With TalkBack, two-finger scroll down into Chapter 2 (the header hides), then swipe left back to the Menu button.
 
@@ -442,6 +574,10 @@ The focus outline is visible on screen, or the header comes back into view. Reco
 Evidence: Screenshot.
 
 ### T6.7 · Explore by touch (normal motion) — U1
+
+**Automated (headless, emulated phone): NONE** — Explore by touch: device only.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. Two-finger scroll until Chapter 2's lines are visible; tap a line once with one finger.
@@ -457,6 +593,10 @@ Optional and separate from the tests above. They need a Windows or Mac computer 
 
 ### C1 · Performance trace of the full scroll
 
+**Automated (headless, emulated phone): NONE** — Needs a computer connected to the phone.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. Phone connected by USB, U1 open in Chrome. On the computer: Chrome → chrome://inspect#devices → find the claude.ai tab → inspect.
 2. Performance panel → enable Screenshots → Record → on the phone, do the T2.1 slow pass → Stop. Save the profile (Save profile… → .json).
@@ -468,6 +608,10 @@ Evidence: The saved trace file.
 
 ### C2 · Long-task attribution: start-up vs scrolling
 
+**Automated (headless, emulated phone): NONE** — Needs a computer connected to the phone.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. From the C1 trace: list tasks over 50 ms with their time and source.
 
@@ -478,6 +622,10 @@ Evidence: From the C1 trace (I can read it from the file).
 
 ### C3 · Memory after a full scroll
 
+**Automated (headless, emulated phone): NONE** — Needs a computer connected to the phone.
+
+**On the A26: NOT TESTED**
+
 Steps:
 1. DevTools → Memory → take a heap snapshot after T2.1 and after T2.3.
 
@@ -487,6 +635,10 @@ No steady growth between the two snapshots (no leak from repeated scrolling).
 Evidence: Snapshot sizes.
 
 ### C4 · Thermal state (optional)
+
+**Automated (headless, emulated phone): NONE** — Needs a computer connected to the phone.
+
+**On the A26: NOT TESTED**
 
 Steps:
 1. With adb installed: adb shell dumpsys thermalservice, before T1 and after T3.

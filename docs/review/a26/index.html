@@ -38,7 +38,16 @@ ol,ul{padding-left:1.2em;margin:4px 0}li{margin:3px 0}.ev{font-size:14px;color:v
 .res input:focus-visible+span{outline:2px solid var(--ch);outline-offset:2px}
 .res input[value=pass]:checked+span{background:light-dark(#dcebd6,#20361e);border-color:light-dark(#2f6b2f,#8fd08a)}
 .res input[value=fail]:checked+span{background:light-dark(#f4d9d5,#3d1f1b);border-color:light-dark(#a3332b,#f19a8f)}
-.res input[value="not run"]:checked+span{background:light-dark(#e7e1d8,#2a2520)}
+.res input[value="not tested"]:checked+span{background:light-dark(#e7e1d8,#2a2520)}
+.status{margin-top:12px;padding-top:10px;border-top:1px solid var(--rule)}
+.auto{margin:0 0 8px;font-size:14px}.auto-what{color:var(--mute)}
+.badge{display:inline-block;font:600 12px Inter;letter-spacing:.02em;padding:3px 8px;border-radius:4px;margin-right:4px}
+.b-passed{background:light-dark(#dcebd6,#20361e);color:light-dark(#1f4d1f,#a9dca5)}
+.b-partial{background:light-dark(#f3e7cf,#3a3020);color:light-dark(#6b4e14,#e2c98f)}
+.b-none{background:light-dark(#e7e1d8,#2a2520);color:var(--mute)}
+.dev-label{margin:6px 0 0;font-size:14px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px;margin-top:16px}
+.summary div{border:1px solid #3b342c;padding:10px 12px}.summary b{display:block;font:600 22px Inter;color:#f2ece2}
 .notes{display:grid;gap:4px;margin-top:10px;font-size:14px;color:var(--mute)}
 textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);border-radius:6px;background:var(--bg);color:var(--fg)}
 .bar{position:sticky;bottom:0;z-index:4;background:var(--ink);color:#f2ece2;padding:10px max(5vw,16px);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
@@ -51,7 +60,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
 </style></head><body>
 <header class="band cover"><div class="wrap">
 <h1>Galaxy A26 5G: real-device tests</h1>
-<p>Chapters 1–3 preview, final build with the TalkBack fix (27 Nov 2026). Work through the cards in order, mark each result, then copy everything back to the chat. Nothing here changes the build. Results are kept in this browser only until you copy them.</p>
+<p>Chapters 1–3 preview, final build with the TalkBack fix (27 Nov 2026). Each card shows two separate results. <b>Automated</b>: what headless Chromium with an emulated phone has verified (never the A26 itself). <b>On the A26</b>: your result, “Not tested” until you mark it. An automated PASS is not a device pass.</p>
+<div class="summary">
+<div><b>9</b>automated: passed</div>
+<div><b>14</b>automated: partly covered</div>
+<div><b>15</b>no automated evidence</div>
+<div><b>0 of 38</b>tested on the A26</div>
+</div>
+<p style="margin-top:14px">Technical assessment and recommendation: <a style="color:#d8c3a0" href="https://claude.ai/artifact/VXfMtBQUMRiXXmJ7mDiYx5">claude.ai/artifact/VXfMtBQUMRiXXmJ7mDiYx5</a></p>
 <ul class="kinds"><li><b>A</b>Manual: your eyes and hands</li><li><b>B</b>On-device automated: built into the preview, no cable</li><li><b>C</b>Needs a connected computer</li></ul>
 </div></header>
 <nav class="toc" aria-label="Sections"><a href="#urls">URLs</a><a href="#sec-S0">S0 Set-up and test conditions</a><a href="#sec-T1">T1 Page-edge accuracy</a><a href="#sec-T2">T2 Chapter transitions</a><a href="#sec-T3">T3 Scrolling smoothness</a><a href="#sec-T4">T4 Reduced motion</a><a href="#sec-T5">T5 Touch interactions and mobile layout integrity</a><a href="#sec-T6">T6 TalkBack</a><a href="#sec-C">C Measurements that need a connected computer</a></nav>
@@ -74,10 +90,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Settings → About phone: note the model name and RAM; Software information → One UI version and Android version.</li><li>Chrome → ⋮ → Settings → About Chrome: note the Chrome version.</li><li>Settings → Display → Motion smoothness: note Adaptive (120 Hz) or Standard (60 Hz). Leave it on the default, Adaptive.</li></ol>
   <h4>Expected</h4><p>Galaxy A26 5G, Chrome (not the Claude app, not Samsung Internet) for every test unless a step says otherwise.</p>
   <p class="ev"><b>Evidence:</b> Write the values in the notes field.</p>
-  <div class="res" role="group" aria-label="Result for S0.1">
-    <label><input type="radio" name="r-S0.1" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-S0.1" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-S0.1" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Device facts: nothing to automate.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for S0.1">
+      <label><input type="radio" name="r-S0.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-S0.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-S0.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-S0.1" rows="2"></textarea></label>
 </article>
@@ -86,10 +106,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Battery ≥ 50 %, charger unplugged, Power saving OFF (Settings → Battery). Power saving lowers the frame rate and changes every result.</li><li>Wi-Fi on. Data Saver / Lite mode OFF in Chrome (Data Saver makes the page choose the still on purpose).</li><li>Close other apps. Phone at room temperature (not just after charging or gaming).</li><li>Brightness fixed at about 70 % (Adaptive brightness off) so recordings compare.</li><li>Display size and font size at default for all tests except T5.7.</li><li>Do Not Disturb on (notifications distort frame times and recordings).</li></ol>
   <h4>Expected</h4><p>All conditions met, or the exception written in the notes.</p>
   <p class="ev"><b>Evidence:</b> Notes.</p>
-  <div class="res" role="group" aria-label="Result for S0.2">
-    <label><input type="radio" name="r-S0.2" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-S0.2" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-S0.2" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Test conditions on the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for S0.2">
+      <label><input type="radio" name="r-S0.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-S0.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-S0.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-S0.2" rows="2"></textarea></label>
 </article>
@@ -98,10 +122,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>In Chrome on the phone, sign in to claude.ai with the same account. The preview is private and only opens for you.</li><li>Open U1 and check that the preview loads. The preview runs inside claude.ai&#39;s viewer frame; that is expected.</li><li>Screen recorder: Quick panel → Screen recorder → settings: Video quality 1080p, Sound “Media sounds”. You will use it in T2, T5 and T6.</li><li>TalkBack shortcut: Settings → Accessibility → Advanced settings → Side and Volume up keys / Volume keys shortcut → TalkBack. Then you can turn TalkBack on and off by holding both volume keys for 3 seconds.</li></ol>
   <h4>Expected</h4><p>The preview opens. Screen recorder and the TalkBack shortcut are ready.</p>
   <p class="ev"><b>Evidence:</b> Notes. If the preview does not open, stop and tell me.</p>
-  <div class="res" role="group" aria-label="Result for S0.3">
-    <label><input type="radio" name="r-S0.3" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-S0.3" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-S0.3" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">The published preview bundle loads with no failed requests, in live, lab and static modes (smoke test). Signing in and the phone&#39;s Chrome: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for S0.3">
+      <label><input type="radio" name="r-S0.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-S0.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-S0.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-S0.3" rows="2"></textarea></label>
 </article>
@@ -115,10 +143,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Open U4. Wait until the hair moves and the lab panel appears (about 10–20 s). The panel covers most of the screen on a phone; that is expected.</li><li>Do not touch the screen except to start the run. Tap “Run accuracy test (30 s)”. Put the phone down, screen up, for 35 s.</li><li>When the panel shows PASS or FAIL, tap “Copy results” and paste into a note. Then take a screenshot of the panel; scroll the panel to capture every line.</li></ol>
   <h4>Expected</h4><p>PASS. GPU line names the phone&#39;s GPU (Mali, not SwiftShader). Probed frames ≥ 20. Pointer force &gt; 0 in most probed frames. Point and edge P99 ≤ 2 px, max ≤ 3 px. In simulation the worst case was 0.15 px; real GPUs may differ slightly.</p>
   <p class="ev"><b>Evidence:</b> Copied JSON + screenshot(s) of the panel.</p>
-  <div class="res" role="group" aria-label="Result for T1.1">
-    <label><input type="radio" name="r-T1.1" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T1.1" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T1.1" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Tier B (the A26 default) at an A26-sized screen (384×832 @2.8125). Spec run: 8 probed frames, point P99 0.005 px / max 0.011 px, edge max 0.018 px. Dense run: 74 frames, point P99 0.005 px / max 0.24 px, edge P99 0.024 px / max 2.23 px (limit 3 px; thinnest margin seen). GPU: SwiftShader, not the A26&#39;s Mali GPU.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T1.1">
+      <label><input type="radio" name="r-T1.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T1.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T1.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T1.1" rows="2"></textarea></label>
 </article>
@@ -127,10 +159,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Same as T1.1 with U5.</li></ol>
   <h4>Expected</h4><p>PASS, same criteria. Fewer probed frames is acceptable if the phone renders tier A more slowly.</p>
   <p class="ev"><b>Evidence:</b> Copied JSON + screenshot.</p>
-  <div class="res" role="group" aria-label="Result for T1.2">
-    <label><input type="radio" name="r-T1.2" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T1.2" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T1.2" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Tier A, spec and dense runs, desktop and mobile: worst point max 0.15 px, edge max 0.03 px; repeated in the e2e suite on every run. SwiftShader.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T1.2">
+      <label><input type="radio" name="r-T1.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T1.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T1.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T1.2" rows="2"></textarea></label>
 </article>
@@ -139,10 +175,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>In U4 (no run needed), tick “show guide points”.</li><li>Drag the Position slider slowly to about 60–80 % (the page at rest).</li><li>Look at the edge of the hair: green dots are the CPU guide points, the white line is the page edge.</li></ol>
   <h4>Expected</h4><p>Green dots lie on the outer strands of the hair and move with them. The white line runs just outside the outer clump, about one finger-width of dark at most, and moves with the hair, without jumping. Magenta circles (GPU readback, shown after a run) sit on the green dots.</p>
   <p class="ev"><b>Evidence:</b> Two screenshots: slider ~60 % and ~80 %.</p>
-  <div class="res" role="group" aria-label="Result for T1.3">
-    <label><input type="radio" name="r-T1.3" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T1.3" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T1.3" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">CPU/GPU point agreement is measured (T1.1). The edge&#39;s visual position was reviewed on headless frame sheets and close-ups; the overlay itself not viewed on the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T1.3">
+      <label><input type="radio" name="r-T1.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T1.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T1.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T1.3" rows="2"></textarea></label>
 </article>
@@ -151,10 +191,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>After T2 and T3 (phone warm, about 10 minutes of use), repeat T1.1 once.</li></ol>
   <h4>Expected</h4><p>Still PASS. Fewer probed frames is acceptable.</p>
   <p class="ev"><b>Evidence:</b> Copied JSON.</p>
-  <div class="res" role="group" aria-label="Result for T1.4">
-    <label><input type="radio" name="r-T1.4" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T1.4" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T1.4" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a warm phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T1.4">
+      <label><input type="radio" name="r-T1.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T1.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T1.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T1.4" rows="2"></textarea></label>
 </article>
@@ -168,10 +212,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Open U1. Wait until the hair starts moving (about 3–5 s after the image appears).</li><li>Start the screen recorder. Scroll down slowly with one finger, about one screen every 4–5 seconds, until the ivory “Chapter 4 · FUTURA” end card is centred. Stop recording.</li></ol>
   <h4>Expected</h4><ul><li>Handoff: the still image turns into moving hair without a visible jump (slight softening acceptable).</li><li>Chapter 1: as the headline scrolls away, no hard horizontal line crosses the hair (fixed in the final build).</li><li>Chapter 2: the camera moves in one continuous motion onto the braids (no cut, no reset). A dark field rises at the bottom, the outlined “02” appears, and the three manifesto lines appear one at a time (on a phone only one line shows at a time).</li><li>Chapter 3, arriving: the ivory page rises from the bottom. Its top edge follows the loose hair ends; there is no gap flicker and no stepped or banded shadow at the edge.</li><li>Chapter 3, at rest: “03”, the portrait placeholder and the Chapter 3 line sit on ivory, and none of the text overlaps hair.</li><li>Chapter 3, closing: the page continues upwards over the hair until it covers the whole screen. Its edge straightens as it travels and the text fades. No straight horizontal band or rectangle cuts across the hair (fixed in the final build). No dark flash.</li><li>After closing: plain ivory, then the end card text rises with no visible seam or tone step between page and end card. Then the dark enquiry section and footer.</li><li>The header (SLAY BRAIDS, Menu) turns dark when it is over ivory and stays readable.</li></ul>
   <p class="ev"><b>Evidence:</b> Screen recording (keep the file; send it or note timestamps of any problem).</p>
-  <div class="res" role="group" aria-label="Result for T2.1">
-    <label><input type="radio" name="r-T2.1" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T2.1" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T2.1" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Automated: M1 handoff test (perceptual Δ 1.44 on mobile, limit 2); Chapter 2 lines reveal in order; the Chapter 3 page opens and covers; render pause at full cover. The look of the sequence was reviewed on headless frame sheets. Smoothness and appearance on the A26: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T2.1">
+      <label><input type="radio" name="r-T2.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T2.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T2.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T2.1" rows="2"></textarea></label>
 </article>
@@ -180,10 +228,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Continue from T2.1: record again and scroll slowly back to the top.</li></ol>
   <h4>Expected</h4><p>Everything reverses in order: the ivory page re-opens from full cover, settles against the hair, slides away down; Chapter 2 lines return; the headline returns. No state is stuck (no leftover ivory, no missing text). The header reappears when you scroll up.</p>
   <p class="ev"><b>Evidence:</b> Screen recording.</p>
-  <div class="res" role="group" aria-label="Result for T2.2">
-    <label><input type="radio" name="r-T2.2" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T2.2" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T2.2" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Automated: rendering resumes when scrolling back from full cover (I4 test). Reverse visuals: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T2.2">
+      <label><input type="radio" name="r-T2.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T2.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T2.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T2.2" rows="2"></textarea></label>
 </article>
@@ -192,10 +244,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Flick hard to the bottom, wait 2 s, flick hard to the top. Repeat twice.</li><li>Then stop in the middle of Chapter 3 (page at rest) and wait 2 s.</li></ol>
   <h4>Expected</h4><p>No black or blank screen longer than a moment. The page edge stays on the hair even during a flick: page and camera run on the same clock, so any visible gap between them is a failure. After stopping, the screen settles to match the scroll position within about 1 second.</p>
   <p class="ev"><b>Evidence:</b> Screen recording; note the time of any frame where the page edge is detached from the hair.</p>
-  <div class="res" role="group" aria-label="Result for T2.3">
-    <label><input type="radio" name="r-T2.3" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T2.3" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T2.3" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Fast flicks: no automated equivalent.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T2.3">
+      <label><input type="radio" name="r-T2.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T2.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T2.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T2.3" rows="2"></textarea></label>
 </article>
@@ -204,10 +260,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Open U6a, wait 15 s without touching, screenshot. Repeat for U6b–U6f.</li><li>Compare with the mobile lab sheet in the review pack (R, “Mobile — Chapter 3 at lab positions”).</li></ol>
   <h4>Expected</h4><p>Same composition at each position (hair at the top, page edge along the hair ends, text on ivory; 100 % = all ivory). The phone&#39;s screen is a slightly different shape, so compare the arrangement, not pixels.</p>
   <p class="ev"><b>Evidence:</b> Six screenshots.</p>
-  <div class="res" role="group" aria-label="Result for T2.4">
-    <label><input type="radio" name="r-T2.4" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T2.4" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T2.4" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Reference frames exist for every position (mobile lab sheet, headless). Not compared on the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T2.4">
+      <label><input type="radio" name="r-T2.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T2.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T2.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T2.4" rows="2"></textarea></label>
 </article>
@@ -221,10 +281,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Open U2 in a fresh tab. Do not touch the screen for 10 s.</li><li>Read the box: tier, viewport, “handoff Δ”, “live at … ms”.</li></ol>
   <h4>Expected</h4><p>Tier B, reason “GPU class (… Mali …)” or “mobile / touch device”: phones get the lighter cascade by design. Handoff Δ perceptual ≤ 2 (the M1 limit). No downgrade line. Visually: seamless or slight softening.</p>
   <p class="ev"><b>Evidence:</b> Screenshot of the box.</p>
-  <div class="res" role="group" aria-label="Result for T3.1">
-    <label><input type="radio" name="r-T3.1" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T3.1" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T3.1" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Handoff Δ passes in emulation (M1 test 1.44, readout 1.13; limit 2). Tier choice rule is unit-tested. Visual seamlessness and absence of downgrades on the A26: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.1">
+      <label><input type="radio" name="r-T3.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T3.1" rows="2"></textarea></label>
 </article>
@@ -233,10 +297,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Continue in U2: scroll slowly from the top to the end card and back to the top (about 30–40 s in total).</li><li>Immediately tap “Copy results” and paste into a note. If copying is blocked, screenshot the box.</li></ol>
   <h4>Expected</h4><p>Chapter 3 transition P95 ≤ 34 ms. Median fps ≥ 45 (with Adaptive motion smoothness the browser may run above 60). CLS ≤ 0.05. Downgrades: none. Long tasks: record the count and total; they include start-up, which is why the attribution check is in C1.</p>
   <p class="ev"><b>Evidence:</b> Copied JSON (or screenshot).</p>
-  <div class="res" role="group" aria-label="Result for T3.2">
-    <label><input type="radio" name="r-T3.2" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T3.2" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T3.2" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">CLS passes (Lighthouse 0.001 mobile; scripted scroll 0). Frame-time criteria (Ch3 transition P95 ≤ 34 ms, median ≥ 45 fps) have NO valid automated evidence: SwiftShader frames saturate at 100 ms.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.2">
+      <label><input type="radio" name="r-T3.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T3.2" rows="2"></textarea></label>
 </article>
@@ -245,10 +313,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Repeat T3.1–T3.2 with U3.</li></ol>
   <h4>Expected</h4><p>For information only: shows whether the phone could carry the heavier cascade. Not a pass/fail criterion.</p>
   <p class="ev"><b>Evidence:</b> Copied JSON.</p>
-  <div class="res" role="group" aria-label="Result for T3.3">
-    <label><input type="radio" name="r-T3.3" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T3.3" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T3.3" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Tier A headroom on the A26: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.3">
+      <label><input type="radio" name="r-T3.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T3.3" rows="2"></textarea></label>
 </article>
@@ -257,10 +329,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Scroll down slowly so that Chrome&#39;s address bar hides, then scroll up a little so it shows again; repeat in each chapter.</li><li>Try to scroll sideways anywhere on the page.</li><li>Optional: Developer options → Show refresh rate, to see 120/60 Hz while scrolling.</li></ol>
   <h4>Expected</h4><p>No jump or resize of the chapters when the address bar hides or shows. No sideways scrolling anywhere. No text that jumps after the page has loaded. The header slides away on scroll down and back on scroll up, smoothly.</p>
   <p class="ev"><b>Evidence:</b> Notes; recording if something jumps.</p>
-  <div class="res" role="group" aria-label="Result for T3.4">
-    <label><input type="radio" name="r-T3.4" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T3.4" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T3.4" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">No horizontal overflow at 41 scroll positions, live and reduced, at 384 px. CLS passes. Address-bar show/hide behaviour: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.4">
+      <label><input type="radio" name="r-T3.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T3.4" rows="2"></textarea></label>
 </article>
@@ -269,10 +345,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Open U8, wait 10 s, read “handoff Δ” and the “stillMatched” value in Copy results.</li></ol>
   <h4>Expected</h4><p>For the I6 decision: compare handoff Δ with T3.1. Adopted only if it is lower on this phone.</p>
   <p class="ev"><b>Evidence:</b> Copied JSON.</p>
-  <div class="res" role="group" aria-label="Result for T3.5">
-    <label><input type="radio" name="r-T3.5" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T3.5" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T3.5" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Simulated: matched still Δ 1.17 vs 1.13 for the standard still, so I6 stays not adopted. The decision needs the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T3.5">
+      <label><input type="radio" name="r-T3.5" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T3.5" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T3.5" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T3.5" rows="2"></textarea></label>
 </article>
@@ -286,10 +366,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Settings → Accessibility → Visibility enhancements → Remove animations: ON (or search Settings for “Remove animations”).</li><li>Close the Chrome tab, open U2 in a new tab, wait 5 s.</li><li>Scroll slowly through the whole page.</li></ol>
   <h4>Expected</h4><p>The box says tier C, reason “prefers-reduced-motion”. Nothing moves: no hair motion, no camera motion, no page closing. Chapter 1: still image with headline. Chapter 2: still close-up of the braids with all three lines visible at once. Chapter 3: still hair with the ivory page edge along it, “03”, portrait placeholder and Chapter 3 line all visible. Then the ivory end card, enquiry section and footer. All text readable; header turns dark over ivory.</p>
   <p class="ev"><b>Evidence:</b> Screenshot of the box + one screenshot per chapter.</p>
-  <div class="res" role="group" aria-label="Result for T4.1">
-    <label><input type="radio" name="r-T4.1" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T4.1" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T4.1" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">prefers-reduced-motion emulated (M1 test): static anchor, no canvas, all text visible; static spreads checked (stills, every line visible, page drawn, no 3D). The Samsung “Remove animations” → Chrome mapping itself: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T4.1">
+      <label><input type="radio" name="r-T4.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T4.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T4.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T4.1" rows="2"></textarea></label>
 </article>
@@ -298,10 +382,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Turn Remove animations OFF. Open U7 in a new tab and scroll through.</li></ol>
   <h4>Expected</h4><p>Identical to T4.1.</p>
   <p class="ev"><b>Evidence:</b> One screenshot of Chapter 3.</p>
-  <div class="res" role="group" aria-label="Result for T4.2">
-    <label><input type="radio" name="r-T4.2" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T4.2" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T4.2" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Static spreads e2e test with the reduced flag, desktop and mobile.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T4.2">
+      <label><input type="radio" name="r-T4.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T4.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T4.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T4.2" rows="2"></textarea></label>
 </article>
@@ -310,10 +398,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>With the setting OFF, open U1 in a new tab.</li></ol>
   <h4>Expected</h4><p>Motion is back (hair moves, chapters animate).</p>
   <p class="ev"><b>Evidence:</b> Notes.</p>
-  <div class="res" role="group" aria-label="Result for T4.3">
-    <label><input type="radio" name="r-T4.3" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T4.3" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T4.3" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Every live e2e test runs with motion on, after reduced-motion tests in the same suite.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T4.3">
+      <label><input type="radio" name="r-T4.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T4.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T4.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T4.3" rows="2"></textarea></label>
 </article>
@@ -327,10 +419,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Tap Menu → the full-screen menu opens. Tap Close → it closes.</li><li>Open Menu again; tap “02 The Craft” → the menu closes and the page jumps to Chapter 2. Repeat for “01 Arrival” and “03 The Unbraiding”, and the menu&#39;s “Make an enquiry”.</li><li>At the top, tap “Make an enquiry” → enquiry section. Scroll up, tap “Discover FUTURA” → the end card. Tap “Back to the top” → top.</li></ol>
   <h4>Expected</h4><p>Each control works on the first tap. After a jump, the screen settles to the right chapter: jumping to Chapter 3 lands at its start, where the page has not opened yet; scroll on to see it.</p>
   <p class="ev"><b>Evidence:</b> Notes; recording if anything misfires.</p>
-  <div class="res" role="group" aria-label="Result for T5.1">
-    <label><input type="radio" name="r-T5.1" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T5.1" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T5.1" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Menu dialog opens, closes and returns focus (e2e); CTA targets (#enquire, #next) and the skip link are tested. Tapping on the phone and the landing position after a jump: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.1">
+      <label><input type="radio" name="r-T5.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T5.1" rows="2"></textarea></label>
 </article>
@@ -339,10 +435,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>In Chapter 1 and Chapter 3, place a finger on the hair and drag slowly; then lift.</li></ol>
   <h4>Expected</h4><p>The page scrolls normally (the hair never blocks scrolling). Strands may part slightly at the start of a drag; nothing stays parted or jitters after you lift the finger.</p>
   <p class="ev"><b>Evidence:</b> Notes.</p>
-  <div class="res" role="group" aria-label="Result for T5.2">
-    <label><input type="radio" name="r-T5.2" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T5.2" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T5.2" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">The M1 pointer test is skipped on touch by design.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.2">
+      <label><input type="radio" name="r-T5.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T5.2" rows="2"></textarea></label>
 </article>
@@ -351,10 +451,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Go to “Make an enquiry”. Tap Name: the keyboard opens; type a few letters. Repeat for Email and Message. Tap Topic: the picker opens.</li><li>Close the keyboard. Look at the send button.</li></ol>
   <h4>Expected</h4><p>The field you type in stays visible above the keyboard. The page does not jump, and the 3D does not fade or restart when the keyboard opens or closes. The button reads “Sending is not enabled in the preview” and cannot be pressed. Nothing is sent.</p>
   <p class="ev"><b>Evidence:</b> Notes; screenshot with the keyboard open.</p>
-  <div class="res" role="group" aria-label="Result for T5.3">
-    <label><input type="radio" name="r-T5.3" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T5.3" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T5.3" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">The send button is disabled and nothing is ever sent (M1 test). On-screen keyboard behaviour: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.3">
+      <label><input type="radio" name="r-T5.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T5.3" rows="2"></textarea></label>
 </article>
@@ -363,10 +467,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Scroll through slowly and look at the edges of the screen, the header and the bottom banner.</li></ol>
   <h4>Expected</h4><p>Nothing cut off at the left or right edge. Header readable on dark and on ivory. The grey preview banner at the bottom never covers a button or the Chapter 3 line completely. No text over the hair in Chapter 3.</p>
   <p class="ev"><b>Evidence:</b> Screenshot of any problem.</p>
-  <div class="res" role="group" aria-label="Result for T5.4">
-    <label><input type="radio" name="r-T5.4" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T5.4" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T5.4" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">No horizontal overflow at 384 px; axe finds no WCAG 2.1 A/AA violations (static, reduced, live). Banner overlap reviewed on headless sheets only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.4">
+      <label><input type="radio" name="r-T5.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T5.4" rows="2"></textarea></label>
 </article>
@@ -375,10 +483,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Pinch to zoom into the headline, then zoom back out.</li></ol>
   <h4>Expected</h4><p>Zoom works and the page returns to normal without broken layout.</p>
   <p class="ev"><b>Evidence:</b> Notes.</p>
-  <div class="res" role="group" aria-label="Result for T5.5">
-    <label><input type="radio" name="r-T5.5" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T5.5" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T5.5" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Pinch zoom: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.5">
+      <label><input type="radio" name="r-T5.5" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.5" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.5" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T5.5" rows="2"></textarea></label>
 </article>
@@ -387,10 +499,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Turn auto-rotate on. In Chapter 1, rotate to landscape, wait 5 s, rotate back.</li><li>Repeat with the Chapter 3 page at rest.</li></ol>
   <h4>Expected</h4><p>Each rotation: a short fade to the still image, then the landscape composition (in Chapter 3 the page comes from the right side), then the portrait composition again after rotating back. The page stays in the same chapter. No permanent black screen.</p>
   <p class="ev"><b>Evidence:</b> Screen recording.</p>
-  <div class="res" role="group" aria-label="Result for T5.6">
-    <label><input type="radio" name="r-T5.6" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T5.6" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T5.6" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Emulated rotation round-trip at Chapter 1 and the Chapter 3 rest: no errors, live 3D restored in both orientations. OPEN RISK: in emulation, rotating at the Chapter 3 rest moved the scroll position to the end card (380 vh → 865 vh in landscape → 679 vh back in portrait). Real Chrome may keep the place by scroll anchoring; only the phone can tell.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.6">
+      <label><input type="radio" name="r-T5.6" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.6" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.6" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T5.6" rows="2"></textarea></label>
 </article>
@@ -399,10 +515,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Settings → Display → Font size and style: set Font size to the largest. Reload U1 and scroll through.</li><li>Reset the font size afterwards.</li></ol>
   <h4>Expected</h4><p>Text larger, still readable, no text running off the screen. Record any overlap; it is informational.</p>
   <p class="ev"><b>Evidence:</b> Screenshots of any overlap.</p>
-  <div class="res" role="group" aria-label="Result for T5.7">
-    <label><input type="radio" name="r-T5.7" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T5.7" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T5.7" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Large system font: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.7">
+      <label><input type="radio" name="r-T5.7" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.7" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.7" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T5.7" rows="2"></textarea></label>
 </article>
@@ -411,10 +531,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>In Samsung Internet, sign in to claude.ai, open U1 and repeat T2.1 quickly.</li></ol>
   <h4>Expected</h4><p>Same as T2.1. Note any difference.</p>
   <p class="ev"><b>Evidence:</b> Notes.</p>
-  <div class="res" role="group" aria-label="Result for T5.8">
-    <label><input type="radio" name="r-T5.8" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T5.8" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T5.8" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Samsung Internet: not available here.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T5.8">
+      <label><input type="radio" name="r-T5.8" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T5.8" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T5.8" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T5.8" rows="2"></textarea></label>
 </article>
@@ -428,10 +552,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Open U7. Turn TalkBack on (hold both volume keys 3 s).</li><li>Swipe right until you reach “Skip to main content”. From there, swipe right item by item to the footer, writing down (or recording) what TalkBack says.</li></ol>
   <h4>Expected</h4><ul><li>Skip to main content, link</li><li>SLAY BRAIDS, home, link</li><li>Menu, button (may add “pop-up”)</li><li>Premium look. Affordable price., heading 1</li><li>Make an enquiry, link · Discover FUTURA, link</li><li>The craft (working title), heading 2</li><li>Manifesto line one … · Manifesto line two … · Manifesto line three … · Placeholder copy</li><li>The unbraiding (working title), heading 2</li><li>Portrait awaiting approved photography · Photo credit pending (figure)</li><li>Chapter 3 line — wording to come from SLAY BRAIDS. Placeholder copy</li><li>Next review · Chapter 4 · FUTURA, heading 2 · Chapters 4–7 are built after this preview is approved. · Back to the top, link</li><li>Make an enquiry, heading 2 · status text · Name, edit box · Email, edit box · Topic, drop-down (General enquiry) · Message, edit box · Sending is not enabled in the preview, button, disabled · note</li><li>© SLAY BRAIDS · FUTURA is a SLAY BRAIDS product line. · Legal pages to follow.</li><li>M2 preview · Chapters 1–3 · not for publication · placeholder copy is marked</li><li>Never read: “01”, “02”, “03”, “Scroll”, images, canvas, graphics.</li></ul>
   <p class="ev"><b>Evidence:</b> Recording with speech, or the list of announcements, marking any difference.</p>
-  <div class="res" role="group" aria-label="Result for T6.1">
-    <label><input type="radio" name="r-T6.1" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T6.1" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T6.1" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Chromium&#39;s accessibility tree (what TalkBack reads), reduced motion: every heading and line present once, in this order; no decorative items; axe clean. TalkBack&#39;s speech itself: not heard.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.1">
+      <label><input type="radio" name="r-T6.1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.1" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T6.1" rows="2"></textarea></label>
 </article>
@@ -440,10 +568,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Open U1 (motion on). With TalkBack on, start at “Skip to main content” and swipe right through the page, as in T6.1.</li></ol>
   <h4>Expected</h4><p>Exactly the same order as T6.1: nothing missing (in particular the Chapter 2 and Chapter 3 headings, the three manifesto lines, the portrait placeholder and the Chapter 3 line), nothing read twice, no numerals. Note where the focus outline appears while it reads Chapter 2–3 text.</p>
   <p class="ev"><b>Evidence:</b> Recording or list of announcements.</p>
-  <div class="res" role="group" aria-label="Result for T6.2">
-    <label><input type="radio" name="r-T6.2" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T6.2" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T6.2" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Live-mode tree identical to reduced motion at 0, 160, 380 and 470 vh (e2e; the test fails on the build before the fix).</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.2">
+      <label><input type="radio" name="r-T6.2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.2" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T6.2" rows="2"></textarea></label>
 </article>
@@ -452,10 +584,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>In U7: swipe down (or up) until TalkBack says “Headings”. Then swipe right repeatedly from the top.</li><li>Repeat in U1.</li></ol>
   <h4>Expected</h4><p>In both U7 and U1: Premium look. Affordable price. (1) → The craft (2) → The unbraiding (2) → Chapter 4 · FUTURA (2) → Make an enquiry (2).</p>
   <p class="ev"><b>Evidence:</b> List of headings heard, for each URL.</p>
-  <div class="res" role="group" aria-label="Result for T6.3">
-    <label><input type="radio" name="r-T6.3" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T6.3" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T6.3" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">Headings in order (h1, then four h2) in the tree, in both modes.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.3">
+      <label><input type="radio" name="r-T6.3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.3" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T6.3" rows="2"></textarea></label>
 </article>
@@ -464,10 +600,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Go to the top. Focus “Skip to main content” and double-tap.</li></ol>
   <h4>Expected</h4><p>Focus moves to the headline: TalkBack reads “Premium look. Affordable price., heading 1”.</p>
   <p class="ev"><b>Evidence:</b> Notes.</p>
-  <div class="res" role="group" aria-label="Result for T6.4">
-    <label><input type="radio" name="r-T6.4" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T6.4" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T6.4" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-passed">AUTOMATED: PASSED</span> <span class="auto-what">The skip link moves focus to the h1 (e2e, keyboard). TalkBack double-tap: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.4">
+      <label><input type="radio" name="r-T6.4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.4" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T6.4" rows="2"></textarea></label>
 </article>
@@ -476,10 +616,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Focus Menu, double-tap.</li><li>Swipe right through the menu until nothing new is read.</li><li>Focus Close, double-tap.</li><li>Open the menu again and use the Android back gesture (swipe down then left, or the system back).</li></ol>
   <h4>Expected</h4><p>On opening, focus moves into the menu (TalkBack reads “Close, button” or the menu name). Swiping reads: Close, Arrival, The Craft, The Unbraiding (links), the note, Make an enquiry. It does not continue into the page behind. Close returns focus to the Menu button. Back closes the menu and stays on the page. If back leaves the page instead, record it as a failure.</p>
   <p class="ev"><b>Evidence:</b> Notes; recording if focus escapes.</p>
-  <div class="res" role="group" aria-label="Result for T6.5">
-    <label><input type="radio" name="r-T6.5" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T6.5" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T6.5" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-partial">AUTOMATED: PARTIAL</span> <span class="auto-what">Focus moves into the dialog, Escape closes it, focus returns to Menu (e2e). Android back gesture and TalkBack swipe containment: not tested.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.5">
+      <label><input type="radio" name="r-T6.5" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.5" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.5" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T6.5" rows="2"></textarea></label>
 </article>
@@ -488,10 +632,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>With TalkBack, two-finger scroll down into Chapter 2 (the header hides), then swipe left back to the Menu button.</li></ol>
   <h4>Expected</h4><p>The focus outline is visible on screen, or the header comes back into view. Record if the focus outline is off screen.</p>
   <p class="ev"><b>Evidence:</b> Screenshot.</p>
-  <div class="res" role="group" aria-label="Result for T6.6">
-    <label><input type="radio" name="r-T6.6" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T6.6" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T6.6" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">TalkBack focus outline position: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.6">
+      <label><input type="radio" name="r-T6.6" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.6" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.6" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T6.6" rows="2"></textarea></label>
 </article>
@@ -500,10 +648,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Two-finger scroll until Chapter 2&#39;s lines are visible; tap a line once with one finger.</li></ol>
   <h4>Expected</h4><p>TalkBack reads the line you touched, once.</p>
   <p class="ev"><b>Evidence:</b> Notes.</p>
-  <div class="res" role="group" aria-label="Result for T6.7">
-    <label><input type="radio" name="r-T6.7" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-T6.7" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-T6.7" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Explore by touch: device only.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for T6.7">
+      <label><input type="radio" name="r-T6.7" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-T6.7" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-T6.7" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-T6.7" rows="2"></textarea></label>
 </article>
@@ -517,10 +669,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>Phone connected by USB, U1 open in Chrome. On the computer: Chrome → chrome://inspect#devices → find the claude.ai tab → inspect.</li><li>Performance panel → enable Screenshots → Record → on the phone, do the T2.1 slow pass → Stop. Save the profile (Save profile… → .json).</li></ol>
   <h4>Expected</h4><p>Gives what the readout cannot: frame-by-frame presentation (dropped and partially presented frames), main-thread long tasks with their causes, raster/GPU time, and the source of any layout shift.</p>
   <p class="ev"><b>Evidence:</b> The saved trace file.</p>
-  <div class="res" role="group" aria-label="Result for C1">
-    <label><input type="radio" name="r-C1" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-C1" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-C1" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a computer connected to the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for C1">
+      <label><input type="radio" name="r-C1" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-C1" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-C1" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-C1" rows="2"></textarea></label>
 </article>
@@ -529,10 +685,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>From the C1 trace: list tasks over 50 ms with their time and source.</li></ol>
   <h4>Expected</h4><p>Approved phone criterion: no long task over 200 ms while scrolling. Start-up tasks (shader compile, geometry) are reported separately.</p>
   <p class="ev"><b>Evidence:</b> From the C1 trace (I can read it from the file).</p>
-  <div class="res" role="group" aria-label="Result for C2">
-    <label><input type="radio" name="r-C2" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-C2" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-C2" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a computer connected to the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for C2">
+      <label><input type="radio" name="r-C2" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-C2" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-C2" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-C2" rows="2"></textarea></label>
 </article>
@@ -541,10 +701,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>DevTools → Memory → take a heap snapshot after T2.1 and after T2.3.</li></ol>
   <h4>Expected</h4><p>No steady growth between the two snapshots (no leak from repeated scrolling).</p>
   <p class="ev"><b>Evidence:</b> Snapshot sizes.</p>
-  <div class="res" role="group" aria-label="Result for C3">
-    <label><input type="radio" name="r-C3" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-C3" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-C3" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a computer connected to the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for C3">
+      <label><input type="radio" name="r-C3" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-C3" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-C3" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-C3" rows="2"></textarea></label>
 </article>
@@ -553,10 +717,14 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   <h4>Steps</h4><ol><li>With adb installed: adb shell dumpsys thermalservice, before T1 and after T3.</li></ol>
   <h4>Expected</h4><p>Status 0–1 (none or light). Throttling would explain slower results.</p>
   <p class="ev"><b>Evidence:</b> Both outputs.</p>
-  <div class="res" role="group" aria-label="Result for C4">
-    <label><input type="radio" name="r-C4" value="pass"><span>Pass</span></label>
-    <label><input type="radio" name="r-C4" value="fail"><span>Fail</span></label>
-    <label><input type="radio" name="r-C4" value="not run"><span>Not run</span></label>
+  <div class="status">
+    <p class="auto"><span class="badge b-none">NO AUTOMATED EVIDENCE</span> <span class="auto-what">Needs a computer connected to the phone.</span></p>
+    <p class="dev-label"><b>On the A26:</b></p>
+    <div class="res" role="group" aria-label="A26 result for C4">
+      <label><input type="radio" name="r-C4" value="pass"><span>Pass</span></label>
+      <label><input type="radio" name="r-C4" value="fail"><span>Fail</span></label>
+      <label><input type="radio" name="r-C4" value="not tested" checked><span>Not tested</span></label>
+    </div>
   </div>
   <label class="notes">Notes<textarea name="n-C4" rows="2"></textarea></label>
 </article>
@@ -581,14 +749,15 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} };
   for (const id of ids) {
     const s = saved[id] || {};
+    if (s.r === "not run") s.r = "not tested";
     if (s.r) { const el = document.querySelector('input[name="r-' + id + '"][value="' + s.r + '"]'); if (el) el.checked = true; }
     const ta = document.querySelector('textarea[name="n-' + id + '"]'); if (ta && s.n) ta.value = s.n;
   }
   const count = document.getElementById("count");
   const update = () => {
-    const done = ids.filter((id) => saved[id] && saved[id].r).length;
+    const done = ids.filter((id) => saved[id] && (saved[id].r === "pass" || saved[id].r === "fail")).length;
     const fails = ids.filter((id) => saved[id] && saved[id].r === "fail").length;
-    count.textContent = done + " of " + ids.length + " marked" + (fails ? " · " + fails + " fail" : "");
+    count.textContent = "A26: " + done + " of " + ids.length + " tested" + (fails ? " · " + fails + " fail" : "");
   };
   document.addEventListener("change", (e) => {
     const t = e.target; const m = /^(r|n)-(.+)$/.exec(t.name || ""); if (!m) return;
@@ -602,7 +771,8 @@ textarea{width:100%;font:16px Inter;padding:10px;border:1px solid var(--rule);bo
     const lines = ["Galaxy A26 5G — Chapters 1–3 real-device results", "Recorded: " + new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC", ""];
     for (const id of ids) {
       const s = saved[id] || {}; const name = document.querySelector('[data-id="' + id + '"] h3').textContent.trim();
-      lines.push(name + ": " + (s.r ? s.r.toUpperCase() : "—") + (s.n ? "\n    " + s.n.replace(/\n/g, "\n    ") : ""));
+      const auto = document.querySelector('[data-id="' + id + '"] .badge').textContent.trim();
+      lines.push(name + " · " + auto + " · A26: " + (s.r ? s.r.toUpperCase() : "NOT TESTED") + (s.n ? "\n    " + s.n.replace(/\n/g, "\n    ") : ""));
     }
     return lines.join("\n");
   };
