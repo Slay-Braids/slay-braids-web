@@ -1,6 +1,6 @@
 {
-  "build": "final (out/index.html md5 c68b191ec4e3f97d3ce46dbf055f2a6d)",
-  "date": "2026-11-26T17:56Z",
+  "build": "final with TalkBack fix (out/index.html md5 9c3bbabfc03425d0f2beb48509508ebb)",
+  "date": "2026-11-27T09:19Z",
   "environment": "headless Chromium + SwiftShader; Playwright projects desktop 1440\u00d7900 and Pixel 7",
   "suites": [
     {
@@ -19,14 +19,15 @@
     },
     {
       "name": "M2 e2e (tests/e2e/chapters.spec.ts)",
-      "passed": 18,
+      "passed": 20,
       "failed": 0,
       "skipped": 0,
-      "note": "structure, skip link, modal menu, axe \u00d73, chapter states, I4 pause/resume, page-edge accuracy, static spreads; desktop + mobile"
+      "note": "structure, skip link, modal menu, axe \u00d73, accessibility tree identical live vs reduced at 4 positions (new; fails on the pre-fix build), chapter states, I4 pause/resume, page-edge accuracy, static spreads; desktop + mobile"
     }
   ],
   "m1HandoffTest": {
     "desktop": "raw 4.40 \u00b7 perceptual 1.19 /255 (M1: 4.40 / 1.19)",
     "mobile": "raw 3.18 \u00b7 perceptual 1.44 /255 (M1: 3.18 / 1.44)"
-  }
+  },
+  "visualRegression": "TalkBack fix: 24 live frames (desktop + mobile, fixed wind, grain frozen) and 10 reduced-motion spreads pixel-identical to the pre-fix build (0 changed pixels)"
 }

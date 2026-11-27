@@ -215,6 +215,10 @@ const decisions = [
     "It grew as results arrived and its own layout shifts were counted in the CLS it reports (0.0137 in the simulated mobile run). The page itself: 0.0006.",
   ],
   [
+    "TalkBack fix: off-screen chapter frames hidden with opacity, not visibility",
+    "Found while preparing the A26 protocol: in live mode, Chapter 2–3 headings and text left the accessibility tree whenever the chapter was off screen, so screen readers skipped them. Now the tree is identical at every scroll position and in reduced motion (new e2e test; it fails on the earlier build). Visuals pixel-identical before/after (34 frames).",
+  ],
+  [
     "Logo slot shows plain text “SLAY BRAIDS”",
     "Dashed placeholder box, accessible name “SLAY BRAIDS, home”. Not a recreation of the logo; the file is still pending.",
   ],
